@@ -1,9 +1,9 @@
 <?php
 
-namespace MaxMind\MinFraud\Exception;
+namespace MaxMind\Exception;
 
 /**
- * Thrown when the MaxMind minFraud service returns an error.
+ * Thrown when a MaxMind web service returns an error.
  */
 class InvalidRequestException extends HttpException
 {

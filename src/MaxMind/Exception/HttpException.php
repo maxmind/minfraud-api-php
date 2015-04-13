@@ -1,11 +1,11 @@
 <?php
 
-namespace MaxMind\MinFraud\Exception;
+namespace MaxMind\Exception;
 
 /**
  *  Thrown on an HTTP transport error.
  */
-class HttpException extends MinFraudException
+class HttpException extends WebServiceException
 {
     /**
      * The URI queried
