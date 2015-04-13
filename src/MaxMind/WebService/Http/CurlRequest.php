@@ -12,12 +12,20 @@ class CurlRequest implements Request
     private $url;
     private $options;
 
+    /**
+     * @param $url
+     * @param $options
+     */
     public function __construct($url, $options)
     {
         $this->url = $url;
         $this->options = $options;
     }
 
+    /**
+     * @param $body
+     * @return array
+     */
     public function post($body)
     {
         $curl = $this->createCurl();
@@ -33,11 +41,14 @@ class CurlRequest implements Request
         return array($statusCode, $contentType, $body);
     }
 
+    /**
+     * @return resource
+     */
     private function createCurl()
     {
         $curl = curl_init($this->url);
 
-        $opts[CURLOPT_CAINFO] =  $this->options['caBundle'];
+        $opts[CURLOPT_CAINFO] = $this->options['caBundle'];
         $opts[CURLOPT_SSL_VERIFYHOST] = 2;
         $opts[CURLOPT_FOLLOWLOCATION] = false;
         $opts[CURLOPT_SSL_VERIFYPEER] = true;
@@ -45,7 +56,7 @@ class CurlRequest implements Request
 
 
         $opts[CURLOPT_HTTPHEADER] = $this->options['headers'];
-        $opts[CURLOPT_USERAGENT] =  $this->options['userAgent'];
+        $opts[CURLOPT_USERAGENT] = $this->options['userAgent'];
 
         $opts[CURLOPT_CONNECTTIMEOUT] = $this->options['connectTimeout'];
         $opts[CURLOPT_TIMEOUT] = $this->options['timeout'];

@@ -2,11 +2,13 @@
 
 namespace MaxMind\MinFraud\Model;
 
+use GeoIp2\Model\Insights;
+
 /**
  * Class IpLocation
  * @package MaxMind\MinFraud\Model
  */
-class IpLocation extends \GeoIp2\Model\Insights
+class IpLocation extends Insights
 {
     /**
      * @param array $response

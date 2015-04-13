@@ -19,6 +19,7 @@ class MinFraud
     /**
      * @param int $userId
      * @param string $licenseKey
+     * @param array $content
      */
     public function __construct(
         $userId,
@@ -29,6 +30,10 @@ class MinFraud
         $this->content = $content;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withEvent($values)
     {
         $new = clone $this;
@@ -36,6 +41,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withAccount($values)
     {
         $new = clone $this;
@@ -43,6 +52,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withEmail($values)
     {
         $new = clone $this;
@@ -50,6 +63,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withBilling($values)
     {
         $new = clone $this;
@@ -58,6 +75,10 @@ class MinFraud
     }
 
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withShipping($values)
     {
         $new = clone $this;
@@ -65,6 +86,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withPayment($values)
     {
         $new = clone $this;
@@ -72,6 +97,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withCreditCard($values)
     {
         $new = clone $this;
@@ -79,6 +108,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withOrder($values)
     {
         $new = clone $this;
@@ -86,6 +119,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withShoppingCartItem($values)
     {
         $new = clone $this;
@@ -96,6 +133,10 @@ class MinFraud
         return $new;
     }
 
+    /**
+     * @param $values
+     * @return MinFraud
+     */
     public function withDevice($values)
     {
         $new = clone $this;
@@ -104,8 +145,9 @@ class MinFraud
     }
 
     /**
-     * @param array $input
-     * @return \MaxMind\MinFraud\Model\Score
+     * @return MinFraud\Model\Score
+     * @throws InvalidInputException
+     * @internal param array $input
      */
     public function score()
     {
@@ -113,14 +155,20 @@ class MinFraud
     }
 
     /**
-     * @param array $input
-     * @return \MaxMind\MinFraud\Model\Insights
+     * @return MinFraud\Model\Insights
+     * @throws InvalidInputException
+     * @internal param array $input
      */
     public function insights()
     {
         return $this->post('Insights');
     }
 
+    /**
+     * @param $service
+     * @return mixed
+     * @throws InvalidInputException
+     */
     private function post($service)
     {
         if (!isset($this->content['device']['ip_address'])) {

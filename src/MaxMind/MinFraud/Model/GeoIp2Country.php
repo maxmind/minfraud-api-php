@@ -2,11 +2,13 @@
 
 namespace MaxMind\MinFraud\Model;
 
+use GeoIp2\Record\Country;
+
 /**
  * Class GeoIp2Country
  * @package MaxMind\MinFraud\Model
  */
-class GeoIp2Country extends \GeoIp2\Record\Country
+class GeoIp2Country extends Country
 {
     protected $validAttributes = array(
         'confidence',

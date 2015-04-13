@@ -2,11 +2,13 @@
 
 namespace MaxMind\MinFraud\Model;
 
+use GeoIp2\Record\Location;
+
 /**
  * Class GeoIp2Location
  * @package MaxMind\MinFraud\Model
  */
-class GeoIp2Location extends \GeoIp2\Record\Location
+class GeoIp2Location extends Location
 {
     protected $validAttributes = array(
         'accuracyRadius',

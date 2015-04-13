@@ -4,10 +4,11 @@ namespace MaxMind\WebService;
 
 use MaxMind\Exception\AuthenticationException;
 use MaxMind\Exception\HttpException;
+use MaxMind\Exception\InsufficientCreditException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
-use MaxMind\Exception\OutOfCreditsException;
+use MaxMind\WebService\Http\RequestFactory;
 
 /**
  * This class is not intended to be used directly by an end-user of a
@@ -21,8 +22,8 @@ class Client
     private $userId;
     private $licenseKey;
     private $userAgent = 'MaxMind Web Service PHP Client';
-    private $host = 'ct5-test.maxmind.com';
-    private $httpRequestClass = 'MaxMind\WebService\Http\CurlRequest';
+    private $host = 'api.maxmind.com';
+    private $httpRequestFactory;
     private $timeout;
     private $connectTimeout;
     private $caBundle;
@@ -30,6 +31,7 @@ class Client
     /**
      * @param int $userId
      * @param string $licenseKey
+     * @param array $options
      */
     public function __construct(
         $userId,
@@ -38,8 +40,12 @@ class Client
     ) {
         $this->userId = $userId;
         $this->licenseKey = $licenseKey;
-        if (isset($options['httpRequestClass'])) {
-            $this->httpRequestClass = $options['httpRequestClass'];
+        $this->httpRequestFactory = isset($options['httpRequestFactory'])
+            ? $options['httpRequestFactory']
+            : new RequestFactory();
+
+        if (isset($options['host'])) {
+            $this->host = $options['host'];
         }
         if (isset($options['userAgent'])) {
             $this->userAgent = sprintf(
@@ -72,7 +78,7 @@ class Client
     {
         list($statusCode, $contentType, $body)
             = $this->makeRequest($path, $input);
-        $this->handleResponse(
+        return $this->handleResponse(
             $statusCode,
             $contentType,
             $body,
@@ -99,11 +105,11 @@ class Client
         $headers = array(
             'Content-type: application/json',
             'Authorization: Basic '
-                . base64_encode($this->userId . ':' . $this->licenseKey),
+            . base64_encode($this->userId . ':' . $this->licenseKey),
             'Accept: application/json',
         );
 
-        $request = new $this->httpRequestClass(
+        $request = $this->httpRequestFactory->request(
             $this->urlFor($path),
             array(
                 'caBundle' => $this->caBundle ?: __DIR__ . '/cacert.pem',
@@ -119,6 +125,16 @@ class Client
         return array($statusCode, $contentType, $body);
     }
 
+    /**
+     * @param $statusCode
+     * @param $contentType
+     * @param $body
+     * @param $service
+     * @param $path
+     * @return array
+     * @throws HttpException
+     * @throws WebServiceException
+     */
     private function handleResponse(
         $statusCode,
         $contentType,
@@ -135,12 +151,6 @@ class Client
         }
         return $this->handleSuccess($body, $service);
     }
-
-    // I'm not yet sure if we want to use Guzzle or just do it manually.
-    // Guzzle has sort of been a pain as the newer versions do not support
-    // PHP 5.3 and there has been quite a bit of API change. If we don't use
-    // Guzzle, we should probably move GeoIP2 away from Guzzle as this depends
-    // on that for the model classes.
 
     /**
      * @return string
@@ -165,6 +175,7 @@ class Client
     }
 
     /**
+     * @param $path
      * @return string
      */
     private function urlFor($path)
@@ -177,11 +188,11 @@ class Client
      * @param string $contentType
      * @param string $body
      * @param string $service
+     * @param $path
      * @throws AuthenticationException
      * @throws HttpException
+     * @throws InsufficientCreditException
      * @throws InvalidRequestException
-     * @throws WebServiceException
-     * @throws OutOfCreditsException
      */
     private function handle4xx(
         $statusCode,
@@ -209,18 +220,20 @@ class Client
         $message = json_decode($body, true);
         if ($message === null) {
             throw new HttpException(
-                "Received a $statusCode error for $service but " .
-                "it did not include the expected JSON body: " .
-                $body,
+                "Received a $statusCode error for $service but could " .
+                'not decode the response as JSON: '
+                . $this->jsonErrorDescription() . ' Body: ' . $body,
                 $statusCode,
                 $this->urlFor($path)
             );
         }
 
         if (!isset($message['code']) || !isset($message['error'])) {
-            throw new WebServiceException(
+            throw new HttpException(
                 'Error response contains JSON but it does not ' .
-                'specify code or error keys: ' . $body
+                'specify code or error keys: ' . $body,
+                $statusCode,
+                $this->urlFor($path)
             );
         }
 
@@ -228,7 +241,6 @@ class Client
             $message['error'],
             $message['code'],
             $statusCode,
-            $service,
             $path
         );
     }
@@ -237,17 +249,15 @@ class Client
      * @param string $message
      * @param string $code
      * @param int $statusCode
-     * @param string $service
      * @param string $path
      * @throws AuthenticationException
      * @throws InvalidRequestException
-     * @throws OutOfCreditsException
+     * @throws InsufficientCreditException
      */
     private function handleWebServiceError(
         $message,
         $code,
         $statusCode,
-        $service,
         $path
     ) {
         switch ($code) {
@@ -256,7 +266,7 @@ class Client
             case 'USER_ID_REQUIRED':
                 throw new AuthenticationException($message);
             case 'INSUFFICIENT_CREDITS':
-                throw new OutOfCreditsException($message);
+                throw new InsufficientCreditException($message);
             default:
                 throw new InvalidRequestException(
                     $message,
@@ -319,7 +329,7 @@ class Client
             throw new WebServiceException(
                 "Received a 200 response for $service but could " .
                 'not decode the response as JSON: '
-                . $this->jsonErrorDescription() . ' Body: ' .$body
+                . $this->jsonErrorDescription() . ' Body: ' . $body
             );
         }
 
