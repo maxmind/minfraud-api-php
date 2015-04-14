@@ -13,7 +13,9 @@ class MinFraud
 {
 
     private $client;
-    private $basePath = '/minfraud/v2.0/';
+    private static $host = 'minfraud.maxmind.com';
+    private static $userAgent = 'MaxMind minFraud PHP API';
+    private static $basePath = '/minfraud/v2.0/';
     private $content;
 
     /**
@@ -24,10 +26,27 @@ class MinFraud
     public function __construct(
         $userId,
         $licenseKey,
-        $content = array()
+        $options = array()
     ) {
-        $this->client = new Client($userId, $licenseKey);
-        $this->content = $content;
+        if (!isset($options['host'])) {
+            $options['host'] = self::$host;
+        }
+        $options['userAgent'] = self::$userAgent;
+        $this->client = new Client($userId, $licenseKey, $options);
+    }
+
+    /**
+     * This sets the complete array that will be sent to the minFraud web
+     * service. Any existing values in the returned object will be replaced.
+     *
+     * @param $values
+     * @return MinFraud
+     */
+    public function with($values)
+    {
+        $new = clone $this;
+        $new->content = $values;
+        return $new;
     }
 
     /**
@@ -176,7 +195,7 @@ class MinFraud
                 'The device "ip_address" field is required'
             );
         }
-        $url = $this->basePath . strtolower($service);
+        $url = self::$basePath . strtolower($service);
         $class = "MaxMind\\MinFraud\\Model\\" . $service;
         return new $class($this->client->post($service, $url, $this->content));
     }
