@@ -22,21 +22,4 @@ class ShippingAddress extends Address
         $this->distanceToBillingAddress
             = $this->get($response['distance_to_billing_address']);
     }
-
-
-    /**
-     * @return boolean
-     */
-    public function isHighRisk()
-    {
-        return $this->isHighRisk;
-    }
-
-    /**
-     * @return int
-     */
-    public function distanceToBillingAddress()
-    {
-        return $this->distanceToBillingAddress;
-    }
 }

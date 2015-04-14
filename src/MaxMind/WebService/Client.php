@@ -40,6 +40,7 @@ class Client
     ) {
         $this->userId = $userId;
         $this->licenseKey = $licenseKey;
+
         $this->httpRequestFactory = isset($options['httpRequestFactory'])
             ? $options['httpRequestFactory']
             : new RequestFactory();

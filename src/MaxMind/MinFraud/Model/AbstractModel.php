@@ -17,4 +17,16 @@ abstract class AbstractModel
     {
         return isset($var) ? $var : $default;
     }
+
+    /**
+     * @ignore
+     */
+    public function __get($attr)
+    {
+        if ($attr != "instance" && property_exists($this, $attr)) {
+            return $this->$attr;
+        }
+
+        throw new \RuntimeException("Unknown attribute: $attr");
+    }
 }

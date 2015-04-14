@@ -25,36 +25,4 @@ class CreditCard extends AbstractModel
             = $this->get($response['is_issued_in_billing_address_country']);
         $this->isPrepaid = $this->get($response['is_prepaid']);
     }
-
-    /**
-     * @return Issuer
-     */
-    public function issuer()
-    {
-        return $this->issuer;
-    }
-
-    /**
-     * @return string
-     */
-    public function country()
-    {
-        return $this->country;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isIssuedInBillingAddressCountry()
-    {
-        return $this->isIssuedInBillingAddressCountry;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isPrepaid()
-    {
-        return $this->isPrepaid;
-    }
 }

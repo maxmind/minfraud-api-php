@@ -2,8 +2,6 @@
 
 namespace MaxMind\Test;
 
-require_once 'MinFraudData.php';
-
 use MaxMind\MinFraud;
 use MaxMind\MinFraud\Model\Insights;
 use MaxMind\MinFraud\Model\Score;
@@ -59,6 +57,23 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testLocalesOption()
+    {
+        $insights = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            1,
+            array(
+                'locales' => array('fr')
+            )
+        )->with(Data::$fullRequest)->insights();
+
+        $this->assertEquals(
+            'Royaume-Uni',
+            $insights->ipLocation->country->name,
+            'locales setting made it to the GeoIP2 models'
+        );
+    }
+
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage  The device "ip_address" field is required
@@ -81,7 +96,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     private function createMinFraudRequestWithFullResponse(
         $service,
-        $callsToRequest = 1
+        $callsToRequest = 1,
+        $options = array()
     ) {
         $responseMeth = $service . 'FullResponse';
         return $this->createMinFraudRequest(
@@ -91,7 +107,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             'application/vnd.maxmind.com-minfraud-' . $service
             . '+json; charset=UTF-8; version=2.0',
             json_encode(Data::$responseMeth()),
-            array(),
+            $options,
             $callsToRequest
         );
     }
@@ -157,12 +173,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
                 )
             )->willReturn($stub);
 
+        $options['httpRequestFactory'] = $factory;
+
         return new Minfraud(
             $userId,
             $licenseKey,
-            array(
-                "httpRequestFactory" => $factory
-            )
+            $options
         );
     }
 }

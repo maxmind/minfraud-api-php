@@ -26,36 +26,4 @@ class Issuer extends AbstractModel
         $this->matchesProvidedNumber
             = $this->get($response['matches_provided_phone_number']);
     }
-
-    /**
-     * @return string
-     */
-    public function name()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function matchesProvidedName()
-    {
-        return $this->matchesProvidedName;
-    }
-
-    /**
-     * @return string
-     */
-    public function phoneNumber()
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function matchesProvidedPhoneNumber()
-    {
-        return $this->matchesProvidedPhoneNumber;
-    }
 }

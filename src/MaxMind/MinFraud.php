@@ -17,6 +17,7 @@ class MinFraud
     private static $userAgent = 'MaxMind minFraud PHP API';
     private static $basePath = '/minfraud/v2.0/';
     private $content;
+    private $locales;
 
     /**
      * @param int $userId
@@ -28,6 +29,12 @@ class MinFraud
         $licenseKey,
         $options = array()
     ) {
+        if (isset($options['locales'])) {
+            $this->locales = $options['locales'];
+        } else {
+            $this->locales = array('en');
+        }
+
         if (!isset($options['host'])) {
             $options['host'] = self::$host;
         }
@@ -197,6 +204,9 @@ class MinFraud
         }
         $url = self::$basePath . strtolower($service);
         $class = "MaxMind\\MinFraud\\Model\\" . $service;
-        return new $class($this->client->post($service, $url, $this->content));
+        return new $class(
+            $this->client->post($service, $url, $this->content),
+            $this->locales
+        );
     }
 }

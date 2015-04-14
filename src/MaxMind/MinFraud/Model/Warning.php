@@ -22,28 +22,4 @@ class Warning extends AbstractModel
         $this->warning = $this->get($response['warning']);
         $this->input = $this->get($response['input']);
     }
-
-    /**
-     * @return string
-     */
-    public function code()
-    {
-        return $this->code;
-    }
-
-    /**
-     * @return string
-     */
-    public function warning()
-    {
-        return $this->warning;
-    }
-
-    /**
-     * @return array
-     */
-    public function input()
-    {
-        return $this->input;
-    }
 }

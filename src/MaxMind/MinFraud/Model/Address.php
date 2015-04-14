@@ -26,44 +26,4 @@ abstract class Address extends AbstractModel
         $this->distanceToIpLocation = $this->get($response['distance_to_ip_location']);
         $this->isInIpCountry = $this->get($response['is_in_ip_country']);
     }
-
-    /**
-     * @return string
-     */
-    public function isPostalInCity()
-    {
-        return $this->isPostalInCity;
-    }
-
-    /**
-     * @return float
-     */
-    public function latitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * @return float
-     */
-    public function longitude()
-    {
-        return $this->longitude;
-    }
-
-    /**
-     * @return int
-     */
-    public function distanceToIpLocation()
-    {
-        return $this->distanceToIpLocation;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isInIpCountry()
-    {
-        return $this->isInIpCountry;
-    }
 }

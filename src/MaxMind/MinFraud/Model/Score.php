@@ -28,28 +28,4 @@ class Score extends AbstractModel
             array_push($this->warnings, new Warning($warning));
         }
     }
-
-    /**
-     * @return int
-     */
-    public function creditsRemaining()
-    {
-        return $this->creditsRemaining;
-    }
-
-    /**
-     * @return string
-     */
-    public function id()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return float
-     */
-    public function riskScore()
-    {
-        return $this->riskScore;
-    }
 }
