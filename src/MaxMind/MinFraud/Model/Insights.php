@@ -12,7 +12,6 @@ class Insights extends Score
     protected $creditCard;
     protected $shippingAddress;
     protected $billingAddress;
-    protected $warnings;
 
     /**
      * @param array $response

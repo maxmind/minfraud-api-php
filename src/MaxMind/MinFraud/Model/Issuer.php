@@ -23,7 +23,7 @@ class Issuer extends AbstractModel
         $this->matchesProvidedName
             = $this->get($response['matches_provided_name']);
         $this->phoneNumber = $this->get($response['phone_number']);
-        $this->matchesProvidedNumber
+        $this->matchesProvidedPhoneNumber
             = $this->get($response['matches_provided_phone_number']);
     }
 }

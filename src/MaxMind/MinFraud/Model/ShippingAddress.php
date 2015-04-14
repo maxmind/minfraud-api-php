@@ -18,7 +18,7 @@ class ShippingAddress extends Address
     public function __construct($response, $locales = array('en'))
     {
         parent::__construct($response, $locales);
-        $this->ipLocation = $this->get($response['is_high_risk']);
+        $this->isHighRisk = $this->get($response['is_high_risk']);
         $this->distanceToBillingAddress
             = $this->get($response['distance_to_billing_address']);
     }
