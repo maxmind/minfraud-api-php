@@ -67,7 +67,7 @@ class MinFraudData
         ),
         'payment' => array(
             'processor'             => 'stripe',
-            'authorization_outcome' => 'declined',
+            'was_authorized'        => false,
             'decline_code'          => 'invalid number',
         ),
         'credit_card' => array(

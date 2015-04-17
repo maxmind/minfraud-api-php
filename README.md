@@ -57,7 +57,7 @@ $response = $mf->withEvent(
 )->withPayment(
     array(
         'processor'             => 'stripe',
-        'authorization_outcome' => 'declined',
+        'was_authorized'        => false,
         'decline_code'          => 'invalid number',
     )
 )->withCreditCard(
