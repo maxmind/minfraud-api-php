@@ -4,7 +4,7 @@ namespace MaxMind\WebService;
 
 use MaxMind\Exception\AuthenticationException;
 use MaxMind\Exception\HttpException;
-use MaxMind\Exception\InsufficientCreditException;
+use MaxMind\Exception\InsufficientFundsException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
@@ -192,7 +192,7 @@ class Client
      * @param $path
      * @throws AuthenticationException
      * @throws HttpException
-     * @throws InsufficientCreditException
+     * @throws InsufficientFundsException
      * @throws InvalidRequestException
      */
     private function handle4xx(
@@ -253,7 +253,7 @@ class Client
      * @param string $path
      * @throws AuthenticationException
      * @throws InvalidRequestException
-     * @throws InsufficientCreditException
+     * @throws InsufficientFundsException
      */
     private function handleWebServiceError(
         $message,
@@ -266,8 +266,8 @@ class Client
             case 'LICENSE_KEY_REQUIRED':
             case 'USER_ID_REQUIRED':
                 throw new AuthenticationException($message);
-            case 'INSUFFICIENT_CREDITS':
-                throw new InsufficientCreditException($message);
+            case 'INSUFFICIENT_FUNDS':
+                throw new InsufficientFundsException($message);
             default:
                 throw new InvalidRequestException(
                     $message,

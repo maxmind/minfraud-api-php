@@ -51,15 +51,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InsufficientCreditException
+     * @expectedException MaxMind\Exception\InsufficientFundsException
      * @expectedExceptionMessage out of credit
      */
-    public function testInsufficientCredit()
+    public function testInsufficientFunds()
     {
         $this->withResponse(
             '402',
             'application/json',
-            '{"code":"INSUFFICIENT_CREDITS","error":"out of credit"}'
+            '{"code":"INSUFFICIENT_FUNDS","error":"out of credit"}'
         );
     }
 
