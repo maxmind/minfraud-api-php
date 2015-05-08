@@ -35,7 +35,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 'caBundle' => '/path/to/ca.pem',
                 'timeout' => 100,
                 'connectTimeout' => 15,
-                'userAgent' => 'Test client',
+                'userAgent' => 'TestClient/1',
 
             )
         );
@@ -202,13 +202,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             'Accept: application/json',
         );
 
-        $userAgent = 'MaxMind Web Service PHP Client';
+        $userAgent = 'MaxMind-WS-API/' . Client::VERSION . ' PHP/' . PHP_VERSION
+            .  ' curl/' . curl_version()['version'];
         if (isset($options['userAgent'])) {
-            $userAgent = sprintf(
-                "%s (%s)",
-                $options['userAgent'],
-                $userAgent
-            );
+            $userAgent = $options['userAgent'] . ' ' . $userAgent;
         }
 
         if (isset($options['caBundle'])) {

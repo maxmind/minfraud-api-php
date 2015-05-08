@@ -11,10 +11,11 @@ use MaxMind\WebService\Client;
  */
 class MinFraud
 {
+    const VERSION = '0.0.1';
 
     private $client;
     private static $host = 'minfraud.maxmind.com';
-    private static $userAgent = 'MaxMind minFraud PHP API';
+
     private static $basePath = '/minfraud/v2.0/';
     private $content;
     private $locales;
@@ -38,8 +39,12 @@ class MinFraud
         if (!isset($options['host'])) {
             $options['host'] = self::$host;
         }
-        $options['userAgent'] = self::$userAgent;
+        $options['userAgent'] = $this->userAgent();
         $this->client = new Client($userId, $licenseKey, $options);
+    }
+
+    private function userAgent() {
+        return 'minFraud-API/' . MinFraud::VERSION;
     }
 
     /**

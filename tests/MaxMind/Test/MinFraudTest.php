@@ -3,9 +3,8 @@
 namespace MaxMind\Test;
 
 use MaxMind\MinFraud;
-use MaxMind\MinFraud\Model\Insights;
-use MaxMind\MinFraud\Model\Score;
 use MaxMind\Test\MinFraudData as Data;
+use MaxMind\WebService\Client;
 
 class MinFraudTest extends \PHPUnit_Framework_TestCase
 {
@@ -163,7 +162,10 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo(
                     array(
                         'headers' => $headers,
-                        'userAgent' => 'MaxMind minFraud PHP API (MaxMind Web Service PHP Client)',
+                        'userAgent' => 'minFraud-API/' . MinFraud::VERSION
+                            . ' MaxMind-WS-API/' . Client::VERSION
+                            . ' PHP/' . PHP_VERSION
+                            . ' curl/' . curl_version()['version'],
                         'connectTimeout' => isset($options['connectTimeout'])
                             ? $options['connectTimeout'] : null,
                         'timeout' => isset($options['timeout'])

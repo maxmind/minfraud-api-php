@@ -18,10 +18,11 @@ use MaxMind\WebService\Http\RequestFactory;
  */
 class Client
 {
+    const VERSION = '0.0.1';
 
     private $userId;
     private $licenseKey;
-    private $userAgent = 'MaxMind Web Service PHP Client';
+    private $userAgentPrefix;
     private $host = 'api.maxmind.com';
     private $httpRequestFactory;
     private $timeout;
@@ -49,11 +50,7 @@ class Client
             $this->host = $options['host'];
         }
         if (isset($options['userAgent'])) {
-            $this->userAgent = sprintf(
-                "%s (%s)",
-                $options['userAgent'],
-                $this->userAgent
-            );
+            $this->userAgentPrefix = $options['userAgent'] . ' ';
         }
         if (isset($options['caBundle'])) {
             $this->caBundle = $options['caBundle'];
@@ -115,7 +112,7 @@ class Client
             array(
                 'caBundle' => $this->caBundle ?: __DIR__ . '/cacert.pem',
                 'headers' => $headers,
-                'userAgent' => $this->userAgent,
+                'userAgent' => $this->userAgent(),
                 'connectTimeout' => $this->connectTimeout,
                 'timeout' => $this->timeout,
             )
@@ -124,6 +121,12 @@ class Client
         list($statusCode, $contentType, $body) = $request->post($body);
 
         return array($statusCode, $contentType, $body);
+    }
+
+    private function userAgent()
+    {
+        return $this->userAgentPrefix . 'MaxMind-WS-API/' . Client::VERSION . ' PHP/' . PHP_VERSION .
+           ' curl/' . curl_version()['version'];
     }
 
     /**
@@ -318,7 +321,6 @@ class Client
     private function handleSuccess($body, $service)
     {
         if (strlen($body) == 0) {
-            // XXX - specific exceptions
             throw new WebServiceException(
                 "Received a 200 response for $service but did not " .
                 "receive a HTTP body."
