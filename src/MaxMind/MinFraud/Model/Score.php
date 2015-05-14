@@ -24,22 +24,34 @@ namespace MaxMind\MinFraud\Model;
  */
 class Score extends AbstractModel
 {
+    /**
+     * @internal
+     */
     protected $creditsRemaining;
-    protected $id;
-    protected $riskScore;
-    protected $warnings;
 
     /**
-     * {@inheritdoc }
+     * @internal
      */
+    protected $id;
+
+    /**
+     * @internal
+     */
+    protected $riskScore;
+
+    /**
+     * @internal
+     */
+    protected $warnings;
+
     public function __construct($response, $locales = array('en'))
     {
-        $this->creditsRemaining = $this->get($response['credits_remaining']);
-        $this->id = $this->get($response['id']);
-        $this->riskScore = $this->get($response['risk_score']);
+        $this->creditsRemaining = $this->safeArrayLookup($response['credits_remaining']);
+        $this->id = $this->safeArrayLookup($response['id']);
+        $this->riskScore = $this->safeArrayLookup($response['risk_score']);
 
         $this->warnings = array();
-        foreach ($this->get($response['warnings'], array()) as $warning) {
+        foreach ($this->safeArrayLookup($response['warnings'], array()) as $warning) {
             array_push($this->warnings, new Warning($warning));
         }
     }

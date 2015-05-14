@@ -7,8 +7,6 @@ namespace MaxMind\MinFraud\Model;
  * @package MaxMind\MinFraud\Model
  *
  * This model contains information about the billing address.
- *
- *  {@inheritdoc }
  */
 class BillingAddress extends Address
 {

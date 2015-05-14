@@ -15,6 +15,7 @@ use MaxMind\WebService\Http\RequestFactory;
  * MaxMind web service. Please use the appropriate client API for the service
  * that you are using.
  * @package MaxMind\WebService
+ * @internal
  */
 class Client
 {

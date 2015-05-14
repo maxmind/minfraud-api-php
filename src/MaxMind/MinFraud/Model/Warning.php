@@ -38,17 +38,25 @@ namespace MaxMind\MinFraud\Model;
  */
 class Warning extends AbstractModel
 {
+    /**
+     * @internal
+     */
     protected $code;
-    protected $warning;
-    protected $input;
 
     /**
-     * {@inheritdoc }
+     * @internal
      */
+    protected $warning;
+
+    /**
+     * @internal
+     */
+    protected $input;
+
     public function __construct($response, $locales = array('en'))
     {
-        $this->code = $this->get($response['code']);
-        $this->warning = $this->get($response['warning']);
-        $this->input = $this->get($response['input']);
+        $this->code = $this->safeArrayLookup($response['code']);
+        $this->warning = $this->safeArrayLookup($response['warning']);
+        $this->input = $this->safeArrayLookup($response['input']);
     }
 }

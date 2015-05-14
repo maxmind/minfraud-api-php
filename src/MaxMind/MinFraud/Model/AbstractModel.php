@@ -5,6 +5,7 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Class AbstractModel
  * @package MaxMind\MinFraud\Model
+ * @internal
  */
 abstract class AbstractModel
 {
@@ -20,17 +21,19 @@ abstract class AbstractModel
     }
 
     /**
+     * Convenience method to safely get value from array that might be null
      * @param $var
      * @param mixed $default
      * @return mixed
+     * @internal
      */
-    protected function get(&$var, $default = null)
+    protected function safeArrayLookup(&$var, $default = null)
     {
         return isset($var) ? $var : $default;
     }
 
     /**
-     * @ignore
+     * @internal
      */
     public function __get($attr)
     {

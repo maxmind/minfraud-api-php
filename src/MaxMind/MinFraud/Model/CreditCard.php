@@ -23,20 +23,32 @@ namespace MaxMind\MinFraud\Model;
  */
 class CreditCard extends AbstractModel
 {
+    /**
+     * @internal
+     */
     protected $issuer;
-    protected $country;
-    protected $isIssuedInBillingAddressCountry;
-    protected $isPrepaid;
 
     /**
-     * {@inheritdoc }
+     * @internal
      */
+    protected $country;
+
+    /**
+     * @internal
+     */
+    protected $isIssuedInBillingAddressCountry;
+
+    /**
+     * @internal
+     */
+    protected $isPrepaid;
+
     public function __construct($response, $locales = array('en'))
     {
-        $this->issuer = new Issuer($this->get($response['issuer']));
-        $this->country = $this->get($response['country']);
+        $this->issuer = new Issuer($this->safeArrayLookup($response['issuer']));
+        $this->country = $this->safeArrayLookup($response['country']);
         $this->isIssuedInBillingAddressCountry
-            = $this->get($response['is_issued_in_billing_address_country']);
-        $this->isPrepaid = $this->get($response['is_prepaid']);
+            = $this->safeArrayLookup($response['is_issued_in_billing_address_country']);
+        $this->isPrepaid = $this->safeArrayLookup($response['is_prepaid']);
     }
 }

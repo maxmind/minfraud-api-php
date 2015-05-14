@@ -47,7 +47,15 @@ class MinFraud
     private $locales;
 
     /**
-     * {@inheritdoc }
+     * @param int $userId Your MaxMind user ID
+     * @param string $licenseKey Your MaxMind license key
+     * @param array $options An array of options. Possible keys:
+     *
+     * * `host` - the host to use when connecting to the web service.
+     * * `userAgent` - the user agent prefix to use in the request
+     * * `caBundle` - the bundle of CA root certificates to use in the equest
+     * * `connectTimeout` - the connect timeout to use for the request
+     * * `timeout` - the timeout to use for the request
      * * `locales` - an array of locale codes to use in name property
      */
     public function __construct(

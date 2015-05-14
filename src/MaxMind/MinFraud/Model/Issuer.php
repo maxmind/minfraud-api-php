@@ -22,21 +22,33 @@ namespace MaxMind\MinFraud\Model;
  */
 class Issuer extends AbstractModel
 {
+    /**
+     * @internal
+     */
     protected $name;
-    protected $matchesProvidedName;
-    protected $phoneNumber;
-    protected $matchesProvidedPhoneNumber;
 
     /**
-     * {@inheritdoc }
+     * @internal
      */
+    protected $matchesProvidedName;
+
+    /**
+     * @internal
+     */
+    protected $phoneNumber;
+
+    /**
+     * @internal
+     */
+    protected $matchesProvidedPhoneNumber;
+
     public function __construct($response, $locales = array('en'))
     {
-        $this->name = $this->get($response['name']);
+        $this->name = $this->safeArrayLookup($response['name']);
         $this->matchesProvidedName
-            = $this->get($response['matches_provided_name']);
-        $this->phoneNumber = $this->get($response['phone_number']);
+            = $this->safeArrayLookup($response['matches_provided_name']);
+        $this->phoneNumber = $this->safeArrayLookup($response['phone_number']);
         $this->matchesProvidedPhoneNumber
-            = $this->get($response['matches_provided_phone_number']);
+            = $this->safeArrayLookup($response['matches_provided_phone_number']);
     }
 }

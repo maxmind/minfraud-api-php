@@ -5,6 +5,7 @@ namespace MaxMind\WebService\Http;
 /**
  * Interface Request
  * @package MaxMind\WebService\Http
+ * @internal
  */
 interface Request
 {
