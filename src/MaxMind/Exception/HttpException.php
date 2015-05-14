@@ -3,7 +3,7 @@
 namespace MaxMind\Exception;
 
 /**
- *  Thrown on an HTTP transport error.
+ *  This class represents an HTTP transport error.
  */
 class HttpException extends WebServiceException
 {
@@ -13,10 +13,10 @@ class HttpException extends WebServiceException
     public $uri;
 
     /**
-     * @param string $message
-     * @param int $httpStatus
-     * @param string $uri
-     * @param \Exception $previous
+     * @param string $message A message describing the error.
+     * @param int $httpStatus The HTTP status code of the response
+     * @param string $uri The URI used in the request.
+     * @param \Exception $previous The previous exception, if any.
      */
     public function __construct(
         $message,

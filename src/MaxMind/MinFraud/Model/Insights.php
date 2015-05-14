@@ -5,6 +5,18 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Class Insights
  * @package MaxMind\MinFraud\Model
+ *
+ * @property \MaxMind\MinFraud\Model\CreditCard $creditCard An object containing
+ * minFraud data about the credit card used in the transaction.
+ * @property \MaxMind\MinFraud\Model\IpLocation $ipLocation An object containing
+ * GeoIP2 and minFraud Insights information about the geolocated IP address.
+ * @property \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
+ * containing minFraud data related to the billing address used in the
+ * transaction.
+ * @property \MaxMind\MinFraud\Model\ShippingAddress $shippingAddress An object
+ * containing minFraud data related to the shipping address used in the
+ * transaction.
+ * {@inheritdoc }
  */
 class Insights extends Score
 {
@@ -14,8 +26,7 @@ class Insights extends Score
     protected $billingAddress;
 
     /**
-     * @param array $response
-     * @param array $locales
+     * {@inheritdoc }
      */
     public function __construct($response, $locales = array('en'))
     {

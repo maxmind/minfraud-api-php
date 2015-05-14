@@ -7,12 +7,13 @@ use GeoIp2\Model\Insights as GeoIp2Insights;
 /**
  * Class IpLocation
  * @package MaxMind\MinFraud\Model
+ *
+ * {@inheritdoc }
  */
 class IpLocation extends GeoIp2Insights
 {
     /**
-     * @param array $response
-     * @param array $locales
+     * {@inheritdoc }
      */
     public function __construct($response, $locales = array('en'))
     {

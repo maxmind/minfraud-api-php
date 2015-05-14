@@ -3,7 +3,7 @@
 namespace MaxMind\Exception;
 
 /**
- * Thrown when a MaxMind web service returns an error.
+ * Thrown when a MaxMind web service returns an error relating to the request.
  */
 class InvalidRequestException extends HttpException
 {
@@ -13,11 +13,11 @@ class InvalidRequestException extends HttpException
     public $error;
 
     /**
-     * @param string $message
-     * @param int $error
-     * @param int $httpStatus
-     * @param string $uri
-     * @param \Exception $previous
+     * @param string $message The exception message
+     * @param int $error The error code returned by the MaxMind web service
+     * @param int $httpStatus The HTTP status code of the response
+     * @param string $uri The URI queries
+     * @param \Exception $previous The previous exception, if any.
      */
     public function __construct(
         $message,
