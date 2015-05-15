@@ -1,10 +1,12 @@
 <?php
 
-namespace MaxMind\MinFraud\Validation;
+namespace MaxMind\MinFraud\Validation\Rules;
 
 use Respect\Validation\Rules\AbstractWrapper;
-use Respect\Validation\Validator as v;
 
+/**
+ * @internal
+ */
 class Billing extends AbstractWrapper
 {
     public function __construct()

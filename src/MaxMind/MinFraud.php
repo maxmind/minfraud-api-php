@@ -11,7 +11,7 @@ use MaxMind\Exception\WebServiceException;
 use MaxMind\MinFraud\Validation\Account;
 use MaxMind\MinFraud\Validation;
 use MaxMind\WebService\Client;
-use \Respect\Validation\Exceptions\NestedValidationExceptionInterface;
+use \Respect\Validation\Exceptions\ValidationExceptionInterface;
 
 /**
  * Class MinFraud
@@ -61,7 +61,7 @@ class MinFraud
      * * `connectTimeout` - the connect timeout to use for the request
      * * `timeout` - the timeout to use for the request
      * * `locales` - an array of locale codes to use in name property
-     * * `$validateInput` - Default is `true`. Determines whether values passed
+     * * `validateInput` - Default is `true`. Determines whether values passed
      *   to the `with*()` methods are validated. It is recommended that you
      *   leave validation on while developing and only (optionally) disable it
      *   before deployment.
@@ -77,8 +77,8 @@ class MinFraud
             $this->locales = array('en');
         }
 
-        if (isset($options['$validateInput'])) {
-            $this->$validateInput = $options['$validateInput'];
+        if (isset($options['validateInput'])) {
+            $this->validateInput = $options['validateInput'];
         }
 
         if (!isset($options['host'])) {
@@ -302,7 +302,7 @@ class MinFraud
     {
         if (!isset($this->content['device']['ip_address'])) {
             throw new InvalidInputException(
-                'The device "ip_address" field is required'
+                'Key ip_address must be present in device'
             );
         }
         $url = self::$basePath . strtolower($service);
@@ -345,11 +345,11 @@ class MinFraud
      */
     private function validate($className, $values)
     {
-        $class = '\\MaxMind\\MinFraud\\Validation\\' . $className;
+        $class = '\\MaxMind\\MinFraud\\Validation\\Rules\\' . $className;
         $validator = new $class();
         try {
             $validator->check($values);
-        } catch (NestedValidationExceptionInterface $exception) {
+        } catch (ValidationExceptionInterface $exception) {
             throw new InvalidInputException(
                 $exception->getMessage(),
                 $exception->getCode(),

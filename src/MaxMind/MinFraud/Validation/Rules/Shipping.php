@@ -1,11 +1,13 @@
 <?php
 
-
-namespace MaxMind\MinFraud\Validation;
+namespace MaxMind\MinFraud\Validation\Rules;
 
 use Respect\Validation\Rules\AbstractWrapper;
 use Respect\Validation\Validator as v;
 
+/**
+ * @internal
+ */
 class Shipping extends AbstractWrapper
 {
     public function __construct()
@@ -16,7 +18,8 @@ class Shipping extends AbstractWrapper
         $this->validatable = Address::validator()
             ->key(
                 'delivery_speed',
-                v::in(array('same_day', 'overnight', 'expedited', 'standard'))
+                v::in(array('same_day', 'overnight', 'expedited', 'standard')),
+                false
             )
             ->each(null, $oneOf);
     }

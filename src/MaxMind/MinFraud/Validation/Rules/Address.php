@@ -1,9 +1,12 @@
 <?php
 
-namespace MaxMind\MinFraud\Validation;
+namespace MaxMind\MinFraud\Validation\Rules;
 
 use Respect\Validation\Validator as v;
 
+/**
+ * @internal
+ */
 class Address
 {
     public static function validator()
