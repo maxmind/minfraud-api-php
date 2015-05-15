@@ -75,7 +75,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage  The device "ip_address" field is required
+     * @expectedExceptionMessage Key ip_address must be present
      * @dataProvider services
      */
     public function testMissingIpAddress($class, $service)

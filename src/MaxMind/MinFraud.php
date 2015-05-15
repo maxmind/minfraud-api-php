@@ -8,7 +8,10 @@ use MaxMind\Exception\InsufficientFundsException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
+use MaxMind\MinFraud\Validation\Account;
+use MaxMind\MinFraud\Validation;
 use MaxMind\WebService\Client;
+use \Respect\Validation\Exceptions\NestedValidationExceptionInterface;
 
 /**
  * Class MinFraud
@@ -45,6 +48,7 @@ class MinFraud
     private static $basePath = '/minfraud/v2.0/';
     private $content;
     private $locales;
+    private $validateInput = true;
 
     /**
      * @param int $userId Your MaxMind user ID
@@ -57,6 +61,10 @@ class MinFraud
      * * `connectTimeout` - the connect timeout to use for the request
      * * `timeout` - the timeout to use for the request
      * * `locales` - an array of locale codes to use in name property
+     * * `$validateInput` - Default is `true`. Determines whether values passed
+     *   to the `with*()` methods are validated. It is recommended that you
+     *   leave validation on while developing and only (optionally) disable it
+     *   before deployment.
      */
     public function __construct(
         $userId,
@@ -67,6 +75,10 @@ class MinFraud
             $this->locales = $options['locales'];
         } else {
             $this->locales = array('en');
+        }
+
+        if (isset($options['$validateInput'])) {
+            $this->$validateInput = $options['$validateInput'];
         }
 
         if (!isset($options['host'])) {
@@ -86,6 +98,8 @@ class MinFraud
      */
     public function with($values)
     {
+        $this->validate('Transaction', $values);
+
         $new = clone $this;
         $new->content = $values;
         return $new;
@@ -101,9 +115,7 @@ class MinFraud
      */
     public function withDevice($values)
     {
-        $new = clone $this;
-        $new->content['device'] = $values;
-        return $new;
+        return $this->validateAndAdd('Device', 'device', $values);
     }
 
     /**
@@ -116,9 +128,7 @@ class MinFraud
      */
     public function withEvent($values)
     {
-        $new = clone $this;
-        $new->content['event'] = $values;
-        return $new;
+        return $this->validateAndAdd('Event', 'event', $values);
     }
 
     /**
@@ -131,9 +141,7 @@ class MinFraud
      */
     public function withAccount($values)
     {
-        $new = clone $this;
-        $new->content['account'] = $values;
-        return $new;
+        return $this->validateAndAdd('Account', 'account', $values);
     }
 
     /**
@@ -146,9 +154,7 @@ class MinFraud
      */
     public function withEmail($values)
     {
-        $new = clone $this;
-        $new->content['email'] = $values;
-        return $new;
+        return $this->validateAndAdd('Email', 'email', $values);
     }
 
     /**
@@ -161,9 +167,7 @@ class MinFraud
      */
     public function withBilling($values)
     {
-        $new = clone $this;
-        $new->content['billing'] = $values;
-        return $new;
+        return $this->validateAndAdd('Billing', 'billing', $values);
     }
 
     /**
@@ -176,9 +180,7 @@ class MinFraud
      */
     public function withShipping($values)
     {
-        $new = clone $this;
-        $new->content['shipping'] = $values;
-        return $new;
+        return $this->validateAndAdd('Shipping', 'shipping', $values);
     }
 
     /**
@@ -191,9 +193,7 @@ class MinFraud
      */
     public function withPayment($values)
     {
-        $new = clone $this;
-        $new->content['payment'] = $values;
-        return $new;
+        return $this->validateAndAdd('Payment', 'payment', $values);
     }
 
     /**
@@ -206,9 +206,7 @@ class MinFraud
      */
     public function withCreditCard($values)
     {
-        $new = clone $this;
-        $new->content['credit_card'] = $values;
-        return $new;
+        return $this->validateAndAdd('CreditCard', 'credit_card', $values);
     }
 
     /**
@@ -221,9 +219,7 @@ class MinFraud
      */
     public function withOrder($values)
     {
-        $new = clone $this;
-        $new->content['order'] = $values;
-        return $new;
+        return $this->validateAndAdd('Order', 'order', $values);
     }
 
     /**
@@ -236,6 +232,8 @@ class MinFraud
      */
     public function withShoppingCartItem($values)
     {
+        $this->validate('ShoppingCartItem', $values);
+
         $new = clone $this;
         if (!isset($new->content['shopping_cart'])) {
             $new->content['shopping_cart'] = array();
@@ -318,7 +316,45 @@ class MinFraud
     /**
      * @return string The default User-Agent prefix
      */
-    private function userAgent() {
+    private function userAgent()
+    {
         return 'minFraud-API/' . MinFraud::VERSION;
+    }
+
+    /**
+     * @param string $className The name of the class (but not the namespace)
+     * @param string $key The key in the transaction array to set
+     * @param array $values The values to validate
+     * @return MinFraud
+     * @throws InvalidInputException when $values does not validate
+         */
+    private function validateAndAdd($className, $key, $values)
+    {
+        if ($this->validateInput) {
+            $this->validate($className, $values);
+        }
+        $new = clone $this;
+        $new->content[$key] = $values;
+        return $new;
+    }
+
+    /**
+     * @param string $className The name of the class (but not the namespace)
+     * @param array $values The values to validate
+     * @throws InvalidInputException when $values does not validate
+     */
+    private function validate($className, $values)
+    {
+        $class = '\\MaxMind\\MinFraud\\Validation\\' . $className;
+        $validator = new $class();
+        try {
+            $validator->check($values);
+        } catch (NestedValidationExceptionInterface $exception) {
+            throw new InvalidInputException(
+                $exception->getMessage(),
+                $exception->getCode(),
+                $exception
+            );
+        }
     }
 }
