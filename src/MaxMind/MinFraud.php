@@ -352,8 +352,7 @@ class MinFraud
         } catch (ValidationExceptionInterface $exception) {
             throw new InvalidInputException(
                 $exception->getMessage(),
-                $exception->getCode(),
-                $exception
+                $exception->getCode()
             );
         }
     }
