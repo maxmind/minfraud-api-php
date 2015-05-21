@@ -34,7 +34,7 @@ namespace MaxMind\MinFraud\Model;
  * @property array $input This is an array of keys representing the path to the
  * input that the warning is associated with. For instance, if the warning was
  * about the billing city, the array would be `["billing", "city"]`. The key is
- * used for object and the index number for an array.
+ * used for an object and the index number for an array.
  */
 class Warning extends AbstractModel
 {

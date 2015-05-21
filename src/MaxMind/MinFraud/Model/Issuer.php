@@ -17,8 +17,8 @@ namespace MaxMind\MinFraud\Model;
  * @property boolean $matchesProvidedPhoneNumber This property is true if the
  * phone number matches the number provided in the request for the card
  * issuer. It is false if the number does not match. It is null if either no
- * phone number or issuer ID number (IIN) was provided in the request or if
- * MaxMind does not have a phone number associated with the IIN.
+ * phone number was provided or issuer ID number (IIN) was provided in the
+ * request or if MaxMind does not have a phone number associated with the IIN.
  */
 class Issuer extends AbstractModel
 {
