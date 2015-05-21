@@ -10,11 +10,10 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property integer $distanceToBillingAddress The distance in kilometers from
  * the shipping address to billing address.
- * @property boolean $isHighRisk This field is true if the shipping address is
- * in the IP country. The field is false when the address is not in the IP
- * country. If the shipping address could not be parsed or was not provided or
- * the IP address could not be geo-located, then the field will not be included
- * in the response.
+ * @property boolean $isHighRisk This property is true if the shipping address
+ * is in the IP country. The property is false when the address is not in the
+ * IP country. If the shipping address could not be parsed or was not provided
+ * or the IP address could not be geo-located, then the property is null.
  */
 class ShippingAddress extends Address
 {

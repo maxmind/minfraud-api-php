@@ -59,7 +59,7 @@ class MinFraud
      * * `userAgent` - The user agent prefix to use in the request.
      * * `caBundle` - The bundle of CA root certificates to use in the request.
      * * `connectTimeout` - The connect timeout to use for the request.
-     * * `timeout` - The timeout to use for the request
+     * * `timeout` - The timeout to use for the request.
      * * `locales` - An array of locale codes to use for the location name
      *   properties.
      * * `validateInput` - Default is `true`. Determines whether values passed
