@@ -17,8 +17,8 @@ use \Respect\Validation\Exceptions\ValidationExceptionInterface;
  * Class MinFraud
  * @package MaxMind
  *
- * This class provides the client API for access MaxMind minFraud Score and
- * Insights.
+ * This class provides a client API for accessing MaxMind minFraud Score
+ * and Insights.
  *
  * ## Usage ##
  *
