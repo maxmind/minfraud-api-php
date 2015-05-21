@@ -55,12 +55,13 @@ class MinFraud
      * @param string $licenseKey Your MaxMind license key
      * @param array $options An array of options. Possible keys:
      *
-     * * `host` - the host to use when connecting to the web service.
-     * * `userAgent` - the user agent prefix to use in the request
-     * * `caBundle` - the bundle of CA root certificates to use in the equest
-     * * `connectTimeout` - the connect timeout to use for the request
-     * * `timeout` - the timeout to use for the request
-     * * `locales` - an array of locale codes to use in name property
+     * * `host` - The host to use when connecting to the web service.
+     * * `userAgent` - The user agent prefix to use in the request.
+     * * `caBundle` - The bundle of CA root certificates to use in the request.
+     * * `connectTimeout` - The connect timeout to use for the request.
+     * * `timeout` - The timeout to use for the request
+     * * `locales` - An array of locale codes to use for the location name
+     *   properties.
      * * `validateInput` - Default is `true`. Determines whether values passed
      *   to the `with*()` methods are validated. It is recommended that you
      *   leave validation on while developing and only (optionally) disable it
