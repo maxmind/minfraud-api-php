@@ -589,7 +589,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $url = 'https://' . $host . '/minfraud/v2.0/' . $service;
 
         $headers = array(
-            'Content-type: application/json',
+            'Content-Type: application/json',
             'Authorization: Basic '
             . base64_encode($userId . ':' . $licenseKey),
             'Accept: application/json',

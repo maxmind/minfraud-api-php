@@ -18,9 +18,9 @@
   ],
   "require": {
     "php": ">=5.3",
-    "ext-curl": "*",
     "ext-json": "*",
-    "geoip2/geoip2": "~2.1",
+    "geoip2/geoip2": "2.2.0-alpha1",
+    "maxmind-ws/web-service-common": "dev-master",
     "respect/validation": "~0.9.1"
   },
   "require-dev": {
