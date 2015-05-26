@@ -8,8 +8,8 @@ use MaxMind\Exception\InsufficientFundsException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
-use MaxMind\MinFraud\Validation\Account;
 use MaxMind\MinFraud\Validation;
+use MaxMind\MinFraud\Validation\Account;
 use MaxMind\WebService\Client;
 use \Respect\Validation\Exceptions\ValidationExceptionInterface;
 
@@ -30,7 +30,7 @@ use \Respect\Validation\Exceptions\ValidationExceptionInterface;
  * ```
  * $client = new MinFraud(6, 'LICENSE_KEY');
  *
- * $score = $client->withDevice(['ip_address' => '1.1.1.1'
+ * $score = $client->withDevice(['ip_address' => '1.1.1.1',
  *                               'accept_language' => 'en-US'])
  *                 ->withEmail(['domain' => 'maxmind.com'])
  *                 ->score();
@@ -244,14 +244,14 @@ class MinFraud
     }
 
     /**
-     * This method does a minFraud Score lookup using the request data in the
-     * current object and returns a model object for minFraud Score.
+     * This method performs a minFraud Score lookup using the request data in
+     * the current object and returns a model object for minFraud Score.
      *
-     * @return MinFraud\Model\Score minFraud Score model object
+     * @return MinFraud\Model\Score minFraud Score model object.
      * @throws InvalidInputException when the request has missing or invalid
      * data.
-     * @throws AuthenticationException when there is an issue authenticating the
-     * request.
+     * @throws AuthenticationException when there is an issue authenticating
+     * the request.
      * @throws InsufficientFundsException when your account is out of funds.
      * @throws InvalidRequestException when the request is invalid for some
      * other reason, e.g., invalid JSON in the POST.
@@ -265,14 +265,14 @@ class MinFraud
     }
 
     /**
-     * This method does a minFraud Insights lookup using the request data in the
-     * current object and returns a model object for minFraud Insights.
+     * This method performs a minFraud Insights lookup using the request data
+     * in the current object and returns a model object for minFraud Insights.
      *
-     * @return MinFraud\Model\Insights minFraud Insights model object
+     * @return MinFraud\Model\Insights minFraud Insights model object.
      * @throws InvalidInputException when the request has missing or invalid
      * data.
-     * @throws AuthenticationException when there is an issue authenticating the
-     * request.
+     * @throws AuthenticationException when there is an issue authenticating
+     * the request.
      * @throws InsufficientFundsException when your account is out of funds.
      * @throws InvalidRequestException when the request is invalid for some
      * other reason, e.g., invalid JSON in the POST.
@@ -287,7 +287,7 @@ class MinFraud
 
     /**
      * @param $service $service The name of the service to use.
-     * @return mixed The model class for the service
+     * @return mixed The model class for the service.
      * @throws InvalidInputException when the request has missing or invalid
      * data.
      * @throws AuthenticationException when there is an issue authenticating the

@@ -114,7 +114,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->$method(array('unknown' => 'some value'));
     }
 
-    public function withMethods() {
+    public function withMethods()
+    {
         return array(
             array('withEvent'),
             array('withAccount'),
@@ -155,7 +156,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withEmail(array('address' => $md5));
     }
 
-    public function badMd5s() {
+    public function badMd5s()
+    {
         return array(
             array('14c4b06b824ec593239362517f538b2'),
             array('14c4b06b824ec593239362517f538b29a'),
@@ -178,7 +180,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->$method(array('region' => $region));
     }
 
-    public function badRegions() {
+    public function badRegions()
+    {
         return array(
             array('withBilling', 'AAAAA'),
             array('withBilling', 'aaa'),
@@ -201,7 +204,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->$method(array('country' => $code));
     }
 
-    public function badCountryCodes() {
+    public function badCountryCodes()
+    {
         return array(
             array('withBilling', 'A'),
             array('withBilling', '1'),
@@ -225,7 +229,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->$method(array($key => $code));
     }
 
-    public function badPhoneCodes() {
+    public function badPhoneCodes()
+    {
         return array(
             array('withBilling', 'phone_country_code', '12344'),
             array('withBilling', 'phone_country_code', '12a'),
@@ -239,7 +244,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be
+     * @expectedExceptionMessage "slow" must be in
      */
     public function testBadDeliverySpeed()
     {
@@ -262,7 +267,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withCreditCard(array('issuer_id_number' => $iin));
     }
 
-    public function badIins() {
+    public function badIins()
+    {
         return array(
             array('12345'),
             array('1234567'),
@@ -283,7 +289,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withCreditCard(array('last_4_digits' => $last4));
     }
 
-    public function badLast4Digits() {
+    public function badLast4Digits()
+    {
         return array(
             array('12345'),
             array('123'),
@@ -304,7 +311,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withCreditCard(array($key => 'Aa'));
     }
 
-    public function avsAndCvv() {
+    public function avsAndCvv()
+    {
         return array(
             array('avs_result'),
             array('cvv_result'),
@@ -324,7 +332,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withDevice(array('ip_address' => $ip));
     }
 
-    public function badIps() {
+    public function badIps()
+    {
         return array(
             array('1.2.3.'),
             array('299.1.1.1'),
@@ -343,7 +352,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withDevice(array('ip_address' => $ip));
     }
 
-    public function goodIps() {
+    public function goodIps()
+    {
         return array(
             array('1.2.3.4'),
             array('2001:db8:0:0:1:0:0:1'),
@@ -365,7 +375,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withEmail(array('domain' => $domain));
     }
 
-    public function badDomains() {
+    public function badDomains()
+    {
         return array(
             array('bad'),
             array(' bad.com'),
@@ -383,7 +394,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withEmail(array('domain' => $domain));
     }
 
-    public function goodDomains() {
+    public function goodDomains()
+    {
         return array(
             array('maxmind.com'),
             array('www.bbc.co.uk'),
@@ -427,7 +439,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withOrder(array('currency' => $currency));
     }
 
-    public function badCurrency() {
+    public function badCurrency()
+    {
         return array(
             array('usd'),
             array('US'),
@@ -449,7 +462,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withOrder(array('referrer_uri' => $uri));
     }
 
-    public function badReferrerUri() {
+    public function badReferrerUri()
+    {
         return array(
             array('/blah/'),
             array('www.mm.com'),
@@ -482,7 +496,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withOrder(array('amount' => $value));
     }
 
-    public function nonPositiveValues() {
+    public function nonPositiveValues()
+    {
         return array(
             array(0),
             array(-1),

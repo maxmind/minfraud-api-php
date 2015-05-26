@@ -14,7 +14,7 @@ class HttpException extends WebServiceException
 
     /**
      * @param string $message A message describing the error.
-     * @param int $httpStatus The HTTP status code of the response
+     * @param int $httpStatus The HTTP status code of the response.
      * @param string $uri The URI used in the request.
      * @param \Exception $previous The previous exception, if any.
      */

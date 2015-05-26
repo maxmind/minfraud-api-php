@@ -18,7 +18,7 @@ namespace MaxMind\MinFraud\Model;
  * of being fraudulent. Likewise we never return a risk score of 100.
  * @property array $warnings This array contains
  * {@link \MaxMind\MinFraud\Model\Warning Warning} objects detailing issues
- * with the request that was sent such as invalid or unknown inputs. It
+ * with the request that was sent, such as invalid or unknown inputs. It
  * is highly recommended that you check this array for issues when integrating
  * the web service.
  */

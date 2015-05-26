@@ -51,11 +51,11 @@ arguments. This object is immutable. You then build up the request using the
 previous object is not modified.
 
 If there is a validation error in the data passed to a `->with*` method, a
-`\MaxMind\Exception\MaxMind\Exception` will be thrown. This validation can
-be disabled by setting `validateInput` to `false` in the options array for
+`\MaxMind\Exception` will be thrown. This validation can be disabled by
+setting `validateInput` to `false` in the options array for
 `\MaxMind\MinFraud`, but it is recommended that you keep it on at least
-through development as it will help ensure that you are sending valid
-data to the web service.
+through development as it will help ensure that you are sending valid data to
+the web service.
 
 After creating the request object, send a Score request by calling `->score()`
 or an Insights request by calling `->insights()`. If the request succeeds, a
@@ -70,9 +70,9 @@ All externally visible exceptions are in the `\MaxMind\Exception` namespace.
 The possible exceptions are:
 
 * `InvalidInputException` - This will be thrown when a `->with*` method is
-  called with invalid input data or when `->score()` or `->insights()` are
-  called on a request that is the required `ip_address` field in the `device`
-  array.
+  called with invalid input data or when `->score()` or `->insights()` is
+  called on a request where the required `ip_address` field in the `device`
+  array is missing.
 * `AuthenticationException` - This will be thrown on calling `->score() or
   `->insights()` when the server is unable to authenticate the request, e.g.,
   if the license key or user ID is invalid.

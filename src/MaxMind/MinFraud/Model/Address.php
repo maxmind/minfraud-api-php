@@ -8,10 +8,10 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property integer $distanceToIpLocation The distance in kilometers from the
  * address to the IP location.
- * @property boolean $isInIpCountry This property is true if the address is in the
- * IP country. The property is false when the address is not in the IP country. If
- * the address could not be parsed or was not provided or if the IP address
- * could not be geo-located, the property will be null.
+ * @property boolean $isInIpCountry This property is true if the address is in
+ * the IP country. The property is false when the address is not in the IP
+ * country. If the address could not be parsed or was not provided or if the
+ * IP address could not be geolocated, the property will be null.
  * @property boolean $isPostalInCity This property is true if the postal code
  * provided with the address is in the city for the address. The property is
  * false when the postal code is not in the city. If the address could not be
