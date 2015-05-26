@@ -9,7 +9,7 @@ use GeoIp2\Record\Location;
  * @package MaxMind\MinFraud\Model
  *
  * @property string $localTime The date and time of the transaction in the time
- * zone associated with the IP address. The value is formated according to RFC
+ * zone associated with the IP address. The value is formatted according to RFC
  * 3339. For instance, the local time in Boston might be returned as
  * 2015-04-27T19:17:24-04:00.
  */

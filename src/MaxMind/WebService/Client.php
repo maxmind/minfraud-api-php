@@ -35,8 +35,8 @@ class Client
      * @param string $licenseKey Your MaxMind license key
      * @param array $options An array of options. Possible keys:
      *
-     * * `host` - the host to use when connecting to the web service.
-     * * `userAgent` - the user agent prefix to use in the request
+     * * `host` - The host to use when connecting to the web service.
+     * * `userAgent` - The user agent prefix to use in the request
      * * `caBundle` - the bundle of CA root certificates to use in the equest
      * * `connectTimeout` - the connect timeout to use for the request
      * * `timeout` - the timeout to use for the request
