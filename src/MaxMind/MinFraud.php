@@ -25,7 +25,7 @@ use \Respect\Validation\Exceptions\ValidationExceptionInterface;
  * The constructor takes your MaxMind user ID and license key. The object
  * returned is immutable. To build up a request, call the `->with*()` methods.
  * Each of these returns a new object (a clone of the original) with the
- * addition data. These can be chained together:
+ * additional data. These can be chained together:
  *
  * ```
  * $client = new MinFraud(6, 'LICENSE_KEY');
@@ -56,7 +56,8 @@ class MinFraud
      * @param array $options An array of options. Possible keys:
      *
      * * `host` - The host to use when connecting to the web service.
-     * * `userAgent` - The user agent prefix to use in the request.
+     * * `userAgent` - The prefix for the User-Agent header to use in the
+     *   request.
      * * `caBundle` - The bundle of CA root certificates to use in the request.
      * * `connectTimeout` - The connect timeout to use for the request.
      * * `timeout` - The timeout to use for the request.
@@ -315,7 +316,7 @@ class MinFraud
     }
 
     /**
-     * @return string The default User-Agent prefix
+     * @return string The prefix for the User-Agent header.
      */
     private function userAgent()
     {
