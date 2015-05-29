@@ -10,10 +10,6 @@ use GeoIp2\Model\Insights as GeoIp2Insights;
  */
 class IpLocation extends GeoIp2Insights
 {
-    /**
-     * @param array $response
-     * @param array $locales
-     */
     public function __construct($response, $locales = array('en'))
     {
         parent::__construct($response, $locales);

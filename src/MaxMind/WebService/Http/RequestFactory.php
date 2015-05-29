@@ -2,16 +2,13 @@
 
 namespace MaxMind\WebService\Http;
 
-
 /**
- * This class is for internal use only. Semantic versioning does not not apply.
- * @package MaxMind\WebService
+ * Class RequestFactory
+ * @package MaxMind\WebService\Http
+ * @internal
  */
 class RequestFactory
 {
-    /**
-     *
-     */
     public function __construct()
     {
     }

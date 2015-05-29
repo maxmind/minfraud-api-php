@@ -75,7 +75,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage  The device "ip_address" field is required
+     * @expectedExceptionMessage Key ip_address must be present
      * @dataProvider services
      */
     public function testMissingIpAddress($class, $service)
@@ -83,6 +83,453 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse($service, 0)
              ->with(Data::$fullRequest)
              ->withDevice(array())->$service();
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage Key ip_address must be present
+     * @dataProvider services
+     */
+    public function testMissingIpAddressWithoutValidation($class, $service)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+                $service,
+                0,
+                array('validateInput' => false)
+            )
+            ->with(Data::$fullRequest)
+            ->withDevice(array())->$service();
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage "unknown" must be
+     * @dataProvider withMethods
+     */
+    public function testUnknownKeys($method)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->$method(array('unknown' => 'some value'));
+    }
+
+    public function withMethods()
+    {
+        return array(
+            array('withEvent'),
+            array('withAccount'),
+            array('withEmail'),
+            array('withBilling'),
+            array('withShipping'),
+            array('withPayment'),
+            array('withCreditCard'),
+            array('withOrder'),
+            array('withShoppingCartItem'),
+        );
+    }
+
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be an MD5
+     * @dataProvider badMd5s
+     */
+    public function testAccountWithBadUsernameMd5($md5)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withAccount(array('username_md5' => $md5));
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be an MD5
+     * @dataProvider badMd5s
+     */
+    public function testEmailWithBadAddress($md5)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(array('address' => $md5));
+    }
+
+    public function badMd5s()
+    {
+        return array(
+            array('14c4b06b824ec593239362517f538b2'),
+            array('14c4b06b824ec593239362517f538b29a'),
+            array('notvalid'),
+            array('invalid @email.org')
+        );
+    }
+
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be an ISO 3166-2
+     * @dataProvider badRegions
+     */
+    public function testBadRegions($method, $region)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->$method(array('region' => $region));
+    }
+
+    public function badRegions()
+    {
+        return array(
+            array('withBilling', 'AAAAA'),
+            array('withBilling', 'aaa'),
+            array('withShipping', 'AAAAA'),
+            array('withShipping', 'aaa'),
+        );
+    }
+
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be a valid country
+     * @dataProvider badCountryCodes
+     */
+    public function testBadCountryCode($method, $code)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->$method(array('country' => $code));
+    }
+
+    public function badCountryCodes()
+    {
+        return array(
+            array('withBilling', 'A'),
+            array('withBilling', '1'),
+            array('withBilling', 'MAA'),
+            array('withShipping', 'A'),
+            array('withShipping', 'MAA'),
+            array('withShipping', '1'),
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be a valid telephone country code
+     * @dataProvider badPhoneCodes
+     */
+    public function testBadPhoneCodes($method, $key, $code)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->$method(array($key => $code));
+    }
+
+    public function badPhoneCodes()
+    {
+        return array(
+            array('withBilling', 'phone_country_code', '12344'),
+            array('withBilling', 'phone_country_code', '12a'),
+            array('withShipping', 'phone_country_code', '12344'),
+            array('withShipping', 'phone_country_code', '12a'),
+            array('withCreditCard', 'bank_phone_country_code', '12344'),
+            array('withCreditCard', 'bank_phone_country_code', '12a'),
+        );
+    }
+
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage "slow" must be in
+     */
+    public function testBadDeliverySpeed()
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(array('delivery_speed' => 'slow'));
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must validate against
+     * @dataProvider badIins
+     */
+    public function testBadIin($iin)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCreditCard(array('issuer_id_number' => $iin));
+    }
+
+    public function badIins()
+    {
+        return array(
+            array('12345'),
+            array('1234567'),
+            array('a23456'),
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must validate against
+     * @dataProvider badLast4Digits
+     */
+    public function testCreditCardWithBadLast4($last4)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCreditCard(array('last_4_digits' => $last4));
+    }
+
+    public function badLast4Digits()
+    {
+        return array(
+            array('12345'),
+            array('123'),
+            array('a234'),
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must have a length
+     * @dataProvider avsAndCvv
+     */
+    public function testAvsAndCCv($key)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCreditCard(array($key => 'Aa'));
+    }
+
+    public function avsAndCvv()
+    {
+        return array(
+            array('avs_result'),
+            array('cvv_result'),
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be an IP address
+     * @dataProvider badIps
+     */
+    public function testBadIps($ip)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(array('ip_address' => $ip));
+    }
+
+    public function badIps()
+    {
+        return array(
+            array('1.2.3.'),
+            array('299.1.1.1'),
+            array('::AF123'),
+        );
+    }
+
+    /**
+     * @dataProvider goodIps
+     */
+    public function testGoodIps($ip)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(array('ip_address' => $ip));
+    }
+
+    public function goodIps()
+    {
+        return array(
+            array('1.2.3.4'),
+            array('2001:db8:0:0:1:0:0:1'),
+            array('::FFFF:1.2.3.4'),
+        );
+    }
+
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must
+     * @dataProvider badDomains
+     */
+    public function testBadDomains($domain)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(array('domain' => $domain));
+    }
+
+    public function badDomains()
+    {
+        return array(
+            array('bad'),
+            array(' bad.com'),
+        );
+    }
+
+    /**
+     * @dataProvider goodDomains
+     */
+    public function testGoodDomains($domain)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(array('domain' => $domain));
+    }
+
+    public function goodDomains()
+    {
+        return array(
+            array('maxmind.com'),
+            array('www.bbc.co.uk'),
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be a valid date
+     */
+    public function testBadEventTime()
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(array('time' => '2014/04/04 19:20'));
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be
+     */
+    public function testBadEventType()
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(array('type' => 'unknown'));
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must validate against
+     * @dataProvider badCurrency
+     */
+    public function testBadCurrency($currency)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withOrder(array('currency' => $currency));
+    }
+
+    public function badCurrency()
+    {
+        return array(
+            array('usd'),
+            array('US'),
+            array('US1'),
+            array('USDD'),
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be an URL
+     * @dataProvider badReferrerUri
+     */
+    public function testBadReferrerUri($uri)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withOrder(array('referrer_uri' => $uri));
+    }
+
+    public function badReferrerUri()
+    {
+        return array(
+            array('/blah/'),
+            array('www.mm.com'),
+
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be
+     */
+    public function testBadPaymentProcessor()
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withPayment(array('processor' => 'unknown'));
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessageRegExp (must be greater than 0|must be a float)
+     * @dataProvider nonPositiveValues
+     */
+    public function testBadOrderAmount($value)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withOrder(array('amount' => $value));
+    }
+
+    public function nonPositiveValues()
+    {
+        return array(
+            array(0),
+            array(-1),
+            array('afdaf')
+        );
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessageRegExp (must be greater than 0|must be a float)
+     * @dataProvider nonPositiveValues
+     */
+    public function testBadShoppingCartItemPrice($value)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShoppingCartItem(array('price' => $value));
+    }
+
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessageRegExp (must be greater than 0|must be an int)
+     * @dataProvider nonPositiveValues
+     */
+    public function testBadShoppingCartItemQuantity($value)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShoppingCartItem(array('quantity' => $value));
     }
 
     public function services()

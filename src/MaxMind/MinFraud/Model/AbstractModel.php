@@ -5,21 +5,35 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Class AbstractModel
  * @package MaxMind\MinFraud\Model
+ * @internal
  */
 abstract class AbstractModel
 {
+
     /**
+     * @param array $response The array corresponding to the object in the
+     * minFraud Insights response.
+     * @param array $locales List of locale codes to use in name property from
+     * most preferred to least preferred.
+     */
+    public function __construct($response, $locales = array('en'))
+    {
+    }
+
+    /**
+     * Convenience method to safely get value from array that might be null
      * @param $var
      * @param mixed $default
      * @return mixed
+     * @internal
      */
-    protected function get(&$var, $default = null)
+    protected function safeArrayLookup(&$var, $default = null)
     {
         return isset($var) ? $var : $default;
     }
 
     /**
-     * @ignore
+     * @internal
      */
     public function __get($attr)
     {

@@ -3,7 +3,7 @@
 namespace MaxMind\Exception;
 
 /**
- * This class represents a generic error.
+ * This class represents an authentication error.
  */
 class AuthenticationException extends WebServiceException
 {

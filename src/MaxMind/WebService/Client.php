@@ -15,6 +15,7 @@ use MaxMind\WebService\Http\RequestFactory;
  * MaxMind web service. Please use the appropriate client API for the service
  * that you are using.
  * @package MaxMind\WebService
+ * @internal
  */
 class Client
 {
@@ -30,9 +31,15 @@ class Client
     private $caBundle;
 
     /**
-     * @param int $userId
-     * @param string $licenseKey
-     * @param array $options
+     * @param int $userId Your MaxMind user ID
+     * @param string $licenseKey Your MaxMind license key
+     * @param array $options An array of options. Possible keys:
+     *
+     * * `host` - The host to use when connecting to the web service.
+     * * `userAgent` - The user agent prefix to use in the request
+     * * `caBundle` - the bundle of CA root certificates to use in the equest
+     * * `connectTimeout` - the connect timeout to use for the request
+     * * `timeout` - the timeout to use for the request
      */
     public function __construct(
         $userId,
@@ -64,18 +71,25 @@ class Client
     }
 
     /**
-     * @param string $service
-     * @param string $path
-     * @param array $input
-     * @return mixed
-     * @throws HttpException
-     * @throws InvalidInputException
-     * @throws WebServiceException
+     * @param string $service name of the service querying
+     * @param string $path the URI path to use
+     * @param array $input the data to be posted as JSON
+     * @return array The decoded content of a successful response
+     * @throws InvalidInputException when the request has missing or invalid
+     * data.
+     * @throws AuthenticationException when there is an issue authenticating the
+     * request.
+     * @throws InsufficientFundsException when your account is out of funds.
+     * @throws InvalidRequestException when the request is invalid for some
+     * other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException when an unexpected HTTP error occurs.
+     * @throws WebServiceException when some other error occurs. This also
+     * serves as the base class for the above exceptions.
      */
     public function post($service, $path, $input)
     {
         list($statusCode, $contentType, $body)
-            = $this->makeRequest($path, $input);
+            = $this->sendRequest($path, $input);
         return $this->handleResponse(
             $statusCode,
             $contentType,
@@ -86,12 +100,13 @@ class Client
     }
 
     /**
-     * @param string $path
-     * @param array $input
-     * @return array
-     * @throws InvalidInputException
+     * @param string $path the URI path to use
+     * @param array $input the data to be posted as JSON
+     * @return array The decoded content of a successful response
+     * @throws InvalidInputException when the request has missing or invalid
+     * data.
      */
-    private function makeRequest($path, $input)
+    private function sendRequest($path, $input)
     {
         $body = json_encode($input);
         if ($body === false) {
@@ -130,14 +145,20 @@ class Client
     }
 
     /**
-     * @param $statusCode
-     * @param $contentType
-     * @param $body
-     * @param $service
-     * @param $path
-     * @return array
-     * @throws HttpException
-     * @throws WebServiceException
+     * @param integer $statusCode the HTTP status code of the response
+     * @param string $contentType the content-type of the response
+     * @param string $body the response body
+     * @param string $service the name of the service
+     * @param string $path the path used in the request
+     * @return array The decoded content of a successful response
+     * @throws AuthenticationException when there is an issue authenticating the
+     * request.
+     * @throws InsufficientFundsException when your account is out of funds.
+     * @throws InvalidRequestException when the request is invalid for some
+     * other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException when an unexpected HTTP error occurs.
+     * @throws WebServiceException when some other error occurs. This also
+     * serves as the base class for the above exceptions
      */
     private function handleResponse(
         $statusCode,
@@ -157,7 +178,7 @@ class Client
     }
 
     /**
-     * @return string
+     * @return string describing the JSON error
      */
     private function jsonErrorDescription()
     {
@@ -179,8 +200,8 @@ class Client
     }
 
     /**
-     * @param $path
-     * @return string
+     * @param string $path The path to use in the URL
+     * @return string The constructed URL
      */
     private function urlFor($path)
     {
@@ -188,11 +209,11 @@ class Client
     }
 
     /**
-     * @param int $statusCode
-     * @param string $contentType
-     * @param string $body
-     * @param string $service
-     * @param $path
+     * @param int $statusCode The HTTP status code
+     * @param string $contentType The response content-type
+     * @param string $body The response body
+     * @param string $service The service name
+     * @param string $path The path used in the request
      * @throws AuthenticationException
      * @throws HttpException
      * @throws InsufficientFundsException
@@ -250,10 +271,10 @@ class Client
     }
 
     /**
-     * @param string $message
-     * @param string $code
-     * @param int $statusCode
-     * @param string $path
+     * @param string $message The error message from the web service
+     * @param string $code The error code from the web service
+     * @param int $statusCode The HTTP status code
+     * @param string $path The path used in the request
      * @throws AuthenticationException
      * @throws InvalidRequestException
      * @throws InsufficientFundsException
@@ -282,9 +303,9 @@ class Client
     }
 
     /**
-     * @param int $statusCode
-     * @param string $service
-     * @param string $path
+     * @param int $statusCode The HTTP status code
+     * @param string $service The service name
+     * @param string $path The URI path used in the request
      * @throws HttpException
      */
     private function handle5xx($statusCode, $service, $path)
@@ -297,9 +318,9 @@ class Client
     }
 
     /**
-     * @param int $statusCode
-     * @param string $service
-     * @param string $path
+     * @param int $statusCode The HTTP status code
+     * @param string $service The service name
+     * @param string $path The URI path used in the request
      * @throws HttpException
      */
     private function handleUnexpectedStatus($statusCode, $service, $path)
@@ -313,10 +334,11 @@ class Client
     }
 
     /**
-     * @param string $body
-     * @param string $service
-     * @return array
-     * @throws WebServiceException
+     * @param string $body The successful request body
+     * @param string $service The service name
+     * @return array The decoded request body
+     * @throws WebServiceException if the request body cannot be decoded as
+     * JSON
      */
     private function handleSuccess($body, $service)
     {

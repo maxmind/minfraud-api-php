@@ -27,7 +27,7 @@ class MinFraudData
         'event' => array(
             'transaction_id' => 'txn3134133',
             'shop_id'        => 's2123',
-            'time'           => '2012-04-12T23:20:50.52Z',
+            'time'           => '2012-04-12T23:20:50+00:00',
             'type'           => 'purchase',
         ),
         'account' => array(
@@ -63,7 +63,7 @@ class MinFraudData
             'postal'             => '73003',
             'phone_number'       => '403-321-2323',
             'phone_country_code' => '1',
-            'delivery_speed'     => 'same-day',
+            'delivery_speed'     => 'same_day',
         ),
         'payment' => array(
             'processor'             => 'stripe',
