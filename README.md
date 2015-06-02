@@ -73,18 +73,18 @@ The possible exceptions are:
   called with invalid input data or when `->score()` or `->insights()` is
   called on a request where the required `ip_address` field in the `device`
   array is missing.
-* `AuthenticationException` - This will be thrown on calling `->score() or
+* `AuthenticationException` - This will be thrown on calling `->score()` or
   `->insights()` when the server is unable to authenticate the request, e.g.,
   if the license key or user ID is invalid.
-* `InsufficientFundsException` - This will be thrown on calling `->score() or
+* `InsufficientFundsException` - This will be thrown on calling `->score()` or
   `->insights()` when your account is out of funds.
-* `InvalidRequestException` - This will be thrown on calling `->score() or
+* `InvalidRequestException` - This will be thrown on calling `->score()` or
   `->insights()` when the server rejects the request for another reason such
   as invalid JSON in the POST.
-* `HttpException` - This will be thrown on calling `->score() or
+* `HttpException` - This will be thrown on calling `->score()` or
   `->insights()` when an unexpected HTTP error occurs such as a firewall
   interfering with the request to the server.
-* `WebServiceException` - This will be thrown on calling `->score() or
+* `WebServiceException` - This will be thrown on calling `->score()` or
   `->insights()` when some other error occurs. This also serves as the base
   class for the above exceptions.
 
