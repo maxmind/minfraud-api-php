@@ -113,7 +113,8 @@ class MinFraudData
         'id'          => '27D26476-E2BC-11E4-92B8-962E705B4AF5',
         'risk_score'  => 0.01,
         'credits_remaining' => 1000,
-        'ip_location' => array(
+        'ip_address' => array(
+            'risk' => 0.01,
             'city' => array(
                 'confidence' => 42,
                 'geoname_id' => 2643743,

@@ -3,7 +3,6 @@
 namespace MaxMind\MinFraud\Validation\Rules;
 
 use Respect\Validation\Rules\AbstractWrapper;
-use Respect\Validation\Rules\Even;
 use Respect\Validation\Validator as v;
 
 /**

@@ -9,7 +9,6 @@ use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
 use MaxMind\MinFraud\Validation;
-use MaxMind\MinFraud\Validation\Account;
 use MaxMind\WebService\Client;
 use \Respect\Validation\Exceptions\ValidationExceptionInterface;
 

@@ -8,7 +8,7 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property \MaxMind\MinFraud\Model\CreditCard $creditCard An object containing
  * minFraud data about the credit card used in the transaction.
- * @property \MaxMind\MinFraud\Model\IpLocation $ipLocation An object containing
+ * @property \MaxMind\MinFraud\Model\IpAddress $ipAddress An object containing
  * GeoIP2 and minFraud Insights information about the geolocated IP address.
  * @property \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
  * containing minFraud data related to the billing address used in the
@@ -22,7 +22,7 @@ class Insights extends Score
     /**
      * @internal
      */
-    protected $ipLocation;
+    protected $ipAddress;
 
     /**
      * @internal
@@ -42,8 +42,8 @@ class Insights extends Score
     public function __construct($response, $locales = array('en'))
     {
         parent::__construct($response, $locales);
-        $this->ipLocation
-            = new IpLocation($this->safeArrayLookup($response['ip_location']), $locales);
+        $this->ipAddress
+            = new IpAddress($this->safeArrayLookup($response['ip_address']), $locales);
         $this->creditCard
             = new CreditCard($this->safeArrayLookup($response['credit_card']));
         $this->shippingAddress

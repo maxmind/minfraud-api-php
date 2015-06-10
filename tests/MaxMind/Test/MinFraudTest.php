@@ -68,7 +68,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'Royaume-Uni',
-            $insights->ipLocation->country->name,
+            $insights->ipAddress->country->name,
             'locales setting made it to the GeoIP2 models'
         );
     }

@@ -2,13 +2,14 @@
 
 namespace MaxMind\Test\MinFraud\Model;
 
-use MaxMind\MinFraud\Model\IpLocation;
+use MaxMind\MinFraud\Model\IpAddress;
 
 class IpLocationTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIpLocation()
+    public function testIpAddress()
     {
         $array = array(
+            'risk' => 0.01,
             'country' => array(
                 'iso_code' => 'US',
                 'is_high_risk' => false,
@@ -22,35 +23,41 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $ipLocation = new IpLocation($array);
+        $ipAddress = new IpAddress($array);
+
+        $this->assertEquals(
+            $array['risk'],
+            $ipAddress->risk,
+            'IP risk'
+        );
 
         $this->assertEquals(
             $array['country']['iso_code'],
-            $ipLocation->country->isoCode,
+            $ipAddress->country->isoCode,
             'ISO code'
         );
 
         $this->assertEquals(
             $array['country']['is_high_risk'],
-            $ipLocation->country->isHighRisk,
+            $ipAddress->country->isHighRisk,
             'country is not high risk'
         );
 
         $this->assertEquals(
             $array['location']['local_time'],
-            $ipLocation->location->localTime,
+            $ipAddress->location->localTime,
             'local time'
         );
 
         $this->assertEquals(
             $array['location']['accuracy_radius'],
-            $ipLocation->location->accuracyRadius,
+            $ipAddress->location->accuracyRadius,
             'accuracy radius'
         );
 
         $this->assertEquals(
             $array['postal']['code'],
-            $ipLocation->postal->code,
+            $ipAddress->postal->code,
             'postal code'
         );
     }
