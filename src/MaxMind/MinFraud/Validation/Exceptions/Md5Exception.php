@@ -4,6 +4,9 @@ namespace MaxMind\MinFraud\Validation\Exceptions;
 
 use Respect\Validation\Exceptions\ValidationException;
 
+/**
+ * @internal
+ */
 class Md5Exception  extends ValidationException
 {
     public static $defaultTemplates = array(

@@ -47,8 +47,8 @@ class InsightsTest extends \PHPUnit_Framework_TestCase
         // is being passed correctly to these objects. There are specific
         // tests of the objects themselves in the appropriately named classes.
         $this->assertEquals(
-            $array['ip_location']['country']['names']['fr'],
-            $insights->ipLocation->country->name,
+            $array['ip_address']['country']['names']['fr'],
+            $insights->ipAddress->country->name,
             'correct French country name'
         );
 

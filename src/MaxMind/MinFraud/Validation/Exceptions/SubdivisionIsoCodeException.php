@@ -4,6 +4,9 @@ namespace MaxMind\MinFraud\Validation\Exceptions;
 
 use Respect\Validation\Exceptions\ValidationException;
 
+/**
+ * @internal
+ */
 class SubdivisionIsoCodeException  extends ValidationException
 {
     public static $defaultTemplates = array(
