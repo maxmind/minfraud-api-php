@@ -1,4 +1,5 @@
 _site
+.geoip2
 .gh-pages
 .idea
 apigen.phar
