@@ -1,8 +1,8 @@
 ---
 layout: default
-title: MaxMind minFraud Score and Insights PHP API
+title: MaxMind GeoIP2 PHP API
 language: php
-version: v0.0.1
+version: v0.1.0
 ---
 
 # MaxMind minFraud Insights and Score PHP API
