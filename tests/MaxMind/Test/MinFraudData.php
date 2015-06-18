@@ -179,7 +179,7 @@ class MinFraudData
                     'zh-CN' => '美国'
                 )
             ),
-            'subdivisions' => [
+            'subdivisions' => array(
                 array(
                     'confidence' => 42,
                     'geoname_id' => 6269131,
@@ -191,7 +191,7 @@ class MinFraudData
                         'pt-BR' => 'Inglaterra'
                     )
                 )
-            ],
+            ),
             'traits' => array(
                 'domain'       => 'in-addr.arpa',
                 'ip_address'   => '81.2.69.160',
