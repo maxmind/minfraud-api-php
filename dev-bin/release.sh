@@ -50,7 +50,7 @@ php composer.phar update
 
 if [ ! -d .gh-pages ]; then
     echo "Checking out gh-pages in .gh-pages"
-    git clone -b gh-pages git@github.maxmind.com:maxmind/minfraud-api-php.git .gh-pages
+    git clone -b gh-pages git@github.com:maxmind/minfraud-api-php.git .gh-pages
     pushd .gh-pages
 else
     echo "Updating .gh-pages"
