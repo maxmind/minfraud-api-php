@@ -168,7 +168,6 @@ $request = $mf->withDevice([
     'quantity' => 1,
     'price'    => 100.00,
 ]);
-```
 
 # To get the minFraud Insights response model, use ->insights():
 $insightsResponse = $request->insights();
