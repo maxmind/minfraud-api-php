@@ -1,0 +1,5 @@
+destination: doc/v2.2.0-beta1
+source:
+	- ../src
+	
+title: GeoIP2 PHP API v2.2.0-beta1
