@@ -58,6 +58,16 @@ else
     git pull
 fi
 
+if [ ! -d .geoip2 ]; then
+    echo "Cloning GeoIP2 for docs"
+    git clone git@github.com:maxmind/GeoIP2-php.git .geoip2
+else
+    echo "Updating GeoIP2 for docs"
+    pushd .geoip2
+    git pull
+    popd
+fi
+
 if [ -n "$(git status --porcelain)" ]; then
     echo ".gh-pages is not clean" >&2
     exit 1
@@ -76,6 +86,7 @@ destination: doc/$TAG
 
 source:
     - ../src
+    - .geoip2
 
 title: "minFraud Score and Insights PHP API $TAG"
 EOF
