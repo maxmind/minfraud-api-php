@@ -1,5 +1,6 @@
 destination: doc/v0.1.0
 source:
 	- ../src
+	- .geoip2
 	
 title: minFraud Score and Insights PHP API v0.1.0
