@@ -28,7 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "MaxMind\\": "src/MaxMind"
+      "MaxMind\\": "src"
     }
   }
 }
