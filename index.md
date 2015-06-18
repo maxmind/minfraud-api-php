@@ -99,6 +99,9 @@ The possible exceptions are:
 ## Example
 
 ```php
+<?php
+require_once 'vendor/autoload.php';
+use MaxMind\MinFraud;
 
 # The constructor for MinFraud takes your user ID, your license key, and
 # optionally an array of options.
