@@ -598,7 +598,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         if (isset($options['caBundle'])) {
             $caBundle = $options['caBundle'];
         } else {
-            $file = (new \ReflectionClass('MaxMind\\WebService\\Client'))->getFileName();
+            $reflectionClass = new \ReflectionClass('MaxMind\\WebService\\Client');
+            $file = $reflectionClass->getFileName();
             $caBundle = dirname($file) . '/cacert.pem';
         }
 
