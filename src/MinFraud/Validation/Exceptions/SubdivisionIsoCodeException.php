@@ -7,7 +7,7 @@ use Respect\Validation\Exceptions\ValidationException;
 /**
  * @internal
  */
-class SubdivisionIsoCodeException  extends ValidationException
+class SubdivisionIsoCodeException extends ValidationException
 {
     public static $defaultTemplates = array(
         self::MODE_DEFAULT => array(

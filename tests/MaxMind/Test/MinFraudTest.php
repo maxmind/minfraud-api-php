@@ -93,12 +93,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testMissingIpAddressWithoutValidation($class, $service)
     {
         $this->createMinFraudRequestWithFullResponse(
-                $service,
-                0,
-                array('validateInput' => false)
-            )
-            ->with(Data::$fullRequest)
-            ->withDevice(array())->$service();
+            $service,
+            0,
+            array('validateInput' => false)
+        )->with(Data::$fullRequest)
+         ->withDevice(array())->$service();
     }
 
     /**
@@ -603,6 +602,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             $caBundle = dirname($file) . '/cacert.pem';
         }
 
+        $curlVersion = curl_version();
         $factory->expects($this->exactly($callsToRequest))
             ->method('request')
             ->with(
@@ -613,7 +613,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
                         'userAgent' => 'minFraud-API/' . MinFraud::VERSION
                             . ' MaxMind-WS-API/' . Client::VERSION
                             . ' PHP/' . PHP_VERSION
-                            . ' curl/' . curl_version()['version'],
+                            . ' curl/' . $curlVersion['version'],
                         'connectTimeout' => isset($options['connectTimeout'])
                             ? $options['connectTimeout'] : null,
                         'timeout' => isset($options['timeout'])

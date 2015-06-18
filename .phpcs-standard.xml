@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="Custom">
+    <description>PSR2 without line-length check.</description>
+    <rule ref="PSR2">
+        <!-- We exclude this only because some dev site links force comment
+             lines to be over 120 characters. Please do not abuse this. -->
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+</ruleset>

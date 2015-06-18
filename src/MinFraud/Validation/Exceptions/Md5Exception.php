@@ -7,7 +7,7 @@ use Respect\Validation\Exceptions\ValidationException;
 /**
  * @internal
  */
-class Md5Exception  extends ValidationException
+class Md5Exception extends ValidationException
 {
     public static $defaultTemplates = array(
         self::MODE_DEFAULT => array(
