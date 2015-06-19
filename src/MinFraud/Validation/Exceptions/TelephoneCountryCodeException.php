@@ -7,7 +7,7 @@ use Respect\Validation\Exceptions\ValidationException;
 /**
  * @internal
  */
-class TelephoneCountryCodeException  extends ValidationException
+class TelephoneCountryCodeException extends ValidationException
 {
     public static $defaultTemplates = array(
         self::MODE_DEFAULT => array(
