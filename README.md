@@ -1,11 +1,18 @@
-# MaxMind minFraud Insights and Score PHP API
+# MaxMind minFraud Insights and minFraud Score PHP API #
 
-This is an early pre-release version. Don't use it.
+## Beta Note ##
+
+This is a beta release. The API may change before the first production
+release.
+
+You may find information on the changes in minFraud Score and minFraud
+Insights in our [What's New
+documentation](https://dev.maxmind.com/minfraud/whats-new-in-minfraud-score-and-minfraud-insights/).
 
 ## Description ##
 
-This package provides an API for the [MaxMind minFraud Score and Insights
-web services](http://dev.maxmind.com/minfraud-score-and-insights-api-documentation).
+This package provides an API for the [MaxMind minFraud Score and minFraud Insights
+web services](http://dev.maxmind.com/minfraud/minfraud-score-and-insights-api-documentation/).
 
 ## Install via Composer ##
 
@@ -26,7 +33,7 @@ You should now have the file `composer.phar` in your project directory.
 Run in your project root:
 
 ```
-php composer.phar require maxmind/minfraud:~0.0
+php composer.phar require maxmind/minfraud:~0.2
 ```
 
 You should now have the files `composer.json` and `composer.lock` as well as

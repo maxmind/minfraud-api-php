@@ -6,6 +6,7 @@ box.phar
 build
 composer.lock
 composer.phar
+minfraud.phar
 phpunit.xml
 t.php
 vendor/
