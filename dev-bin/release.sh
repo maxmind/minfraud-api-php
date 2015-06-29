@@ -121,6 +121,8 @@ git push
 
 popd
 
+git commit -m "Update for $TAG" -a
+
 git tag -a $TAG
 git push
 git push --tags
