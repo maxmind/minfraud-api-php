@@ -108,15 +108,15 @@ EOF
 cat ../README.md >> $PAGE
 
 git add doc/
-git commit -m "Updated for $TAG" -a
 
-read -e -p "Push to origin? " SHOULD_PUSH
+read -e -p "Commit changes and push to origin? " SHOULD_PUSH
 
 if [ "$SHOULD_PUSH" != "y" ]; then
     echo "Aborting"
     exit 1
 fi
 
+git commit -m "Updated for $TAG" -a
 git push
 
 popd
