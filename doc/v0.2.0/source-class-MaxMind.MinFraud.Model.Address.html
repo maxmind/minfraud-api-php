@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex">
+
+	<title>File MinFraud/Model/Address.php | minFraud Score and Insights PHP API v0.2.0</title>
+
+	<link rel="stylesheet" href="resources/style.css?1648332946">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+			<h3>Namespaces</h3>
+			<ul>
+				<li><a href="namespace-GeoIp2.html">GeoIp2<span></span></a>
+						<ul>
+				<li><a href="namespace-GeoIp2.Database.html">Database</a>
+						</li>
+				<li><a href="namespace-GeoIp2.Exception.html">Exception</a>
+						</li>
+				<li><a href="namespace-GeoIp2.Model.html">Model</a>
+						</li>
+				<li><a href="namespace-GeoIp2.Record.html">Record</a>
+						</li>
+				<li><a href="namespace-GeoIp2.Test.html">Test<span></span></a>
+						<ul>
+				<li><a href="namespace-GeoIp2.Test.Model.html">Model</a>
+						</li>
+				<li><a href="namespace-GeoIp2.Test.WebService.html">WebService</a>
+						</li>
+							</ul></li>
+				<li><a href="namespace-GeoIp2.WebService.html">WebService</a>
+						</li>
+							</ul></li>
+				<li class="active"><a href="namespace-MaxMind.html">MaxMind<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-MaxMind.MinFraud.html">MinFraud<span></span></a>
+						<ul>
+				<li class="active"><a href="namespace-MaxMind.MinFraud.Model.html">Model</a>
+						</li>
+							</ul></li></ul></li>
+				<li><a href="namespace-None.html">None</a>
+						</li>
+				<li><a href="namespace-PHP.html">PHP</a>
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-MaxMind.MinFraud.Model.Address.html">Address</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.BillingAddress.html">BillingAddress</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.CreditCard.html">CreditCard</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.GeoIp2Country.html">GeoIp2Country</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.GeoIp2Location.html">GeoIp2Location</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.Insights.html">Insights</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.IpAddress.html">IpAddress</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.Issuer.html">Issuer</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.Score.html">Score</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.ShippingAddress.html">ShippingAddress</a></li>
+				<li><a href="class-MaxMind.MinFraud.Model.Warning.html">Warning</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-MaxMind.MinFraud.Model.html" title="Summary of MaxMind\MinFraud\Model"><span>Namespace</span></a>
+			</li>
+			<li>
+				<a href="class-MaxMind.MinFraud.Model.Address.html" title="Summary of MaxMind\MinFraud\Model\Address"><span>Class</span></a>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="tree.html" title="Tree view of classes, interfaces, traits and exceptions"><span>Tree</span></a>
+			</li>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<pre><code><span id="1" class="l"><a class="l" href="#1"> 1: </a><span class="xlang">&lt;?php</span>
+</span><span id="2" class="l"><a class="l" href="#2"> 2: </a>
+</span><span id="3" class="l"><a class="l" href="#3"> 3: </a><span class="php-keyword1">namespace</span> MaxMind\MinFraud\Model;
+</span><span id="4" class="l"><a class="l" href="#4"> 4: </a>
+</span><span id="5" class="l"><a class="l" href="#5"> 5: </a><span class="php-comment">/**
+</span></span><span id="6" class="l"><a class="l" href="#6"> 6: </a><span class="php-comment"> * Class Address
+</span></span><span id="7" class="l"><a class="l" href="#7"> 7: </a><span class="php-comment"> * @package MaxMind\MinFraud\Model
+</span></span><span id="8" class="l"><a class="l" href="#8"> 8: </a><span class="php-comment"> *
+</span></span><span id="9" class="l"><a class="l" href="#9"> 9: </a><span class="php-comment"> * @property integer $distanceToIpLocation The distance in kilometers from the
+</span></span><span id="10" class="l"><a class="l" href="#10">10: </a><span class="php-comment"> * address to the IP location.
+</span></span><span id="11" class="l"><a class="l" href="#11">11: </a><span class="php-comment"> * @property boolean $isInIpCountry This property is true if the address is in
+</span></span><span id="12" class="l"><a class="l" href="#12">12: </a><span class="php-comment"> * the IP country. The property is false when the address is not in the IP
+</span></span><span id="13" class="l"><a class="l" href="#13">13: </a><span class="php-comment"> * country. If the address could not be parsed or was not provided or if the
+</span></span><span id="14" class="l"><a class="l" href="#14">14: </a><span class="php-comment"> * IP address could not be geolocated, the property will be null.
+</span></span><span id="15" class="l"><a class="l" href="#15">15: </a><span class="php-comment"> * @property boolean $isPostalInCity This property is true if the postal code
+</span></span><span id="16" class="l"><a class="l" href="#16">16: </a><span class="php-comment"> * provided with the address is in the city for the address. The property is
+</span></span><span id="17" class="l"><a class="l" href="#17">17: </a><span class="php-comment"> * false when the postal code is not in the city. If the address could not be
+</span></span><span id="18" class="l"><a class="l" href="#18">18: </a><span class="php-comment"> * parsed or was not provided, the property will be null.
+</span></span><span id="19" class="l"><a class="l" href="#19">19: </a><span class="php-comment"> * @property float $latitude The latitude associated with the address.
+</span></span><span id="20" class="l"><a class="l" href="#20">20: </a><span class="php-comment"> * @property float $longitude The longitude associated with the address.
+</span></span><span id="21" class="l"><a class="l" href="#21">21: </a><span class="php-comment"> *
+</span></span><span id="22" class="l"><a class="l" href="#22">22: </a><span class="php-comment"> */</span>
+</span><span id="23" class="l"><a class="l" href="#23">23: </a><span class="php-keyword1">abstract</span> <span class="php-keyword1">class</span> <a id="Address" href="#Address">Address</a> <span class="php-keyword1">extends</span> AbstractModel
+</span><span id="24" class="l"><a class="l" href="#24">24: </a>{
+</span><span id="25" class="l"><a class="l" href="#25">25: </a>    <span class="php-comment">/**
+</span></span><span id="26" class="l"><a class="l" href="#26">26: </a><span class="php-comment">     * @internal
+</span></span><span id="27" class="l"><a class="l" href="#27">27: </a><span class="php-comment">     */</span>
+</span><span id="28" class="l"><a class="l" href="#28">28: </a>    <span class="php-keyword1">protected</span> <span class="php-var"><a id="$isPostalInCity" href="#$isPostalInCity">$isPostalInCity</a></span>;
+</span><span id="29" class="l"><a class="l" href="#29">29: </a>
+</span><span id="30" class="l"><a class="l" href="#30">30: </a>    <span class="php-comment">/**
+</span></span><span id="31" class="l"><a class="l" href="#31">31: </a><span class="php-comment">     * @internal
+</span></span><span id="32" class="l"><a class="l" href="#32">32: </a><span class="php-comment">     */</span>
+</span><span id="33" class="l"><a class="l" href="#33">33: </a>    <span class="php-keyword1">protected</span> <span class="php-var"><a id="$latitude" href="#$latitude">$latitude</a></span>;
+</span><span id="34" class="l"><a class="l" href="#34">34: </a>
+</span><span id="35" class="l"><a class="l" href="#35">35: </a>    <span class="php-comment">/**
+</span></span><span id="36" class="l"><a class="l" href="#36">36: </a><span class="php-comment">     * @internal
+</span></span><span id="37" class="l"><a class="l" href="#37">37: </a><span class="php-comment">     */</span>
+</span><span id="38" class="l"><a class="l" href="#38">38: </a>    <span class="php-keyword1">protected</span> <span class="php-var"><a id="$longitude" href="#$longitude">$longitude</a></span>;
+</span><span id="39" class="l"><a class="l" href="#39">39: </a>
+</span><span id="40" class="l"><a class="l" href="#40">40: </a>    <span class="php-comment">/**
+</span></span><span id="41" class="l"><a class="l" href="#41">41: </a><span class="php-comment">     * @internal
+</span></span><span id="42" class="l"><a class="l" href="#42">42: </a><span class="php-comment">     */</span>
+</span><span id="43" class="l"><a class="l" href="#43">43: </a>    <span class="php-keyword1">protected</span> <span class="php-var"><a id="$distanceToIpLocation" href="#$distanceToIpLocation">$distanceToIpLocation</a></span>;
+</span><span id="44" class="l"><a class="l" href="#44">44: </a>
+</span><span id="45" class="l"><a class="l" href="#45">45: </a>    <span class="php-comment">/**
+</span></span><span id="46" class="l"><a class="l" href="#46">46: </a><span class="php-comment">     * @internal
+</span></span><span id="47" class="l"><a class="l" href="#47">47: </a><span class="php-comment">     */</span>
+</span><span id="48" class="l"><a class="l" href="#48">48: </a>    <span class="php-keyword1">protected</span> <span class="php-var"><a id="$isInIpCountry" href="#$isInIpCountry">$isInIpCountry</a></span>;
+</span><span id="49" class="l"><a class="l" href="#49">49: </a>
+</span><span id="50" class="l"><a class="l" href="#50">50: </a>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> <a id="___construct" href="#___construct">__construct</a>(<span class="php-var">$response</span>, <span class="php-var">$locales</span> = <span class="php-keyword1">array</span>(<span class="php-quote">'en'</span>))
+</span><span id="51" class="l"><a class="l" href="#51">51: </a>    {
+</span><span id="52" class="l"><a class="l" href="#52">52: </a>        <span class="php-var">$this</span>-&gt;isPostalInCity = <span class="php-var">$this</span>-&gt;safeArrayLookup(<span class="php-var">$response</span>[<span class="php-quote">'is_postal_in_city'</span>]);
+</span><span id="53" class="l"><a class="l" href="#53">53: </a>        <span class="php-var">$this</span>-&gt;latitude = <span class="php-var">$this</span>-&gt;safeArrayLookup(<span class="php-var">$response</span>[<span class="php-quote">'latitude'</span>]);
+</span><span id="54" class="l"><a class="l" href="#54">54: </a>        <span class="php-var">$this</span>-&gt;longitude = <span class="php-var">$this</span>-&gt;safeArrayLookup(<span class="php-var">$response</span>[<span class="php-quote">'longitude'</span>]);
+</span><span id="55" class="l"><a class="l" href="#55">55: </a>        <span class="php-var">$this</span>-&gt;distanceToIpLocation = <span class="php-var">$this</span>-&gt;safeArrayLookup(<span class="php-var">$response</span>[<span class="php-quote">'distance_to_ip_location'</span>]);
+</span><span id="56" class="l"><a class="l" href="#56">56: </a>        <span class="php-var">$this</span>-&gt;isInIpCountry = <span class="php-var">$this</span>-&gt;safeArrayLookup(<span class="php-var">$response</span>[<span class="php-quote">'is_in_ip_country'</span>]);
+</span><span id="57" class="l"><a class="l" href="#57">57: </a>    }
+</span><span id="58" class="l"><a class="l" href="#58">58: </a>}
+</span><span id="59" class="l"><a class="l" href="#59">59: </a></span></code></pre>
+
+	<div id="footer">
+		minFraud Score and Insights PHP API v0.2.0 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js?721046668"></script>
+<script src="elementlist.js?1540787354"></script>
+</body>
+</html>
