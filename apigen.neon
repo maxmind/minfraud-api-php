@@ -1,6 +1,6 @@
-destination: doc/v0.2.1
+destination: doc/v0.2.2
 source:
 	- ../src
 	- .geoip2
 	
-title: minFraud Score and Insights PHP API v0.2.1
+title: minFraud Score and Insights PHP API v0.2.2
