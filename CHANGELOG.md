@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+0.2.2 (2015-07-21)
+------------------
+
+* Updated `maxmind/web-service-common` to version that fixes POST bug.
+
+
 0.2.1 (2015-06-30)
 ------------------
 
