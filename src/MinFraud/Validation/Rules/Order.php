@@ -17,6 +17,8 @@ class Order extends AbstractWrapper
             ->key('amount', v::float()->min(0), false)
             ->key('currency', v::regex('/^[A-Z]{3}$/'), false)
             ->key('discount_code', v::string(), false)
+            ->key('has_gift_message', v::bool(), false)
+            ->key('is_gift', v::bool(), false)
             ->key('referrer_uri', v::url(), false)
             ->key('subaffiliate_id', v::string(), false)
             ->each(
@@ -26,6 +28,8 @@ class Order extends AbstractWrapper
                     v::equals('amount'),
                     v::equals('currency'),
                     v::equals('discount_code'),
+                    v::equals('has_gift_message'),
+                    v::equals('is_gift'),
                     v::equals('referrer_uri'),
                     v::equals('subaffiliate_id')
                 )
