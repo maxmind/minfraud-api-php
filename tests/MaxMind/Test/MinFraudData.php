@@ -80,12 +80,14 @@ class MinFraudData
             'cvv_result'              => 'N',
         ),
         'order' => array(
-            'amount'          => 323.21,
-            'currency'        => 'USD',
-            'discount_code'   => 'FIRST',
-            'affiliate_id'    => 'af12',
-            'subaffiliate_id' => 'saf42',
-            'referrer_uri'    => 'http://www.amazon.com/',
+            'affiliate_id'     => 'af12',
+            'amount'           => 323.21,
+            'currency'         => 'USD',
+            'discount_code'    => 'FIRST',
+            'has_gift_message' => false,
+            'is_gift'          => true,
+            'referrer_uri'     => 'http://www.amazon.com/',
+            'subaffiliate_id'  => 'saf42',
         ),
         'shopping_cart' => array(
             array(
