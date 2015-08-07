@@ -17,7 +17,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             new $class(Data::$responseMeth()),
             $this->createMinFraudRequestWithFullResponse($service)
-                 ->with(Data::$fullRequest)->$service(),
+                ->with(Data::$fullRequest)->$service(),
             'response for full request'
         );
     }
@@ -73,6 +73,65 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testRequestsWithNulls()
+    {
+        $insights = $this->createNullRequest()
+            ->with(array(
+                'device' => array('ip_address' => '1.1.1.1'),
+                'billing' => array(
+                    'first_name' => 'firstname',
+                    'last_name' => null,
+                ),
+                'shopping_cart' => array(
+                    array(
+                        'category' => 'catname',
+                        'item_id' => null,
+                    )
+                )
+            ))->insights();
+
+        $this->assertEquals(
+            0.01,
+            $insights->riskScore,
+            'expected riskScore'
+        );
+    }
+
+    public function testRequestsWithNullsPiecemeal()
+    {
+        $insights = $this->createNullRequest()
+            ->withDevice(array('ip_address' => '1.1.1.1'))
+            ->withBilling(array(
+                'first_name' => 'firstname',
+                'last_name' => null,
+            ))
+            ->withShoppingCartItem(array(
+                'category' => 'catname',
+                'item_id' => null,
+            ))
+            ->insights();
+
+        $this->assertEquals(
+            0.01,
+            $insights->riskScore,
+            'expected riskScore'
+        );
+    }
+
+    private function createNullRequest()
+    {
+        return $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            1,
+            array(),
+            array(
+                'device' => array('ip_address' => '1.1.1.1'),
+                'billing' => array('first_name' => 'firstname'),
+                'shopping_cart' => array(array('category' => 'catname'))
+            )
+        );
+    }
+
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage Key ip_address must be present
@@ -81,8 +140,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testMissingIpAddress($class, $service)
     {
         $this->createMinFraudRequestWithFullResponse($service, 0)
-             ->with(Data::$fullRequest)
-             ->withDevice(array())->$service();
+            ->with(Data::$fullRequest)
+            ->withDevice(array())->$service();
     }
 
     /**
@@ -97,7 +156,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             0,
             array('validateInput' => false)
         )->with(Data::$fullRequest)
-         ->withDevice(array())->$service();
+            ->withDevice(array())->$service();
     }
 
     /**
@@ -542,12 +601,17 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     private function createMinFraudRequestWithFullResponse(
         $service,
         $callsToRequest = 1,
-        $options = array()
+        $options = array(),
+        $request = null
     ) {
+        if ($request === null) {
+            $request = Data::$fullRequest;
+        }
         $responseMeth = $service . 'FullResponse';
+
         return $this->createMinFraudRequest(
             $service,
-            Data::$fullRequest,
+            $request,
             200,
             'application/vnd.maxmind.com-minfraud-' . $service
             . '+json; charset=UTF-8; version=2.0',
