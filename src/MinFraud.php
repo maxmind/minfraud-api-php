@@ -10,7 +10,7 @@ use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
 use MaxMind\MinFraud\Validation;
 use MaxMind\WebService\Client;
-use \Respect\Validation\Exceptions\ValidationExceptionInterface;
+use Respect\Validation\Exceptions\ValidationExceptionInterface;
 
 /**
  * Class MinFraud
@@ -99,10 +99,11 @@ class MinFraud
      */
     public function with($values)
     {
-        $this->validate('Transaction', $values);
+        $values = $this->cleanAndValidate('Transaction', $values);
 
         $new = clone $this;
         $new->content = $values;
+
         return $new;
     }
 
@@ -233,13 +234,14 @@ class MinFraud
      */
     public function withShoppingCartItem($values)
     {
-        $this->validate('ShoppingCartItem', $values);
+        $values = $this->cleanAndValidate('ShoppingCartItem', $values);
 
         $new = clone $this;
         if (!isset($new->content['shopping_cart'])) {
             $new->content['shopping_cart'] = array();
         }
         array_push($new->content['shopping_cart'], $values);
+
         return $new;
     }
 
@@ -308,6 +310,7 @@ class MinFraud
         }
         $url = self::$basePath . strtolower($service);
         $class = "MaxMind\\MinFraud\\Model\\" . $service;
+
         return new $class(
             $this->client->post($service, $url, $this->content),
             $this->locales
@@ -328,24 +331,30 @@ class MinFraud
      * @param array $values The values to validate
      * @return MinFraud
      * @throws InvalidInputException when $values does not validate
-         */
+     */
     private function validateAndAdd($className, $key, $values)
     {
-        if ($this->validateInput) {
-            $this->validate($className, $values);
-        }
+        $values = $this->cleanAndValidate($className, $values);
         $new = clone $this;
         $new->content[$key] = $values;
+
         return $new;
     }
+
 
     /**
      * @param string $className The name of the class (but not the namespace)
      * @param array $values The values to validate
      * @throws InvalidInputException when $values does not validate
      */
-    private function validate($className, $values)
+    private function cleanAndValidate($className, $values)
     {
+        $values = $this->clean($values);
+
+        if (!$this->validateInput) {
+            return $values;
+        }
+
         $class = '\\MaxMind\\MinFraud\\Validation\\Rules\\' . $className;
         $validator = new $class();
         try {
@@ -356,5 +365,21 @@ class MinFraud
                 $exception->getCode()
             );
         }
+
+        return $values;
+    }
+
+    private function clean($array)
+    {
+        $cleaned = array();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $cleaned[$key] = $this->clean($array[$key]);
+            } elseif ($array[$key] !== null) {
+                $cleaned[$key] = $array[$key];
+            }
+        }
+
+        return $cleaned;
     }
 }
