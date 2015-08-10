@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v0.2.2
+version: v0.3.0
 ---
 
 # MaxMind minFraud Insights and minFraud Score PHP API #
@@ -168,12 +168,14 @@ $request = $mf->withDevice([
     'avs_result'              => 'Y',
     'cvv_result'              => 'N',
 ])->withOrder([
-    'amount'          => 323.21,
-    'currency'        => 'USD',
-    'discount_code'   => 'FIRST',
-    'affiliate_id'    => 'af12',
-    'subaffiliate_id' => 'saf42',
-    'referrer_uri'    => 'http://www.amazon.com/',
+    'amount'           => 323.21,
+    'currency'         => 'USD',
+    'discount_code'    => 'FIRST',
+    'is_gift'          => true,
+    'has_gift_message' => false,
+    'affiliate_id'     => 'af12',
+    'subaffiliate_id'  => 'saf42',
+    'referrer_uri'     => 'http://www.amazon.com/',
 ])->withShoppingCartItem([
     'category' => 'pets',
     'item_id'  => 'leash-0231',
