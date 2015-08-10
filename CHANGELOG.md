@@ -1,10 +1,12 @@
 CHANGELOG
 =========
 
-0.3.0 (2015-XX-XX)
+0.3.0 (2015-08-10)
 ------------------
 
 * Add new `is_gift` and `has_gift_message` inputs to order object.
+* Request keys with `null` values are no longer validated or sent to the web
+  service.
 
 0.2.2 (2015-07-21)
 ------------------
