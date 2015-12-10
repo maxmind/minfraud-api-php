@@ -9,14 +9,17 @@ php:
   - hhvm
   - nightly
 
+matrix:
+  allow_failures:
+    - php: nightly
+
 before_install:
   - composer self-update
   - composer install --dev -n --prefer-source
-  - if [ "5.5" == $TRAVIS_PHP_VERSION ]; then pyrus install pear/PHP_CodeSniffer; fi
   - phpenv rehash
 
 script:
-  - if [ "5.5" == $TRAVIS_PHP_VERSION ]; then phpcs --standard=.phpcs-standard.xml src/ src/; fi
+  - ./vendor/bin/phpcs --standard=PSR2 src/
   - ./vendor/bin/phpunit -c phpunit.xml.dist
 
 sudo: false
@@ -27,7 +30,3 @@ notifications:
       - dev-ci@maxmind.com
     on_success: change
     on_failure: always
-
-matrix:
-  allow_failures:
-    - php: nightly
