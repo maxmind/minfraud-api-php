@@ -17,7 +17,7 @@ before_install:
 
 script:
   - if [ "5.5" == $TRAVIS_PHP_VERSION ]; then phpcs --standard=.phpcs-standard.xml src/ src/; fi
-  - phpunit -c phpunit.xml.dist
+  - ./vendor/bin/phpunit -c phpunit.xml.dist
 
 sudo: false
 
