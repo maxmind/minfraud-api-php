@@ -34,6 +34,8 @@ abstract class AbstractModel
 
     /**
      * @internal
+     * @param $attr The attribute to get
+     * @return The value for the attribute
      */
     public function __get($attr)
     {

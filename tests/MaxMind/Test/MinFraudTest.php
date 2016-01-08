@@ -134,7 +134,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Key ip_address must be present
+     * @expectedExceptionMessage Must have keys
      * @dataProvider services
      */
     public function testMissingIpAddress($class, $service)
@@ -161,7 +161,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage "unknown" must be
+     * @expectedExceptionMessage Must have keys
      * @dataProvider withMethods
      */
     public function testUnknownKeys($method)
@@ -588,6 +588,18 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             'insights',
             0
         )->withShoppingCartItem(array('quantity' => $value));
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage Must have keys
+     */
+    public function testBadShoppingCartItemWithDoubleArray()
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShoppingCartItem(array(array('price' => 1)));
     }
 
     public function services()

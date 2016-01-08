@@ -355,6 +355,7 @@ class MinFraud
     /**
      * @param string $className The name of the class (but not the namespace)
      * @param array $values The values to validate
+     * @return array The cleaned values
      * @throws InvalidInputException when $values does not validate
      */
     private function cleanAndValidate($className, $values)
