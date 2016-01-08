@@ -8,11 +8,11 @@ class WarningTest extends \PHPUnit_Framework_TestCase
 {
     public function testWarning()
     {
-        $array = array(
+        $array = [
             'code' => 'INVALID_INPUT',
             'warning' => 'Bad input',
-            'input' => array('device', 'input')
-        );
+            'input' => ['device', 'input']
+        ];
         $warning = new Warning($array);
 
         foreach ($array as $key => $value) {

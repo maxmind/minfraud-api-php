@@ -19,7 +19,7 @@ class IpAddress extends GeoIp2Insights
      */
     protected $risk;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->country = new GeoIp2Country($this->get('country'), $locales);

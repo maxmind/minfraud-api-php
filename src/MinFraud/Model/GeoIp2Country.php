@@ -16,11 +16,11 @@ class GeoIp2Country extends Country
     /**
      * @internal
      */
-    protected $validAttributes = array(
+    protected $validAttributes = [
         'confidence',
         'geonameId',
         'isoCode',
         'isHighRisk',
         'names'
-    );
+    ];
 }

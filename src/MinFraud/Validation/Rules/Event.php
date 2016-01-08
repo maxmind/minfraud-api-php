@@ -18,14 +18,14 @@ class Event extends AbstractWrapper
             v::key(
                 'type',
                 v::in(
-                    array(
+                    [
                         'account_creation',
                         'account_login',
                         'purchase',
                         'recurring_purchase',
                         'referral',
                         'survey',
-                    )
+                    ]
                 ),
                 false
             ),

@@ -39,7 +39,7 @@ class Insights extends Score
      */
     protected $billingAddress;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->ipAddress

@@ -8,7 +8,7 @@ class ShippingAddressTest extends \PHPUnit_Framework_TestCase
 {
     public function testShippingAddress()
     {
-        $array = array(
+        $array = [
             'is_postal_in_city' => true,
             'latitude' => 12.3,
             'longitude' => 132,
@@ -16,7 +16,7 @@ class ShippingAddressTest extends \PHPUnit_Framework_TestCase
             'is_in_ip_country' => false,
             'is_high_risk' => true,
             'distance_to_billing_address' => 20,
-        );
+        ];
         $shipping = new ShippingAddress($array);
 
         $this->assertEquals(

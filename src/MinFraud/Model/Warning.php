@@ -53,7 +53,7 @@ class Warning extends AbstractModel
      */
     protected $input;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         $this->code = $this->safeArrayLookup($response['code']);
         $this->warning = $this->safeArrayLookup($response['warning']);

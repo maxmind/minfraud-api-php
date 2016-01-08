@@ -19,7 +19,7 @@ class Shipping extends AbstractWrapper
             $keys,
             v::key(
                 'delivery_speed',
-                v::in(array('same_day', 'overnight', 'expedited', 'standard')),
+                v::in(['same_day', 'overnight', 'expedited', 'standard']),
                 false
             )
         );

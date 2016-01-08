@@ -13,7 +13,7 @@ class PaymentProcessor extends AbstractWrapper
     public function __construct()
     {
         $this->validatable = v::in(
-            array(
+            [
                 'adyen',
                 'altapay',
                 'amazon_payments',
@@ -80,7 +80,7 @@ class PaymentProcessor extends AbstractWrapper
                 'virtual_card_services',
                 'vme',
                 'worldpay',
-            )
+            ]
         );
     }
 }

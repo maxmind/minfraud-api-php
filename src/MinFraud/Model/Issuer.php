@@ -42,7 +42,7 @@ class Issuer extends AbstractModel
      */
     protected $matchesProvidedPhoneNumber;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         $this->name = $this->safeArrayLookup($response['name']);
         $this->matchesProvidedName

@@ -11,7 +11,7 @@ class InsightsTest extends \PHPUnit_Framework_TestCase
     {
         $array = Data::insightsFullResponse();
 
-        $insights = new Insights($array, array('fr'));
+        $insights = new Insights($array, ['fr']);
 
         $this->assertEquals(
             $array['id'],

@@ -8,20 +8,20 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
 {
     public function testIpAddress()
     {
-        $array = array(
+        $array = [
             'risk' => 0.01,
-            'country' => array(
+            'country' => [
                 'iso_code' => 'US',
                 'is_high_risk' => false,
-            ),
-            'location' => array(
+            ],
+            'location' => [
                 'local_time' => '2015-04-12T18:51:19-01:00',
                 'accuracy_radius' => 5,
-            ),
-            'postal' => array(
+            ],
+            'postal' => [
                 'code' => '31432'
-            )
-        );
+            ]
+        ];
 
         $ipAddress = new IpAddress($array);
 

@@ -47,7 +47,7 @@ abstract class Address extends AbstractModel
      */
     protected $isInIpCountry;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         $this->isPostalInCity = $this->safeArrayLookup($response['is_postal_in_city']);
         $this->latitude = $this->safeArrayLookup($response['latitude']);

@@ -27,7 +27,7 @@ class ShippingAddress extends Address
      */
     protected $distanceToBillingAddress;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->isHighRisk = $this->safeArrayLookup($response['is_high_risk']);

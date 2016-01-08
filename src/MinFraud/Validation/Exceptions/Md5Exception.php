@@ -9,9 +9,9 @@ use Respect\Validation\Exceptions\ValidationException;
  */
 class Md5Exception extends ValidationException
 {
-    public static $defaultTemplates = array(
-        self::MODE_DEFAULT => array(
+    public static $defaultTemplates = [
+        self::MODE_DEFAULT => [
             self::STANDARD => '{{name}} must be an MD5',
-        )
-    );
+        ]
+    ];
 }

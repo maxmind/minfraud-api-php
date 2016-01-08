@@ -70,12 +70,12 @@ class MinFraud
     public function __construct(
         $userId,
         $licenseKey,
-        $options = array()
+        $options = []
     ) {
         if (isset($options['locales'])) {
             $this->locales = $options['locales'];
         } else {
-            $this->locales = array('en');
+            $this->locales = ['en'];
         }
 
         if (isset($options['validateInput'])) {
@@ -248,7 +248,7 @@ class MinFraud
 
         $new = clone $this;
         if (!isset($new->content['shopping_cart'])) {
-            $new->content['shopping_cart'] = array();
+            $new->content['shopping_cart'] = [];
         }
         array_push($new->content['shopping_cart'], $values);
 
@@ -382,7 +382,7 @@ class MinFraud
 
     private function clean($array)
     {
-        $cleaned = array();
+        $cleaned = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
                 $cleaned[$key] = $this->clean($array[$key]);

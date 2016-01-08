@@ -9,9 +9,9 @@ use Respect\Validation\Exceptions\ValidationException;
  */
 class SubdivisionIsoCodeException extends ValidationException
 {
-    public static $defaultTemplates = array(
-        self::MODE_DEFAULT => array(
+    public static $defaultTemplates = [
+        self::MODE_DEFAULT => [
             self::STANDARD => '{{name}} must be an ISO 3166-2 subdivision code',
-        )
-    );
+        ]
+    ];
 }
