@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+0.4.0 (2016-XX-XX)
+------------------
+
+* PHP 7 support was added. PHP 5.3 support was dropped.
+* Previously an array within an array would incorrectly validate when using
+  the `->with*` methods. This now correctly throws a validation exception.
+
 0.3.0 (2015-08-10)
 ------------------
 
