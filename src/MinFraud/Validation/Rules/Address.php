@@ -11,17 +11,17 @@ class Address
 {
     public static function validator()
     {
-        return v::arr()
+        return v::arrayVal()
             ->key('address', new IntOrString(), false)
             ->key('address_2', new IntOrString(), false)
-            ->key('city', v::string(), false)
-            ->key('company', v::string(), false)
+            ->key('city', v::stringType(), false)
+            ->key('company', v::stringType(), false)
             ->key('country', v::countryCode(), false)
-            ->key('first_name', v::string(), false)
-            ->key('last_name', v::string(), false)
+            ->key('first_name', v::stringType(), false)
+            ->key('last_name', v::stringType(), false)
             ->key('phone_country_code', new TelephoneCountryCode(), false)
-            ->key('phone_number', v::string(), false)
-            ->key('postal', v::string(), false)
+            ->key('phone_number', v::stringType(), false)
+            ->key('postal', v::stringType(), false)
             ->key('region', new SubdivisionIsoCode(), false);
     }
 

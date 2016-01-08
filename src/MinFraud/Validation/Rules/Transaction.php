@@ -12,7 +12,7 @@ class Transaction extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arr()
+        $this->validatable = v::arrayVal()
             ->key('account', new Account(), false)
             ->key('billing', new Billing(), false)
             ->key('payment', new Payment(), false)
@@ -22,7 +22,7 @@ class Transaction extends AbstractWrapper
             ->key('event', new Event(), false)
             ->key('order', new Order(), false)
             ->key('shipping', new Shipping(), false)
-            ->key('shopping_cart', v::arr()->each(new ShoppingCartItem()))
+            ->key('shopping_cart', v::arrayVal()->each(new ShoppingCartItem()))
             ->each(
                 null,
                 v::oneOf(

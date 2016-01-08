@@ -212,7 +212,7 @@ to the client API, please see
 
 ## Requirements  ##
 
-This code requires PHP 5.3 or greater. Older versions of PHP are not
+This code requires PHP 5.4 or greater. Older versions of PHP are not
 supported. This library works and is tested with HHVM.
 
 There are several other dependencies as defined in the `composer.json` file.

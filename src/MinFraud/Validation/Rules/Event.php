@@ -12,8 +12,8 @@ class Event extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arr()
-            ->key('shop_id', v::string(), false)
+        $this->validatable = v::arrayVal()
+            ->key('shop_id', v::stringType(), false)
             ->key('time', v::date(\DateTime::RFC3339), false)
             ->key(
                 'type',
@@ -29,7 +29,7 @@ class Event extends AbstractWrapper
                 ),
                 false
             )
-            ->key('transaction_id', v::string(), false)
+            ->key('transaction_id', v::stringType(), false)
             ->each(
                 null,
                 v::oneOf(

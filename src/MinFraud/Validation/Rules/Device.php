@@ -12,10 +12,10 @@ class Device extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arr()
-            ->key('accept_language', v::string(), false)
+        $this->validatable = v::arrayVal()
+            ->key('accept_language', v::stringType(), false)
             ->key('ip_address', v::ip(), true)
-            ->key('user_agent', v::string(), false)
+            ->key('user_agent', v::stringType(), false)
             ->each(
                 null,
                 v::oneOf(

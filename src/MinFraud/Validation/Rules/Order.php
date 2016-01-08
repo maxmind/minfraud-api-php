@@ -12,15 +12,15 @@ class Order extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arr()
-            ->key('affiliate_id', v::string(), false)
-            ->key('amount', v::float()->min(0), false)
+        $this->validatable = v::arrayVal()
+            ->key('affiliate_id', v::stringType(), false)
+            ->key('amount', v::floatVal()->min(0, false), false)
             ->key('currency', v::regex('/^[A-Z]{3}$/'), false)
-            ->key('discount_code', v::string(), false)
-            ->key('has_gift_message', v::bool(), false)
-            ->key('is_gift', v::bool(), false)
+            ->key('discount_code', v::stringType(), false)
+            ->key('has_gift_message', v::boolVal(), false)
+            ->key('is_gift', v::boolVal(), false)
             ->key('referrer_uri', v::url(), false)
-            ->key('subaffiliate_id', v::string(), false)
+            ->key('subaffiliate_id', v::stringType(), false)
             ->each(
                 null,
                 v::oneOf(

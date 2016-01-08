@@ -12,7 +12,7 @@ class Account extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arr()
+        $this->validatable = v::arrayVal()
             ->key('user_id', new IntOrString(), false)
             ->key('username_md5', new Md5(), false)
             ->each(

@@ -302,7 +302,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage "slow" must be in
+     * @expectedExceptionMessage delivery_speed must be in
      */
     public function testBadDeliverySpeed()
     {

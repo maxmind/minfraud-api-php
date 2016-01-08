@@ -17,11 +17,11 @@
     }
   ],
   "require": {
-    "php": ">=5.3",
+    "php": ">=5.4",
     "ext-json": "*",
     "geoip2/geoip2": "~2.3",
     "maxmind/web-service-common": "~0.0.4",
-    "respect/validation": "~0.9.1"
+    "respect/validation": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "4.6.*",
