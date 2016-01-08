@@ -9,10 +9,10 @@ use Respect\Validation\Rules\AbstractWrapper;
  */
 class Billing extends AbstractWrapper
 {
+    use Address;
+
     public function __construct()
     {
-        $oneOf = call_user_func_array('Respect\Validation\Validator::oneOf', Address::keys());
-        $this->validatable = Address::validator()
-            ->each(null, $oneOf);
+        $this->validatable = call_user_func_array('Respect\Validation\Validator::keySet', Address::keys());
     }
 }

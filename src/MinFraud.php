@@ -10,7 +10,7 @@ use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
 use MaxMind\MinFraud\Validation;
 use MaxMind\WebService\Client;
-use Respect\Validation\Exceptions\ValidationExceptionInterface;
+use Respect\Validation\Exceptions\ValidationException;
 
 /**
  * Class MinFraud
@@ -70,12 +70,12 @@ class MinFraud
     public function __construct(
         $userId,
         $licenseKey,
-        $options = array()
+        $options = []
     ) {
         if (isset($options['locales'])) {
             $this->locales = $options['locales'];
         } else {
-            $this->locales = array('en');
+            $this->locales = ['en'];
         }
 
         if (isset($options['validateInput'])) {
@@ -110,7 +110,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `device` array set to
      * `$values`. Existing `device` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Device_device minFraud device API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Device_device
+     *     minFraud device API docs
      *
      * @param $values
      * @return MinFraud
@@ -123,7 +124,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `events` array set to
      * `$values`. Existing `event` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Event_event minFraud event API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Event_event
+     *     minFraud event API docs
      *
      * @param $values
      * @return MinFraud
@@ -136,7 +138,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `account` array set to
      * `$values`. Existing `account` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Account_account minFraud account API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Account_account
+     *     minFraud account API docs
      *
      * @param $values
      * @return MinFraud
@@ -149,7 +152,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `email` array set to
      * `$values`. Existing `email` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Email_email minFraud email API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Email_email
+     *     minFraud email API docs
      *
      * @param $values
      * @return MinFraud
@@ -162,7 +166,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `billing` array set to
      * `$values`. Existing `billing` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Billing_billing minFraud billing API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Billing_billing
+     *     minFraud billing API docs
      *
      * @param $values
      * @return MinFraud
@@ -175,7 +180,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `shipping` array set to
      * `$values`. Existing `shipping` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Shipping_shipping minFraud shipping API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Shipping_shipping
+     *     minFraud shipping API docs
      *
      * @param $values
      * @return MinFraud
@@ -188,7 +194,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `payment` array set to
      * `$values`. Existing `payment` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Payment_payment minFraud payment API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Payment_payment
+     *     minFraud payment API docs
      *
      * @param $values
      * @return MinFraud
@@ -201,7 +208,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `credit_card` array set to
      * `$values`. Existing `credit_card` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Credit_Card_credit_card minFraud credit_card API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Credit_Card_credit_card
+     *     minFraud credit_card API docs
      *
      * @param $values
      * @return MinFraud
@@ -214,7 +222,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `order` array set to
      * `$values`. Existing `order` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Order_order minFraud order API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Order_order
+     *     minFraud order API docs
      *
      * @param $values
      * @return MinFraud
@@ -227,7 +236,8 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with `$values` added to the shopping
      * cart array.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Shopping_Cart_Item minFraud shopping cart item API docs
+     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Shopping_Cart_Item
+     *     minFraud shopping cart item API docs
      *
      * @param $values
      * @return MinFraud
@@ -238,7 +248,7 @@ class MinFraud
 
         $new = clone $this;
         if (!isset($new->content['shopping_cart'])) {
-            $new->content['shopping_cart'] = array();
+            $new->content['shopping_cart'] = [];
         }
         array_push($new->content['shopping_cart'], $values);
 
@@ -345,6 +355,7 @@ class MinFraud
     /**
      * @param string $className The name of the class (but not the namespace)
      * @param array $values The values to validate
+     * @return array The cleaned values
      * @throws InvalidInputException when $values does not validate
      */
     private function cleanAndValidate($className, $values)
@@ -359,7 +370,7 @@ class MinFraud
         $validator = new $class();
         try {
             $validator->check($values);
-        } catch (ValidationExceptionInterface $exception) {
+        } catch (ValidationException $exception) {
             throw new InvalidInputException(
                 $exception->getMessage(),
                 $exception->getCode()
@@ -371,7 +382,7 @@ class MinFraud
 
     private function clean($array)
     {
-        $cleaned = array();
+        $cleaned = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
                 $cleaned[$key] = $this->clean($array[$key]);

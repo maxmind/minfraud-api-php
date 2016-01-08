@@ -8,17 +8,17 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreditCard()
     {
-        $array = array(
-            'issuer' => array(
+        $array = [
+            'issuer' => [
                 'name' => 'Bank',
                 'matches_provided_name' => false,
                 'phone_number' => '123-321-3213',
                 'matches_provided_phone_number' => true,
-            ),
+            ],
             'country' => 'US',
             'is_issued_in_billing_address_country' => false,
             'is_prepaid' => true,
-        );
+        ];
         $cc = new CreditCard($array);
 
         $this->assertEquals(

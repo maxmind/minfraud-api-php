@@ -47,7 +47,7 @@ class CreditCard extends AbstractModel
      */
     protected $isPrepaid;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         $this->issuer = new Issuer($this->safeArrayLookup($response['issuer']));
         $this->country = $this->safeArrayLookup($response['country']);

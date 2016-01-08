@@ -8,12 +8,12 @@ class IssuerTest extends \PHPUnit_Framework_TestCase
 {
     public function testIssuer()
     {
-        $array = array(
+        $array = [
             'name' => 'Bank',
             'matches_provided_name' => false,
             'phone_number' => '123-321-3213',
             'matches_provided_phone_number' => true,
-        );
+        ];
         $issuer = new Issuer($array);
 
         $this->assertEquals(

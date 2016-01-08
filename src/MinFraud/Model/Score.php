@@ -44,14 +44,14 @@ class Score extends AbstractModel
      */
     protected $warnings;
 
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
         $this->creditsRemaining = $this->safeArrayLookup($response['credits_remaining']);
         $this->id = $this->safeArrayLookup($response['id']);
         $this->riskScore = $this->safeArrayLookup($response['risk_score']);
 
-        $this->warnings = array();
-        foreach ($this->safeArrayLookup($response['warnings'], array()) as $warning) {
+        $this->warnings = [];
+        foreach ($this->safeArrayLookup($response['warnings'], []) as $warning) {
             array_push($this->warnings, new Warning($warning));
         }
     }

@@ -8,13 +8,13 @@ class BillingAddressTest extends \PHPUnit_Framework_TestCase
 {
     public function testBillingAddress()
     {
-        $array = array(
+        $array = [
             'is_postal_in_city' => true,
             'latitude' => 12.3,
             'longitude' => 132,
             'distance_to_ip_location' => 240,
             'is_in_ip_country' => false,
-        );
+        ];
         $billing = new BillingAddress($array);
 
         $this->assertEquals(

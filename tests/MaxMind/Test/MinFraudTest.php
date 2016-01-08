@@ -61,9 +61,9 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $insights = $this->createMinFraudRequestWithFullResponse(
             'insights',
             1,
-            array(
-                'locales' => array('fr')
-            )
+            [
+                'locales' => ['fr']
+            ]
         )->with(Data::$fullRequest)->insights();
 
         $this->assertEquals(
@@ -76,19 +76,19 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testRequestsWithNulls()
     {
         $insights = $this->createNullRequest()
-            ->with(array(
-                'device' => array('ip_address' => '1.1.1.1'),
-                'billing' => array(
+            ->with([
+                'device' => ['ip_address' => '1.1.1.1'],
+                'billing' => [
                     'first_name' => 'firstname',
                     'last_name' => null,
-                ),
-                'shopping_cart' => array(
-                    array(
+                ],
+                'shopping_cart' => [
+                    [
                         'category' => 'catname',
                         'item_id' => null,
-                    )
-                )
-            ))->insights();
+                    ]
+                ]
+            ])->insights();
 
         $this->assertEquals(
             0.01,
@@ -100,15 +100,15 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testRequestsWithNullsPiecemeal()
     {
         $insights = $this->createNullRequest()
-            ->withDevice(array('ip_address' => '1.1.1.1'))
-            ->withBilling(array(
+            ->withDevice(['ip_address' => '1.1.1.1'])
+            ->withBilling([
                 'first_name' => 'firstname',
                 'last_name' => null,
-            ))
-            ->withShoppingCartItem(array(
+            ])
+            ->withShoppingCartItem([
                 'category' => 'catname',
                 'item_id' => null,
-            ))
+            ])
             ->insights();
 
         $this->assertEquals(
@@ -123,25 +123,25 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         return $this->createMinFraudRequestWithFullResponse(
             'insights',
             1,
-            array(),
-            array(
-                'device' => array('ip_address' => '1.1.1.1'),
-                'billing' => array('first_name' => 'firstname'),
-                'shopping_cart' => array(array('category' => 'catname'))
-            )
+            [],
+            [
+                'device' => ['ip_address' => '1.1.1.1'],
+                'billing' => ['first_name' => 'firstname'],
+                'shopping_cart' => [['category' => 'catname']]
+            ]
         );
     }
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Key ip_address must be present
+     * @expectedExceptionMessage Must have keys
      * @dataProvider services
      */
     public function testMissingIpAddress($class, $service)
     {
         $this->createMinFraudRequestWithFullResponse($service, 0)
             ->with(Data::$fullRequest)
-            ->withDevice(array())->$service();
+            ->withDevice([])->$service();
     }
 
     /**
@@ -154,14 +154,14 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             $service,
             0,
-            array('validateInput' => false)
+            ['validateInput' => false]
         )->with(Data::$fullRequest)
-            ->withDevice(array())->$service();
+            ->withDevice([])->$service();
     }
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage "unknown" must be
+     * @expectedExceptionMessage Must have keys
      * @dataProvider withMethods
      */
     public function testUnknownKeys($method)
@@ -169,22 +169,22 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(array('unknown' => 'some value'));
+        )->$method(['unknown' => 'some value']);
     }
 
     public function withMethods()
     {
-        return array(
-            array('withEvent'),
-            array('withAccount'),
-            array('withEmail'),
-            array('withBilling'),
-            array('withShipping'),
-            array('withPayment'),
-            array('withCreditCard'),
-            array('withOrder'),
-            array('withShoppingCartItem'),
-        );
+        return [
+            ['withEvent'],
+            ['withAccount'],
+            ['withEmail'],
+            ['withBilling'],
+            ['withShipping'],
+            ['withPayment'],
+            ['withCreditCard'],
+            ['withOrder'],
+            ['withShoppingCartItem'],
+        ];
     }
 
 
@@ -198,7 +198,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withAccount(array('username_md5' => $md5));
+        )->withAccount(['username_md5' => $md5]);
     }
 
     /**
@@ -211,17 +211,17 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEmail(array('address' => $md5));
+        )->withEmail(['address' => $md5]);
     }
 
     public function badMd5s()
     {
-        return array(
-            array('14c4b06b824ec593239362517f538b2'),
-            array('14c4b06b824ec593239362517f538b29a'),
-            array('notvalid'),
-            array('invalid @email.org')
-        );
+        return [
+            ['14c4b06b824ec593239362517f538b2'],
+            ['14c4b06b824ec593239362517f538b29a'],
+            ['notvalid'],
+            ['invalid @email.org']
+        ];
     }
 
 
@@ -235,17 +235,17 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(array('region' => $region));
+        )->$method(['region' => $region]);
     }
 
     public function badRegions()
     {
-        return array(
-            array('withBilling', 'AAAAA'),
-            array('withBilling', 'aaa'),
-            array('withShipping', 'AAAAA'),
-            array('withShipping', 'aaa'),
-        );
+        return [
+            ['withBilling', 'AAAAA'],
+            ['withBilling', 'aaa'],
+            ['withShipping', 'AAAAA'],
+            ['withShipping', 'aaa'],
+        ];
     }
 
 
@@ -259,19 +259,19 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(array('country' => $code));
+        )->$method(['country' => $code]);
     }
 
     public function badCountryCodes()
     {
-        return array(
-            array('withBilling', 'A'),
-            array('withBilling', '1'),
-            array('withBilling', 'MAA'),
-            array('withShipping', 'A'),
-            array('withShipping', 'MAA'),
-            array('withShipping', '1'),
-        );
+        return [
+            ['withBilling', 'A'],
+            ['withBilling', '1'],
+            ['withBilling', 'MAA'],
+            ['withShipping', 'A'],
+            ['withShipping', 'MAA'],
+            ['withShipping', '1'],
+        ];
     }
 
     /**
@@ -284,32 +284,32 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(array($key => $code));
+        )->$method([$key => $code]);
     }
 
     public function badPhoneCodes()
     {
-        return array(
-            array('withBilling', 'phone_country_code', '12344'),
-            array('withBilling', 'phone_country_code', '12a'),
-            array('withShipping', 'phone_country_code', '12344'),
-            array('withShipping', 'phone_country_code', '12a'),
-            array('withCreditCard', 'bank_phone_country_code', '12344'),
-            array('withCreditCard', 'bank_phone_country_code', '12a'),
-        );
+        return [
+            ['withBilling', 'phone_country_code', '12344'],
+            ['withBilling', 'phone_country_code', '12a'],
+            ['withShipping', 'phone_country_code', '12344'],
+            ['withShipping', 'phone_country_code', '12a'],
+            ['withCreditCard', 'bank_phone_country_code', '12344'],
+            ['withCreditCard', 'bank_phone_country_code', '12a'],
+        ];
     }
 
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage "slow" must be in
+     * @expectedExceptionMessage delivery_speed must be in
      */
     public function testBadDeliverySpeed()
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withShipping(array('delivery_speed' => 'slow'));
+        )->withShipping(['delivery_speed' => 'slow']);
     }
 
     /**
@@ -322,16 +322,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withCreditCard(array('issuer_id_number' => $iin));
+        )->withCreditCard(['issuer_id_number' => $iin]);
     }
 
     public function badIins()
     {
-        return array(
-            array('12345'),
-            array('1234567'),
-            array('a23456'),
-        );
+        return [
+            ['12345'],
+            ['1234567'],
+            ['a23456'],
+        ];
     }
 
     /**
@@ -344,16 +344,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withCreditCard(array('last_4_digits' => $last4));
+        )->withCreditCard(['last_4_digits' => $last4]);
     }
 
     public function badLast4Digits()
     {
-        return array(
-            array('12345'),
-            array('123'),
-            array('a234'),
-        );
+        return [
+            ['12345'],
+            ['123'],
+            ['a234'],
+        ];
     }
 
     /**
@@ -366,15 +366,15 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withCreditCard(array($key => 'Aa'));
+        )->withCreditCard([$key => 'Aa']);
     }
 
     public function avsAndCvv()
     {
-        return array(
-            array('avs_result'),
-            array('cvv_result'),
-        );
+        return [
+            ['avs_result'],
+            ['cvv_result'],
+        ];
     }
 
     /**
@@ -387,16 +387,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withDevice(array('ip_address' => $ip));
+        )->withDevice(['ip_address' => $ip]);
     }
 
     public function badIps()
     {
-        return array(
-            array('1.2.3.'),
-            array('299.1.1.1'),
-            array('::AF123'),
-        );
+        return [
+            ['1.2.3.'],
+            ['299.1.1.1'],
+            ['::AF123'],
+        ];
     }
 
     /**
@@ -407,16 +407,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withDevice(array('ip_address' => $ip));
+        )->withDevice(['ip_address' => $ip]);
     }
 
     public function goodIps()
     {
-        return array(
-            array('1.2.3.4'),
-            array('2001:db8:0:0:1:0:0:1'),
-            array('::FFFF:1.2.3.4'),
-        );
+        return [
+            ['1.2.3.4'],
+            ['2001:db8:0:0:1:0:0:1'],
+            ['::FFFF:1.2.3.4'],
+        ];
     }
 
 
@@ -430,15 +430,15 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEmail(array('domain' => $domain));
+        )->withEmail(['domain' => $domain]);
     }
 
     public function badDomains()
     {
-        return array(
-            array('bad'),
-            array(' bad.com'),
-        );
+        return [
+            ['bad'],
+            [' bad.com'],
+        ];
     }
 
     /**
@@ -449,15 +449,15 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEmail(array('domain' => $domain));
+        )->withEmail(['domain' => $domain]);
     }
 
     public function goodDomains()
     {
-        return array(
-            array('maxmind.com'),
-            array('www.bbc.co.uk'),
-        );
+        return [
+            ['maxmind.com'],
+            ['www.bbc.co.uk'],
+        ];
     }
 
     /**
@@ -469,7 +469,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEvent(array('time' => '2014/04/04 19:20'));
+        )->withEvent(['time' => '2014/04/04 19:20']);
     }
 
     /**
@@ -481,7 +481,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEvent(array('type' => 'unknown'));
+        )->withEvent(['type' => 'unknown']);
     }
 
     /**
@@ -494,17 +494,17 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withOrder(array('currency' => $currency));
+        )->withOrder(['currency' => $currency]);
     }
 
     public function badCurrency()
     {
-        return array(
-            array('usd'),
-            array('US'),
-            array('US1'),
-            array('USDD'),
-        );
+        return [
+            ['usd'],
+            ['US'],
+            ['US1'],
+            ['USDD'],
+        ];
     }
 
     /**
@@ -517,16 +517,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withOrder(array('referrer_uri' => $uri));
+        )->withOrder(['referrer_uri' => $uri]);
     }
 
     public function badReferrerUri()
     {
-        return array(
-            array('/blah/'),
-            array('www.mm.com'),
+        return [
+            ['/blah/'],
+            ['www.mm.com'],
 
-        );
+        ];
     }
 
     /**
@@ -538,7 +538,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withPayment(array('processor' => 'unknown'));
+        )->withPayment(['processor' => 'unknown']);
     }
 
     /**
@@ -551,16 +551,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withOrder(array('amount' => $value));
+        )->withOrder(['amount' => $value]);
     }
 
     public function nonPositiveValues()
     {
-        return array(
-            array(0),
-            array(-1),
-            array('afdaf')
-        );
+        return [
+            [0],
+            [-1],
+            ['afdaf']
+        ];
     }
 
     /**
@@ -573,7 +573,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withShoppingCartItem(array('price' => $value));
+        )->withShoppingCartItem(['price' => $value]);
     }
 
 
@@ -587,21 +587,33 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withShoppingCartItem(array('quantity' => $value));
+        )->withShoppingCartItem(['quantity' => $value]);
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage Must have keys
+     */
+    public function testBadShoppingCartItemWithDoubleArray()
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShoppingCartItem([['price' => 1]]);
     }
 
     public function services()
     {
-        return array(
-            array('\MaxMind\MinFraud\Model\Insights', 'insights'),
-            array('\MaxMind\MinFraud\Model\Score', 'score')
-        );
+        return [
+            ['\MaxMind\MinFraud\Model\Insights', 'insights'],
+            ['\MaxMind\MinFraud\Model\Score', 'score']
+        ];
     }
 
     private function createMinFraudRequestWithFullResponse(
         $service,
         $callsToRequest = 1,
-        $options = array(),
+        $options = [],
         $request = null
     ) {
         if ($request === null) {
@@ -627,7 +639,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $statusCode,
         $contentType,
         $responseBody,
-        $options = array(),
+        $options = [],
         $callsToRequest = 1
     ) {
 
@@ -641,7 +653,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $stub->expects($this->exactly($callsToRequest))
             ->method('post')
             ->with($this->equalTo(json_encode($requestContent)))
-            ->willReturn(array($statusCode, $contentType, $responseBody));
+            ->willReturn([$statusCode, $contentType, $responseBody]);
 
         $factory = $this->getMockBuilder(
             'MaxMind\\WebService\\Http\\RequestFactory'
@@ -651,12 +663,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
         $url = 'https://' . $host . '/minfraud/v2.0/' . $service;
 
-        $headers = array(
+        $headers = [
             'Content-Type: application/json',
             'Authorization: Basic '
             . base64_encode($userId . ':' . $licenseKey),
             'Accept: application/json',
-        );
+        ];
 
         if (isset($options['caBundle'])) {
             $caBundle = $options['caBundle'];
@@ -672,7 +684,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->equalTo($url),
                 $this->equalTo(
-                    array(
+                    [
                         'headers' => $headers,
                         'userAgent' => 'minFraud-API/' . MinFraud::VERSION
                             . ' MaxMind-WS-API/' . Client::VERSION
@@ -683,7 +695,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
                         'timeout' => isset($options['timeout'])
                             ? $options['timeout'] : null,
                         'caBundle' => $caBundle,
-                    )
+                    ]
                 )
             )->willReturn($stub);
 

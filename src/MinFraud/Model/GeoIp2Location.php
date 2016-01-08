@@ -18,7 +18,7 @@ class GeoIp2Location extends Location
     /**
      * @internal
      */
-    protected $validAttributes = array(
+    protected $validAttributes = [
         'accuracyRadius',
         'latitude',
         'localTime',
@@ -27,5 +27,5 @@ class GeoIp2Location extends Location
         'postalCode',
         'postalConfidence',
         'timeZone'
-    );
+    ];
 }

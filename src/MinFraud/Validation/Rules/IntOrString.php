@@ -12,6 +12,6 @@ class IntOrString extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::oneOf(v::string(), v::int());
+        $this->validatable = v::oneOf(v::stringType(), v::intVal());
     }
 }

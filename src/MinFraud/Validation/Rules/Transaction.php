@@ -12,31 +12,17 @@ class Transaction extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arr()
-            ->key('account', new Account(), false)
-            ->key('billing', new Billing(), false)
-            ->key('payment', new Payment(), false)
-            ->key('credit_card', new CreditCard(), false)
-            ->key('device', new Device(), true)
-            ->key('email', new Email(), false)
-            ->key('event', new Event(), false)
-            ->key('order', new Order(), false)
-            ->key('shipping', new Shipping(), false)
-            ->key('shopping_cart', v::arr()->each(new ShoppingCartItem()))
-            ->each(
-                null,
-                v::oneOf(
-                    v::equals('account'),
-                    v::equals('billing'),
-                    v::equals('payment'),
-                    v::equals('credit_card'),
-                    v::equals('device'),
-                    v::equals('email'),
-                    v::equals('event'),
-                    v::equals('order'),
-                    v::equals('shipping'),
-                    v::equals('shopping_cart')
-                )
-            );
+        $this->validatable = v::keySet(
+            v::key('account', new Account(), false),
+            v::key('billing', new Billing(), false),
+            v::key('credit_card', new CreditCard(), false),
+            v::key('device', new Device(), true),
+            v::key('email', new Email(), false),
+            v::key('event', new Event(), false),
+            v::key('order', new Order(), false),
+            v::key('payment', new Payment(), false),
+            v::key('shipping', new Shipping(), false),
+            v::key('shopping_cart', v::arrayVal()->each(new ShoppingCartItem()))
+        );
     }
 }

@@ -16,7 +16,7 @@ abstract class AbstractModel
      * @param array $locales List of locale codes to use in name property from
      * most preferred to least preferred.
      */
-    public function __construct($response, $locales = array('en'))
+    public function __construct($response, $locales = ['en'])
     {
     }
 
@@ -34,6 +34,8 @@ abstract class AbstractModel
 
     /**
      * @internal
+     * @param $attr The attribute to get
+     * @return The value for the attribute
      */
     public function __get($attr)
     {
