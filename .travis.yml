@@ -1,31 +1,29 @@
+---
+sudo: false
 language: php
-
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
   - hhvm
   - nightly
-
 matrix:
   allow_failures:
     - php: nightly
-
 before_install:
   - composer self-update
   - composer install --dev -n --prefer-source
   - phpenv rehash
-
 script:
   - ./vendor/bin/phpcs --standard=PSR2 src/
   - ./vendor/bin/phpunit -c phpunit.xml.dist
-
-sudo: false
-
 notifications:
   email:
+    on_failure: always
+    on_success: change
     recipients:
       - dev-ci@maxmind.com
-    on_success: change
-    on_failure: always
+  slack:
+    rooms:
+      secure: "GLE0181QXcfYCSLPqTcKP9nJ5f7s8VRqXE0tYj78r+jk77c5vrtSqU41Ld99qQPcDMHxYMvdWbJ5asTAg324PaOn7UA74hzP7SYe8lcgivOI02n1Au3Vel4tPufyGnLN97Uhwurymhg8NgmYxVjdSNeYvmTZceUyddS9YEwS0BcU5SkFp5qfeW6Fp5Pnl0PIiItlUetY5xsr826VyOOZ3PzW7cif3u85pCoh8BL1lwV4hCOFDmYGXtyMgiS5/ARqjUd/EMAonxGu5zX54diP4wzqT7Vp4qJveR6a5EPDUoya66Y5zvlQ9K7iWDFsIwebzaGwLL+JNPuxW6vxjY0zvWeUI8LCt+qtnpHCkVzpHzmAyfLg0/xGq/ct4Kont2rOgCcmdJO8zCSsyqYT0yj/HQ8LkgXB9MOEjscHq5nugMPHSZX+nL2Z6IHIUupLpvJ9oCPG3GwwIJyA05LUXsuNMaRYxLgAh0EiPJ+Ny1bYqI0Umz6rlT1izSsEEVpiU527nmWrFrH5fKgnoMPdhrCw2GFqBgp7bvUSJ6J/rapIS9DoIAMZZ2X1m2lim501+VK+N10n+L2mICnepSTXes+N0TtB//ovSOg4m5U5VKRlSeoY1NFj/z+SlJ20EpVNzJuwR0ULf+lH8YXuNSsvOg/xSsbrHhdxglwxOJAvpaO55hY=\n"
