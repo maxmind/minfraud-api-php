@@ -15,9 +15,11 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
                 'phone_number' => '123-321-3213',
                 'matches_provided_phone_number' => true,
             ],
+            'brand' => 'Visa',
             'country' => 'US',
             'is_issued_in_billing_address_country' => false,
             'is_prepaid' => true,
+            'type' => 'credit'
         ];
         $cc = new CreditCard($array);
 
@@ -46,6 +48,12 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
+            $array['brand'],
+            $cc->brand,
+            'brand'
+        );
+
+        $this->assertEquals(
             $array['country'],
             $cc->country,
             'country'
@@ -55,6 +63,18 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             $array['is_issued_in_billing_address_country'],
             $cc->isIssuedInBillingAddressCountry,
             'isIssuedInBillingAddressCountry'
+        );
+
+        $this->assertEquals(
+            $array['is_prepaid'],
+            $cc->isPrepaid,
+            'isPrepaid'
+        );
+
+        $this->assertEquals(
+            $array['type'],
+            $cc->type,
+            'type'
         );
     }
 }
