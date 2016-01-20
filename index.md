@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v0.3.0
+version: v0.4.0
 ---
 
 # MaxMind minFraud Insights and minFraud Score PHP API #
@@ -219,7 +219,7 @@ to the client API, please see
 
 ## Requirements  ##
 
-This code requires PHP 5.3 or greater. Older versions of PHP are not
+This code requires PHP 5.4 or greater. Older versions of PHP are not
 supported. This library works and is tested with HHVM.
 
 There are several other dependencies as defined in the `composer.json` file.
