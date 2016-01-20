@@ -11,13 +11,26 @@ class WarningTest extends \PHPUnit_Framework_TestCase
         $array = [
             'code' => 'INVALID_INPUT',
             'warning' => 'Bad input',
-            'input' => ['device', 'input']
+            'input_pointer' => '/device/input'
         ];
         $warning = new Warning($array);
 
-        foreach ($array as $key => $value) {
-            $this->assertEquals($value, $warning->$key, "$key is equal");
+        $this->assertSame(
+            $array['code'],
+            $warning->code,
+            'code'
+        );
 
-        }
+        $this->assertSame(
+            $array['warning'],
+            $warning->warning,
+            'warning'
+        );
+
+        $this->assertSame(
+            $array['input_pointer'],
+            $warning->inputPointer,
+            'inputPointer'
+        );
     }
 }

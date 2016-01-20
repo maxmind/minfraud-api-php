@@ -31,10 +31,11 @@ namespace MaxMind\MinFraud\Model;
  * @property string $warning This property provides a human-readable
  * explanation of the warning. The description may change at any time and
  * should not be matched against.
- * @property array $input This is an array of keys representing the path to the
- * input that the warning is associated with. For instance, if the warning was
- * about the billing city, the array would be `["billing", "city"]`. The key is
- * used for an object and the index number for an array.
+ *
+ * @property array $input A JSON Pointer to the input field that the warning
+ * is associated with. For instance, if the warning was about the billing
+ * city, this would be `/billing/city`. If it was for the price in the second
+ * shopping cart item, it would be `/shopping_cart/1/price`.
  */
 class Warning extends AbstractModel
 {
@@ -51,12 +52,12 @@ class Warning extends AbstractModel
     /**
      * @internal
      */
-    protected $input;
+    protected $inputPointer;
 
     public function __construct($response, $locales = ['en'])
     {
         $this->code = $this->safeArrayLookup($response['code']);
         $this->warning = $this->safeArrayLookup($response['warning']);
-        $this->input = $this->safeArrayLookup($response['input']);
+        $this->inputPointer = $this->safeArrayLookup($response['input_pointer']);
     }
 }

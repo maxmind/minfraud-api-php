@@ -7,6 +7,15 @@ CHANGELOG
 * PHP 7 support was added. PHP 5.3 support was dropped.
 * Previously an array within an array would incorrectly validate when using
   the `->with*` methods. This now correctly throws a validation exception.
+* Added support for new minFraud Insights outputs. These are:
+    * `/credit_card/brand`
+    * `/credit_card/type`
+    * `/device/id`
+    * `/email/is_free`
+    * `/emai/is_high_risk`
+* `input` on the `Warning` response model has been replaced with
+  `inputPointer`. The latter is a JSON pointer to the input that caused the
+  warning.
 
 0.3.0 (2015-08-10)
 ------------------

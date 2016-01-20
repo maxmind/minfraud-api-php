@@ -218,11 +218,17 @@ class MinFraudData
                 'matches_provided_phone_number' =>
                     true,
             ],
+            'brand' => 'Visa',
             'country' => 'US',
             'is_issued_in_billing_address_country' =>
                 true,
-            'is_prepaid' => true
-
+            'is_prepaid' => true,
+            'type' => 'credit'
+        ],
+        'device' => [ 'id' => '915d5202-d6c5-4616-b2c1-87683975dadb'],
+        'email' => [
+            'is_free' => true,
+            'is_high_risk' => true
         ],
         'shipping_address' => [
             'distance_to_billing_address' => 2227,
@@ -236,13 +242,13 @@ class MinFraudData
         'warnings' => [
             [
                 'code'  => 'INPUT_INVALID',
-                'input' => ['account', 'user_id'],
+                'input_pointer' => '/account/user_id',
                 'warning' =>
                     'Encountered value at /account/user_id that does meet the required constraints',
             ],
             [
                 'code'  => 'INPUT_INVALID',
-                'input' => ['account', 'username_md5'],
+                'input_pointer' => '/account/username_md5',
                 'warning' =>
                     'Encountered value at /account/username_md5 that does meet the required constraints',
             ],
