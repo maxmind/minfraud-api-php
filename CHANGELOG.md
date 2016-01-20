@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-0.4.0 (2016-XX-XX)
+0.4.0 (2016-01-20)
 ------------------
 
 * PHP 7 support was added. PHP 5.3 support was dropped.
