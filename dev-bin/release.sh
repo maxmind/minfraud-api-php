@@ -32,7 +32,7 @@ php composer.phar update --no-dev
 perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$TAG/g" src/MinFraud.php
 
 if [ ! -f box.phar ]; then
-    wget -O box.phar "https://github.com/box-project/box2/releases/download/2.5.0/box-2.5.0.phar"
+    wget -O box.phar "https://github.com/box-project/box2/releases/download/2.6.1/box-2.6.1.phar"
 fi
 
 php box.phar build
@@ -77,7 +77,7 @@ fi
 # sporadically deleted upstream and compatibility is often broken on patch
 # releases.
 if [ ! -f apigen.phar ]; then
-    wget -O apigen.phar "https://github.com/apigen/apigen/releases/download/v4.0.0-RC3/apigen-4.0.0-RC3.phar"
+    wget -O apigen.phar "https://github.com/ApiGen/ApiGen/releases/download/v4.1.2/apigen.phar"
 fi
 
 
@@ -123,6 +123,6 @@ popd
 
 git commit -m "Update for $TAG" -a
 
-git tag -a $TAG
+git tag -a "$TAG"
 git push
 git push --tags
