@@ -12,7 +12,7 @@ CHANGELOG
     * `/credit_card/type`
     * `/device/id`
     * `/email/is_free`
-    * `/emai/is_high_risk`
+    * `/email/is_high_risk`
 * `input` on the `Warning` response model has been replaced with
   `inputPointer`. The latter is a JSON pointer to the input that caused the
   warning.
