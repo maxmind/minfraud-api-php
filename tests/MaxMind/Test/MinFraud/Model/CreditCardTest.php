@@ -76,5 +76,11 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             $cc->type,
             'type'
         );
+
+        $this->assertEquals(
+            $array,
+            $cc->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

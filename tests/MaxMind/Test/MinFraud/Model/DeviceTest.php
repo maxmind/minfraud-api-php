@@ -18,5 +18,11 @@ class DeviceTest extends \PHPUnit_Framework_TestCase
             $device->id,
             'id'
         );
+
+        $this->assertEquals(
+            $array,
+            $device->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

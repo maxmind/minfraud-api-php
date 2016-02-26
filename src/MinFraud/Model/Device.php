@@ -22,6 +22,7 @@ class Device extends AbstractModel
 
     public function __construct($response, $locales = ['en'])
     {
+        parent::__construct($response, $locales);
         $this->id = $this->safeArrayLookup($response['id']);
     }
 }

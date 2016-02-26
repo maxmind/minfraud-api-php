@@ -69,5 +69,11 @@ class InsightsTest extends \PHPUnit_Framework_TestCase
             $insights->billingAddress->latitude,
             'correct billing latitude'
         );
+
+        $this->assertEquals(
+            $array,
+            $insights->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

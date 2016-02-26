@@ -42,5 +42,11 @@ class ScoreTest extends \PHPUnit_Framework_TestCase
             $score->warnings[0]->code,
             'first warning has correct code'
         );
+
+        $this->assertEquals(
+            $array,
+            $score->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }
