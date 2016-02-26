@@ -60,5 +60,11 @@ class ShippingAddressTest extends \PHPUnit_Framework_TestCase
             $shipping->isInIpCountry,
             'isInIpCountry'
         );
+
+        $this->assertEquals(
+            $array,
+            $shipping->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

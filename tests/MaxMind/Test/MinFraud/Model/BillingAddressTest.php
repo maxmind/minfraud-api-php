@@ -46,5 +46,11 @@ class BillingAddressTest extends \PHPUnit_Framework_TestCase
             $billing->isInIpCountry,
             'isInIpCountry'
         );
+
+        $this->assertEquals(
+            $array,
+            $billing->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

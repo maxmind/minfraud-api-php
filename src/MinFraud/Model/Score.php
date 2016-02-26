@@ -8,6 +8,8 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property integer $creditsRemaining The approximate number of service
  * credits remaining on your account.
+ * @property integer $rawResponse The raw data that comes back from the post
+ * request to the maxmind server.
  * @property string $id This is a UUID that identifies the minFraud request.
  * Please use this ID in bug reports or support requests to MaxMind so that we
  * can easily identify a particular request.
@@ -32,6 +34,11 @@ class Score extends AbstractModel
     /**
      * @internal
      */
+    protected $rawResponse;
+
+    /**
+     * @internal
+     */
     protected $id;
 
     /**
@@ -46,6 +53,8 @@ class Score extends AbstractModel
 
     public function __construct($response, $locales = ['en'])
     {
+        parent::__construct($response, $locales);
+
         $this->creditsRemaining = $this->safeArrayLookup($response['credits_remaining']);
         $this->id = $this->safeArrayLookup($response['id']);
         $this->riskScore = $this->safeArrayLookup($response['risk_score']);

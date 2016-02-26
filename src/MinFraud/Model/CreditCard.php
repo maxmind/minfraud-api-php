@@ -64,6 +64,8 @@ class CreditCard extends AbstractModel
 
     public function __construct($response, $locales = ['en'])
     {
+        parent::__construct($response, $locales);
+
         $this->issuer = new Issuer($this->safeArrayLookup($response['issuer']));
 
         $this->brand = $this->safeArrayLookup($response['brand']);

@@ -60,5 +60,11 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
             $ipAddress->postal->code,
             'postal code'
         );
+
+        $this->assertEquals(
+            $array,
+            $ipAddress->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

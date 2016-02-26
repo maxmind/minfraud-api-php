@@ -28,6 +28,7 @@ class Email extends AbstractModel
 
     public function __construct($response, $locales = ['en'])
     {
+        parent::__construct($response, $locales);
         $this->isFree = $this->safeArrayLookup($response['is_free']);
         $this->isHighRisk = $this->safeArrayLookup($response['is_high_risk']);
     }

@@ -39,5 +39,11 @@ class IssuerTest extends \PHPUnit_Framework_TestCase
             $issuer->matchesProvidedPhoneNumber,
             'issuer phone number matches'
         );
+
+        $this->assertEquals(
+            $array,
+            $issuer->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
     }
 }

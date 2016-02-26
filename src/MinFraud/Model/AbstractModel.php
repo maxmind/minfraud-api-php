@@ -7,7 +7,7 @@ namespace MaxMind\MinFraud\Model;
  * @package MaxMind\MinFraud\Model
  * @internal
  */
-abstract class AbstractModel
+abstract class AbstractModel implements \JsonSerializable
 {
 
     /**
@@ -18,6 +18,7 @@ abstract class AbstractModel
      */
     public function __construct($response, $locales = ['en'])
     {
+        $this->rawResponse = $response;
     }
 
     /**
@@ -44,5 +45,13 @@ abstract class AbstractModel
         }
 
         throw new \RuntimeException("Unknown attribute: $attr");
+    }
+
+    /**
+     * Returns data that can be serialized by json_encode
+     */
+    public function jsonSerialize()
+    {
+        return $this->rawResponse;
     }
 }

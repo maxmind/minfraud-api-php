@@ -44,6 +44,8 @@ class Issuer extends AbstractModel
 
     public function __construct($response, $locales = ['en'])
     {
+        parent::__construct($response, $locales);
+
         $this->name = $this->safeArrayLookup($response['name']);
         $this->matchesProvidedName
             = $this->safeArrayLookup($response['matches_provided_name']);
