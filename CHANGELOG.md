@@ -5,6 +5,9 @@ CHANGELOG
 ------------------
 
 * Implement `JsonSerializable`.
+- Added the following new values to the payment processor validation:
+  `ccnow`, `dalpay`, `epay` (repaces `epayeu`), `payplus`, `pinpayments`,
+  `quickpay`, and `verepay`.
 
 0.4.0 (2016-01-20)
 ------------------
