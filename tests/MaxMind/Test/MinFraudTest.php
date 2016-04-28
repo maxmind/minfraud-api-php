@@ -17,7 +17,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             new $class(Data::$responseMeth()),
             $this->createMinFraudRequestWithFullResponse($service)
-                ->with(Data::$fullRequest)->$service(),
+                ->with(Data::fullRequest())->$service(),
             'response for full request'
         );
     }
@@ -28,19 +28,19 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testFullInsightsRequestBuiltPiecemeal($class, $service)
     {
         $incompleteMf = $this->createMinFraudRequestWithFullResponse($service)
-            ->withEvent(Data::$fullRequest['event'])
-            ->withAccount(Data::$fullRequest['account'])
-            ->withEmail(Data::$fullRequest['email'])
-            ->withBilling(Data::$fullRequest['billing'])
-            ->withShipping(Data::$fullRequest['shipping'])
-            ->withPayment(Data::$fullRequest['payment'])
-            ->withCreditCard(Data::$fullRequest['credit_card'])
-            ->withOrder(Data::$fullRequest['order'])
-            ->withShoppingCartItem(Data::$fullRequest['shopping_cart'][0]);
+            ->withEvent(Data::fullRequest()['event'])
+            ->withAccount(Data::fullRequest()['account'])
+            ->withEmail(Data::fullRequest()['email'])
+            ->withBilling(Data::fullRequest()['billing'])
+            ->withShipping(Data::fullRequest()['shipping'])
+            ->withPayment(Data::fullRequest()['payment'])
+            ->withCreditCard(Data::fullRequest()['credit_card'])
+            ->withOrder(Data::fullRequest()['order'])
+            ->withShoppingCartItem(Data::fullRequest()['shopping_cart'][0]);
 
         $mf = $incompleteMf
-            ->withShoppingCartItem(Data::$fullRequest['shopping_cart'][1])
-            ->withDevice(Data::$fullRequest['device']);
+            ->withShoppingCartItem(Data::fullRequest()['shopping_cart'][1])
+            ->withDevice(Data::fullRequest()['device']);
 
         $responseMeth = $service . 'FullResponse';
         $this->assertEquals(
@@ -64,7 +64,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             [
                 'locales' => ['fr']
             ]
-        )->with(Data::$fullRequest)->insights();
+        )->with(Data::fullRequest())->insights();
 
         $this->assertEquals(
             'Royaume-Uni',
@@ -140,7 +140,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testMissingIpAddress($class, $service)
     {
         $this->createMinFraudRequestWithFullResponse($service, 0)
-            ->with(Data::$fullRequest)
+            ->with(Data::fullRequest())
             ->withDevice([])->$service();
     }
 
@@ -155,7 +155,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             $service,
             0,
             ['validateInput' => false]
-        )->with(Data::$fullRequest)
+        )->with(Data::fullRequest())
             ->withDevice([])->$service();
     }
 
@@ -605,6 +605,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function services()
     {
         return [
+            ['\MaxMind\MinFraud\Model\Factors', 'factors'],
             ['\MaxMind\MinFraud\Model\Insights', 'insights'],
             ['\MaxMind\MinFraud\Model\Score', 'score']
         ];
@@ -617,7 +618,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $request = null
     ) {
         if ($request === null) {
-            $request = Data::$fullRequest;
+            $request = Data::fullRequest();
         }
         $responseMeth = $service . 'FullResponse';
 

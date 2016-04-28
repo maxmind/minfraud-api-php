@@ -298,6 +298,27 @@ class MinFraud
     }
 
     /**
+     * This method performs a minFraud Factors lookup using the request data
+     * in the current object and returns a model object for minFraud Factors.
+     *
+     * @return MinFraud\Model\Factors minFraud Factors model object.
+     * @throws InvalidInputException when the request has missing or invalid
+     * data.
+     * @throws AuthenticationException when there is an issue authenticating
+     * the request.
+     * @throws InsufficientFundsException when your account is out of funds.
+     * @throws InvalidRequestException when the request is invalid for some
+     * other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException when an unexpected HTTP error occurs.
+     * @throws WebServiceException when some other error occurs. This also
+     * serves as the base class for the above exceptions.
+     */
+    public function factors()
+    {
+        return $this->post('Factors');
+    }
+
+    /**
      * @param $service $service The name of the service to use.
      * @return mixed The model class for the service.
      * @throws InvalidInputException when the request has missing or invalid

@@ -6,12 +6,13 @@ namespace MaxMind\MinFraud\Model;
  * Class Email
  * @package MaxMind\MinFraud\Model
  *
- * @property boolean $isFree This property is true if MaxMind believes that this
- * email is hosted by a free email provider such as Gmail or Yahoo! Mail.
+ * @property boolean|null $isFree This property is true if MaxMind believes
+ * that this email is hosted by a free email provider such as Gmail or Yahoo!
+ * Mail.
  *
- * @property boolean $isHighRisk This field is true if MaxMind believes that
- * this email is likely to be used for fraud. Note that this is also factored
- * into the overall risk_score in the response as well.
+ * @property boolean|null $isHighRisk This field is true if MaxMind believes
+ * that this email is likely to be used for fraud. Note that this is also
+ * factored into the overall risk_score in the response as well.
  *
  */
 class Email extends AbstractModel
