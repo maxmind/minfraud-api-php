@@ -1,0 +1,159 @@
+{
+  "id": "27d26476-e2bc-11e4-92b8-962e705b4af5",
+  "risk_score": 0.01,
+  "credits_remaining": 1000,
+  "ip_address": {
+    "risk": 0.01,
+    "city": {
+      "confidence": 42,
+      "geoname_id": 2643743,
+      "names": {
+        "de": "London",
+        "en": "London",
+        "es": "Londres",
+        "fr": "Londres",
+        "ja": "\u30ed\u30f3\u30c9\u30f3",
+        "pt-BR": "Londres",
+        "ru": "\u041b\u043e\u043d\u0434\u043e\u043d"
+      }
+    },
+    "continent": {
+      "code": "EU",
+      "geoname_id": 6255148,
+      "names": {
+        "de": "Europa",
+        "en": "Europe",
+        "es": "Europa",
+        "fr": "Europe",
+        "ja": "\u30e8\u30fc\u30ed\u30c3\u30d1",
+        "pt-BR": "Europa",
+        "ru": "\u0415\u0432\u0440\u043e\u043f\u0430",
+        "zh-CN": "\u6b27\u6d32"
+      }
+    },
+    "country": {
+      "confidence": 99,
+      "geoname_id": 2635167,
+      "is_high_risk": false,
+      "iso_code": "GB",
+      "names": {
+        "de": "Vereinigtes K\u00f6nigreich",
+        "en": "United Kingdom",
+        "es": "Reino Unido",
+        "fr": "Royaume-Uni",
+        "ja": "\u30a4\u30ae\u30ea\u30b9",
+        "pt-BR": "Reino Unido",
+        "ru": "\u0412\u0435\u043b\u0438\u043a\u043e\u0431\u0440\u0438\u0442\u0430\u043d\u0438\u044f",
+        "zh-CN": "\u82f1\u56fd"
+      }
+    },
+    "location": {
+      "accuracy_radius": 96,
+      "latitude": 51.5142,
+      "local_time": "2012-04-13T00:20:50+01:00",
+      "longitude": -0.0931,
+      "time_zone": "Europe\/London"
+    },
+    "registered_country": {
+      "geoname_id": 6252001,
+      "iso_code": "US",
+      "names": {
+        "de": "USA",
+        "en": "United States",
+        "es": "Estados Unidos",
+        "fr": "\u00c9tats-Unis",
+        "ja": "\u30a2\u30e1\u30ea\u30ab\u5408\u8846\u56fd",
+        "pt-BR": "Estados Unidos",
+        "ru": "\u0421\u0428\u0410",
+        "zh-CN": "\u7f8e\u56fd"
+      }
+    },
+    "subdivisions": [
+      {
+        "confidence": 42,
+        "geoname_id": 6269131,
+        "iso_code": "ENG",
+        "names": {
+          "en": "England",
+          "es": "Inglaterra",
+          "fr": "Angleterre",
+          "pt-BR": "Inglaterra"
+        }
+      }
+    ],
+    "traits": {
+      "domain": "in-addr.arpa",
+      "ip_address": "81.2.69.160",
+      "isp": "Andrews & Arnold Ltd",
+      "organization": "STONEHOUSE office network",
+      "user_type": "government"
+    }
+  },
+  "billing_address": {
+    "is_postal_in_city": false,
+    "latitude": 41.310571,
+    "longitude": -72.922891,
+    "distance_to_ip_location": 5465,
+    "is_in_ip_country": false
+  },
+  "credit_card": {
+    "issuer": {
+      "name": "Bank of No Hope",
+      "matches_provided_name": true,
+      "phone_number": "8003421232",
+      "matches_provided_phone_number": true
+    },
+    "brand": "Visa",
+    "country": "US",
+    "is_issued_in_billing_address_country": true,
+    "is_prepaid": true,
+    "type": "credit"
+  },
+  "device": {
+    "id": "7835b099-d385-4e5b-969e-7df26181d73b"
+  },
+  "email": {
+    "is_free": true,
+    "is_high_risk": true
+  },
+  "shipping_address": {
+    "distance_to_billing_address": 2227,
+    "distance_to_ip_location": 7456,
+    "is_in_ip_country": false,
+    "is_high_risk": false,
+    "is_postal_in_city": false,
+    "latitude": 35.704729,
+    "longitude": -97.568619
+  },
+  "subscores": {
+    "avs_result": 0.01,
+    "billing_address": 0.02,
+    "billing_address_distance_to_ip_location": 0.03,
+    "browser": 0.04,
+    "chargeback": 0.05,
+    "country": 0.06,
+    "country_mismatch": 0.07,
+    "cvv_result": 0.08,
+    "email_address": 0.09,
+    "email_domain": 0.10,
+    "email_tenure": 0.11,
+    "ip_tenure": 0.12,
+    "issuer_id_number": 0.13,
+    "order_amount": 0.14,
+    "phone_number": 0.15,
+    "shipping_address_distance_to_ip_location": 0.16,
+    "time_of_day": 0.17
+  },
+  "warnings": [
+    {
+      "code": "INPUT_INVALID",
+      "input_pointer": "/account/user_id",
+      "warning": "Encountered value at \/account\/user_id that does meet the required constraints"
+    },
+    {
+      "code": "INPUT_INVALID",
+      "input_pointer": "/account/username_md5",
+      "warning": "Encountered value at \/account\/username_md5 that does meet the required constraints"
+    }
+  ]
+}

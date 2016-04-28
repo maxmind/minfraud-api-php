@@ -7,11 +7,20 @@ use MaxMind\Test\MinFraudData as Data;
 
 class ScoreTest extends \PHPUnit_Framework_TestCase
 {
-    public function testScore()
+    protected function response()
     {
-        $array = Data::scoreFullResponse();
+        return Data::scoreFullResponse();
+    }
 
-        $score = new Score($array);
+    protected function model()
+    {
+        return new Score($this->response());
+    }
+
+    public function testScoreProperties()
+    {
+        $array = $this->response();
+        $score = $this->model();
 
         $this->assertEquals(
             $array['id'],

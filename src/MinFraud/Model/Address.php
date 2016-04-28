@@ -6,18 +6,18 @@ namespace MaxMind\MinFraud\Model;
  * Class Address
  * @package MaxMind\MinFraud\Model
  *
- * @property integer $distanceToIpLocation The distance in kilometers from the
- * address to the IP location.
- * @property boolean $isInIpCountry This property is true if the address is in
- * the IP country. The property is false when the address is not in the IP
- * country. If the address could not be parsed or was not provided or if the
- * IP address could not be geolocated, the property will be null.
- * @property boolean $isPostalInCity This property is true if the postal code
- * provided with the address is in the city for the address. The property is
- * false when the postal code is not in the city. If the address could not be
- * parsed or was not provided, the property will be null.
- * @property float $latitude The latitude associated with the address.
- * @property float $longitude The longitude associated with the address.
+ * @property integer|null $distanceToIpLocation The distance in kilometers from
+ * the address to the IP location.
+ * @property boolean|null $isInIpCountry This property is true if the address
+ * is in the IP country. The property is false when the address is not in the
+ * IP country. If the address could not be parsed or was not provided or if
+ * the IP address could not be geolocated, the property will be null.
+ * @property boolean|null $isPostalInCity This property is true if the postal
+ * code provided with the address is in the city for the address. The property
+ * is false when the postal code is not in the city. If the address could not
+ * be parsed or was not provided, the property will be null.
+ * @property float|null $latitude The latitude associated with the address.
+ * @property float|null $longitude The longitude associated with the address.
  *
  */
 abstract class Address extends AbstractModel

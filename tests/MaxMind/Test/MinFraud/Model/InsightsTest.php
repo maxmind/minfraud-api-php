@@ -5,43 +5,22 @@ namespace MaxMind\Test\MinFraud\Model;
 use MaxMind\MinFraud\Model\Insights;
 use MaxMind\Test\MinFraudData as Data;
 
-class InsightsTest extends \PHPUnit_Framework_TestCase
+class InsightsTest extends ScoreTest
 {
-    public function testInsights()
+    protected function response()
     {
-        $array = Data::insightsFullResponse();
+        return Data::insightsFullResponse();
+    }
 
-        $insights = new Insights($array, ['fr']);
+    protected function model()
+    {
+        return new Insights($this->response(), ['fr']);
+    }
 
-        $this->assertEquals(
-            $array['id'],
-            $insights->id,
-            'id'
-        );
-
-        $this->assertEquals(
-            $array['credits_remaining'],
-            $insights->creditsRemaining,
-            'credits remaining'
-        );
-
-        $this->assertEquals(
-            $array['risk_score'],
-            $insights->riskScore,
-            'riskScore'
-        );
-
-        $this->assertEquals(
-            count($array['warnings']),
-            count($insights->warnings),
-            'correct number of warnings'
-        );
-
-        $this->assertEquals(
-            $array['warnings'][0]['code'],
-            $insights->warnings[0]->code,
-            'first warning has correct code'
-        );
+    public function testInsightsProperties()
+    {
+        $array = $this->response();
+        $insights = $this->model();
 
         // We test one field in each contained object to ensure that data
         // is being passed correctly to these objects. There are specific
@@ -68,12 +47,6 @@ class InsightsTest extends \PHPUnit_Framework_TestCase
             $array['billing_address']['latitude'],
             $insights->billingAddress->latitude,
             'correct billing latitude'
-        );
-
-        $this->assertEquals(
-            $array,
-            $insights->jsonSerialize(),
-            'correctly implements JsonSerializable'
         );
     }
 }

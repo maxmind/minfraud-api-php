@@ -1,18 +1,18 @@
-# MaxMind minFraud Insights and minFraud Score PHP API #
+# MaxMind minFraud Factors, Insights, Score PHP API #
 
 ## Beta Note ##
 
 This is a beta release. The API may change before the first production
 release.
 
-You may find information on the changes in minFraud Score and minFraud
-Insights in our [What's New
+You may find information on the changes in minFraud Score, Insights, and
+Factors in our [What's New
 documentation](https://dev.maxmind.com/minfraud/whats-new-in-minfraud-score-and-minfraud-insights/).
 
 ## Description ##
 
-This package provides an API for the [MaxMind minFraud Score and minFraud Insights
-web services](http://dev.maxmind.com/minfraud/minfraud-score-and-insights-api-documentation/).
+This package provides an API for the [MaxMind minFraud Score, Insights, and
+Factors web services](http://dev.maxmind.com/minfraud/minfraud-score-and-insights-api-documentation/).
 
 ## Install via Composer ##
 
@@ -64,10 +64,11 @@ setting `validateInput` to `false` in the options array for
 through development as it will help ensure that you are sending valid data to
 the web service.
 
-After creating the request object, send a Score request by calling `->score()`
-or an Insights request by calling `->insights()`. If the request succeeds, a
-model object will be returned for the endpoint. If the request fails, an
-exception will be thrown.
+After creating the request object, send a Score request by calling
+`->score()`, an Insights request by calling `->insights()`, or a Factors
+request by calling `->factors()`. If the request succeeds, a model object will
+be returned for the endpoint. If the request fails, an exception will be
+thrown.
 
 See the API documentation for more details.
 
@@ -180,6 +181,11 @@ $request = $mf->withDevice([
     'quantity' => 1,
     'price'    => 100.00,
 ]);
+
+# To get the minFraud Factors response model, use ->factors():
+$factorsResponse = $request->factors();
+
+print($insightsResponse->subscores->email . "\n");
 
 # To get the minFraud Insights response model, use ->insights():
 $insightsResponse = $request->insights();

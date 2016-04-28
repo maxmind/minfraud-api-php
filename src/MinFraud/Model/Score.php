@@ -34,12 +34,17 @@ class Score extends AbstractModel
     /**
      * @internal
      */
-    protected $rawResponse;
+    protected $id;
 
     /**
      * @internal
      */
-    protected $id;
+    protected $ipAddress;
+
+    /**
+     * @internal
+     */
+    protected $rawResponse;
 
     /**
      * @internal
@@ -57,6 +62,8 @@ class Score extends AbstractModel
 
         $this->creditsRemaining = $this->safeArrayLookup($response['credits_remaining']);
         $this->id = $this->safeArrayLookup($response['id']);
+        $this->ipAddress
+            = new ScoreIpAddress($this->safeArrayLookup($response['ipAddress']));
         $this->riskScore = $this->safeArrayLookup($response['risk_score']);
 
         $this->warnings = [];
