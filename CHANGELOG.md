@@ -1,14 +1,14 @@
 CHANGELOG
 =========
 
-0.5.0 (2016-XX-XX)
+0.5.0 (2016-05-23)
 ------------------
 
 * Added support for the minFraud Factors.
 * Added IP address risk to the minFraud Score model.
 * Implement `JsonSerializable`.
 * Added the following new values to the payment processor validation:
-  `ccnow`, `dalpay`, `epay` (repaces `epayeu`), `payplus`, `pinpayments`,
+  `ccnow`, `dalpay`, `epay` (replaces `epayeu`), `payplus`, `pinpayments`,
   `quickpay`, and `verepay`.
 
 0.4.0 (2016-01-20)
