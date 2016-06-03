@@ -6,8 +6,10 @@ namespace MaxMind\MinFraud\Model;
  * Class Score
  * @package MaxMind\MinFraud\Model
  *
- * @property integer $creditsRemaining The approximate number of service
- * credits remaining on your account.
+ * @property integer $fundsRemaining The approximate US dollar value of the
+ * funds remaining on your MaxMind account.
+ * @property integer $queriesRemaining The approximate number of queries
+ * remaining for this service before your account runs out of funds.
  * @property integer $rawResponse The raw data that comes back from the post
  * request to the maxmind server.
  * @property string $id This is a UUID that identifies the minFraud request.
@@ -29,7 +31,12 @@ class Score extends AbstractModel
     /**
      * @internal
      */
-    protected $creditsRemaining;
+    protected $fundsRemaining;
+
+    /**
+     * @internal
+     */
+    protected $queriesRemaining;
 
     /**
      * @internal
@@ -60,7 +67,8 @@ class Score extends AbstractModel
     {
         parent::__construct($response, $locales);
 
-        $this->creditsRemaining = $this->safeArrayLookup($response['credits_remaining']);
+        $this->fundsRemaining = $this->safeArrayLookup($response['funds_remaining']);
+        $this->queriesRemaining = $this->safeArrayLookup($response['queries_remaining']);
         $this->id = $this->safeArrayLookup($response['id']);
         $this->ipAddress
             = new ScoreIpAddress($this->safeArrayLookup($response['ipAddress']));
