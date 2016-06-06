@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+0.6.0 (2016-XX-XX)
+------------------
+
+* BREAKING CHANGE: `creditsRemaining` has been removed from the web service
+  models and has been replaced by `queriesRemaining`.
+* Added `queriesRemaining` and `fundsRemaining`. Note that `fundsRemaining`
+  will not be returned by the web service until our new credit system is in
+  place.
+
 0.5.0 (2016-05-23)
 ------------------
 

@@ -29,8 +29,14 @@ class ScoreTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(
-            $array['credits_remaining'],
-            $score->creditsRemaining,
+            $array['funds_remaining'],
+            $score->fundsRemaining,
+            'funds remaining'
+        );
+
+        $this->assertEquals(
+            $array['queries_remaining'],
+            $score->queriesRemaining,
             'credits remaining'
         );
 

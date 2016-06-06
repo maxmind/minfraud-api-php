@@ -1,7 +1,8 @@
 {
   "risk_score": 0.01,
   "id": "27d26476-e2bc-11e4-92b8-962e705b4af5",
-  "credits_remaining": 1000,
+  "funds_remaining": 10.00,
+  "queries_remaining": 1000,
   "ip_address": {
     "risk": 99
   },
