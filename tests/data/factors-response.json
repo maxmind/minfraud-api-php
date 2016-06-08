@@ -111,7 +111,9 @@
     "type": "credit"
   },
   "device": {
-    "id": "7835b099-d385-4e5b-969e-7df26181d73b"
+    "confidence": 99,
+    "id": "7835b099-d385-4e5b-969e-7df26181d73b",
+    "last_seen": "2016-06-08T14:16:38Z"
   },
   "email": {
     "is_free": true,

@@ -9,6 +9,7 @@ CHANGELOG
 * Added `queriesRemaining` and `fundsRemaining`. Note that `fundsRemaining`
   will not be returned by the web service until our new credit system is in
   place.
+* `confidence` and `lastSeen` were added to the `Device` response model.
 
 0.5.0 (2016-05-23)
 ------------------
