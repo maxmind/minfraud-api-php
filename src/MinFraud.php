@@ -60,6 +60,8 @@ class MinFraud
      * * `caBundle` - The bundle of CA root certificates to use in the request.
      * * `connectTimeout` - The connect timeout to use for the request.
      * * `timeout` - The timeout to use for the request.
+     * * `proxy` - The HTTP proxy to use. May include a schema, port,
+     *   username, and password, e.g., `http://username:password@127.0.0.1:10`.
      * * `locales` - An array of locale codes to use for the location name
      *   properties.
      * * `validateInput` - Default is `true`. Determines whether values passed
