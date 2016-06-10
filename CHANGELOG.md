@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.6.1 (2016-06-10)
+------------------
+
+* Upgraded to `maxmind/web-service-common` that supports setting a HTTP proxy.
+
 0.6.0 (2016-06-08)
 ------------------
 
