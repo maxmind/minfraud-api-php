@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+0.6.2
+------------------
+
+* Added the following new values to the payment processor validation:
+  `concept_payments`, `ecomm365`, `orangepay`, and `pacnet_services`.
+
 0.6.1 (2016-06-10)
 ------------------
 
