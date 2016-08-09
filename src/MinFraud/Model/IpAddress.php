@@ -5,10 +5,9 @@ namespace MaxMind\MinFraud\Model;
 use GeoIp2\Model\Insights as GeoIp2Insights;
 
 /**
- * Class IpAddress
- * @package MaxMind\MinFraud\Model
+ * Model containing GeoIP2 data and the risk for the IP address.
  *
- * @property float $risk This field contains the risk associated with the IP
+ * @property-read float $risk This field contains the risk associated with the IP
  * address. The value ranges from 0.01 to 99. A higher score indicates a
  * higher risk.
  */

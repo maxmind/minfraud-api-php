@@ -4,7 +4,6 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Class AbstractModel
- * @package MaxMind\MinFraud\Model
  * @internal
  */
 abstract class AbstractModel implements \JsonSerializable

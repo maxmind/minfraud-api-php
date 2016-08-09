@@ -3,11 +3,9 @@
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Class Warning
- * @package MaxMind\MinFraud\Model
+ * Warning about the minFraud request.
  *
- * @property string $code This value is a machine-readable code identifying the
- * warning. Although more codes may be added in the future, the current codes
+ * Although more codes may be added in the future, the current warning codes
  * are:
  *
  * * `BILLING_CITY_NOT_FOUND` - the billing city could not be found in our
@@ -28,11 +26,14 @@ namespace MaxMind\MinFraud\Model;
  * * `SHIPPING_POSTAL_NOT_FOUND` - the shipping postal could not be found in
  *   our database.
  *
- * @property string $warning This property provides a human-readable
+ * @property-read string $code This value is a machine-readable code identifying the
+ * warning.
+ *
+ * @property-read string $warning This property provides a human-readable
  * explanation of the warning. The description may change at any time and
  * should not be matched against.
  *
- * @property array|null $input A JSON Pointer to the input field that the
+ * @property-read array|null $input A JSON Pointer to the input field that the
  * warning is associated with. For instance, if the warning was about the
  * billing city, this would be `/billing/city`. If it was for the price in
  * the second shopping cart item, it would be `/shopping_cart/1/price`.

@@ -3,56 +3,55 @@
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Class Subscores
- * @package MaxMind\MinFraud\Subscores
+ * Subscores for components that are used in calculating the riskScore.
  *
- * @property float|null avsResult The risk associated with the AVS result. If
+ * @property-read float|null avsResult The risk associated with the AVS result. If
  * present, this is a value in the range 0.01 to 99.
- * @property float|null billingAddress The risk associated with the billing
+ * @property-read float|null billingAddress The risk associated with the billing
  * address. If present, this is a value in the range 0.01 to 99.
- * @property float|null billingAddressDistanceToIpLocation The risk
+ * @property-read float|null billingAddressDistanceToIpLocation The risk
  * associated with the distance between the billing address and the
  * location for the given IP address. If present, this is a value in the
  * range 0.01 to 99.
- * @property float|null browser The risk associated with the browser
+ * @property-read float|null browser The risk associated with the browser
  * attributes such as the User-Agent and Accept-Language. If present, this is
  * a value in the range 0.01 to 99.
- * @property float|null chargeback Individualized risk of chargeback for the
+ * @property-read float|null chargeback Individualized risk of chargeback for the
  * given IP address given for your account and any shop ID passed. This is
  * only available to users sending chargeback data to MaxMind. If present,
  * this is a value in the range 0.01 to 99.
- * @property float|null country The risk associated with the country the
+ * @property-read float|null country The risk associated with the country the
  * transaction originated from. If present, this is a value in the  range 0.01
  * to 99.
- * @property float|null countryMismatch The risk associated with the
+ * @property-read float|null countryMismatch The risk associated with the
  * combination of IP country, card issuer country, billing country, and
  * shipping country. If present, this is a value in the  range 0.01 to 99.
- * @property float|null cvvResult The risk associated with the CVV result. If
+ * @property-read float|null cvvResult The risk associated with the CVV result. If
  * present, this is a value in the range 0.01 to 99.
- * @property float|null emailAddress The risk associated with the particular
+ * @property-read float|null emailAddress The risk associated with the particular
  * email address. If present, this is a value in the range 0.01 to 99.
- * @property float|null emailDomain The general risk associated with the
+ * @property-read float|null emailDomain The general risk associated with the
  * email domain. If present, this is a value in the range 0.01 to 99.
- * @property float|null emailTenure The risk associated with the issuer ID
+ * @property-read float|null emailTenure The risk associated with the issuer ID
  * number on the email domain. If present, this is a value in the range 0.01
  * to 99.
- * @property float|null ipTenure The risk associated with the issuer ID
+ * @property-read float|null ipTenure The risk associated with the issuer ID
  * number on the IP address. If present, this is a value in the range 0.01 to
  * 99.
- * @property float|null issuerIdNumber The risk associated with the
+ * @property-read float|null issuerIdNumber The risk associated with the
  * particular issuer ID number (IIN) given the billing location and the
  * history of usage of the IIN on your account and shop ID. If present, this
  * is a value in the range 0.01 to 99.
- * @property float|null orderAmount The risk associated with the particular
+ * @property-read float|null orderAmount The risk associated with the particular
  * order amount for your account and shop ID. If present, this is a value in
  * the range 0.01 to 99.
- * @property float|null phoneNumber The risk associated with the particular
+ * @property-read float|null phoneNumber The risk associated with the particular
  * phone number. If present, this is a value in the range 0.01 to 99.
- * @property float|null shippingAddressDistanceToIpLocation The risk
+ * @property-read float|null shippingAddressDistanceToIpLocation The risk
  * associated with the distance between the shipping address and the IP
  * location for the given IP address. If present, this is a value in the
  * range 0.01 to 99.
- * @property float|null timeOfDay The risk associated with the local time of
+ * @property-read float|null timeOfDay The risk associated with the local time of
  * day of the transaction in the IP address location. If present, this is a
  * value in the range 0.01 to 99.
  *

@@ -76,22 +76,16 @@ fi
 # We no longer have apigen as a dependency in Composer as releases are
 # sporadically deleted upstream and compatibility is often broken on patch
 # releases.
-if [ ! -f apigen.phar ]; then
-    wget -O apigen.phar "https://github.com/ApiGen/ApiGen/releases/download/v4.1.2/apigen.phar"
-fi
+wget -O apigen.phar "http://apigen.org/apigen.phar"
 
-
-cat <<EOF > apigen.neon
-destination: doc/$TAG
-
-source:
-    - ../src
-    - .geoip2
-
-title: "minFraud Score and Insights PHP API $TAG"
-EOF
-
-php apigen.phar generate
+php apigen.phar generate \
+    -s ../src \
+    -s .geoip2 \
+    -d "doc/$TAG" \
+    --title "minFraud PHP API $TAG" \
+    --template-theme bootstrap \
+    --exclude "Compat" \
+    --php
 
 
 PAGE=index.md
