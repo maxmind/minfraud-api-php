@@ -87,8 +87,6 @@ php apigen.phar generate \
     --exclude "Compat" \
     --php
 
-php apigen.phar generate
-
 
 PAGE=index.md
 cat <<EOF > $PAGE
