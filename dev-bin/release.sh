@@ -82,7 +82,7 @@ php apigen.phar generate \
     -s ../src \
     -s .geoip2 \
     -d "doc/$TAG" \
-    --title "minFraud Score, Insights, and Factors PHP API $TAG" \
+    --title "minFraud PHP API $TAG" \
     --template-theme bootstrap \
     --exclude "Compat" \
     --php

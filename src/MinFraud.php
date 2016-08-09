@@ -13,9 +13,6 @@ use MaxMind\WebService\Client;
 use Respect\Validation\Exceptions\ValidationException;
 
 /**
- * Class MinFraud
- * @package MaxMind
- *
  * This class provides a client API for accessing MaxMind minFraud Score
  * and Insights.
  *

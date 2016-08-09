@@ -5,10 +5,9 @@ namespace MaxMind\MinFraud\Model;
 use GeoIp2\Record\Country;
 
 /**
- * Class GeoIp2Country
- * @package MaxMind\MinFraud\Model
+ * Model of the GeoIP2 country information.
  *
- * @property boolean $isHighRisk This value is true if the IP country is high
+ * @property-read boolean $isHighRisk This value is true if the IP country is high
  * risk.
  **/
 class GeoIp2Country extends Country

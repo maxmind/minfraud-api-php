@@ -3,10 +3,9 @@
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Class ScoreIpAddress
- * @package MaxMind\MinFraud\Model
+ * Model containing the IP address's risk for the Score response.
  *
- * @property float $risk This field contains the risk associated with the IP
+ * @property-read float $risk This field contains the risk associated with the IP
  * address. The value ranges from 0.01 to 99. A higher score indicates a
  * higher risk.
  */

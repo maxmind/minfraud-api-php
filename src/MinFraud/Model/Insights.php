@@ -3,27 +3,26 @@
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Class Insights
- * @package MaxMind\MinFraud\Model
+ * Model of the Insights score response.
  *
- * @property \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
+ * @property-read \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
  * containing minFraud data related to the billing address used in the
  * transaction.
  *
- * @property \MaxMind\MinFraud\Model\CreditCard $creditCard An object containing
+ * @property-read \MaxMind\MinFraud\Model\CreditCard $creditCard An object containing
  * minFraud data about the credit card used in the transaction.
  *
- * @property \MaxMind\MinFraud\Model\Device $device This object contains
+ * @property-read \MaxMind\MinFraud\Model\Device $device This object contains
  * information about the device that MaxMind believes is associated with the
  * IP address passed in the request.
  *
- * @property \MaxMind\MinFraud\Model\Email $email This object contains
+ * @property-read \MaxMind\MinFraud\Model\Email $email This object contains
  * information about the email address passed in the request.
  *
- * @property \MaxMind\MinFraud\Model\IpAddress $ipAddress An object containing
+ * @property-read \MaxMind\MinFraud\Model\IpAddress $ipAddress An object containing
  * GeoIP2 and minFraud Insights information about the geolocated IP address.
  *
- * @property \MaxMind\MinFraud\Model\ShippingAddress $shippingAddress An object
+ * @property-read \MaxMind\MinFraud\Model\ShippingAddress $shippingAddress An object
  * containing minFraud data related to the shipping address used in the
  * transaction.
  */
