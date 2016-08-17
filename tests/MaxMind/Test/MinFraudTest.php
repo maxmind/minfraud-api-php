@@ -2,6 +2,7 @@
 
 namespace MaxMind\Test;
 
+use Composer\CaBundle\CaBundle;
 use MaxMind\MinFraud;
 use MaxMind\Test\MinFraudData as Data;
 use MaxMind\WebService\Client;
@@ -674,9 +675,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         if (isset($options['caBundle'])) {
             $caBundle = $options['caBundle'];
         } else {
-            $reflectionClass = new \ReflectionClass('MaxMind\\WebService\\Client');
-            $file = $reflectionClass->getFileName();
-            $caBundle = dirname($file) . '/cacert.pem';
+            $caBundle = CaBundle::getSystemCaRootBundlePath();
         }
 
         $curlVersion = curl_version();
