@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.0 (2016-09-15)
+------------------
+
+* First production release. No code changes.
+
 0.6.2 (2016-08-17)
 ------------------
 

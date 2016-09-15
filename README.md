@@ -1,14 +1,5 @@
 # MaxMind minFraud Factors, Insights, Score PHP API #
 
-## Beta Note ##
-
-This is a beta release. The API may change before the first production
-release.
-
-You may find information on the changes in minFraud Score, Insights, and
-Factors in our [What's New
-documentation](https://dev.maxmind.com/minfraud/whats-new-in-minfraud-score-and-minfraud-insights/).
-
 ## Description ##
 
 This package provides an API for the [MaxMind minFraud Score, Insights, and
@@ -48,6 +39,11 @@ from your code:
 ```php
 require 'vendor/autoload.php';
 ```
+
+## API Documentation ###
+
+More detailed API documentation is available on [our GitHub
+Page](http://maxmind.github.io/minfraud-api-php/) under the "API" tab.
 
 ## Usage ##
 

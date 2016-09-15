@@ -20,7 +20,7 @@
     "php": ">=5.4",
     "ext-json": "*",
     "geoip2/geoip2": "^2.4",
-    "maxmind/web-service-common": "^0.3.0",
+    "maxmind/web-service-common": "^0.3.1",
     "respect/validation": "~1.0"
   },
   "require-dev": {
