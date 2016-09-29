@@ -91,7 +91,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the array to be sent to the web
      * service set to `$values`. Existing values will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/ minFraud API docs
+     * @link https://dev.maxmind.com/minfraud/ minFraud API docs
      *
      * @param $values
      * @return MinFraud
@@ -109,7 +109,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `device` array set to
      * `$values`. Existing `device` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Device_device
+     * @link https://dev.maxmind.com/minfraud/#Device_device
      *     minFraud device API docs
      *
      * @param $values
@@ -123,7 +123,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `events` array set to
      * `$values`. Existing `event` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Event_event
+     * @link https://dev.maxmind.com/minfraud/#Event_event
      *     minFraud event API docs
      *
      * @param $values
@@ -137,7 +137,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `account` array set to
      * `$values`. Existing `account` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Account_account
+     * @link https://dev.maxmind.com/minfraud/#Account_account
      *     minFraud account API docs
      *
      * @param $values
@@ -151,7 +151,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `email` array set to
      * `$values`. Existing `email` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Email_email
+     * @link https://dev.maxmind.com/minfraud/#Email_email
      *     minFraud email API docs
      *
      * @param $values
@@ -165,7 +165,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `billing` array set to
      * `$values`. Existing `billing` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Billing_billing
+     * @link https://dev.maxmind.com/minfraud/#Billing_billing
      *     minFraud billing API docs
      *
      * @param $values
@@ -179,7 +179,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `shipping` array set to
      * `$values`. Existing `shipping` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Shipping_shipping
+     * @link https://dev.maxmind.com/minfraud/#Shipping_shipping
      *     minFraud shipping API docs
      *
      * @param $values
@@ -193,7 +193,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `payment` array set to
      * `$values`. Existing `payment` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Payment_payment
+     * @link https://dev.maxmind.com/minfraud/#Payment_payment
      *     minFraud payment API docs
      *
      * @param $values
@@ -207,7 +207,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `credit_card` array set to
      * `$values`. Existing `credit_card` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Credit_Card_credit_card
+     * @link https://dev.maxmind.com/minfraud/#Credit_Card_credit_card
      *     minFraud credit_card API docs
      *
      * @param $values
@@ -221,7 +221,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `order` array set to
      * `$values`. Existing `order` data will be replaced.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Order_order
+     * @link https://dev.maxmind.com/minfraud/#Order_order
      *     minFraud order API docs
      *
      * @param $values
@@ -235,7 +235,7 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with `$values` added to the shopping
      * cart array.
-     * @link http://dev.maxmind.com/minfraud-score-and-insights-api-documentation/#Shopping_Cart_Item
+     * @link https://dev.maxmind.com/minfraud/#Shopping_Cart_Item
      *     minFraud shopping cart item API docs
      *
      * @param $values
