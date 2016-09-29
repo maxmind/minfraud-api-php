@@ -10,7 +10,7 @@ version: v1.0.0
 ## Description ##
 
 This package provides an API for the [MaxMind minFraud Score, Insights, and
-Factors web services](http://dev.maxmind.com/minfraud/minfraud-score-and-insights-api-documentation/).
+Factors web services](https://dev.maxmind.com/minfraud/).
 
 ## Install via Composer ##
 
