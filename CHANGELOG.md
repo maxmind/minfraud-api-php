@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.0.1
+------------------
+
+* Added the follow new values to the event type validation: `email_change` and
+  `password_reset`.
+
 1.0.0 (2016-09-15)
 ------------------
 
