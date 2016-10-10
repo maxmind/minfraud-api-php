@@ -47,6 +47,16 @@ abstract class AbstractModel implements \JsonSerializable
     }
 
     /**
+     * @internal
+     * @param $attr The attribute to determine if set
+     * @return The isset for the attribute
+     */
+    public function __isset($attr)
+    {
+        return isset($this->$attr);
+    }
+
+    /**
      * Returns data that can be serialized by json_encode
      */
     public function jsonSerialize()

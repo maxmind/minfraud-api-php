@@ -1,11 +1,12 @@
 CHANGELOG
 =========
 
-1.0.1
+1.1.0
 ------------------
 
 * Added the follow new values to the event type validation: `email_change` and
   `password_reset`.
+* `isset()` on model attributes now returns the correct value.
 
 1.0.0 (2016-09-15)
 ------------------
@@ -19,7 +20,7 @@ CHANGELOG
   `concept_payments`, `ecomm365`, `orangepay`, and `pacnet_services`.
 * Upgraded `maxmind/web-service-common` to 0.3.0. This version uses
   `composer/ca-bundle` rather than our own CA bundle.
-  
+
 0.6.1 (2016-06-10)
 ------------------
 

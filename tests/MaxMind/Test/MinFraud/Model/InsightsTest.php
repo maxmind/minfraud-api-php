@@ -48,5 +48,20 @@ class InsightsTest extends ScoreTest
             $insights->billingAddress->latitude,
             'correct billing latitude'
         );
+
+        $this->assertTrue(
+            isset($insights->billingAddress->latitude),
+            'isset works for billing latitude'
+        );
+
+        $this->assertFalse(
+            isset($insights->unknown),
+            'isset returns false for unknown method'
+        );
+
+        $this->assertFalse(
+            empty($insights->billingAddress->latitude),
+            'empty works for billing latitude'
+        );
     }
 }
