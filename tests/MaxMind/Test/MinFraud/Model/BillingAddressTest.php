@@ -17,37 +17,37 @@ class BillingAddressTest extends \PHPUnit_Framework_TestCase
         ];
         $billing = new BillingAddress($array);
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_postal_in_city'],
             $billing->isPostalInCity,
             'isPostalInCity'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['latitude'],
             $billing->latitude,
             'latitude'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['longitude'],
             $billing->longitude,
             'longitude'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['distance_to_ip_location'],
             $billing->distanceToIpLocation,
             'distanceToIpLocation'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_in_ip_country'],
             $billing->isInIpCountry,
             'isInIpCountry'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $billing->jsonSerialize(),
             'correctly implements JsonSerializable'

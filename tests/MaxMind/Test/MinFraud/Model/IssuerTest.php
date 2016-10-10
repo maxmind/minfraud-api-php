@@ -16,31 +16,31 @@ class IssuerTest extends \PHPUnit_Framework_TestCase
         ];
         $issuer = new Issuer($array);
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['name'],
             $issuer->name,
             'issuer name'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['matches_provided_name'],
             $issuer->matchesProvidedName,
             'issuer name matches'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['phone_number'],
             $issuer->phoneNumber,
             'issuer phone number'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['matches_provided_phone_number'],
             $issuer->matchesProvidedPhoneNumber,
             'issuer phone number matches'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $issuer->jsonSerialize(),
             'correctly implements JsonSerializable'

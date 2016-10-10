@@ -33,7 +33,7 @@ class WarningTest extends \PHPUnit_Framework_TestCase
             'inputPointer'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $warning->jsonSerialize(),
             'correctly implements JsonSerializable'

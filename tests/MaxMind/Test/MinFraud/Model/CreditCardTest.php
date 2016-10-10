@@ -23,61 +23,61 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         ];
         $cc = new CreditCard($array);
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['issuer']['name'],
             $cc->issuer->name,
             'issuer name'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['issuer']['matches_provided_name'],
             $cc->issuer->matchesProvidedName,
             'issuer name matches'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['issuer']['phone_number'],
             $cc->issuer->phoneNumber,
             'issuer phone number'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['issuer']['matches_provided_phone_number'],
             $cc->issuer->matchesProvidedPhoneNumber,
             'issuer phone number matches'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['brand'],
             $cc->brand,
             'brand'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['country'],
             $cc->country,
             'country'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_issued_in_billing_address_country'],
             $cc->isIssuedInBillingAddressCountry,
             'isIssuedInBillingAddressCountry'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_prepaid'],
             $cc->isPrepaid,
             'isPrepaid'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['type'],
             $cc->type,
             'type'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $cc->jsonSerialize(),
             'correctly implements JsonSerializable'

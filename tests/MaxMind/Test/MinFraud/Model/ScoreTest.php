@@ -22,43 +22,43 @@ class ScoreTest extends \PHPUnit_Framework_TestCase
         $array = $this->response();
         $score = $this->model();
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['id'],
             $score->id,
             'id'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['funds_remaining'],
             $score->fundsRemaining,
             'funds remaining'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['queries_remaining'],
             $score->queriesRemaining,
             'credits remaining'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['risk_score'],
             $score->riskScore,
             'credits remaining'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             count($array['warnings']),
             count($score->warnings),
             'correct number of warnings'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['warnings'][0]['code'],
             $score->warnings[0]->code,
             'first warning has correct code'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $score->jsonSerialize(),
             'correctly implements JsonSerializable'
