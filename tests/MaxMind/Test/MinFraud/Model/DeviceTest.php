@@ -15,25 +15,25 @@ class DeviceTest extends \PHPUnit_Framework_TestCase
         ];
         $device = new Device($array);
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['confidence'],
             $device->confidence,
             'confidence'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['id'],
             $device->id,
             'id'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['last_seen'],
             $device->lastSeen,
             'last_seen'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $device->jsonSerialize(),
             'correctly implements JsonSerializable'

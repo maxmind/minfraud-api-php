@@ -25,43 +25,43 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
 
         $ipAddress = new IpAddress($array);
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['risk'],
             $ipAddress->risk,
             'IP risk'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['country']['iso_code'],
             $ipAddress->country->isoCode,
             'ISO code'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['country']['is_high_risk'],
             $ipAddress->country->isHighRisk,
             'country is not high risk'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['location']['local_time'],
             $ipAddress->location->localTime,
             'local time'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['location']['accuracy_radius'],
             $ipAddress->location->accuracyRadius,
             'accuracy radius'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['postal']['code'],
             $ipAddress->postal->code,
             'postal code'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $ipAddress->jsonSerialize(),
             'correctly implements JsonSerializable'

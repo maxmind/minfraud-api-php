@@ -19,49 +19,49 @@ class ShippingAddressTest extends \PHPUnit_Framework_TestCase
         ];
         $shipping = new ShippingAddress($array);
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_high_risk'],
             $shipping->isHighRisk,
             'is high risk'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['distance_to_billing_address'],
             $shipping->distanceToBillingAddress,
             'distance to billing address is correct'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_postal_in_city'],
             $shipping->isPostalInCity,
             'isPostalInCity'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['latitude'],
             $shipping->latitude,
             'latitude'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['longitude'],
             $shipping->longitude,
             'longitude'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['distance_to_ip_location'],
             $shipping->distanceToIpLocation,
             'distanceToIpLocation'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array['is_in_ip_country'],
             $shipping->isInIpCountry,
             'isInIpCountry'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $shipping->jsonSerialize(),
             'correctly implements JsonSerializable'

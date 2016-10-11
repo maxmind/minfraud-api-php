@@ -67,7 +67,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ]
         )->with(Data::fullRequest())->insights();
 
-        $this->assertEquals(
+        $this->assertSame(
             'Royaume-Uni',
             $insights->ipAddress->country->name,
             'locales setting made it to the GeoIP2 models'
@@ -91,7 +91,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
                 ]
             ])->insights();
 
-        $this->assertEquals(
+        $this->assertSame(
             0.01,
             $insights->riskScore,
             'expected riskScore'
@@ -112,7 +112,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ])
             ->insights();
 
-        $this->assertEquals(
+        $this->assertSame(
             0.01,
             $insights->riskScore,
             'expected riskScore'

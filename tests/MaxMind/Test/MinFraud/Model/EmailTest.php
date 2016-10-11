@@ -26,7 +26,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
             'isHighRisk'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $array,
             $email->jsonSerialize(),
             'correctly implements JsonSerializable'
