@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.1.0
+1.1.0 (2016-10-11)
 ------------------
 
 * Added the follow new values to the event type validation: `email_change` and
