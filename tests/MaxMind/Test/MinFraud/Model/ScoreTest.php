@@ -47,6 +47,12 @@ class ScoreTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
+            $array['disposition']['action'],
+            $score->disposition->action,
+            'disposition action'
+        );
+
+        $this->assertSame(
             $array['ip_address']['risk'],
             $score->ipAddress->risk,
             'IP address risk'

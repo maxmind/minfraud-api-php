@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.2.0
+------------------
+
+* The disposition was added to the minFraud response models. This is used to
+  return the disposition of the transaction as set by the custom rules for the
+  account.
+
 1.1.1 (2016-10-17)
 ------------------
 

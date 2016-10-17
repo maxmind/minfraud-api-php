@@ -24,6 +24,9 @@ namespace MaxMind\MinFraud\Model;
  * never return a risk score of 0, since all transactions have the possibility
  * of being fraudulent. Likewise we never return a risk score of 100.
  *
+ * @property-read \MaxMind\MinFraud\Model\Disposition disposition An object
+ * containing the disposition set by custom rules.
+ *
  * @property-read \MaxMind\MinFraud\Model\ScoreIpAddress $ipAddress An object
  * containing the IP risk for the transaction.
  *
@@ -35,6 +38,11 @@ namespace MaxMind\MinFraud\Model;
  */
 class Score extends AbstractModel
 {
+    /**
+     * @internal
+     */
+    protected $disposition;
+
     /**
      * @internal
      */
@@ -74,6 +82,8 @@ class Score extends AbstractModel
     {
         parent::__construct($response, $locales);
 
+        $this->disposition
+            = new Disposition($this->safeArrayLookup($response['disposition']));
         $this->fundsRemaining = $this->safeArrayLookup($response['funds_remaining']);
         $this->queriesRemaining = $this->safeArrayLookup($response['queries_remaining']);
         $this->id = $this->safeArrayLookup($response['id']);
