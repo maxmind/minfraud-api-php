@@ -47,6 +47,12 @@ class ScoreTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
+            $array['ip_address']['risk'],
+            $score->ipAddress->risk,
+            'IP address risk'
+        );
+
+        $this->assertSame(
             count($array['warnings']),
             count($score->warnings),
             'correct number of warnings'

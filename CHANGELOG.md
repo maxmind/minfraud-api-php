@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.1.1 (2016-10-17)
+------------------
+
+* Correctly set the IP address risk for the Score model. Previously, it
+  always returned `null`.
+
 1.1.0 (2016-10-11)
 ------------------
 
