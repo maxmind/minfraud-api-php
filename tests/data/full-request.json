@@ -52,7 +52,8 @@
     "bank_phone_country_code": "1",
     "bank_phone_number": "800-342-1232",
     "avs_result": "Y",
-    "cvv_result": "N"
+    "cvv_result": "N",
+    "token": "123456abc1234"
   },
   "order": {
     "amount": 323.21,

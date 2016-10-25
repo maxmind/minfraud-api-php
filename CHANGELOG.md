@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* Allow `/credit_card/token` input
+
 1.1.1 (2016-10-17)
 ------------------
 

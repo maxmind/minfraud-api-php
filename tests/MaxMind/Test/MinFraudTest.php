@@ -359,6 +359,88 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must not validate against
+     * @dataProvider numericToken
+     */
+    public function testCreditCardWithNumericToken($token)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCreditCard(['token' => $token]);
+    }
+
+    public function numericToken()
+    {
+        return [
+            ['123456'],
+            ['123456789123456789'],
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must validate against
+     * @dataProvider invalidRangeToken
+     */
+    public function testCreditCardWithInvalidRangeToken($token)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+                'insights',
+                0
+                )->withCreditCard(['token' => $token]);
+    }
+
+    public function invalidRangeToken()
+    {
+        return [
+                ["\x20"],
+                ["\x7G"],
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must validate against
+     * @dataProvider longToken
+     */
+    public function testCreditCardWithLongToken($token)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+                'insights',
+                0
+                )->withCreditCard(['token' => $token]);
+    }
+
+    public function longToken()
+    {
+        return [
+                [str_repeat('x', 256)],
+        ];
+    }
+
+    /**
+     * @dataProvider goodToken
+     */
+    public function testCreditCardWithGoodToken($token)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+                'insights',
+                0
+                )->withCreditCard(['token' => $token]);
+    }
+
+    public function goodToken()
+    {
+        return [
+                ['123456abc1234'],
+                ["\x21"],
+                [str_repeat('1', 20)],
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must have a length
      * @dataProvider avsAndCvv
      */
