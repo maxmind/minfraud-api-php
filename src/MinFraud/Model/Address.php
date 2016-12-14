@@ -14,7 +14,7 @@ namespace MaxMind\MinFraud\Model;
  * @property-read boolean|null $isPostalInCity This property is true if the postal
  * code provided with the address is in the city for the address. The property
  * is false when the postal code is not in the city. If the address was not
- * provided, could not be parsed, or is outside USA, the property will be null.
+ * provided or could not be parsed, the property will be null.
  * @property-read float|null $latitude The latitude associated with the address.
  * @property-read float|null $longitude The longitude associated with the address.
  *
