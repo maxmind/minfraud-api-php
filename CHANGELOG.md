@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* Updated the docs for `MaxMind\MinFraud\Model\Address` now that
+  `isPostalInCity` may be returned for addresses world-wide.
+
 1.3.0 (2016-11-22)
 ------------------
 
