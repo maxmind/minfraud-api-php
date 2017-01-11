@@ -16,6 +16,7 @@ class Transaction extends AbstractWrapper
             v::key('account', new Account(), false),
             v::key('billing', new Billing(), false),
             v::key('credit_card', new CreditCard(), false),
+            v::key('custom_inputs', new CustomInputs(), false),
             v::key('device', new Device(), true),
             v::key('email', new Email(), false),
             v::key('event', new Event(), false),

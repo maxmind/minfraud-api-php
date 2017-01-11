@@ -36,6 +36,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ->withShipping(Data::fullRequest()['shipping'])
             ->withPayment(Data::fullRequest()['payment'])
             ->withCreditCard(Data::fullRequest()['credit_card'])
+            ->withCustomInputs(Data::fullRequest()['custom_inputs'])
             ->withOrder(Data::fullRequest()['order'])
             ->withShoppingCartItem(Data::fullRequest()['shopping_cart'][0]);
 
@@ -790,6 +791,31 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ['\MaxMind\MinFraud\Model\Factors', 'factors'],
             ['\MaxMind\MinFraud\Model\Insights', 'insights'],
             ['\MaxMind\MinFraud\Model\Score', 'score']
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must
+     * @dataProvider badCustomInputs
+     */
+    public function testBadCustomInputs($inputs)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCustomInputs($inputs);
+    }
+
+    public function badCustomInputs()
+    {
+        return [
+            [['InvalidKey' => 1]],
+            [['too_long' => str_repeat('x', 256)]],
+            [['has_newline'=> "test\n"]],
+            [['too_big' => 1<<53]],
+            [['too_small' => -(1<<53)]],
+            [['too_big_float' => (1<<53) - 0.1]],
         ];
     }
 

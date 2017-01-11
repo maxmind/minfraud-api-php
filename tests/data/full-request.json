@@ -55,6 +55,12 @@
     "cvv_result": "N",
     "token": "123456abc1234"
   },
+  "custom_inputs": {
+    "float_input": 12.1,
+    "integer_input": 3123,
+    "string_input": "This is a string input.",
+    "boolean_input": true
+  },
   "order": {
     "amount": 323.21,
     "currency": "USD",

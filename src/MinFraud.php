@@ -221,6 +221,18 @@ class MinFraud
     }
 
     /**
+     * This returns a `MinFraud` object with the `custom_inputs` array set to
+     * `$values`. Existing `custom_inputs` data will be replaced.
+     *
+     * @param $values
+     * @return MinFraud
+     */
+    public function withCustomInputs($values)
+    {
+        return $this->validateAndAdd('CustomInputs', 'custom_inputs', $values);
+    }
+
+    /**
      * This returns a `MinFraud` object with the `order` array set to
      * `$values`. Existing `order` data will be replaced.
      * @link https://dev.maxmind.com/minfraud/#Order_order
