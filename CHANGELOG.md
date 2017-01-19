@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+* Added the following new values to the payment processor validation:
+  `ebs`, `hipay`, and `lemon_way`.
 * Updated the docs for `MaxMind\MinFraud\Model\Address` now that
   `isPostalInCity` may be returned for addresses world-wide.
 
