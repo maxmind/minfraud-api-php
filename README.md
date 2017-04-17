@@ -60,7 +60,7 @@ Page](http://maxmind.github.io/minfraud-api-php/) under the "API" tab.
 
 ## Usage ##
 
-To use this API, create a new `\Maxmind\MinFraud` object. The constructor
+To use this API, create a new `\MaxMind\MinFraud` object. The constructor
 takes your MaxMind user ID, license key, and an optional options array as
 arguments. This object is immutable. You then build up the request using the
 `->with*` methods as shown below. Each method call returns a new object. The
