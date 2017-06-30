@@ -26,7 +26,9 @@ use Respect\Validation\Exceptions\ValidationException;
  * ```
  * $client = new MinFraud(6, 'LICENSE_KEY');
  *
- * $score = $client->withDevice(['ip_address' => '1.1.1.1',
+ * $score = $client->withDevice(['ip_address'  => '1.1.1.1',
+ *                               'session_age' => 3600.5,
+ *                               'session_id'  => 'foobar',
  *                               'accept_language' => 'en-US'])
  *                 ->withEmail(['domain' => 'maxmind.com'])
  *                 ->score();
