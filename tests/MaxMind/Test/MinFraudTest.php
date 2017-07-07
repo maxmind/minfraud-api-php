@@ -249,7 +249,6 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-
     /**
      * @expectedException MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be a valid country
@@ -479,6 +478,105 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ['1.2.3.'],
             ['299.1.1.1'],
             ['::AF123'],
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be greater than or equal to 0
+     * @dataProvider negativeSessionAge
+     */
+    public function testNegativeSessionAge($age)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
+    }
+
+    public function negativeSessionAge()
+    {
+        return [
+            [-1],
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must be a float number
+     * @dataProvider badSessionAge
+     */
+    public function testBadSessionAge($age)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
+    }
+
+    public function badSessionAge()
+    {
+        return [
+            ["X"],
+        ];
+    }
+
+    /**
+     * @dataProvider goodSessionAge
+     */
+    public function testGoodSessionAge($age)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
+    }
+
+    public function goodSessionAge()
+    {
+        return [
+            [0],
+            [3600],
+            [1000.5],
+        ];
+    }
+
+    /**
+     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedExceptionMessage must have a length between 1 and 255
+     * @dataProvider badSessionId
+     */
+    public function testBadSessionId($id)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
+    }
+
+    public function badSessionId()
+    {
+        return [
+            [str_repeat("X", 256)],
+        ];
+    }
+
+    /**
+     * @dataProvider goodSessionId
+     */
+    public function testGoodSessionId($id)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
+    }
+
+    public function goodSessionId()
+    {
+        return [
+            [0],
+            [3600],
         ];
     }
 
