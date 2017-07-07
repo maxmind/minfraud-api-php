@@ -15,8 +15,8 @@ class Device extends AbstractWrapper
         $this->validatable = v::keySet(
             v::key('accept_language', v::stringType(), false),
             v::key('ip_address', v::ip(), true),
-            v::key('session_id', v::stringType(), false),
-            v::key('session_age', v::floatType(), false),
+            v::key('session_id', v::stringType()->length(1,255), false),
+            v::key('session_age', v::floatType()->min(0,true), false),
             v::key('user_agent', v::stringType(), false)
         );
     }
