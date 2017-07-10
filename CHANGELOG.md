@@ -2,16 +2,31 @@ CHANGELOG
 =========
 
 1.4.0 (2017-07-10)
+------------------
 
 * Added support for custom inputs. You may set up custom inputs from your
   account portal.
 * Updated the docs for `MaxMind\MinFraud\Model\Address` now that
   `isPostalInCity` may be returned for addresses world-wide.
-* The `first_seen` output was added to the `Email` response model.
-* `session_age` and `session_id` inputs were added to `device` input
-  validation.
+* The `firstSeen` was added to the `Email` response model. `session_age`
+  and `session_id` inputs were added to `device` input validation.
 * Added the following new values to the payment processor validation:
-  `ebs`, `hipay`, and `lemon_way`.
+  * `american_express_payment_gateway`
+  * `bluesnap`
+  * `commdoo`
+  * `curopayments`
+  * `ebs`
+  * `exact`
+  * `hipay`
+  * `lemon_way`
+  * `oceanpayment`
+  * `paymentwall`
+  * `payza`
+  * `securetrading`
+  * `solidtrust_pay`
+  * `vantiv`
+  * `vericheck`
+  * `vpos`
 
 1.3.0 (2016-11-22)
 ------------------
