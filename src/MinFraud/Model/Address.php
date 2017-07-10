@@ -5,19 +5,18 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Abstract model for a postal address.
  *
- * @property-read integer|null $distanceToIpLocation The distance in kilometers from
+ * @property-read int|null $distanceToIpLocation The distance in kilometers from
  * the address to the IP location.
- * @property-read boolean|null $isInIpCountry This property is true if the address
+ * @property-read bool|null $isInIpCountry This property is true if the address
  * is in the IP country. The property is false when the address is not in the
  * IP country. If the address could not be parsed or was not provided or if
  * the IP address could not be geolocated, the property will be null.
- * @property-read boolean|null $isPostalInCity This property is true if the postal
+ * @property-read bool|null $isPostalInCity This property is true if the postal
  * code provided with the address is in the city for the address. The property
  * is false when the postal code is not in the city. If the address was not
  * provided or could not be parsed, the property will be null.
  * @property-read float|null $latitude The latitude associated with the address.
  * @property-read float|null $longitude The longitude associated with the address.
- *
  */
 abstract class Address extends AbstractModel
 {

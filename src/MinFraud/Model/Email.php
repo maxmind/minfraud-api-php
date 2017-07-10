@@ -8,15 +8,12 @@ namespace MaxMind\MinFraud\Model;
  * @property-read string|null $firstSeen A date string (e.g. 2017-04-24) to
  * identify the date an email address was first seen by MaxMind. This is
  * expressed using the ISO 8601 date format.
- *
- * @property-read boolean|null $isFree This property is true if MaxMind believes
+ * @property-read bool|null $isFree This property is true if MaxMind believes
  * that this email is hosted by a free email provider such as Gmail or Yahoo!
  * Mail.
- *
- * @property-read boolean|null $isHighRisk This field is true if MaxMind believes
+ * @property-read bool|null $isHighRisk This field is true if MaxMind believes
  * that this email is likely to be used for fraud. Note that this is also
  * factored into the overall risk_score in the response as well.
- *
  */
 class Email extends AbstractModel
 {

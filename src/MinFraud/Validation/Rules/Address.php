@@ -22,7 +22,7 @@ trait Address
             v::key('phone_country_code', new TelephoneCountryCode(), false),
             v::key('phone_number', v::stringType(), false),
             v::key('postal', v::stringType(), false),
-            v::key('region', new SubdivisionIsoCode(), false)
+            v::key('region', new SubdivisionIsoCode(), false),
         ];
     }
 }

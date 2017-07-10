@@ -12,7 +12,6 @@ namespace MaxMind\MinFraud\Model;
  * defined by your custom rules. The current set of values are "accept",
  * "manual_review", and "reject". If you do not have custom rules set up,
  * `null` will be returned.
- *
  * @property-read string|null $reason The reason for the action. The current
  * possible values are "custom_rule", "block_list", and "default". If you do
  * not have custom rules set up, `null` will be returned.

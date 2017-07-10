@@ -54,7 +54,6 @@ namespace MaxMind\MinFraud\Model;
  * @property-read float|null timeOfDay The risk associated with the local time of
  * day of the transaction in the IP address location. If present, this is a
  * value in the range 0.01 to 99.
- *
  */
 class Subscores extends AbstractModel
 {

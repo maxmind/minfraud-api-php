@@ -7,7 +7,7 @@ use GeoIp2\Record\Country;
 /**
  * Model of the GeoIP2 country information.
  *
- * @property-read boolean $isHighRisk This value is true if the IP country is high
+ * @property-read bool $isHighRisk This value is true if the IP country is high
  * risk.
  **/
 class GeoIp2Country extends Country
@@ -20,6 +20,6 @@ class GeoIp2Country extends Country
         'geonameId',
         'isoCode',
         'isHighRisk',
-        'names'
+        'names',
     ];
 }

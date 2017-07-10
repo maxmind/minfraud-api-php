@@ -28,11 +28,9 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property-read string $code This value is a machine-readable code identifying the
  * warning.
- *
  * @property-read string $warning This property provides a human-readable
  * explanation of the warning. The description may change at any time and
  * should not be matched against.
- *
  * @property-read array|null $input A JSON Pointer to the input field that the
  * warning is associated with. For instance, if the warning was about the
  * billing city, this would be `/billing/city`. If it was for the price in

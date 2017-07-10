@@ -49,9 +49,9 @@ class MinFraud
     private $validateInput = true;
 
     /**
-     * @param int $userId Your MaxMind user ID
+     * @param int    $userId     Your MaxMind user ID
      * @param string $licenseKey Your MaxMind license key
-     * @param array $options An array of options. Possible keys:
+     * @param array  $options    An array of options. Possible keys:
      *
      * * `host` - The host to use when connecting to the web service.
      * * `userAgent` - The prefix for the User-Agent header to use in the
@@ -93,9 +93,11 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the array to be sent to the web
      * service set to `$values`. Existing values will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/ minFraud API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function with($values)
@@ -111,10 +113,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `device` array set to
      * `$values`. Existing `device` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Device_device
      *     minFraud device API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withDevice($values)
@@ -125,10 +129,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `events` array set to
      * `$values`. Existing `event` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Event_event
      *     minFraud event API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withEvent($values)
@@ -139,10 +145,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `account` array set to
      * `$values`. Existing `account` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Account_account
      *     minFraud account API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withAccount($values)
@@ -153,10 +161,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `email` array set to
      * `$values`. Existing `email` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Email_email
      *     minFraud email API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withEmail($values)
@@ -167,10 +177,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `billing` array set to
      * `$values`. Existing `billing` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Billing_billing
      *     minFraud billing API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withBilling($values)
@@ -181,10 +193,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `shipping` array set to
      * `$values`. Existing `shipping` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Shipping_shipping
      *     minFraud shipping API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withShipping($values)
@@ -195,10 +209,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `payment` array set to
      * `$values`. Existing `payment` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Payment_payment
      *     minFraud payment API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withPayment($values)
@@ -209,10 +225,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `credit_card` array set to
      * `$values`. Existing `credit_card` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Credit_Card_credit_card
      *     minFraud credit_card API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withCreditCard($values)
@@ -225,6 +243,7 @@ class MinFraud
      * `$values`. Existing `custom_inputs` data will be replaced.
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withCustomInputs($values)
@@ -235,10 +254,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with the `order` array set to
      * `$values`. Existing `order` data will be replaced.
+     *
      * @link https://dev.maxmind.com/minfraud/#Order_order
      *     minFraud order API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withOrder($values)
@@ -249,10 +270,12 @@ class MinFraud
     /**
      * This returns a `MinFraud` object with `$values` added to the shopping
      * cart array.
+     *
      * @link https://dev.maxmind.com/minfraud/#Shopping_Cart_Item
      *     minFraud shopping cart item API docs
      *
      * @param $values
+     *
      * @return MinFraud
      */
     public function withShoppingCartItem($values)
@@ -272,17 +295,18 @@ class MinFraud
      * This method performs a minFraud Score lookup using the request data in
      * the current object and returns a model object for minFraud Score.
      *
-     * @return MinFraud\Model\Score minFraud Score model object.
-     * @throws InvalidInputException when the request has missing or invalid
-     * data.
-     * @throws AuthenticationException when there is an issue authenticating
-     * the request.
-     * @throws InsufficientFundsException when your account is out of funds.
-     * @throws InvalidRequestException when the request is invalid for some
-     * other reason, e.g., invalid JSON in the POST.
-     * @throws HttpException when an unexpected HTTP error occurs.
-     * @throws WebServiceException when some other error occurs. This also
-     * serves as the base class for the above exceptions.
+     * @throws InvalidInputException      when the request has missing or invalid
+     *                                    data
+     * @throws AuthenticationException    when there is an issue authenticating
+     *                                    the request
+     * @throws InsufficientFundsException when your account is out of funds
+     * @throws InvalidRequestException    when the request is invalid for some
+     *                                    other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException              when an unexpected HTTP error occurs
+     * @throws WebServiceException        when some other error occurs. This also
+     *                                    serves as the base class for the above exceptions.
+     *
+     * @return MinFraud\Model\Score minFraud Score model object
      */
     public function score()
     {
@@ -293,17 +317,18 @@ class MinFraud
      * This method performs a minFraud Insights lookup using the request data
      * in the current object and returns a model object for minFraud Insights.
      *
-     * @return MinFraud\Model\Insights minFraud Insights model object.
-     * @throws InvalidInputException when the request has missing or invalid
-     * data.
-     * @throws AuthenticationException when there is an issue authenticating
-     * the request.
-     * @throws InsufficientFundsException when your account is out of funds.
-     * @throws InvalidRequestException when the request is invalid for some
-     * other reason, e.g., invalid JSON in the POST.
-     * @throws HttpException when an unexpected HTTP error occurs.
-     * @throws WebServiceException when some other error occurs. This also
-     * serves as the base class for the above exceptions.
+     * @throws InvalidInputException      when the request has missing or invalid
+     *                                    data
+     * @throws AuthenticationException    when there is an issue authenticating
+     *                                    the request
+     * @throws InsufficientFundsException when your account is out of funds
+     * @throws InvalidRequestException    when the request is invalid for some
+     *                                    other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException              when an unexpected HTTP error occurs
+     * @throws WebServiceException        when some other error occurs. This also
+     *                                    serves as the base class for the above exceptions.
+     *
+     * @return MinFraud\Model\Insights minFraud Insights model object
      */
     public function insights()
     {
@@ -314,17 +339,18 @@ class MinFraud
      * This method performs a minFraud Factors lookup using the request data
      * in the current object and returns a model object for minFraud Factors.
      *
-     * @return MinFraud\Model\Factors minFraud Factors model object.
-     * @throws InvalidInputException when the request has missing or invalid
-     * data.
-     * @throws AuthenticationException when there is an issue authenticating
-     * the request.
-     * @throws InsufficientFundsException when your account is out of funds.
-     * @throws InvalidRequestException when the request is invalid for some
-     * other reason, e.g., invalid JSON in the POST.
-     * @throws HttpException when an unexpected HTTP error occurs.
-     * @throws WebServiceException when some other error occurs. This also
-     * serves as the base class for the above exceptions.
+     * @throws InvalidInputException      when the request has missing or invalid
+     *                                    data
+     * @throws AuthenticationException    when there is an issue authenticating
+     *                                    the request
+     * @throws InsufficientFundsException when your account is out of funds
+     * @throws InvalidRequestException    when the request is invalid for some
+     *                                    other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException              when an unexpected HTTP error occurs
+     * @throws WebServiceException        when some other error occurs. This also
+     *                                    serves as the base class for the above exceptions.
+     *
+     * @return MinFraud\Model\Factors minFraud Factors model object
      */
     public function factors()
     {
@@ -332,18 +358,20 @@ class MinFraud
     }
 
     /**
-     * @param $service $service The name of the service to use.
-     * @return mixed The model class for the service.
-     * @throws InvalidInputException when the request has missing or invalid
-     * data.
-     * @throws AuthenticationException when there is an issue authenticating the
-     * request.
-     * @throws InsufficientFundsException when your account is out of funds.
-     * @throws InvalidRequestException when the request is invalid for some
-     * other reason, e.g., invalid JSON in the POST.
-     * @throws HttpException when an unexpected HTTP error occurs.
-     * @throws WebServiceException when some other error occurs. This also
-     * serves as the base class for the above exceptions.
+     * @param $service $service the name of the service to use
+     *
+     * @throws InvalidInputException      when the request has missing or invalid
+     *                                    data
+     * @throws AuthenticationException    when there is an issue authenticating the
+     *                                    request
+     * @throws InsufficientFundsException when your account is out of funds
+     * @throws InvalidRequestException    when the request is invalid for some
+     *                                    other reason, e.g., invalid JSON in the POST.
+     * @throws HttpException              when an unexpected HTTP error occurs
+     * @throws WebServiceException        when some other error occurs. This also
+     *                                    serves as the base class for the above exceptions.
+     *
+     * @return mixed the model class for the service
      */
     private function post($service)
     {
@@ -353,7 +381,7 @@ class MinFraud
             );
         }
         $url = self::$basePath . strtolower($service);
-        $class = "MaxMind\\MinFraud\\Model\\" . $service;
+        $class = 'MaxMind\\MinFraud\\Model\\' . $service;
 
         return new $class(
             $this->client->post($service, $url, $this->content),
@@ -362,19 +390,21 @@ class MinFraud
     }
 
     /**
-     * @return string The prefix for the User-Agent header.
+     * @return string the prefix for the User-Agent header
      */
     private function userAgent()
     {
-        return 'minFraud-API/' . MinFraud::VERSION;
+        return 'minFraud-API/' . self::VERSION;
     }
 
     /**
      * @param string $className The name of the class (but not the namespace)
-     * @param string $key The key in the transaction array to set
-     * @param array $values The values to validate
-     * @return MinFraud
+     * @param string $key       The key in the transaction array to set
+     * @param array  $values    The values to validate
+     *
      * @throws InvalidInputException when $values does not validate
+     *
+     * @return MinFraud
      */
     private function validateAndAdd($className, $key, $values)
     {
@@ -385,12 +415,13 @@ class MinFraud
         return $new;
     }
 
-
     /**
      * @param string $className The name of the class (but not the namespace)
-     * @param array $values The values to validate
-     * @return array The cleaned values
+     * @param array  $values    The values to validate
+     *
      * @throws InvalidInputException when $values does not validate
+     *
+     * @return array The cleaned values
      */
     private function cleanAndValidate($className, $values)
     {

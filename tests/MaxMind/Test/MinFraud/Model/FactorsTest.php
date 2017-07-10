@@ -5,6 +5,9 @@ namespace MaxMind\Test\MinFraud\Model;
 use MaxMind\MinFraud\Model\Factors;
 use MaxMind\Test\MinFraudData as Data;
 
+/**
+ * @coversNothing
+ */
 class FactorsTest extends InsightsTest
 {
     protected function response()
@@ -25,8 +28,7 @@ class FactorsTest extends InsightsTest
         foreach ([
                      'avs_result' => 'avsResult',
                      'billing_address' => 'billingAddress',
-                     'billing_address_distance_to_ip_location'
-                        => 'billingAddressDistanceToIpLocation',
+                     'billing_address_distance_to_ip_location' => 'billingAddressDistanceToIpLocation',
                      'browser' => 'browser',
                      'chargeback' => 'chargeback',
                      'country' => 'country',
@@ -39,8 +41,7 @@ class FactorsTest extends InsightsTest
                      'issuer_id_number' => 'issuerIdNumber',
                      'order_amount' => 'orderAmount',
                      'phone_number' => 'phoneNumber',
-                     'shipping_address_distance_to_ip_location'
-                        => 'shippingAddressDistanceToIpLocation',
+                     'shipping_address_distance_to_ip_location' => 'shippingAddressDistanceToIpLocation',
                      'time_of_day' => 'timeOfDay',
                  ] as $key => $method) {
             $this->assertSame(

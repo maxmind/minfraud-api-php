@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\BillingAddress;
 
+/**
+ * @coversNothing
+ */
 class BillingAddressTest extends \PHPUnit_Framework_TestCase
 {
     public function testBillingAddress()

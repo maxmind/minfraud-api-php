@@ -5,6 +5,9 @@ namespace MaxMind\Test\MinFraud\Model;
 use MaxMind\MinFraud\Model\Score;
 use MaxMind\Test\MinFraudData as Data;
 
+/**
+ * @coversNothing
+ */
 class ScoreTest extends \PHPUnit_Framework_TestCase
 {
     protected function response()

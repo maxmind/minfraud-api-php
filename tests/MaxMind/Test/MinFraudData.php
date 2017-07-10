@@ -2,7 +2,6 @@
 
 namespace MaxMind\Test;
 
-use MaxMind\MinFraud;
 use MaxMind\MinFraud\Model\Insights;
 use MaxMind\MinFraud\Model\Score;
 

@@ -7,7 +7,7 @@ namespace MaxMind\MinFraud\Model;
  *
  * In order to receive device output from minFraud Insights or minFraud
  * Factors, you must be using the Device Tracking Add-on.
- * @package MaxMind\MinFraud\Model
+ *
  * @link https://dev.maxmind.com/minfraud/device/ Device Tracking Add-on
  *
  * @property-read float|null $confidence This number represents our confidence that

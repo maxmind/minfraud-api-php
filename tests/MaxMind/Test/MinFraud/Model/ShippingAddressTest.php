@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\ShippingAddress;
 
+/**
+ * @coversNothing
+ */
 class ShippingAddressTest extends \PHPUnit_Framework_TestCase
 {
     public function testShippingAddress()

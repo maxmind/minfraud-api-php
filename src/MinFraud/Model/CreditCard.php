@@ -7,26 +7,21 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property-read string|null $brand The card brand, such as "Visa", "Discover",
  * "American Express", etc.
- *
  * @property-read string|null $country This property contains the the two letter
  * {@link http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 ISO 3166-1 alpha-2
  * country code} associated with the location of the majority of customers
  * using this credit card as determined by their billing address. In cases
  * where the location of customers is highly mixed, this defaults to the
  * country of the bank issuing the card.
- *
- * @property-read boolean|null $isIssuedInBillingAddressCountry This property is
+ * @property-read bool|null $isIssuedInBillingAddressCountry This property is
  * true if the country of the billing address matches the country of the
  * majority of customers using this credit card. In cases where the location
  * of customers is highly mixed, the match is to the country of the bank
  * issuing the card.
- *
- * @property-read boolean|null $isPrepaid This property is true if the card is a
+ * @property-read bool|null $isPrepaid This property is true if the card is a
  * prepaid card.
- *
  * @property-read \MaxMind\MinFraud\Model\Issuer $issuer An object containing
  * information about the credit card issuer.
- *
  * @property-read string|null $type The card's type. The valid values are: charge,
  * credit, debit.
  */

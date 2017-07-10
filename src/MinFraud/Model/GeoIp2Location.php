@@ -25,6 +25,6 @@ class GeoIp2Location extends Location
         'metroCode',
         'postalCode',
         'postalConfidence',
-        'timeZone'
+        'timeZone',
     ];
 }

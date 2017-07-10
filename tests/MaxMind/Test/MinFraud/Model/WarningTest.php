@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Warning;
 
+/**
+ * @coversNothing
+ */
 class WarningTest extends \PHPUnit_Framework_TestCase
 {
     public function testWarning()
@@ -11,7 +14,7 @@ class WarningTest extends \PHPUnit_Framework_TestCase
         $array = [
             'code' => 'INVALID_INPUT',
             'warning' => 'Bad input',
-            'input_pointer' => '/device/input'
+            'input_pointer' => '/device/input',
         ];
         $warning = new Warning($array);
 

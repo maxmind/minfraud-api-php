@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Issuer;
 
+/**
+ * @coversNothing
+ */
 class IssuerTest extends \PHPUnit_Framework_TestCase
 {
     public function testIssuer()

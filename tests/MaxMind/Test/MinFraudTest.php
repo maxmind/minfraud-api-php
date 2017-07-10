@@ -7,15 +7,21 @@ use MaxMind\MinFraud;
 use MaxMind\Test\MinFraudData as Data;
 use MaxMind\WebService\Client;
 
+/**
+ * @coversNothing
+ */
 class MinFraudTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider services
+     *
+     * @param mixed $class
+     * @param mixed $service
      */
     public function testFullRequest($class, $service)
     {
         $responseMeth = $service . 'FullResponse';
-        $this->assertEquals(
+        $this->assertSame(
             new $class(Data::$responseMeth()),
             $this->createMinFraudRequestWithFullResponse($service)
                 ->with(Data::fullRequest())->$service(),
@@ -25,6 +31,9 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider services
+     *
+     * @param mixed $class
+     * @param mixed $service
      */
     public function testFullInsightsRequestBuiltPiecemeal($class, $service)
     {
@@ -45,13 +54,13 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ->withDevice(Data::fullRequest()['device']);
 
         $responseMeth = $service . 'FullResponse';
-        $this->assertEquals(
+        $this->assertSame(
             new $class(Data::$responseMeth()),
             $mf->$service(),
             'response for full request built piece by piece'
         );
 
-        $this->assertNotEquals(
+        $this->assertNotSame(
             $mf,
             $incompleteMf,
             'intermediate object not mutated'
@@ -64,7 +73,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             'insights',
             1,
             [
-                'locales' => ['fr']
+                'locales' => ['fr'],
             ]
         )->with(Data::fullRequest())->insights();
 
@@ -88,8 +97,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
                     [
                         'category' => 'catname',
                         'item_id' => null,
-                    ]
-                ]
+                    ],
+                ],
             ])->insights();
 
         $this->assertSame(
@@ -129,15 +138,18 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             [
                 'device' => ['ip_address' => '1.1.1.1'],
                 'billing' => ['first_name' => 'firstname'],
-                'shopping_cart' => [['category' => 'catname']]
+                'shopping_cart' => [['category' => 'catname']],
             ]
         );
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage Must have keys
      * @dataProvider services
+     *
+     * @param mixed $class
+     * @param mixed $service
      */
     public function testMissingIpAddress($class, $service)
     {
@@ -147,9 +159,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage Key ip_address must be present
      * @dataProvider services
+     *
+     * @param mixed $class
+     * @param mixed $service
      */
     public function testMissingIpAddressWithoutValidation($class, $service)
     {
@@ -162,9 +177,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage Must have keys
      * @dataProvider withMethods
+     *
+     * @param mixed $method
      */
     public function testUnknownKeys($method)
     {
@@ -189,11 +206,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be an MD5
      * @dataProvider badMd5s
+     *
+     * @param mixed $md5
      */
     public function testAccountWithBadUsernameMd5($md5)
     {
@@ -204,9 +222,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be an MD5
      * @dataProvider badMd5s
+     *
+     * @param mixed $md5
      */
     public function testEmailWithBadAddress($md5)
     {
@@ -222,15 +242,17 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ['14c4b06b824ec593239362517f538b2'],
             ['14c4b06b824ec593239362517f538b29a'],
             ['notvalid'],
-            ['invalid @email.org']
+            ['invalid @email.org'],
         ];
     }
 
-
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be an ISO 3166-2
      * @dataProvider badRegions
+     *
+     * @param mixed $method
+     * @param mixed $region
      */
     public function testBadRegions($method, $region)
     {
@@ -251,9 +273,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be a valid country
      * @dataProvider badCountryCodes
+     *
+     * @param mixed $method
+     * @param mixed $code
      */
     public function testBadCountryCode($method, $code)
     {
@@ -276,9 +301,13 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be a valid telephone country code
      * @dataProvider badPhoneCodes
+     *
+     * @param mixed $method
+     * @param mixed $key
+     * @param mixed $code
      */
     public function testBadPhoneCodes($method, $key, $code)
     {
@@ -300,9 +329,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage delivery_speed must be in
      */
     public function testBadDeliverySpeed()
@@ -314,9 +342,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must validate against
      * @dataProvider badIins
+     *
+     * @param mixed $iin
      */
     public function testBadIin($iin)
     {
@@ -336,9 +366,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must validate against
      * @dataProvider badLast4Digits
+     *
+     * @param mixed $last4
      */
     public function testCreditCardWithBadLast4($last4)
     {
@@ -358,9 +390,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must not validate against
      * @dataProvider numericToken
+     *
+     * @param mixed $token
      */
     public function testCreditCardWithNumericToken($token)
     {
@@ -379,9 +413,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must validate against
      * @dataProvider invalidRangeToken
+     *
+     * @param mixed $token
      */
     public function testCreditCardWithInvalidRangeToken($token)
     {
@@ -400,9 +436,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must validate against
      * @dataProvider longToken
+     *
+     * @param mixed $token
      */
     public function testCreditCardWithLongToken($token)
     {
@@ -421,6 +459,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider goodToken
+     *
+     * @param mixed $token
      */
     public function testCreditCardWithGoodToken($token)
     {
@@ -440,9 +480,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must have a length
      * @dataProvider avsAndCvv
+     *
+     * @param mixed $key
      */
     public function testAvsAndCCv($key)
     {
@@ -461,9 +503,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be an IP address
      * @dataProvider badIps
+     *
+     * @param mixed $ip
      */
     public function testBadIps($ip)
     {
@@ -483,9 +527,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be greater than or equal to 0
      * @dataProvider negativeSessionAge
+     *
+     * @param mixed $age
      */
     public function testNegativeSessionAge($age)
     {
@@ -503,9 +549,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be a float number
      * @dataProvider badSessionAge
+     *
+     * @param mixed $age
      */
     public function testBadSessionAge($age)
     {
@@ -518,12 +566,14 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function badSessionAge()
     {
         return [
-            ["X"],
+            ['X'],
         ];
     }
 
     /**
      * @dataProvider goodSessionAge
+     *
+     * @param mixed $age
      */
     public function testGoodSessionAge($age)
     {
@@ -539,14 +589,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             [0],
             [3600],
             [1000.5],
-            ["12345"],
+            ['12345'],
         ];
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must have a length between 1 and 255
      * @dataProvider badSessionId
+     *
+     * @param mixed $id
      */
     public function testBadSessionId($id)
     {
@@ -559,12 +611,14 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function badSessionId()
     {
         return [
-            [str_repeat("X", 256)],
+            [str_repeat('X', 256)],
         ];
     }
 
     /**
      * @dataProvider goodSessionId
+     *
+     * @param mixed $id
      */
     public function testGoodSessionId($id)
     {
@@ -584,6 +638,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider goodIps
+     *
+     * @param mixed $ip
      */
     public function testGoodIps($ip)
     {
@@ -602,11 +658,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must
      * @dataProvider badDomains
+     *
+     * @param mixed $domain
      */
     public function testBadDomains($domain)
     {
@@ -626,6 +683,8 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider goodDomains
+     *
+     * @param mixed $domain
      */
     public function testGoodDomains($domain)
     {
@@ -644,7 +703,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be a valid date
      */
     public function testBadEventTime()
@@ -656,7 +715,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be
      */
     public function testBadEventType()
@@ -668,9 +727,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must validate against
      * @dataProvider badCurrency
+     *
+     * @param mixed $currency
      */
     public function testBadCurrency($currency)
     {
@@ -691,9 +752,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be an URL
      * @dataProvider badReferrerUri
+     *
+     * @param mixed $uri
      */
     public function testBadReferrerUri($uri)
     {
@@ -708,12 +771,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         return [
             ['/blah/'],
             ['www.mm.com'],
-
         ];
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be
      */
     public function testBadPaymentProcessor()
@@ -725,9 +787,11 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessageRegExp (must be greater than 0|must be a float)
      * @dataProvider nonPositiveValues
+     *
+     * @param mixed $value
      */
     public function testBadOrderAmount($value)
     {
@@ -742,14 +806,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         return [
             [0],
             [-1],
-            ['afdaf']
+            ['afdaf'],
         ];
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessageRegExp (must be greater than 0|must be a float)
      * @dataProvider nonPositiveValues
+     *
+     * @param mixed $value
      */
     public function testBadShoppingCartItemPrice($value)
     {
@@ -759,11 +825,12 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         )->withShoppingCartItem(['price' => $value]);
     }
 
-
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessageRegExp (must be greater than 0|must be an int)
      * @dataProvider nonPositiveValues
+     *
+     * @param mixed $value
      */
     public function testBadShoppingCartItemQuantity($value)
     {
@@ -774,7 +841,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage Must have keys
      */
     public function testBadShoppingCartItemWithDoubleArray()
@@ -790,14 +857,16 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         return [
             ['\MaxMind\MinFraud\Model\Factors', 'factors'],
             ['\MaxMind\MinFraud\Model\Insights', 'insights'],
-            ['\MaxMind\MinFraud\Model\Score', 'score']
+            ['\MaxMind\MinFraud\Model\Score', 'score'],
         ];
     }
 
     /**
-     * @expectedException MaxMind\Exception\InvalidInputException
+     * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must
      * @dataProvider badCustomInputs
+     *
+     * @param mixed $inputs
      */
     public function testBadCustomInputs($inputs)
     {
@@ -812,10 +881,10 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         return [
             [['InvalidKey' => 1]],
             [['too_long' => str_repeat('x', 256)]],
-            [['has_newline'=> "test\n"]],
-            [['too_big' => 1<<53]],
-            [['too_small' => -(1<<53)]],
-            [['too_big_float' => (1<<53) - 0.1]],
+            [['has_newline' => "test\n"]],
+            [['too_big' => 1 << 53]],
+            [['too_small' => -(1 << 53)]],
+            [['too_big_float' => (1 << 53) - 0.1]],
         ];
     }
 
@@ -851,7 +920,6 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         $options = [],
         $callsToRequest = 1
     ) {
-
         $userId = 1;
         $licenseKey = 'abcdefghij';
 

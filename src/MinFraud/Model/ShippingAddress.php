@@ -5,9 +5,9 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Model containing properties of the shipping address.
  *
- * @property-read integer|null $distanceToBillingAddress The distance in kilometers
+ * @property-read int|null $distanceToBillingAddress The distance in kilometers
  * from the shipping address to billing address.
- * @property-read boolean|null $isHighRisk This property is true if the shipping
+ * @property-read bool|null $isHighRisk This property is true if the shipping
  * address is in the IP country. The property is false when the address is not
  * in the IP country. If the shipping address could not be parsed or was not
  * provided or the IP address could not be geolocated, then the property is

@@ -3,17 +3,17 @@
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Class AbstractModel
+ * Class AbstractModel.
+ *
  * @internal
  */
 abstract class AbstractModel implements \JsonSerializable
 {
-
     /**
-     * @param array $response The array corresponding to the object in the
-     * minFraud Insights response.
-     * @param array $locales List of locale codes to use in name property from
-     * most preferred to least preferred.
+     * @param array $response the array corresponding to the object in the
+     *                        minFraud Insights response
+     * @param array $locales  list of locale codes to use in name property from
+     *                        most preferred to least preferred
      */
     public function __construct($response, $locales = ['en'])
     {
@@ -21,10 +21,13 @@ abstract class AbstractModel implements \JsonSerializable
     }
 
     /**
-     * Convenience method to safely get value from array that might be null
+     * Convenience method to safely get value from array that might be null.
+     *
      * @param $var
      * @param mixed $default
+     *
      * @return mixed
+     *
      * @internal
      */
     protected function safeArrayLookup(&$var, $default = null)
@@ -34,12 +37,14 @@ abstract class AbstractModel implements \JsonSerializable
 
     /**
      * @internal
+     *
      * @param $attr The attribute to get
+     *
      * @return The value for the attribute
      */
     public function __get($attr)
     {
-        if ($attr != "instance" && property_exists($this, $attr)) {
+        if ($attr !== 'instance' && property_exists($this, $attr)) {
             return $this->$attr;
         }
 
@@ -48,7 +53,9 @@ abstract class AbstractModel implements \JsonSerializable
 
     /**
      * @internal
+     *
      * @param $attr The attribute to determine if set
+     *
      * @return The isset for the attribute
      */
     public function __isset($attr)
@@ -57,7 +64,7 @@ abstract class AbstractModel implements \JsonSerializable
     }
 
     /**
-     * Returns data that can be serialized by json_encode
+     * Returns data that can be serialized by json_encode.
      */
     public function jsonSerialize()
     {

@@ -8,20 +8,15 @@ namespace MaxMind\MinFraud\Model;
  * @property-read \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
  * containing minFraud data related to the billing address used in the
  * transaction.
- *
  * @property-read \MaxMind\MinFraud\Model\CreditCard $creditCard An object containing
  * minFraud data about the credit card used in the transaction.
- *
  * @property-read \MaxMind\MinFraud\Model\Device $device This object contains
  * information about the device that MaxMind believes is associated with the
  * IP address passed in the request.
- *
  * @property-read \MaxMind\MinFraud\Model\Email $email This object contains
  * information about the email address passed in the request.
- *
  * @property-read \MaxMind\MinFraud\Model\IpAddress $ipAddress An object containing
  * GeoIP2 and minFraud Insights information about the geolocated IP address.
- *
  * @property-read \MaxMind\MinFraud\Model\ShippingAddress $shippingAddress An object
  * containing minFraud data related to the shipping address used in the
  * transaction.

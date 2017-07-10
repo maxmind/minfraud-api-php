@@ -5,6 +5,9 @@ namespace MaxMind\Test\MinFraud\Model;
 use MaxMind\MinFraud\Model\Insights;
 use MaxMind\Test\MinFraudData as Data;
 
+/**
+ * @coversNothing
+ */
 class InsightsTest extends ScoreTest
 {
     protected function response()
@@ -59,8 +62,8 @@ class InsightsTest extends ScoreTest
             'isset returns false for unknown method'
         );
 
-        $this->assertFalse(
-            empty($insights->billingAddress->latitude),
+        $this->assertNotEmpty(
+            $insights->billingAddress->latitude,
             'empty works for billing latitude'
         );
     }

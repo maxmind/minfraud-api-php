@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Email;
 
+/**
+ * @coversNothing
+ */
 class EmailTest extends \PHPUnit_Framework_TestCase
 {
     public function testEmail()
@@ -11,7 +14,7 @@ class EmailTest extends \PHPUnit_Framework_TestCase
         $array = [
             'first_seen' => '2017-01-02',
             'is_free' => true,
-            'is_high_risk' => true
+            'is_high_risk' => true,
         ];
         $email = new Email($array);
 

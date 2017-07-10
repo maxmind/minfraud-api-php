@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\CreditCard;
 
+/**
+ * @coversNothing
+ */
 class CreditCardTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreditCard()
@@ -19,7 +22,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             'country' => 'US',
             'is_issued_in_billing_address_country' => false,
             'is_prepaid' => true,
-            'type' => 'credit'
+            'type' => 'credit',
         ];
         $cc = new CreditCard($array);
 

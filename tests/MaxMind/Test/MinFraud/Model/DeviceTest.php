@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Device;
 
+/**
+ * @coversNothing
+ */
 class DeviceTest extends \PHPUnit_Framework_TestCase
 {
     public function testDevice()

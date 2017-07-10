@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\IpAddress;
 
+/**
+ * @coversNothing
+ */
 class IpLocationTest extends \PHPUnit_Framework_TestCase
 {
     public function testIpAddress()
@@ -19,8 +22,8 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
                 'accuracy_radius' => 5,
             ],
             'postal' => [
-                'code' => '31432'
-            ]
+                'code' => '31432',
+            ],
         ];
 
         $ipAddress = new IpAddress($array);

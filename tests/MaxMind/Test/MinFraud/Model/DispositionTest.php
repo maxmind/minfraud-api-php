@@ -4,6 +4,9 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Disposition;
 
+/**
+ * @coversNothing
+ */
 class DispositionTest extends \PHPUnit_Framework_TestCase
 {
     public function testDisposition()
