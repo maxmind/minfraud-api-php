@@ -12,7 +12,6 @@ class Device extends AbstractWrapper
 {
     public function __construct()
     {
-        $int_or_string = new IntOrString();
         $this->validatable = v::keySet(
             v::key('accept_language', v::stringType(), false),
             v::key('ip_address', v::ip(), true),
