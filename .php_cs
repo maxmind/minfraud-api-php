@@ -17,7 +17,10 @@ return PhpCsFixer\Config::create()
         'no_useless_return' => true,
         'ordered_imports' => true,
         'pre_increment' => false,
-        'php_unit_strict' => true,
+        // Although we generally want to use assertSame, there are times
+        // when we do not, such as comparing two object for non-referential
+        // equality.
+        'php_unit_strict' => false,
         'php_unit_test_class_requires_covers' => true,
         'phpdoc_add_missing_param_annotation' => true,
         'phpdoc_no_alias_tag' => false,

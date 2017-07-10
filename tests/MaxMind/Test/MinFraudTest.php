@@ -21,7 +21,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
     public function testFullRequest($class, $service)
     {
         $responseMeth = $service . 'FullResponse';
-        $this->assertSame(
+        $this->assertEquals(
             new $class(Data::$responseMeth()),
             $this->createMinFraudRequestWithFullResponse($service)
                 ->with(Data::fullRequest())->$service(),
@@ -54,13 +54,13 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             ->withDevice(Data::fullRequest()['device']);
 
         $responseMeth = $service . 'FullResponse';
-        $this->assertSame(
+        $this->assertEquals(
             new $class(Data::$responseMeth()),
             $mf->$service(),
             'response for full request built piece by piece'
         );
 
-        $this->assertNotSame(
+        $this->assertNotEquals(
             $mf,
             $incompleteMf,
             'intermediate object not mutated'
