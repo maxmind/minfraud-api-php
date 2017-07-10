@@ -5,6 +5,9 @@ CHANGELOG
   `ebs`, `hipay`, and `lemon_way`.
 * Updated the docs for `MaxMind\MinFraud\Model\Address` now that
   `isPostalInCity` may be returned for addresses world-wide.
+* The `first_seen` output was added to the `Email` response model.
+* `session_age` and `session_id` inputs were added to `device` input
+  validation.
 
 1.3.0 (2016-11-22)
 ------------------
