@@ -538,6 +538,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
             [0],
             [3600],
             [1000.5],
+            ["12345"],
         ];
     }
 
