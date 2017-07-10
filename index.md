@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.3.0
+version: v1.4.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -31,7 +31,7 @@ You should now have the file `composer.phar` in your project directory.
 Run in your project root:
 
 ```
-php composer.phar require maxmind/minfraud
+php composer.phar require maxmind/minfraud:~1.0
 ```
 
 You should now have the files `composer.json` and `composer.lock` as well as
@@ -47,6 +47,36 @@ from your code:
 require 'vendor/autoload.php';
 ```
 
+## Install via Phar ##
+
+Although we strongly recommend using Composer, we also provide a
+[phar archive](http://php.net/manual/en/book.phar.php) containing most of the
+dependencies for this API. The latest phar archive is available on
+[our releases page](https://github.com/maxmind/minfraud-api-php/releases).
+
+### Install Dependencies ###
+
+Please note that you must have the PHP [cURL
+extension](http://php.net/manual/en/book.curl.php) installed to use this
+archive. For Debian based distributions, this can typically be found in the
+the `php-curl` package. For other operating systems, please consult the
+relevant documentation. After installing the extension you may need to
+restart your web server.
+
+If you are missing this extension, you will see errors like the following:
+
+```
+PHP Fatal error:  Uncaught Error: Call to undefined function MaxMind\WebService\curl_version()
+```
+
+### Require Package ###
+
+To use the archive, just require it from your script:
+
+```php
+require 'minfraud.phar';
+```
+
 ## API Documentation ###
 
 More detailed API documentation is available on [our GitHub
@@ -54,7 +84,7 @@ Page](http://maxmind.github.io/minfraud-api-php/) under the "API" tab.
 
 ## Usage ##
 
-To use this API, create a new `\Maxmind\MinFraud` object. The constructor
+To use this API, create a new `\MaxMind\MinFraud` object. The constructor
 takes your MaxMind user ID, license key, and an optional options array as
 arguments. This object is immutable. You then build up the request using the
 `->with*` methods as shown below. Each method call returns a new object. The
@@ -112,8 +142,10 @@ use MaxMind\MinFraud;
 $mf = new MinFraud(1, 'ABCD567890');
 
 $request = $mf->withDevice([
-    'ip_address' => '81.2.69.160',
-    'user_agent' =>
+    'ip_address'  => '81.2.69.160',
+    'session_age' => 3600.5,
+    'session_id'  => 'foobar',
+    'user_agent'  =>
         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
     'accept_language' => 'en-US,en;q=0.8',
 ])->withEvent([
@@ -183,6 +215,11 @@ $request = $mf->withDevice([
     'item_id'  => 'msc-1232',
     'quantity' => 1,
     'price'    => 100.00,
+])->withCustomInputs([
+    'section'                      => 'news',
+    'number_of_previous_purchases' => 19,
+    'discount'                     => 3.2,
+    'previous_user'                => true,
 ]);
 
 # To get the minFraud Factors response model, use ->factors():
@@ -237,6 +274,6 @@ This API uses [Semantic Versioning](http://semver.org/).
 
 ## Copyright and License ##
 
-This software is Copyright (c) 2015 by MaxMind, Inc.
+This software is Copyright (c) 2015-2017 by MaxMind, Inc.
 
 This is free software, licensed under the Apache License, Version 2.0.
