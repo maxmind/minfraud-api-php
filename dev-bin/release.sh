@@ -98,8 +98,6 @@ php apigen.phar generate \
     -s .geoip2 \
     -d "doc/$tag" \
     --title "minFraud PHP API $tag" \
-    --template-theme bootstrap \
-    --exclude "Compat" \
     --php
 
 
