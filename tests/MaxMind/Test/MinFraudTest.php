@@ -699,6 +699,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
         return [
             ['maxmind.com'],
             ['www.bbc.co.uk'],
+            ['ponyville.eq'],
         ];
     }
 

@@ -14,7 +14,7 @@ class Email extends AbstractWrapper
     {
         $this->validatable = v::keySet(
             v::key('address', v::oneOf(new Md5(), v::email()), false),
-            v::key('domain', v::domain(), false)
+            v::key('domain', v::domain(false), false)
         );
     }
 }
