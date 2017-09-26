@@ -1,13 +1,18 @@
 CHANGELOG
 =========
 
-1.4.1
+1.5.0
 -----------------
 
 * TLD validation is no longer performed when validating `/email/domain` in
   order to better accommodate new gTLDs that the validation library does
   not yet know about.
-
+* Added the following new values to the payment processor validation:
+  * `bpoint`
+  * `checkout_com`
+  * `emerchantpay`
+  * `heartland`
+  * `payway`
 
 1.4.0 (2017-07-10)
 ------------------
