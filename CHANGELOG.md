@@ -13,6 +13,8 @@ CHANGELOG
   * `emerchantpay`
   * `heartland`
   * `payway`
+* Updated `geoip2/geoip2` dependency to add support for GeoIP2 Precision
+  Insights anonymizer fields.
 
 1.4.0 (2017-07-10)
 ------------------

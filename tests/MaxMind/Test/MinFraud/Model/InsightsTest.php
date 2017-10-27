@@ -66,5 +66,15 @@ class InsightsTest extends ScoreTest
             $insights->billingAddress->latitude,
             'empty works for billing latitude'
         );
+
+        foreach (['isAnonymous',
+                  'isAnonymousVpn',
+                  'isHostingProvider',
+                  'isPublicProxy',
+                  'isSatelliteProvider',
+                  'isTorExitNode',
+                 ] as $property) {
+            $this->assertTrue($insights->ipAddress->traits->$property);
+        }
     }
 }
