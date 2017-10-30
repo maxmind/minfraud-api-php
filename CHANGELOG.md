@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-1.5.0
------------------
+1.5.0 (2017-10-30)
+------------------
 
 * TLD validation is no longer performed when validating `/email/domain` in
   order to better accommodate new gTLDs that the validation library does
