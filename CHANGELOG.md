@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.6.0
+-----------------
+
+* Added the following new values to the payment processor validation:
+  * `cybersource`
+  * `transact_pro`
+  * `wirecard`
+
 1.5.0 (2017-10-30)
 ------------------
 
