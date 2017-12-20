@@ -36,6 +36,7 @@ class PaymentProcessor extends AbstractWrapper
                 'conekta',
                 'cuentadigital',
                 'curopayments',
+                'cybersource',
                 'dalpay',
                 'dibs',
                 'digital_river',
@@ -102,6 +103,7 @@ class PaymentProcessor extends AbstractWrapper
                 'stripe',
                 'telerecargas',
                 'towah',
+                'transact_pro',
                 'usa_epay',
                 'vantiv',
                 'verepay',
@@ -110,6 +112,7 @@ class PaymentProcessor extends AbstractWrapper
                 'virtual_card_services',
                 'vme',
                 'vpos',
+                'wirecard',
                 'worldpay',
             ]
         );
