@@ -4,6 +4,10 @@ CHANGELOG
 1.6.0
 -----------------
 
+* Upgraded `geoip2/geoip2` dependency. This version adds the
+  `isInEuropeanUnion` property to `MaxMind\MinFraud\Model\GeoIp2Country`
+  and `GeoIp2\Record\RepresentedCountry`. This property is `true` if the
+  country is a member state of the European Union.
 * Added the following new values to the payment processor validation:
   * `cybersource`
   * `transact_pro`
