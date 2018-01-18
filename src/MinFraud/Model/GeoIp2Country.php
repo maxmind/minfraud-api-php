@@ -18,6 +18,7 @@ class GeoIp2Country extends Country
     protected $validAttributes = [
         'confidence',
         'geonameId',
+        'isInEuropeanUnion',
         'isoCode',
         'isHighRisk',
         'names',

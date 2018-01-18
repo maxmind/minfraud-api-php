@@ -34,6 +34,21 @@ class InsightsTest extends ScoreTest
             'correct French country name'
         );
 
+        $this->assertTrue(
+            $insights->ipAddress->country->isInEuropeanUnion,
+            'country is in EU'
+        );
+
+        $this->assertFalse(
+            $insights->ipAddress->registeredCountry->isInEuropeanUnion,
+            'registered country is in EU'
+        );
+
+        $this->assertFalse(
+            $insights->ipAddress->representedCountry->isInEuropeanUnion,
+            'represented country is in EU'
+        );
+
         $this->assertSame(
             $array['credit_card']['issuer']['name'],
             $insights->creditCard->issuer->name,

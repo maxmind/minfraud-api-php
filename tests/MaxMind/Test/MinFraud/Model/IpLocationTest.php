@@ -14,6 +14,7 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
         $array = [
             'risk' => 0.01,
             'country' => [
+                'is_in_european_union' => true,
                 'iso_code' => 'US',
                 'is_high_risk' => false,
             ],
@@ -32,6 +33,11 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
             $array['risk'],
             $ipAddress->risk,
             'IP risk'
+        );
+
+        $this->assertTrue(
+            $ipAddress->country->isInEuropeanUnion,
+            'country is in European Union'
         );
 
         $this->assertSame(
@@ -63,6 +69,12 @@ class IpLocationTest extends \PHPUnit_Framework_TestCase
             $ipAddress->postal->code,
             'postal code'
         );
+
+        $this->assertFalse($ipAddress->registeredCountry->isInEuropeanUnion,
+            'registered country is in European Union');
+
+        $this->assertFalse($ipAddress->representedCountry->isInEuropeanUnion,
+            'represented country is in European Union');
 
         $this->assertSame(
             $array,
