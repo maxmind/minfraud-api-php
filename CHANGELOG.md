@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-1.6.0
------------------
+1.6.0 (2018-01-19)
+------------------
 
 * Upgraded `geoip2/geoip2` dependency. This version adds the
   `isInEuropeanUnion` property to `MaxMind\MinFraud\Model\GeoIp2Country`
