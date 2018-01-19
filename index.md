@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.5.0
+version: v1.6.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -274,6 +274,6 @@ This API uses [Semantic Versioning](http://semver.org/).
 
 ## Copyright and License ##
 
-This software is Copyright (c) 2015-2017 by MaxMind, Inc.
+This software is Copyright (c) 2015-2018 by MaxMind, Inc.
 
 This is free software, licensed under the Apache License, Version 2.0.
