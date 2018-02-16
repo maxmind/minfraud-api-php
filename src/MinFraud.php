@@ -18,7 +18,7 @@ use Respect\Validation\Exceptions\ValidationException;
  *
  * ## Usage ##
  *
- * The constructor takes your MaxMind user ID and license key. The object
+ * The constructor takes your MaxMind account ID and license key. The object
  * returned is immutable. To build up a request, call the `->with*()` methods.
  * Each of these returns a new object (a clone of the original) with the
  * additional data. These can be chained together:
@@ -49,7 +49,7 @@ class MinFraud
     private $validateInput = true;
 
     /**
-     * @param int    $userId     Your MaxMind user ID
+     * @param int    $accountId  Your MaxMind account ID
      * @param string $licenseKey Your MaxMind license key
      * @param array  $options    An array of options. Possible keys:
      *
@@ -69,7 +69,7 @@ class MinFraud
      *   before deployment.
      */
     public function __construct(
-        $userId,
+        $accountId,
         $licenseKey,
         $options = []
     ) {
@@ -87,7 +87,7 @@ class MinFraud
             $options['host'] = self::$host;
         }
         $options['userAgent'] = $this->userAgent();
-        $this->client = new Client($userId, $licenseKey, $options);
+        $this->client = new Client($accountId, $licenseKey, $options);
     }
 
     /**
