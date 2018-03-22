@@ -6,6 +6,12 @@ CHANGELOG
 
 * Renamed MaxMind user ID to account ID in the code and added support for the
   new `ACCOUNT_ID_REQUIRED` error code.
+* Added the following new values to the payment processor validation:
+  * `ccavenue`
+  * `ct_payments`
+  * `dalenys`
+  * `oney`
+  * `posconnect`
 
 1.6.0 (2018-01-19)
 ------------------
