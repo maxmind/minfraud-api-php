@@ -22,6 +22,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             'country' => 'US',
             'is_issued_in_billing_address_country' => false,
             'is_prepaid' => true,
+            'is_virtual' => true,
             'type' => 'credit',
         ];
         $cc = new CreditCard($array);
@@ -72,6 +73,12 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
             $array['is_prepaid'],
             $cc->isPrepaid,
             'isPrepaid'
+        );
+
+        $this->assertSame(
+            $array['is_virtual'],
+            $cc->isVirtual,
+            'isVirtual'
         );
 
         $this->assertSame(
