@@ -20,6 +20,8 @@ namespace MaxMind\MinFraud\Model;
  * issuing the card.
  * @property-read bool|null $isPrepaid This property is true if the card is a
  * prepaid card.
+ * @property-read bool|null $isVirtual This property is true if the card is a
+ * virtual card.
  * @property-read \MaxMind\MinFraud\Model\Issuer $issuer An object containing
  * information about the credit card issuer.
  * @property-read string|null $type The card's type. The valid values are: charge,
@@ -50,6 +52,11 @@ class CreditCard extends AbstractModel
     /**
      * @internal
      */
+    protected $isVirtual;
+
+    /**
+     * @internal
+     */
     protected $issuer;
 
     /**
@@ -68,6 +75,7 @@ class CreditCard extends AbstractModel
         $this->isIssuedInBillingAddressCountry
             = $this->safeArrayLookup($response['is_issued_in_billing_address_country']);
         $this->isPrepaid = $this->safeArrayLookup($response['is_prepaid']);
+        $this->isVirtual = $this->safeArrayLookup($response['is_virtual']);
         $this->type = $this->safeArrayLookup($response['type']);
     }
 }

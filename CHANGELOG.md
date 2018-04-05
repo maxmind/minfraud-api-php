@@ -14,6 +14,8 @@ CHANGELOG
   * `posconnect`
 * Added support for the `/device/local_time` output. This is exposed as
   the `localTime` property on `MaxMind\MinFraud\Model\Device`.
+* Added support for the `/credit_card/is_virtual` output. This is exposed as
+  the `isVirtual` property on `MaxMind\MinFraud\Model\CreditCard`.
 
 1.6.0 (2018-01-19)
 ------------------
