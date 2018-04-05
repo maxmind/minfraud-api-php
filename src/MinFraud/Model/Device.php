@@ -21,6 +21,9 @@ namespace MaxMind\MinFraud\Model;
  * UUID for that device.
  * @property-read string|null $lastSeen This is the date and time of the last
  * sighting of the device. This is an RFC 3339 date-time.
+ * @property-read string|null $localTime This is the local date and time of
+ * the transaction in the time zone of the device. This is determined by using
+ * the UTC offset associated with the device. This is an RFC 3339 date-time
  */
 class Device extends AbstractModel
 {
@@ -39,11 +42,17 @@ class Device extends AbstractModel
      */
     protected $lastSeen;
 
+    /**
+     * @internal
+     */
+    protected $localTime;
+
     public function __construct($response, $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->confidence = $this->safeArrayLookup($response['confidence']);
         $this->id = $this->safeArrayLookup($response['id']);
         $this->lastSeen = $this->safeArrayLookup($response['last_seen']);
+        $this->localTime = $this->safeArrayLookup($response['local_time']);
     }
 }

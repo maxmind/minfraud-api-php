@@ -12,6 +12,8 @@ CHANGELOG
   * `dalenys`
   * `oney`
   * `posconnect`
+* Added support for the `/device/local_time` output. This is exposed as
+  the `localTime` property on `MaxMind\MinFraud\Model\Device`.
 
 1.6.0 (2018-01-19)
 ------------------
