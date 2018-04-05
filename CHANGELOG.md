@@ -16,6 +16,8 @@ CHANGELOG
   the `localTime` property on `MaxMind\MinFraud\Model\Device`.
 * Added support for the `/credit_card/is_virtual` output. This is exposed as
   the `isVirtual` property on `MaxMind\MinFraud\Model\CreditCard`.
+* Added `payout_change` to the `/event/type` input validation.
+
 
 1.6.0 (2018-01-19)
 ------------------
