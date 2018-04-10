@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.6.0
+version: v1.7.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -85,7 +85,7 @@ Page](http://maxmind.github.io/minfraud-api-php/) under the "API" tab.
 ## Usage ##
 
 To use this API, create a new `\MaxMind\MinFraud` object. The constructor
-takes your MaxMind user ID, license key, and an optional options array as
+takes your MaxMind account ID, license key, and an optional options array as
 arguments. This object is immutable. You then build up the request using the
 `->with*` methods as shown below. Each method call returns a new object. The
 previous object is not modified.
@@ -116,7 +116,7 @@ The possible exceptions are:
   array is missing.
 * `AuthenticationException` - This will be thrown on calling `->score()` or
   `->insights()` when the server is unable to authenticate the request, e.g.,
-  if the license key or user ID is invalid.
+  if the license key or account ID is invalid.
 * `InsufficientFundsException` - This will be thrown on calling `->score()` or
   `->insights()` when your account is out of funds.
 * `InvalidRequestException` - This will be thrown on calling `->score()` or
@@ -137,7 +137,7 @@ The possible exceptions are:
 require_once 'vendor/autoload.php';
 use MaxMind\MinFraud;
 
-# The constructor for MinFraud takes your user ID, your license key, and
+# The constructor for MinFraud takes your account ID, your license key, and
 # optionally an array of options.
 $mf = new MinFraud(1, 'ABCD567890');
 
