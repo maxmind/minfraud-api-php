@@ -134,6 +134,9 @@ use MaxMind\MinFraud;
 # optionally an array of options.
 $mf = new MinFraud(1, 'ABCD567890');
 
+# Note that each ->with*() call returns a new immutable object. This means
+# that if you separate the calls into separate statements without chaining,
+# you should assign the return value to a variable each time.
 $request = $mf->withDevice([
     'ip_address'  => '81.2.69.160',
     'session_age' => 3600.5,
