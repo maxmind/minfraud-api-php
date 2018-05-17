@@ -7,7 +7,7 @@ Factors web services](https://dev.maxmind.com/minfraud/).
 
 ## Install via Composer ##
 
-We recommend installing this package with [Composer](http://getcomposer.org/).
+We recommend installing this package with [Composer](https://getcomposer.org/).
 
 ### Download Composer ###
 
@@ -43,14 +43,14 @@ require 'vendor/autoload.php';
 ## Install via Phar ##
 
 Although we strongly recommend using Composer, we also provide a
-[phar archive](http://php.net/manual/en/book.phar.php) containing most of the
+[phar archive](https://php.net/manual/en/book.phar.php) containing most of the
 dependencies for this API. The latest phar archive is available on
 [our releases page](https://github.com/maxmind/minfraud-api-php/releases).
 
 ### Install Dependencies ###
 
 Please note that you must have the PHP [cURL
-extension](http://php.net/manual/en/book.curl.php) installed to use this
+extension](https://php.net/manual/en/book.curl.php) installed to use this
 archive. For Debian based distributions, this can typically be found in the
 the `php-curl` package. For other operating systems, please consult the
 relevant documentation. After installing the extension you may need to
@@ -73,7 +73,7 @@ require 'minfraud.phar';
 ## API Documentation ###
 
 More detailed API documentation is available on [our GitHub
-Page](http://maxmind.github.io/minfraud-api-php/) under the "API" tab.
+Page](https://maxmind.github.io/minfraud-api-php/) under the "API" tab.
 
 ## Usage ##
 
@@ -247,7 +247,7 @@ Please report all issues with this code using the
 
 If you are having an issue with the minFraud service that is not specific
 to the client API, please see
-[our support page](http://www.maxmind.com/en/support).
+[our support page](https://www.maxmind.com/en/support).
 
 ## Requirements  ##
 
@@ -263,7 +263,7 @@ style guidelines. Please include unit tests whenever possible.
 
 ## Versioning ##
 
-This API uses [Semantic Versioning](http://semver.org/).
+This API uses [Semantic Versioning](https://semver.org/).
 
 ## Copyright and License ##
 
