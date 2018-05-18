@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+* Be more explicit in the documentation about the fact that we create and
+  return new MinFraud objects in each `->with*()` call.
+
 1.7.0 (2018-04-10)
 ------------------
 

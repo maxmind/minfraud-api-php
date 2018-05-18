@@ -91,7 +91,7 @@ fi
 # We no longer have apigen as a dependency in Composer as releases are
 # sporadically deleted upstream and compatibility is often broken on patch
 # releases.
-wget -O apigen.phar "http://apigen.org/apigen.phar"
+wget -O apigen.phar "https://www.apigen.org/apigen.phar"
 
 php apigen.phar generate \
     -s ../src \
