@@ -10,9 +10,11 @@ php:
   - '7.1'
   - '7.2'
   - hhvm
+  - hhvm-nightly
   - nightly
 matrix:
   allow_failures:
+    - php: hhvm-nightly
     - php: nightly
 before_install:
   - composer self-update
