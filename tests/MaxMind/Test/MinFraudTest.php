@@ -979,7 +979,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
         $options['httpRequestFactory'] = $factory;
 
-        return new Minfraud(
+        return new MinFraud(
             $userId,
             $licenseKey,
             $options
