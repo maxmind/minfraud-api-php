@@ -2,9 +2,6 @@
 
 namespace MaxMind\Test;
 
-use MaxMind\MinFraud\Model\Insights;
-use MaxMind\MinFraud\Model\Score;
-
 class MinFraudData
 {
     public static function factorsFullResponse()
