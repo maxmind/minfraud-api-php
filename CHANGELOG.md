@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.8.0
+------------------
+
+* Added the following new values to the payment processor validation:
+  * `payeezy`
+  * `payment_express`
 * Be more explicit in the documentation about the fact that we create and
   return new MinFraud objects in each `->with*()` call.
 
