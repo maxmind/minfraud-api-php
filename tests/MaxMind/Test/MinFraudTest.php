@@ -754,7 +754,7 @@ class MinFraudTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be an URL
+     * @expectedExceptionMessageRegExp /must be an? URL/
      * @dataProvider badReferrerUri
      *
      * @param mixed $uri
