@@ -13,6 +13,6 @@ class Billing extends AbstractWrapper
 
     public function __construct()
     {
-        $this->validatable = call_user_func_array('Respect\Validation\Validator::keySet', Address::keys());
+        $this->validatable = \call_user_func_array('Respect\Validation\Validator::keySet', Address::keys());
     }
 }
