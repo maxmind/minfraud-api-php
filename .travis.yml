@@ -20,10 +20,15 @@ before_install:
   - composer self-update
   - composer install --dev -n --prefer-source
   - phpenv rehash
+  - "if [[ $TRAVIS_PHP_VERSION == '7.2' ]]; then sudo apt-get install -y nodejs; npm install -g snyk; fi"
+install:
+  - "if [[ $TRAVIS_PHP_VERSION == '7.2' ]]; then snyk test --org=maxmind; fi"
 script:
-  - if [[ $TRAVIS_PHP_VERSION = '7.2' ]]; then vendor/bin/php-cs-fixer fix --verbose --diff --dry-run --config=.php_cs; fi
-  - if [[ $TRAVIS_PHP_VERSION = '7.2' ]]; then vendor/bin/phpcs --standard=PSR2 src/; fi
+  - "if [[ $TRAVIS_PHP_VERSION == '7.2' ]]; then vendor/bin/php-cs-fixer fix --verbose --diff --dry-run --config=.php_cs; fi"
+  - "if [[ $TRAVIS_PHP_VERSION == '7.2' ]]; then vendor/bin/phpcs --standard=PSR2 src/; fi"
   - ./vendor/bin/phpunit -c phpunit.xml.dist
+after_success:
+  - "if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PHP_VERSION == '7.2' ]]; then snyk monitor --org=maxmind --project-name=maxmind/minfraud-api-php; fi"
 notifications:
   email:
     on_failure: always
@@ -33,3 +38,6 @@ notifications:
   slack:
     rooms:
       secure: "GLE0181QXcfYCSLPqTcKP9nJ5f7s8VRqXE0tYj78r+jk77c5vrtSqU41Ld99qQPcDMHxYMvdWbJ5asTAg324PaOn7UA74hzP7SYe8lcgivOI02n1Au3Vel4tPufyGnLN97Uhwurymhg8NgmYxVjdSNeYvmTZceUyddS9YEwS0BcU5SkFp5qfeW6Fp5Pnl0PIiItlUetY5xsr826VyOOZ3PzW7cif3u85pCoh8BL1lwV4hCOFDmYGXtyMgiS5/ARqjUd/EMAonxGu5zX54diP4wzqT7Vp4qJveR6a5EPDUoya66Y5zvlQ9K7iWDFsIwebzaGwLL+JNPuxW6vxjY0zvWeUI8LCt+qtnpHCkVzpHzmAyfLg0/xGq/ct4Kont2rOgCcmdJO8zCSsyqYT0yj/HQ8LkgXB9MOEjscHq5nugMPHSZX+nL2Z6IHIUupLpvJ9oCPG3GwwIJyA05LUXsuNMaRYxLgAh0EiPJ+Ny1bYqI0Umz6rlT1izSsEEVpiU527nmWrFrH5fKgnoMPdhrCw2GFqBgp7bvUSJ6J/rapIS9DoIAMZZ2X1m2lim501+VK+N10n+L2mICnepSTXes+N0TtB//ovSOg4m5U5VKRlSeoY1NFj/z+SlJ20EpVNzJuwR0ULf+lH8YXuNSsvOg/xSsbrHhdxglwxOJAvpaO55hY=\n"
+env:
+  global:
+    secure: "VYfszM+JeDgPFfJtZKOUAmL+/J54oq54Iw0E2+DUq8SytPjq01qa8cfwP1syLdrd3BSGosjVxFdlsPCefMtV4b7BLMi9Gm3lq+S2XO/vxX1YNFBpyXeYhPul+ycBmm8GotXRnkX/sg+gfH+ovyibYqWhQDKWZfZDcwBBmsMog83/2cHM3qGfEuzGC9Sp0E0YgMmDbDOY3MrRwCJuCJ+lbtO+fmvYdItHEksm1v5U2xxDY/dRL92DvmIN0WItmI8ebsst5+tiTYLzwbiWAIvSeD0fQyn5Wwol4nU75+Su9Xm+pkCZudUcywMX43eeXFb3DVH4HmlY/LYKOZNE0RDALxMMji80wnTizv9gXumQPE0gJ4OWccLnk281+uPrrn8JzwHYdu2jbkyfM7kB0ZLOTmcvTneEffeZXRI+sHgt2rkUP6LDK9/sgxIGtvocNqgQhGhs8IKHep5HQuRMBW7JHIP/CzlFxV8rSFCaqVQ62coObRdOV+R89LDCjJ698V2zgSGtnqaM5mpRBw+Tnof4+x49bwNR+H7ifC1TJMP/4RhoXSLFfLwvjsfOIlqi676XDcRJbNHyfQotfFHR8v8lx+xkMvxBJ4USOEjSsbc2nF3OoXatNdIoAfkYgNjY2EcqWml+ltFxKHZzdZdMOfmITiZcAqxeOUgoQeuzdoXKGrw="
