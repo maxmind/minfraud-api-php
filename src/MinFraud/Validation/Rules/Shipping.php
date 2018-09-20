@@ -23,6 +23,6 @@ class Shipping extends AbstractWrapper
                 false
             )
         );
-        $this->validatable = call_user_func_array('Respect\Validation\Validator::keySet', $keys);
+        $this->validatable = \call_user_func_array('Respect\Validation\Validator::keySet', $keys);
     }
 }

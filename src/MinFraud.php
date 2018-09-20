@@ -461,7 +461,7 @@ class MinFraud
     {
         $cleaned = [];
         foreach ($array as $key => $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $cleaned[$key] = $this->clean($array[$key]);
             } elseif ($array[$key] !== null) {
                 $cleaned[$key] = $array[$key];
