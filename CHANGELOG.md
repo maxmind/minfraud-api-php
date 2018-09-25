@@ -5,8 +5,12 @@ CHANGELOG
 ------------------
 
 * Added the following new values to the payment processor validation:
+  * `datacash`
+  * `gocardless`
   * `payeezy`
   * `payment_express`
+  * `smartdebit`
+  * `synapsefi`
 * Be more explicit in the documentation about the fact that we create and
   return new MinFraud objects in each `->with*()` call.
 
