@@ -23,15 +23,15 @@ before_install:
   - composer self-update
   - composer install --dev -n --prefer-source
   - phpenv rehash
-  - "if [[ $RUN_SNYK ]]; then sudo apt-get install -y nodejs; npm install -g snyk; fi"
+  - "if [[ $RUN_SNYK && $SNYK_TOKEN ]]; then sudo apt-get install -y nodejs; npm install -g snyk; fi"
 install:
-  - "if [[ $RUN_SNYK ]]; then snyk test --org=maxmind; fi"
+  - "if [[ $RUN_SNYK && $SNYK_TOKEN ]]; then snyk test --org=maxmind; fi"
 script:
   - "if [[ $RUN_LINTER ]]; then vendor/bin/php-cs-fixer fix --verbose --diff --dry-run --config=.php_cs; fi"
   - "if [[ $RUN_LINTER ]]; then vendor/bin/phpcs --standard=PSR2 src/; fi"
   - ./vendor/bin/phpunit -c phpunit.xml.dist
 after_success:
-  - "if [[ $RUN_SNYK && $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then snyk monitor --org=maxmind --project-name=maxmind/minfraud-api-php; fi"
+  - "if [[ $RUN_SNYK && $SNYK_TOKEN && $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then snyk monitor --org=maxmind --project-name=maxmind/minfraud-api-php; fi"
 notifications:
   email:
     on_failure: always
