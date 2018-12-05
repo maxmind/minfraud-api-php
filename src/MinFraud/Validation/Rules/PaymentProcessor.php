@@ -79,6 +79,7 @@ class PaymentProcessor extends AbstractWrapper
                 'payeezy',
                 'payfast',
                 'paygate',
+                'paylike',
                 'payment_express',
                 'paymentwall',
                 'payone',

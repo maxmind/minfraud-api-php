@@ -8,6 +8,7 @@ CHANGELOG
   * `datacash`
   * `gocardless`
   * `payeezy`
+  * `paylike`
   * `payment_express`
   * `smartdebit`
   * `synapsefi`
