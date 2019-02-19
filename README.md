@@ -255,7 +255,7 @@ to the client API, please see
 ## Requirements  ##
 
 This code requires PHP 5.4 or greater. Older versions of PHP are not
-supported. This library is also compatible with HHVM.
+supported.
 
 There are several other dependencies as defined in the `composer.json` file.
 
