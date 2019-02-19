@@ -13,11 +13,8 @@ matrix:
       env:
         - RUN_LINTER=1
         - RUN_SNYK=1
-    - php: hhvm
-    - php: hhvm-nightly
     - php: nightly
   allow_failures:
-    - php: hhvm-nightly
     - php: nightly
 before_install:
   - composer self-update
