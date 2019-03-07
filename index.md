@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.7.0
+version: v1.8.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -14,7 +14,7 @@ Factors web services](https://dev.maxmind.com/minfraud/).
 
 ## Install via Composer ##
 
-We recommend installing this package with [Composer](http://getcomposer.org/).
+We recommend installing this package with [Composer](https://getcomposer.org/).
 
 ### Download Composer ###
 
@@ -50,14 +50,14 @@ require 'vendor/autoload.php';
 ## Install via Phar ##
 
 Although we strongly recommend using Composer, we also provide a
-[phar archive](http://php.net/manual/en/book.phar.php) containing most of the
+[phar archive](https://php.net/manual/en/book.phar.php) containing most of the
 dependencies for this API. The latest phar archive is available on
 [our releases page](https://github.com/maxmind/minfraud-api-php/releases).
 
 ### Install Dependencies ###
 
 Please note that you must have the PHP [cURL
-extension](http://php.net/manual/en/book.curl.php) installed to use this
+extension](https://php.net/manual/en/book.curl.php) installed to use this
 archive. For Debian based distributions, this can typically be found in the
 the `php-curl` package. For other operating systems, please consult the
 relevant documentation. After installing the extension you may need to
@@ -80,7 +80,7 @@ require 'minfraud.phar';
 ## API Documentation ###
 
 More detailed API documentation is available on [our GitHub
-Page](http://maxmind.github.io/minfraud-api-php/) under the "API" tab.
+Page](https://maxmind.github.io/minfraud-api-php/) under the "API" tab.
 
 ## Usage ##
 
@@ -111,23 +111,23 @@ All externally visible exceptions are in the `\MaxMind\Exception` namespace.
 The possible exceptions are:
 
 * `InvalidInputException` - This will be thrown when a `->with*` method is
-  called with invalid input data or when `->score()` or `->insights()` is
-  called on a request where the required `ip_address` field in the `device`
-  array is missing.
-* `AuthenticationException` - This will be thrown on calling `->score()` or
-  `->insights()` when the server is unable to authenticate the request, e.g.,
-  if the license key or account ID is invalid.
-* `InsufficientFundsException` - This will be thrown on calling `->score()` or
-  `->insights()` when your account is out of funds.
-* `InvalidRequestException` - This will be thrown on calling `->score()` or
-  `->insights()` when the server rejects the request for another reason such
-  as invalid JSON in the POST.
-* `HttpException` - This will be thrown on calling `->score()` or
-  `->insights()` when an unexpected HTTP error occurs such as a firewall
+  called with invalid input data or when `->score()`, `->insights()`, or
+  `->factors()` is called on a request where the required `ip_address` field in
+  the `device` array is missing.
+* `AuthenticationException` - This will be thrown on calling `->score()`,
+  `->insights()`, or `->factors()` when the server is unable to authenticate
+  the request, e.g., if the license key or account ID is invalid.
+* `InsufficientFundsException` - This will be thrown on calling `->score()`,
+  `->insights()`, or `->factors()` when your account is out of funds.
+* `InvalidRequestException` - This will be thrown on calling `->score()`,
+  `->insights()`, or `->factors()` when the server rejects the request for
+  another reason such as invalid JSON in the POST.
+* `HttpException` - This will be thrown on calling `->score()`, `->insights()`,
+  or `->factors()` when an unexpected HTTP error occurs such as a firewall
   interfering with the request to the server.
-* `WebServiceException` - This will be thrown on calling `->score()` or
-  `->insights()` when some other error occurs. This also serves as the base
-  class for the above exceptions.
+* `WebServiceException` - This will be thrown on calling `->score()`,
+  `->insights()`, or `->factors()` when some other error occurs. This also
+  serves as the base class for the above exceptions.
 
 
 ## Example
@@ -141,6 +141,9 @@ use MaxMind\MinFraud;
 # optionally an array of options.
 $mf = new MinFraud(1, 'ABCD567890');
 
+# Note that each ->with*() call returns a new immutable object. This means
+# that if you separate the calls into separate statements without chaining,
+# you should assign the return value to a variable each time.
 $request = $mf->withDevice([
     'ip_address'  => '81.2.69.160',
     'session_age' => 3600.5,
@@ -225,7 +228,7 @@ $request = $mf->withDevice([
 # To get the minFraud Factors response model, use ->factors():
 $factorsResponse = $request->factors();
 
-print($insightsResponse->subscores->email . "\n");
+print($factorsResponse->subscores->email . "\n");
 
 # To get the minFraud Insights response model, use ->insights():
 $insightsResponse = $request->insights();
@@ -254,12 +257,12 @@ Please report all issues with this code using the
 
 If you are having an issue with the minFraud service that is not specific
 to the client API, please see
-[our support page](http://www.maxmind.com/en/support).
+[our support page](https://www.maxmind.com/en/support).
 
 ## Requirements  ##
 
 This code requires PHP 5.4 or greater. Older versions of PHP are not
-supported. This library works and is tested with HHVM.
+supported.
 
 There are several other dependencies as defined in the `composer.json` file.
 
@@ -270,10 +273,10 @@ style guidelines. Please include unit tests whenever possible.
 
 ## Versioning ##
 
-This API uses [Semantic Versioning](http://semver.org/).
+This API uses [Semantic Versioning](https://semver.org/).
 
 ## Copyright and License ##
 
-This software is Copyright (c) 2015-2018 by MaxMind, Inc.
+This software is Copyright (c) 2015-2019 by MaxMind, Inc.
 
 This is free software, licensed under the Apache License, Version 2.0.
