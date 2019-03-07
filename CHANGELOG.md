@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.8.0
+1.8.0 (2019-03-07)
 ------------------
 
 * Added the following new values to the payment processor validation:
