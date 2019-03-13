@@ -19,7 +19,7 @@ namespace MaxMind\MinFraud\Model;
  * score of 20 indicates a 20% chance that a transaction is fraudulent. We
  * never return a risk score of 0, since all transactions have the possibility
  * of being fraudulent. Likewise we never return a risk score of 100.
- * @property-read \MaxMind\MinFraud\Model\Disposition disposition An object
+ * @property-read \MaxMind\MinFraud\Model\Disposition $disposition An object
  * containing the disposition set by custom rules.
  * @property-read \MaxMind\MinFraud\Model\ScoreIpAddress $ipAddress An object
  * containing the IP risk for the transaction.
