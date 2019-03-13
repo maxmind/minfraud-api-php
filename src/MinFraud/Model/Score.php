@@ -24,10 +24,9 @@ namespace MaxMind\MinFraud\Model;
  * @property-read \MaxMind\MinFraud\Model\ScoreIpAddress $ipAddress An object
  * containing the IP risk for the transaction.
  * @property-read array $warnings This array contains
- * {@link \MaxMind\MinFraud\Model\Warning Warning} objects detailing issues
- * with the request that was sent, such as invalid or unknown inputs. It
- * is highly recommended that you check this array for issues when integrating
- * the web service.
+ * \MaxMind\MinFraud\Model\Warning objects detailing issues with the request
+ * that was sent, such as invalid or unknown inputs. It is highly recommended
+ * that you check this array for issues when integrating the web service.
  */
 class Score extends AbstractModel
 {
