@@ -88,18 +88,21 @@ if [ -n "$(git status --porcelain)" ]; then
     exit 1
 fi
 
-# We no longer have apigen as a dependency in Composer as releases are
-# sporadically deleted upstream and compatibility is often broken on patch
-# releases.
-wget -O apigen.phar "https://www.apigen.org/apigen.phar"
+# Using Composer is possible, but they don't recommend it.
+wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor2/releases/download/v2.9.0/phpDocumentor.phar
 
-php apigen.phar generate \
-    -s ../src \
-    -s .geoip2 \
-    -d "doc/$tag" \
+# Use cache dir in /tmp as otherwise cache files get into the output directory.
+cachedir="/tmp/phpdoc-$$-$RANDOM"
+rm -rf "$cachedir"
+
+php phpDocumentor.phar \
+    -d src,.geoip2/src \
+    --visibility public \
+    --cache-folder "$cachedir" \
     --title "minFraud PHP API $tag" \
-    --php
+    -t "doc/$tag"
 
+rm -rf "$cachedir"
 
 page=index.md
 cat <<EOF > $page
