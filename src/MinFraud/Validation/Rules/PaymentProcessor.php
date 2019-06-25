@@ -15,6 +15,7 @@ class PaymentProcessor extends AbstractWrapper
         $this->validatable = v::in(
             [
                 'adyen',
+                'afterpay',
                 'altapay',
                 'amazon_payments',
                 'american_express_payment_gateway',
@@ -44,6 +45,7 @@ class PaymentProcessor extends AbstractWrapper
                 'datacash',
                 'dibs',
                 'digital_river',
+                'dotpay',
                 'ebs',
                 'ecomm365',
                 'elavon',
@@ -61,6 +63,7 @@ class PaymentProcessor extends AbstractWrapper
                 'internetsecure',
                 'intuit_quickbooks_payments',
                 'iugu',
+                'klarna',
                 'lemon_way',
                 'mastercard_payment_gateway',
                 'mercadopago',
@@ -85,6 +88,7 @@ class PaymentProcessor extends AbstractWrapper
                 'payone',
                 'paypal',
                 'payplus',
+                'paysafecard',
                 'paystation',
                 'paytrace',
                 'paytrail',
