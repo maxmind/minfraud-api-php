@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+1.9.0
+------------------
+
+* Added the following new values to the payment processor validation:
+  * `afterpay`
+  * `dotpay`
+  * `klarna`
+  * `paysafecard`
+
 1.8.0 (2019-03-07)
 ------------------
 
