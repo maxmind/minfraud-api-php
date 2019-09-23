@@ -212,10 +212,10 @@ $request = $mf->withDevice([
     'quantity' => 1,
     'price'    => 100.00,
 ])->withCustomInputs([
-    'section'                      => 'news',
-    'number_of_previous_purchases' => 19,
-    'discount'                     => 3.2,
-    'previous_user'                => true,
+    'section'            => 'news',
+    'previous_purchases' => 19,
+    'discount'           => 3.2,
+    'previous_user'      => true,
 ]);
 
 # To get the minFraud Factors response model, use ->factors():
