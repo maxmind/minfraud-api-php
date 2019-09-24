@@ -5,8 +5,10 @@ CHANGELOG
 ------------------
 
 * Added the following new values to the payment processor validation:
+  * `affirm`
   * `afterpay`
   * `dotpay`
+  * `interac`
   * `klarna`
   * `paysafecard`
 

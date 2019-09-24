@@ -15,6 +15,7 @@ class PaymentProcessor extends AbstractWrapper
         $this->validatable = v::in(
             [
                 'adyen',
+                'affirm',
                 'afterpay',
                 'altapay',
                 'amazon_payments',
@@ -60,6 +61,7 @@ class PaymentProcessor extends AbstractWrapper
                 'heartland',
                 'hipay',
                 'ingenico',
+                'interac',
                 'internetsecure',
                 'intuit_quickbooks_payments',
                 'iugu',
