@@ -9,6 +9,7 @@ CHANGELOG
   * `dotpay`
   * `klarna`
   * `paysafecard`
+* Deprecated `emailTenure` and `ipTenure` subscores, in addition to `isHighRisk`.
 
 1.8.0 (2019-03-07)
 ------------------

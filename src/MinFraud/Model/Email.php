@@ -13,7 +13,8 @@ namespace MaxMind\MinFraud\Model;
  * Mail.
  * @property-read bool|null $isHighRisk This field is true if MaxMind believes
  * that this email is likely to be used for fraud. Note that this is also
- * factored into the overall risk_score in the response as well.
+ * factored into the overall risk_score in the response as well. <b>Deprecated
+ * effective August 29, 2019.</b>
  */
 class Email extends AbstractModel
 {
@@ -29,6 +30,8 @@ class Email extends AbstractModel
 
     /**
      * @internal
+     *
+     * @deprecated
      */
     protected $isHighRisk;
 
