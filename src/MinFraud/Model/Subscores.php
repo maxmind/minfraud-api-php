@@ -34,10 +34,14 @@ namespace MaxMind\MinFraud\Model;
  * email domain. If present, this is a value in the range 0.01 to 99.
  * @property-read float|null emailTenure The risk associated with the issuer ID
  * number on the email domain. If present, this is a value in the range 0.01
- * to 99.
+ * to 99. <b>Deprecated effective August 29, 2019. This subscore will default
+ * to 1 and will be removed in a future release. The user tenure on email is
+ * reflected in the `/subscores/email_address` output.</b>
  * @property-read float|null ipTenure The risk associated with the issuer ID
  * number on the IP address. If present, this is a value in the range 0.01 to
- * 99.
+ * 99. <b>Deprecated effective August 29, 2019. This subscore will default to
+ * 1 and will be removed in a future release. The IP tenure is reflected in the
+ * overall risk score.</b>
  * @property-read float|null issuerIdNumber The risk associated with the
  * particular issuer ID number (IIN) given the billing location and the
  * history of usage of the IIN on your account and shop ID. If present, this
@@ -109,11 +113,18 @@ class Subscores extends AbstractModel
 
     /**
      * @internal
+     *
+     * @deprecated This subscore will default to 1 and will be removed in a
+     * future release. The user tenure on email is reflected in the
+     * `/subscores/email_address` output.
      */
     protected $emailTenure;
 
     /**
      * @internal
+     *
+     * @deprecated This subscore will default to 1 and will be removed in a
+     * future release. The IP tenure is reflected in the overall risk score.
      */
     protected $ipTenure;
 
