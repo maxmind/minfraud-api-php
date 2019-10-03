@@ -8,7 +8,7 @@ use GeoIp2\Record\Country;
  * Model of the GeoIP2 country information.
  *
  * @property-read bool $isHighRisk This value is true if the IP country is high
- * risk.
+ * risk. <b>Deprecated effective August 29, 2019.</b>
  **/
 class GeoIp2Country extends Country
 {
@@ -20,6 +20,10 @@ class GeoIp2Country extends Country
         'geonameId',
         'isInEuropeanUnion',
         'isoCode',
+
+        /*
+         * @deprecated
+         */
         'isHighRisk',
         'names',
     ];
