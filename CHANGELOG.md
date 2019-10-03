@@ -11,7 +11,9 @@ CHANGELOG
   * `interac`
   * `klarna`
   * `paysafecard`
-* Deprecated `emailTenure` and `ipTenure` subscores, in addition to `isHighRisk`.
+* Deprecated `emailTenure` and `ipTenure` properties in 
+  `MaxMind\MinFraud\Model\Subscores`.
+* Deprecated `isHighRisk` property in `MaxMind\MinFraud\Model\GeoIp2Country`.
 
 1.8.0 (2019-03-07)
 ------------------
