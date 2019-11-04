@@ -6,11 +6,12 @@ use Composer\CaBundle\CaBundle;
 use MaxMind\MinFraud;
 use MaxMind\Test\MinFraudData as Data;
 use MaxMind\WebService\Client;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class MinFraudTest extends \PHPUnit_Framework_TestCase
+class MinFraudTest extends TestCase
 {
     /**
      * @dataProvider services

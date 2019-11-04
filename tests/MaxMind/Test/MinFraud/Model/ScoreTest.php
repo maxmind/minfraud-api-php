@@ -4,11 +4,12 @@ namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Score;
 use MaxMind\Test\MinFraudData as Data;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class ScoreTest extends \PHPUnit_Framework_TestCase
+class ScoreTest extends TestCase
 {
     protected function response()
     {

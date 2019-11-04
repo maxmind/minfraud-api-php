@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Email;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class EmailTest extends \PHPUnit_Framework_TestCase
+class EmailTest extends TestCase
 {
     public function testEmail()
     {

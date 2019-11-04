@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Disposition;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class DispositionTest extends \PHPUnit_Framework_TestCase
+class DispositionTest extends TestCase
 {
     public function testDisposition()
     {

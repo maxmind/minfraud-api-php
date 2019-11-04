@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\IpAddress;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class IpLocationTest extends \PHPUnit_Framework_TestCase
+class IpLocationTest extends TestCase
 {
     public function testIpAddress()
     {
