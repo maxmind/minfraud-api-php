@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Device;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class DeviceTest extends \PHPUnit_Framework_TestCase
+class DeviceTest extends TestCase
 {
     public function testDevice()
     {

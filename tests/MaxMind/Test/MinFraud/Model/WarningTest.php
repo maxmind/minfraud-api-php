@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Warning;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class WarningTest extends \PHPUnit_Framework_TestCase
+class WarningTest extends TestCase
 {
     public function testWarning()
     {

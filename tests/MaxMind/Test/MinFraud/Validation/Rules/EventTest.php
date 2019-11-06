@@ -3,33 +3,40 @@
 namespace MaxMind\Test;
 
 use MaxMind\MinFraud\Validation\Rules\Event;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class EventTest extends \PHPUnit_Framework_TestCase
+class EventTest extends TestCase
 {
-    public function testEventType()
+    /**
+     * @dataProvider eventTypeDataProvider
+     *
+     * @param mixed $good
+     */
+    public function testEventType($good)
     {
         $validator = new Event();
 
-        $good = [
-            'account_creation',
-            'account_login',
-            'email_change',
-            'password_reset',
-            'payout_change',
-            'purchase',
-            'recurring_purchase',
-            'referral',
-            'survey',
-        ];
+        $this->assertTrue(
+            $validator->check(['type' => $good]),
+            $good
+        );
+    }
 
-        foreach ($good as $value) {
-            $this->assertTrue(
-                $validator->check(['type' => $value]),
-                $value
-            );
-        }
+    public function eventTypeDataProvider()
+    {
+        return [
+            ['account_creation'],
+            ['account_login'],
+            ['email_change'],
+            ['password_reset'],
+            ['payout_change'],
+            ['purchase'],
+            ['recurring_purchase'],
+            ['referral'],
+            ['survey'],
+        ];
     }
 }

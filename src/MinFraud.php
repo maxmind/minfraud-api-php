@@ -388,9 +388,7 @@ class MinFraud
     private function post($service)
     {
         if (!isset($this->content['device']['ip_address'])) {
-            throw new InvalidInputException(
-                'Key ip_address must be present in device'
-            );
+            throw new InvalidInputException('Key ip_address must be present in device');
         }
         $url = self::$basePath . strtolower($service);
         $class = 'MaxMind\\MinFraud\\Model\\' . $service;
@@ -448,10 +446,7 @@ class MinFraud
         try {
             $validator->check($values);
         } catch (ValidationException $exception) {
-            throw new InvalidInputException(
-                $exception->getMessage(),
-                $exception->getCode()
-            );
+            throw new InvalidInputException($exception->getMessage(), $exception->getCode());
         }
 
         return $values;

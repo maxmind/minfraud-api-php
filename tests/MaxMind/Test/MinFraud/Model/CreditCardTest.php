@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\CreditCard;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class CreditCardTest extends \PHPUnit_Framework_TestCase
+class CreditCardTest extends TestCase
 {
     public function testCreditCard()
     {

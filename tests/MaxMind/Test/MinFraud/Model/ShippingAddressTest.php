@@ -3,11 +3,12 @@
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\ShippingAddress;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class ShippingAddressTest extends \PHPUnit_Framework_TestCase
+class ShippingAddressTest extends TestCase
 {
     public function testShippingAddress()
     {
