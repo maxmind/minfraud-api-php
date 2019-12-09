@@ -254,7 +254,7 @@ to the client API, please see
 
 ## Requirements  ##
 
-This code requires PHP 5.4 or greater. Older versions of PHP are not
+This code requires PHP 5.6 or greater. Older versions of PHP are not
 supported.
 
 There are several other dependencies as defined in the `composer.json` file.

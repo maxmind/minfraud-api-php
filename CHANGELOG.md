@@ -4,6 +4,7 @@ CHANGELOG
 1.9.0
 ------------------
 
+* PHP 5.6 is now required.
 * The client-side validation for numeric custom inputs has been updated to
   match the server-side validation. The valid range is -9,999,999,999,999
   to 9,999,999,999,999. Previously, larger numbers were allowed.
