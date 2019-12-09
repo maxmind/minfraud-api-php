@@ -884,9 +884,9 @@ class MinFraudTest extends TestCase
             [['InvalidKey' => 1]],
             [['too_long' => str_repeat('x', 256)]],
             [['has_newline' => "test\n"]],
-            [['too_big' => 1 << 53]],
-            [['too_small' => -(1 << 53)]],
-            [['too_big_float' => (1 << 53) - 0.1]],
+            [['too_big' => 1e13]],
+            [['too_small' => -1e13]],
+            [['too_big_float' => 1e13 - 0.1]],
         ];
     }
 

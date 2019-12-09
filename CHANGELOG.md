@@ -4,6 +4,9 @@ CHANGELOG
 1.9.0
 ------------------
 
+* The client-side validation for numeric custom inputs has been updated to
+  match the server-side validation. The valid range is -9,999,999,999,999
+  to 9,999,999,999,999. Previously, larger numbers were allowed.
 * Added the following new values to the payment processor validation:
   * `affirm`
   * `afterpay`
@@ -11,7 +14,7 @@ CHANGELOG
   * `interac`
   * `klarna`
   * `paysafecard`
-* Deprecated `emailTenure` and `ipTenure` properties in 
+* Deprecated `emailTenure` and `ipTenure` properties in
   `MaxMind\MinFraud\Model\Subscores`.
 * Deprecated `isHighRisk` property in `MaxMind\MinFraud\Model\GeoIp2Country`.
 
