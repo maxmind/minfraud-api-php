@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.8.0
+version: v1.9.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -219,10 +219,10 @@ $request = $mf->withDevice([
     'quantity' => 1,
     'price'    => 100.00,
 ])->withCustomInputs([
-    'section'                      => 'news',
-    'number_of_previous_purchases' => 19,
-    'discount'                     => 3.2,
-    'previous_user'                => true,
+    'section'            => 'news',
+    'previous_purchases' => 19,
+    'discount'           => 3.2,
+    'previous_user'      => true,
 ]);
 
 # To get the minFraud Factors response model, use ->factors():
@@ -261,7 +261,7 @@ to the client API, please see
 
 ## Requirements  ##
 
-This code requires PHP 5.4 or greater. Older versions of PHP are not
+This code requires PHP 5.6 or greater. Older versions of PHP are not
 supported.
 
 There are several other dependencies as defined in the `composer.json` file.
