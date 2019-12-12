@@ -19,7 +19,7 @@
   "require": {
     "php": ">=5.6",
     "ext-json": "*",
-    "geoip2/geoip2": "^2.9",
+    "geoip2/geoip2": "^2.10",
     "maxmind/web-service-common": "^0.6",
     "respect/validation": "~1.0"
   },
