@@ -11,9 +11,13 @@ CHANGELOG
 * Added the following new values to the payment processor validation:
   * `affirm`
   * `afterpay`
+  * `cetelem`
   * `dotpay`
+  * `ecommpay`
+  * `g2a_pay`
   * `interac`
   * `klarna`
+  * `mercanet`
   * `paysafecard`
 * Deprecated `emailTenure` and `ipTenure` properties in
   `MaxMind\MinFraud\Model\Subscores`.
