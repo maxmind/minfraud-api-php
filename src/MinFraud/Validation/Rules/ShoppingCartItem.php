@@ -15,7 +15,7 @@ class ShoppingCartItem extends AbstractWrapper
         $this->validatable = v::keySet(
             v::key('category', v::stringType(), false),
             v::key('item_id', new IntOrString(), false),
-            v::key('price', v::floatVal()->min(0, false), false),
+            v::key('price', v::floatVal()->min(0), false),
             v::key('quantity', v::intVal()->min(0, false), false)
         );
     }

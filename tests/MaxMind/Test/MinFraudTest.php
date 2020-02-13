@@ -789,9 +789,45 @@ class MinFraudTest extends TestCase
     }
 
     /**
+     * @dataProvider validAmounts
+     *
+     * @param mixed $value
+     */
+    public function testGoodOrderAmount($value)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withOrder(['amount' => $value]);
+    }
+
+    /**
+     * @dataProvider validAmounts
+     *
+     * @param mixed $value
+     */
+    public function testGoodShoppingCartItemPrice($value)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShoppingCartItem(['price' => $value]);
+    }
+
+    public function validAmounts()
+    {
+        return [
+            [0],
+            [0.001],
+            [1],
+            [1e14 - 1],
+        ];
+    }
+
+    /**
      * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessageRegExp (must be greater than 0|must be a float)
-     * @dataProvider nonPositiveValues
+     * @expectedExceptionMessageRegExp (must be greater than or equal to 0|must be a float)
+     * @dataProvider invalidAmounts
      *
      * @param mixed $value
      */
@@ -803,10 +839,10 @@ class MinFraudTest extends TestCase
         )->withOrder(['amount' => $value]);
     }
 
-    public function nonPositiveValues()
+    public function invalidAmounts()
     {
         return [
-            [0],
+            [-0.001],
             [-1],
             ['afdaf'],
         ];
@@ -814,8 +850,8 @@ class MinFraudTest extends TestCase
 
     /**
      * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessageRegExp (must be greater than 0|must be a float)
-     * @dataProvider nonPositiveValues
+     * @expectedExceptionMessageRegExp (must be greater than or equal to 0|must be a float)
+     * @dataProvider invalidAmounts
      *
      * @param mixed $value
      */
@@ -830,7 +866,7 @@ class MinFraudTest extends TestCase
     /**
      * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessageRegExp (must be greater than 0|must be an int)
-     * @dataProvider nonPositiveValues
+     * @dataProvider invalidQuantities
      *
      * @param mixed $value
      */
@@ -840,6 +876,17 @@ class MinFraudTest extends TestCase
             'insights',
             0
         )->withShoppingCartItem(['quantity' => $value]);
+    }
+
+    public function invalidQuantities()
+    {
+        return [
+            [-0.001],
+            [-1],
+            [0.1],
+            [1e14],
+            ['afdaf'],
+        ];
     }
 
     /**

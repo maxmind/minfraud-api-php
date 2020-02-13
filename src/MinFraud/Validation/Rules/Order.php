@@ -14,7 +14,7 @@ class Order extends AbstractWrapper
     {
         $this->validatable = v::keySet(
             v::key('affiliate_id', v::stringType(), false),
-            v::key('amount', v::floatVal()->min(0, false), false),
+            v::key('amount', v::floatVal()->min(0), false),
             v::key('currency', v::regex('/^[A-Z]{3}$/'), false),
             v::key('discount_code', v::stringType(), false),
             v::key('has_gift_message', v::boolVal(), false),
