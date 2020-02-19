@@ -1,9 +1,11 @@
 CHANGELOG
 =========
 
-1.9.1
+1.10.0
 ------------------
 
+* Added support for the `/email/is_disposable` output. This is available as
+  the `isDisposable` property on `MaxMind\MinFraud\Model\Email`.
 * Updated the validation on `/order/amount` and `/shopping_cart/*/price` to
   allow 0. This was an inconsistency between this library and the web
   service. Reported by Sn0wCrack. GitHub #78.
