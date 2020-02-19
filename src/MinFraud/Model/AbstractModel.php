@@ -64,7 +64,7 @@ abstract class AbstractModel implements \JsonSerializable
     }
 
     /**
-     * @return array data that can be serialized by json_encode.
+     * @return array data that can be serialized by json_encode
      */
     public function jsonSerialize()
     {
