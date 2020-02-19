@@ -1,6 +1,6 @@
 <?php
 
-namespace MaxMind\Test;
+namespace MaxMind\Test\MinFraud\Validation\Rules;
 
 use MaxMind\MinFraud\Validation\Rules\Event;
 use PHPUnit\Framework\TestCase;

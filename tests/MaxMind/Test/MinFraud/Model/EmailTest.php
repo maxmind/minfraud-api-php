@@ -14,6 +14,7 @@ class EmailTest extends TestCase
     {
         $array = [
             'first_seen' => '2017-01-02',
+            'is_disposable' => true,
             'is_free' => true,
             'is_high_risk' => true,
         ];
@@ -23,6 +24,12 @@ class EmailTest extends TestCase
             $array['first_seen'],
             $email->firstSeen,
             'firstSeen'
+        );
+
+        $this->assertSame(
+            $array['is_disposable'],
+            $email->isDisposable,
+            'isDisposable'
         );
 
         $this->assertSame(

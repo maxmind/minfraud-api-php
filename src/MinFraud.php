@@ -96,7 +96,7 @@ class MinFraud
      *
      * @link https://dev.maxmind.com/minfraud/ minFraud API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -118,7 +118,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Device_device
      *     minFraud device API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -135,7 +135,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Event_event
      *     minFraud event API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -152,7 +152,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Account_account
      *     minFraud account API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -169,7 +169,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Email_email
      *     minFraud email API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -186,7 +186,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Billing_billing
      *     minFraud billing API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -203,7 +203,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Shipping_shipping
      *     minFraud shipping API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -220,7 +220,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Payment_payment
      *     minFraud payment API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -237,7 +237,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Credit_Card_credit_card
      *     minFraud credit_card API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -251,7 +251,7 @@ class MinFraud
      * This returns a `MinFraud` object with the `custom_inputs` array set to
      * `$values`. Existing `custom_inputs` data will be replaced.
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -268,7 +268,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Order_order
      *     minFraud order API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -285,7 +285,7 @@ class MinFraud
      * @link https://dev.maxmind.com/minfraud/#Shopping_Cart_Item
      *     minFraud shopping cart item API docs
      *
-     * @param $values
+     * @param array $values
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -370,7 +370,7 @@ class MinFraud
     }
 
     /**
-     * @param $service $service the name of the service to use
+     * @param string $service the name of the service to use
      *
      * @throws InvalidInputException      when the request has missing or invalid
      *                                    data

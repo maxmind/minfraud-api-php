@@ -23,7 +23,7 @@ abstract class AbstractModel implements \JsonSerializable
     /**
      * Convenience method to safely get value from array that might be null.
      *
-     * @param $var
+     * @param mixed $var
      * @param mixed $default
      *
      * @return mixed
@@ -38,9 +38,9 @@ abstract class AbstractModel implements \JsonSerializable
     /**
      * @internal
      *
-     * @param $attr The attribute to get
+     * @param string $attr The attribute to get
      *
-     * @return The value for the attribute
+     * @return mixed The value for the attribute
      */
     public function __get($attr)
     {
@@ -54,9 +54,9 @@ abstract class AbstractModel implements \JsonSerializable
     /**
      * @internal
      *
-     * @param $attr The attribute to determine if set
+     * @param mixed $attr The attribute to determine if set
      *
-     * @return The isset for the attribute
+     * @return bool The isset for the attribute
      */
     public function __isset($attr)
     {
@@ -64,7 +64,7 @@ abstract class AbstractModel implements \JsonSerializable
     }
 
     /**
-     * Returns data that can be serialized by json_encode.
+     * @return array data that can be serialized by json_encode
      */
     public function jsonSerialize()
     {

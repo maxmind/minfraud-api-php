@@ -423,9 +423,9 @@ class MinFraudTest extends TestCase
     public function testCreditCardWithInvalidRangeToken($token)
     {
         $this->createMinFraudRequestWithFullResponse(
-                'insights',
-                0
-                )->withCreditCard(['token' => $token]);
+            'insights',
+            0
+        )->withCreditCard(['token' => $token]);
     }
 
     public function invalidRangeToken()
@@ -446,9 +446,9 @@ class MinFraudTest extends TestCase
     public function testCreditCardWithLongToken($token)
     {
         $this->createMinFraudRequestWithFullResponse(
-                'insights',
-                0
-                )->withCreditCard(['token' => $token]);
+            'insights',
+            0
+        )->withCreditCard(['token' => $token]);
     }
 
     public function longToken()
@@ -466,9 +466,9 @@ class MinFraudTest extends TestCase
     public function testCreditCardWithGoodToken($token)
     {
         $this->createMinFraudRequestWithFullResponse(
-                'insights',
-                0
-                )->withCreditCard(['token' => $token]);
+            'insights',
+            0
+        )->withCreditCard(['token' => $token]);
     }
 
     public function goodToken()

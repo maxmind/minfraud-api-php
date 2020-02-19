@@ -128,6 +128,7 @@
   },
   "email": {
     "first_seen": "2017-01-02",
+    "is_disposable": true,
     "is_free": true,
     "is_high_risk": true
   },
