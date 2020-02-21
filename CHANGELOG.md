@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-1.10.0
-------------------
+1.10.0 (2020-02-21)
+-------------------
 
 * Added support for the `/email/is_disposable` output. This is available as
   the `isDisposable` property on `MaxMind\MinFraud\Model\Email`.
