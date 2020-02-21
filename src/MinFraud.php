@@ -38,7 +38,7 @@ use Respect\Validation\Exceptions\ValidationException;
  */
 class MinFraud
 {
-    const VERSION = 'v1.9.0';
+    const VERSION = 'v1.10.0';
 
     private $client;
     private static $host = 'minfraud.maxmind.com';
