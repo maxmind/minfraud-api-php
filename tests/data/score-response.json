@@ -14,12 +14,12 @@
     {
       "code": "INPUT_INVALID",
       "input_pointer": "/account/user_id",
-      "warning": "Encountered value at \/account\/user_id that does meet the required constraints"
+      "warning": "Encountered value at /account/user_id that does meet the required constraints"
     },
     {
       "code": "INPUT_INVALID",
       "input_pointer": "/account/username_md5",
-      "warning": "Encountered value at \/account\/username_md5 that does meet the required constraints"
+      "warning": "Encountered value at /account/username_md5 that does meet the required constraints"
     }
   ]
 }
