@@ -7,10 +7,10 @@ namespace MaxMind\MinFraud\Model;
  *
  * @property-read int|null $distanceToBillingAddress The distance in kilometers
  * from the shipping address to billing address.
- * @property-read bool|null $isHighRisk This field is true if the shipping
- * address is an address associated with fraudulent transactions. The field is
- * false when the address is not associated with increased risk. The key will
- * only be present when a shipping address is provided.
+ * @property-read bool|null $isHighRisk This property is true if the shipping
+ * address is an address associated with fraudulent transactions. The property
+ * is false when the address is not associated with increased risk. The
+ * property will be `null` when a shipping address is not provided.
  */
 class ShippingAddress extends Address
 {
