@@ -5,7 +5,7 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Model of the Score response.
  *
- * @property-read int $fundsRemaining The approximate US dollar value of the
+ * @property-read float $fundsRemaining The approximate US dollar value of the
  * funds remaining on your MaxMind account.
  * @property-read int $queriesRemaining The approximate number of queries
  * remaining for this service before your account runs out of funds.

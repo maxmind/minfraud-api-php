@@ -5,8 +5,7 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Model with the disposition set by custom rules.
  *
- * In order to receive a disposition, you must be use the minFraud custom
- * rules.
+ * In order to receive a disposition, you must be using minFraud custom rules.
  *
  * @property-read string|null $action The action to take on the transaction as
  * defined by your custom rules. The current set of values are "accept",

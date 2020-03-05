@@ -21,11 +21,11 @@ namespace MaxMind\MinFraud\Model;
  * only available to users sending chargeback data to MaxMind. If present,
  * this is a value in the range 0.01 to 99.
  * @property-read float|null $country The risk associated with the country the
- * transaction originated from. If present, this is a value in the  range 0.01
+ * transaction originated from. If present, this is a value in the range 0.01
  * to 99.
  * @property-read float|null $countryMismatch The risk associated with the
  * combination of IP country, card issuer country, billing country, and
- * shipping country. If present, this is a value in the  range 0.01 to 99.
+ * shipping country. If present, this is a value in the range 0.01 to 99.
  * @property-read float|null $cvvResult The risk associated with the CVV result. If
  * present, this is a value in the range 0.01 to 99.
  * @property-read float|null $emailAddress The risk associated with the particular

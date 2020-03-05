@@ -3,7 +3,7 @@
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Model of the Insights score response.
+ * Model of the Insights response.
  *
  * @property-read \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
  * containing minFraud data related to the billing address used in the
