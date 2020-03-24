@@ -5,6 +5,8 @@ namespace MaxMind\MinFraud\Model;
 /**
  * Model containing information about the email address.
  *
+ * @property-read \MaxMind\MinFraud\Model\EmailDomain $domain An object
+ * containing information about the email domain.
  * @property-read string|null $firstSeen A date string (e.g. 2017-04-24) to
  * identify the date an email address was first seen by MaxMind. This is
  * expressed using the ISO 8601 date format.
@@ -20,6 +22,11 @@ namespace MaxMind\MinFraud\Model;
  */
 class Email extends AbstractModel
 {
+    /**
+     * @internal
+     */
+    protected $domain;
+
     /**
      * @internal
      */
@@ -43,6 +50,8 @@ class Email extends AbstractModel
     public function __construct($response, $locales = ['en'])
     {
         parent::__construct($response, $locales);
+
+        $this->domain = new EmailDomain($this->safeArrayLookup($response['domain']));
         $this->firstSeen = $this->safeArrayLookup($response['first_seen']);
         $this->isDisposable = $this->safeArrayLookup($response['is_disposable']);
         $this->isFree = $this->safeArrayLookup($response['is_free']);

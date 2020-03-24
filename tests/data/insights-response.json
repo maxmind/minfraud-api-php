@@ -127,6 +127,9 @@
     "last_seen": "2016-06-08T14:16:38Z"
   },
   "email": {
+    "domain": {
+      "first_seen": "2014-02-23"
+    },
     "first_seen": "2017-01-02",
     "is_disposable": true,
     "is_free": true,

@@ -72,6 +72,12 @@ class InsightsTest extends ScoreTest
             'isset works for billing latitude'
         );
 
+        $this->assertSame(
+            $array['email']['domain']['first_seen'],
+            $insights->email->domain->firstSeen,
+            'correct email domain first seen'
+        );
+
         $this->assertFalse(
             isset($insights->unknown),
             'isset returns false for unknown method'
