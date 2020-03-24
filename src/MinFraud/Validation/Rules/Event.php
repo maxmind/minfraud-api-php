@@ -18,7 +18,9 @@ class Event extends AbstractWrapper
                 'time',
                 v::oneOf(
                     v::date(\DateTime::RFC3339),
-                    v::date(\DateTime::RFC3339_EXTENDED)
+                    // This is the same as DateTime::RFC3339_EXTENDED,
+                    // but PHP 5.6 doesn't have that.
+                    v::date('Y-m-d\TH:i:s.vP')
                 ),
                 false
             ),

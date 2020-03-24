@@ -719,12 +719,20 @@ class MinFraudTest extends TestCase
 
     public function goodTimes()
     {
-        return [
+        $tests = [
             ['2014-04-12T23:20:50+01:00'],
             ['2014-04-12T23:20:50Z'],
-            ['2014-04-12T23:20:50.052+01:00'],
-            ['2014-04-12T23:20:50.052Z'],
         ];
+
+        if (\PHP_VERSION_ID >= 70300) {
+            array_push(
+                $tests,
+                ['2014-04-12T23:20:50.052+01:00'],
+                ['2014-04-12T23:20:50.052Z']
+            );
+        }
+
+        return $tests;
     }
 
     /**
