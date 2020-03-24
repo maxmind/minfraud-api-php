@@ -13,12 +13,21 @@ class EmailTest extends TestCase
     public function testEmail()
     {
         $array = [
+            'domain' => [
+                'first_seen' => '2014-02-03',
+            ],
             'first_seen' => '2017-01-02',
             'is_disposable' => true,
             'is_free' => true,
             'is_high_risk' => true,
         ];
         $email = new Email($array);
+
+        $this->assertSame(
+            $array['domain']['first_seen'],
+            $email->domain->firstSeen,
+            'domain->firstSeen'
+        );
 
         $this->assertSame(
             $array['first_seen'],

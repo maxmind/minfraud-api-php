@@ -14,7 +14,16 @@ class Event extends AbstractWrapper
     {
         $this->validatable = v::keySet(
             v::key('shop_id', v::stringType(), false),
-            v::key('time', v::date(\DateTime::RFC3339), false),
+            v::key(
+                'time',
+                v::oneOf(
+                    v::date(\DateTime::RFC3339),
+                    // This is the same as DateTime::RFC3339_EXTENDED,
+                    // but PHP 5.6 doesn't have that.
+                    v::date('Y-m-d\TH:i:s.vP')
+                ),
+                false
+            ),
             v::key(
                 'type',
                 v::in(

@@ -705,6 +705,37 @@ class MinFraudTest extends TestCase
     }
 
     /**
+     * @dataProvider goodTimes
+     *
+     * @param mixed $time
+     */
+    public function testGoodEventTimes($time)
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(['time' => $time]);
+    }
+
+    public function goodTimes()
+    {
+        $tests = [
+            ['2014-04-12T23:20:50+01:00'],
+            ['2014-04-12T23:20:50Z'],
+        ];
+
+        if (\PHP_VERSION_ID >= 70300) {
+            array_push(
+                $tests,
+                ['2014-04-12T23:20:50.052+01:00'],
+                ['2014-04-12T23:20:50.052Z']
+            );
+        }
+
+        return $tests;
+    }
+
+    /**
      * @expectedException \MaxMind\Exception\InvalidInputException
      * @expectedExceptionMessage must be a valid date
      */

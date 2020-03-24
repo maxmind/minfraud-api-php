@@ -1,6 +1,15 @@
 CHANGELOG
 =========
 
+1.11.0
+-------------------
+
+* Added support for the new email domain output `/email/domain/first_seen`.
+  This may be accessed via `$response->email->domain->firstSeen` on the
+  minFraud Insights and Factors response objects.
+* The validation of `/event/time` now allows sub-second RFC 3339 timestamps
+  in the request.
+
 1.10.0 (2020-02-21)
 -------------------
 
