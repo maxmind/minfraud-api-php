@@ -9,6 +9,9 @@ CHANGELOG
   minFraud Insights and Factors response objects.
 * The validation of `/event/time` now allows sub-second RFC 3339 timestamps
   in the request.
+* Added the following new values to the payment processor validation:
+  * `cardpay`
+  * `epx`
 
 1.10.0 (2020-02-21)
 -------------------
