@@ -117,6 +117,7 @@
     },
     "brand": "Visa",
     "country": "US",
+    "is_business": true,
     "is_issued_in_billing_address_country": true,
     "is_prepaid": true,
     "type": "credit"

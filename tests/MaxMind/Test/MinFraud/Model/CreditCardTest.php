@@ -21,6 +21,7 @@ class CreditCardTest extends TestCase
             ],
             'brand' => 'Visa',
             'country' => 'US',
+            'is_business' => true,
             'is_issued_in_billing_address_country' => false,
             'is_prepaid' => true,
             'is_virtual' => true,
@@ -62,6 +63,12 @@ class CreditCardTest extends TestCase
             $array['country'],
             $cc->country,
             'country'
+        );
+
+        $this->assertSame(
+            $array['is_business'],
+            $cc->isBusiness,
+            'isBusiness'
         );
 
         $this->assertSame(

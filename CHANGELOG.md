@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.12.0
+-------------------
+
+* Added support for the new credit card output `/credit_card/is_business`.
+  This indicates whether the card is a business card. It may be accessed via
+  `$response->creditCard->isBusiness` on the minFraud Insights and Factors
+  response objects.
+
 1.11.0 (2020-03-26)
 -------------------
 
