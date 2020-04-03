@@ -13,6 +13,8 @@ namespace MaxMind\MinFraud\Model;
  * location of the majority of customers using this credit card as determined
  * by their billing address. In cases where the location of customers is highly
  * mixed, this defaults to the country of the bank issuing the card.
+ * @property-read bool|null $isBusiness This property is true if the card is a
+ * business card.
  * @property-read bool|null $isIssuedInBillingAddressCountry This property is
  * true if the country of the billing address matches the country of the
  * majority of customers using this credit card. In cases where the location
@@ -38,6 +40,11 @@ class CreditCard extends AbstractModel
      * @internal
      */
     protected $country;
+
+    /**
+     * @internal
+     */
+    protected $isBusiness;
 
     /**
      * @internal
@@ -72,6 +79,7 @@ class CreditCard extends AbstractModel
 
         $this->brand = $this->safeArrayLookup($response['brand']);
         $this->country = $this->safeArrayLookup($response['country']);
+        $this->isBusiness = $this->safeArrayLookup($response['is_business']);
         $this->isIssuedInBillingAddressCountry
             = $this->safeArrayLookup($response['is_issued_in_billing_address_country']);
         $this->isPrepaid = $this->safeArrayLookup($response['is_prepaid']);
