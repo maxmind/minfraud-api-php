@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.12.0
+1.12.0 (2020-04-06)
 -------------------
 
 * Added support for the new credit card output `/credit_card/is_business`.
