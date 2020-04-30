@@ -89,18 +89,20 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 # Using Composer is possible, but they don't recommend it.
-wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor2/releases/download/v2.9.0/phpDocumentor.phar
+wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.0.0-rc/phpDocumentor.phar
 
 # Use cache dir in /tmp as otherwise cache files get into the output directory.
 cachedir="/tmp/phpdoc-$$-$RANDOM"
 rm -rf "$cachedir"
 
 php phpDocumentor.phar \
-    -d src,.geoip2/src \
+    -d "$PWD/../src" \
+    -d "$PWD/.geoip2/src" \
     --visibility public \
     --cache-folder "$cachedir" \
     --title "minFraud PHP API $tag" \
-    -t "doc/$tag"
+    -t "doc/$tag" \
+    --template=clean
 
 rm -rf "$cachedir"
 
