@@ -9,8 +9,6 @@ use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
 use MaxMind\MinFraud\Validation;
-use MaxMind\WebService\Client;
-use Respect\Validation\Exceptions\ValidationException;
 
 /**
  * This class provides a client API for accessing MaxMind minFraud Score,
@@ -36,17 +34,10 @@ use Respect\Validation\Exceptions\ValidationException;
  *
  * If the request fails, an exception is thrown.
  */
-class MinFraud
+class MinFraud extends MinFraud\ServiceClient
 {
-    const VERSION = 'v1.12.0';
-
-    private $client;
-    private static $host = 'minfraud.maxmind.com';
-
-    private static $basePath = '/minfraud/v2.0/';
     private $content;
     private $locales;
-    private $validateInput = true;
 
     /**
      * @param int    $accountId  Your MaxMind account ID
@@ -79,15 +70,7 @@ class MinFraud
             $this->locales = ['en'];
         }
 
-        if (isset($options['validateInput'])) {
-            $this->validateInput = $options['validateInput'];
-        }
-
-        if (!isset($options['host'])) {
-            $options['host'] = self::$host;
-        }
-        $options['userAgent'] = $this->userAgent();
-        $this->client = new Client($accountId, $licenseKey, $options);
+        parent::__construct($accountId, $licenseKey, $options);
     }
 
     /**
@@ -304,6 +287,24 @@ class MinFraud
     }
 
     /**
+     * @param string $className The name of the class (but not the namespace)
+     * @param string $key       The key in the transaction array to set
+     * @param array  $values    The values to validate
+     *
+     * @throws InvalidInputException when $values does not validate
+     *
+     * @return MinFraud
+     */
+    private function validateAndAdd($className, $key, $values)
+    {
+        $values = $this->cleanAndValidate($className, $values);
+        $new = clone $this;
+        $new->content[$key] = $values;
+
+        return $new;
+    }
+
+    /**
      * This method performs a minFraud Score lookup using the request data in
      * the current object and returns a model object for minFraud Score.
      *
@@ -397,72 +398,5 @@ class MinFraud
             $this->client->post($service, $url, $this->content),
             $this->locales
         );
-    }
-
-    /**
-     * @return string the prefix for the User-Agent header
-     */
-    private function userAgent()
-    {
-        return 'minFraud-API/' . self::VERSION;
-    }
-
-    /**
-     * @param string $className The name of the class (but not the namespace)
-     * @param string $key       The key in the transaction array to set
-     * @param array  $values    The values to validate
-     *
-     * @throws InvalidInputException when $values does not validate
-     *
-     * @return MinFraud
-     */
-    private function validateAndAdd($className, $key, $values)
-    {
-        $values = $this->cleanAndValidate($className, $values);
-        $new = clone $this;
-        $new->content[$key] = $values;
-
-        return $new;
-    }
-
-    /**
-     * @param string $className The name of the class (but not the namespace)
-     * @param array  $values    The values to validate
-     *
-     * @throws InvalidInputException when $values does not validate
-     *
-     * @return array The cleaned values
-     */
-    private function cleanAndValidate($className, $values)
-    {
-        $values = $this->clean($values);
-
-        if (!$this->validateInput) {
-            return $values;
-        }
-
-        $class = '\\MaxMind\\MinFraud\\Validation\\Rules\\' . $className;
-        $validator = new $class();
-        try {
-            $validator->check($values);
-        } catch (ValidationException $exception) {
-            throw new InvalidInputException($exception->getMessage(), $exception->getCode());
-        }
-
-        return $values;
-    }
-
-    private function clean($array)
-    {
-        $cleaned = [];
-        foreach ($array as $key => $value) {
-            if (\is_array($value)) {
-                $cleaned[$key] = $this->clean($array[$key]);
-            } elseif ($array[$key] !== null) {
-                $cleaned[$key] = $array[$key];
-            }
-        }
-
-        return $cleaned;
     }
 }

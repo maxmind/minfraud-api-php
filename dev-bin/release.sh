@@ -44,7 +44,7 @@ fi
 php composer.phar self-update
 php composer.phar update --no-dev
 
-perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud.php
+perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud/ServiceClient.php
 
 if [ ! -f box.phar ]; then
     wget -O box.phar "https://github.com/box-project/box2/releases/download/2.6.1/box-2.6.1.phar"
