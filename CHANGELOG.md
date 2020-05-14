@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.13.0 (XXXX-XX-XX)
+-------------------
+
+* Added support for the Report Transactions API. We encourage the use of this
+  API as we use data received through this channel to continually improve the
+  accuracy of our fraud detection algorithms.
+
 1.12.0 (2020-04-06)
 -------------------
 
