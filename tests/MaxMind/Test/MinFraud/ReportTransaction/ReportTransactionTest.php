@@ -16,7 +16,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
             $this->createReportTransactionRequest(
                 Data::minimalRequest(),
                 1
-            )->reportTransaction(Data::minimalRequest()),
+            )->report(Data::minimalRequest()),
             'response for minimal request'
         );
     }
@@ -27,7 +27,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->assertEmpty(
             $this->createReportTransactionRequest(
                 $req
-            )->reportTransaction($req),
+            )->report($req),
             'response for full request'
         );
     }
@@ -48,7 +48,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
             $this->createReportTransactionRequest(
                 Data::minimalRequest(),
                 1
-            )->reportTransaction($req),
+            )->report($req),
             'response from request including nulls'
         );
     }
@@ -66,7 +66,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     /**
@@ -83,7 +83,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
             $req,
             0,
             ['validateInput' => false]
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     public function requestsMissingRequiredFields()
@@ -116,7 +116,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     /**
@@ -136,7 +136,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     /**
@@ -153,7 +153,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     /**
@@ -173,7 +173,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     public function notStringTypes()
@@ -200,7 +200,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     public function invalidIpAddresses()
@@ -229,7 +229,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     public function invalidMaxmindIds()
@@ -258,7 +258,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     public function invalidMinfraudIds()
@@ -287,7 +287,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createReportTransactionRequest(
             $req,
             0
-        )->reportTransaction($req);
+        )->report($req);
     }
 
     public function invalidTags()

@@ -45,7 +45,7 @@ class ReportTransaction extends ServiceClient
      * @throws WebServiceException     when some other error occurs. This also
      *                                 serves as the base class for the above exceptions.
      */
-    public function reportTransaction($values)
+    public function report($values)
     {
         $values = $this->cleanAndValidate('TransactionReport', $values);
 
