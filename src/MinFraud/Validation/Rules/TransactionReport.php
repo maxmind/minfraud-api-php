@@ -18,7 +18,7 @@ class TransactionReport extends AbstractWrapper
             v::key('maxmind_id', v::stringType()->length(8, 8), false),
             v::key(
                 'minfraud_id',
-                v::regex('/^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/'),
+                v::regex('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i'),
                 false
             ),
             v::key('notes', v::stringType(), false),
