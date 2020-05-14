@@ -180,6 +180,8 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     {
         return [
             [1],
+            [['string']],
+            [new \stdClass()],
         ];
     }
 
