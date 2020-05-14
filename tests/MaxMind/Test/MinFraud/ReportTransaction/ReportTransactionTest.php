@@ -2,6 +2,7 @@
 
 namespace MaxMind\Test\MinFraud\ReportTransaction;
 
+use MaxMind\Exception\InvalidInputException;
 use MaxMind\Test\MinFraud\ReportTransaction\ReportTransactionData as Data;
 
 /**
@@ -53,15 +54,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Must have keys
-     *
      * @dataProvider requestsMissingRequiredFields
      *
      * @param array $req
      */
     public function testMissingRequiredFields($req)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Must have keys');
+
         $this->createReportTransactionRequest(
             $req,
             0
@@ -69,15 +70,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be present in request
-     *
      * @dataProvider requestsMissingRequiredFields
      *
      * @param array $req
      */
     public function testMissingRequiredFieldsWithoutValidation($req)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be present in request');
+
         $this->createReportTransactionRequest(
             $req,
             0,
@@ -103,12 +104,11 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         ];
     }
 
-    /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Must have keys
-     */
     public function testUnknownKey()
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Must have keys');
+
         $req = array_merge(
             Data::minimalRequest(),
             ['unknown' => 'some_value']
@@ -120,15 +120,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage chargeback_code must be a string
-     *
      * @dataProvider notStringTypes
      *
      * @param mixed $chargebackCode
      */
     public function testInvalidChargebackCodes($chargebackCode)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('chargeback_code must be a string');
+
         $req = array_merge(
             Data::minimalRequest(),
             ['chargeback_code' => $chargebackCode]
@@ -140,15 +140,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage notes must be a string
-     *
      * @dataProvider notStringTypes
      *
      * @param mixed $notes
      */
     public function testInvalidNotes($notes)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('notes must be a string');
+
         $req = array_merge(Data::minimalRequest(), ['notes' => $notes]);
         $this->createReportTransactionRequest(
             $req,
@@ -157,15 +157,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage transaction_id must be a string
-     *
      * @dataProvider notStringTypes
      *
      * @param mixed $transactionId
      */
     public function testInvalidTransactionIds($transactionId)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('transaction_id must be a string');
+
         $req = array_merge(
             Data::minimalRequest(),
             ['transaction_id' => $transactionId]
@@ -184,15 +184,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage ip_address must be an IP address
-     *
      * @dataProvider notStringTypes
      *
      * @param mixed $ip
      */
     public function testInvalidIpAddresses($ip)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('ip_address must be an IP address');
+
         $req = array_merge(
             Data::minimalRequest(),
             ['ip_address' => $ip]
@@ -213,15 +213,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage maxmind_id must have a length between 8 and 8
-     *
      * @dataProvider invalidMaxmindIds
      *
      * @param mixed $maxmindId
      */
     public function testInvalidMaxmindIds($maxmindId)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('maxmind_id must have a length between 8 and 8');
+
         $req = array_merge(
             Data::minimalRequest(),
             ['maxmind_id' => $maxmindId]
@@ -242,15 +242,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage minfraud_id must validate against
-     *
      * @dataProvider invalidMinfraudIds
      *
      * @param mixed $minfraudId
      */
     public function testInvalidMinfraudIds($minfraudId)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('minfraud_id must validate against');
+
         $req = array_merge(
             Data::minimalRequest(),
             ['minfraud_id' => $minfraudId]
@@ -274,15 +274,15 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage tag must be in
-     *
      * @dataProvider invalidTags
      *
      * @param mixed $tag
      */
     public function testInvalidTags($tag)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('tag must be in');
+
         $req = array_merge(Data::minimalRequest(), ['tag' => $tag]);
         $this->createReportTransactionRequest(
             $req,
