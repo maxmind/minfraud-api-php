@@ -2,16 +2,13 @@
 
 namespace MaxMind\Test;
 
-use Composer\CaBundle\CaBundle;
-use MaxMind\MinFraud;
+use MaxMind\Exception\InvalidInputException;
 use MaxMind\Test\MinFraudData as Data;
-use MaxMind\WebService\Client;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class MinFraudTest extends TestCase
+class MinFraudTest extends MinFraud\ServiceClientTest
 {
     /**
      * @dataProvider services
@@ -145,8 +142,6 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Must have keys
      * @dataProvider services
      *
      * @param mixed $class
@@ -154,14 +149,15 @@ class MinFraudTest extends TestCase
      */
     public function testMissingIpAddress($class, $service)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Must have keys');
+
         $this->createMinFraudRequestWithFullResponse($service, 0)
             ->with(Data::fullRequest())
             ->withDevice([])->$service();
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Key ip_address must be present
      * @dataProvider services
      *
      * @param mixed $class
@@ -169,6 +165,9 @@ class MinFraudTest extends TestCase
      */
     public function testMissingIpAddressWithoutValidation($class, $service)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Key ip_address must be present');
+
         $this->createMinFraudRequestWithFullResponse(
             $service,
             0,
@@ -178,14 +177,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Must have keys
      * @dataProvider withMethods
      *
      * @param mixed $method
      */
     public function testUnknownKeys($method)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Must have keys');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -208,14 +208,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be an MD5
      * @dataProvider badMd5s
      *
      * @param mixed $md5
      */
     public function testAccountWithBadUsernameMd5($md5)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be an MD5');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -223,14 +224,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be an MD5
      * @dataProvider badMd5s
      *
      * @param mixed $md5
      */
     public function testEmailWithBadAddress($md5)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be an MD5');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -248,8 +250,6 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be an ISO 3166-2
      * @dataProvider badRegions
      *
      * @param mixed $method
@@ -257,6 +257,9 @@ class MinFraudTest extends TestCase
      */
     public function testBadRegions($method, $region)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be an ISO 3166-2');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -274,8 +277,6 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be a valid country
      * @dataProvider badCountryCodes
      *
      * @param mixed $method
@@ -283,6 +284,9 @@ class MinFraudTest extends TestCase
      */
     public function testBadCountryCode($method, $code)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be a valid country');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -302,8 +306,6 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be a valid telephone country code
      * @dataProvider badPhoneCodes
      *
      * @param mixed $method
@@ -312,6 +314,9 @@ class MinFraudTest extends TestCase
      */
     public function testBadPhoneCodes($method, $key, $code)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be a valid telephone country code');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -330,12 +335,11 @@ class MinFraudTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage delivery_speed must be in
-     */
     public function testBadDeliverySpeed()
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('delivery_speed must be in');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -343,14 +347,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must validate against
      * @dataProvider badIins
      *
      * @param mixed $iin
      */
     public function testBadIin($iin)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must validate against');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -367,14 +372,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must validate against
      * @dataProvider badLast4Digits
      *
      * @param mixed $last4
      */
     public function testCreditCardWithBadLast4($last4)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must validate against');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -391,14 +397,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must not validate against
      * @dataProvider numericToken
      *
      * @param mixed $token
      */
     public function testCreditCardWithNumericToken($token)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must not validate against');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -414,14 +421,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must validate against
      * @dataProvider invalidRangeToken
      *
      * @param mixed $token
      */
     public function testCreditCardWithInvalidRangeToken($token)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must validate against');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -437,14 +445,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must validate against
      * @dataProvider longToken
      *
      * @param mixed $token
      */
     public function testCreditCardWithLongToken($token)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must validate against');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -481,14 +490,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must have a length
      * @dataProvider avsAndCvv
      *
      * @param mixed $key
      */
     public function testAvsAndCCv($key)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must have a length');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -504,14 +514,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be an IP address
      * @dataProvider badIps
      *
      * @param mixed $ip
      */
     public function testBadIps($ip)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be an IP address');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -528,14 +539,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be greater than or equal to 0
      * @dataProvider negativeSessionAge
      *
      * @param mixed $age
      */
     public function testNegativeSessionAge($age)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be greater than or equal to 0');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -550,14 +562,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be a float number
      * @dataProvider badSessionAge
      *
      * @param mixed $age
      */
     public function testBadSessionAge($age)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be a float number');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -595,14 +608,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must have a length between 1 and 255
      * @dataProvider badSessionId
      *
      * @param mixed $id
      */
     public function testBadSessionId($id)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must have a length between 1 and 255');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -660,14 +674,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must
      * @dataProvider badDomains
      *
      * @param mixed $domain
      */
     public function testBadDomains($domain)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -735,24 +750,22 @@ class MinFraudTest extends TestCase
         return $tests;
     }
 
-    /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be a valid date
-     */
     public function testBadEventTime()
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be a valid date');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
         )->withEvent(['time' => '2014/04/04 19:20']);
     }
 
-    /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be
-     */
     public function testBadEventType()
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -760,14 +773,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must validate against
      * @dataProvider badCurrency
      *
      * @param mixed $currency
      */
     public function testBadCurrency($currency)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must validate against');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -785,14 +799,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessageRegExp /must be an? URL/
      * @dataProvider badReferrerUri
      *
      * @param mixed $uri
      */
     public function testBadReferrerUri($uri)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessageRegExp('/must be an? URL/');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -807,12 +822,11 @@ class MinFraudTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must be
-     */
     public function testBadPaymentProcessor()
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -856,14 +870,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessageRegExp (must be greater than or equal to 0|must be a float)
      * @dataProvider invalidAmounts
      *
      * @param mixed $value
      */
     public function testBadOrderAmount($value)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessageRegExp('/(must be greater than or equal to 0|must be a float)/');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -880,14 +895,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessageRegExp (must be greater than or equal to 0|must be a float)
      * @dataProvider invalidAmounts
      *
      * @param mixed $value
      */
     public function testBadShoppingCartItemPrice($value)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessageRegExp('/(must be greater than or equal to 0|must be a float)/');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -895,14 +911,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessageRegExp (must be greater than 0|must be an int)
      * @dataProvider invalidQuantities
      *
      * @param mixed $value
      */
     public function testBadShoppingCartItemQuantity($value)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessageRegExp('/(must be greater than 0|must be an int)/');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -920,12 +937,11 @@ class MinFraudTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage Must have keys
-     */
     public function testBadShoppingCartItemWithDoubleArray()
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Must have keys');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -942,14 +958,15 @@ class MinFraudTest extends TestCase
     }
 
     /**
-     * @expectedException \MaxMind\Exception\InvalidInputException
-     * @expectedExceptionMessage must
      * @dataProvider badCustomInputs
      *
      * @param mixed $inputs
      */
     public function testBadCustomInputs($inputs)
     {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must');
+
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
@@ -1000,68 +1017,15 @@ class MinFraudTest extends TestCase
         $options = [],
         $callsToRequest = 1
     ) {
-        $userId = 1;
-        $licenseKey = 'abcdefghij';
-
-        $stub = $this->getMockForAbstractClass(
-            'MaxMind\\WebService\\Http\\Request'
-        );
-
-        $stub->expects($this->exactly($callsToRequest))
-            ->method('post')
-            ->with($this->equalTo(json_encode($requestContent)))
-            ->willReturn([$statusCode, $contentType, $responseBody]);
-
-        $factory = $this->getMockBuilder(
-            'MaxMind\\WebService\\Http\\RequestFactory'
-        )->getMock();
-
-        $host = isset($options['host']) ? $options['host'] : 'minfraud.maxmind.com';
-
-        $url = 'https://' . $host . '/minfraud/v2.0/' . $service;
-
-        $headers = [
-            'Content-Type: application/json',
-            'Authorization: Basic '
-            . base64_encode($userId . ':' . $licenseKey),
-            'Accept: application/json',
-        ];
-
-        if (isset($options['caBundle'])) {
-            $caBundle = $options['caBundle'];
-        } else {
-            $caBundle = CaBundle::getSystemCaRootBundlePath();
-        }
-
-        $curlVersion = curl_version();
-        $factory->expects($this->exactly($callsToRequest))
-            ->method('request')
-            ->with(
-                $this->equalTo($url),
-                $this->equalTo(
-                    [
-                        'headers' => $headers,
-                        'userAgent' => 'minFraud-API/' . MinFraud::VERSION
-                            . ' MaxMind-WS-API/' . Client::VERSION
-                            . ' PHP/' . PHP_VERSION
-                            . ' curl/' . $curlVersion['version'],
-                        'connectTimeout' => isset($options['connectTimeout'])
-                            ? $options['connectTimeout'] : null,
-                        'timeout' => isset($options['timeout'])
-                            ? $options['timeout'] : null,
-                        'proxy' => isset($options['proxy'])
-                            ? $options['proxy'] : null,
-                        'caBundle' => $caBundle,
-                    ]
-                )
-            )->willReturn($stub);
-
-        $options['httpRequestFactory'] = $factory;
-
-        return new MinFraud(
-            $userId,
-            $licenseKey,
-            $options
+        return $this->createRequest(
+            '\MaxMind\MinFraud',
+            $service,
+            $requestContent,
+            $statusCode,
+            $contentType,
+            $responseBody,
+            $options,
+            $callsToRequest
         );
     }
 }

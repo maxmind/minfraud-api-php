@@ -26,6 +26,6 @@ class MinFraudData
 
     private static function decodeFile($file)
     {
-        return json_decode(file_get_contents('tests/data/' . $file), true);
+        return json_decode(file_get_contents('tests/data/minfraud/' . $file), true);
     }
 }
