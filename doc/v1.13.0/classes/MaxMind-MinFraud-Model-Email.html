@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>minFraud PHP API v1.13.0</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">minFraud PHP API v1.13.0</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/geoip2.html"><abbr title="\GeoIp2">normal</abbr></a></li>
+                                                        <li><a href="../namespaces/maxmind.html"><abbr title="\MaxMind">normal</abbr></a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1807847222"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1807847222" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1632700874"></a>
+                                <a href="../namespaces/geoip2.html" style="margin-left: 30px; padding-left: 0">GeoIp2</a>
+            </div>
+            <div id="namespace-1632700874" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1091625749"></a>
+                                <a href="../namespaces/geoip2-database.html" style="margin-left: 30px; padding-left: 0">Database</a>
+            </div>
+            <div id="namespace-1091625749" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/GeoIp2-Database-Reader.html"><abbr title="\GeoIp2\Database\Reader">Reader</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-634378017"></a>
+                                <a href="../namespaces/geoip2-exception.html" style="margin-left: 30px; padding-left: 0">Exception</a>
+            </div>
+            <div id="namespace-634378017" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/GeoIp2-Exception-AddressNotFoundException.html"><abbr title="\GeoIp2\Exception\AddressNotFoundException">AddressNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Exception-AuthenticationException.html"><abbr title="\GeoIp2\Exception\AuthenticationException">AuthenticationException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Exception-GeoIp2Exception.html"><abbr title="\GeoIp2\Exception\GeoIp2Exception">GeoIp2Exception</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Exception-HttpException.html"><abbr title="\GeoIp2\Exception\HttpException">HttpException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Exception-InvalidRequestException.html"><abbr title="\GeoIp2\Exception\InvalidRequestException">InvalidRequestException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Exception-OutOfQueriesException.html"><abbr title="\GeoIp2\Exception\OutOfQueriesException">OutOfQueriesException</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-617564795"></a>
+                                <a href="../namespaces/geoip2-model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-617564795" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/GeoIp2-Model-AbstractModel.html"><abbr title="\GeoIp2\Model\AbstractModel">AbstractModel</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-AnonymousIp.html"><abbr title="\GeoIp2\Model\AnonymousIp">AnonymousIp</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-Asn.html"><abbr title="\GeoIp2\Model\Asn">Asn</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-City.html"><abbr title="\GeoIp2\Model\City">City</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-ConnectionType.html"><abbr title="\GeoIp2\Model\ConnectionType">ConnectionType</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-Country.html"><abbr title="\GeoIp2\Model\Country">Country</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-Domain.html"><abbr title="\GeoIp2\Model\Domain">Domain</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-Enterprise.html"><abbr title="\GeoIp2\Model\Enterprise">Enterprise</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-Insights.html"><abbr title="\GeoIp2\Model\Insights">Insights</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Model-Isp.html"><abbr title="\GeoIp2\Model\Isp">Isp</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1970847769"></a>
+                                <a href="../namespaces/geoip2-record.html" style="margin-left: 30px; padding-left: 0">Record</a>
+            </div>
+            <div id="namespace-1970847769" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/GeoIp2-Record-AbstractPlaceRecord.html"><abbr title="\GeoIp2\Record\AbstractPlaceRecord">AbstractPlaceRecord</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-AbstractRecord.html"><abbr title="\GeoIp2\Record\AbstractRecord">AbstractRecord</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-City.html"><abbr title="\GeoIp2\Record\City">City</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-Continent.html"><abbr title="\GeoIp2\Record\Continent">Continent</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-Country.html"><abbr title="\GeoIp2\Record\Country">Country</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-Location.html"><abbr title="\GeoIp2\Record\Location">Location</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-MaxMind.html"><abbr title="\GeoIp2\Record\MaxMind">MaxMind</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-Postal.html"><abbr title="\GeoIp2\Record\Postal">Postal</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-RepresentedCountry.html"><abbr title="\GeoIp2\Record\RepresentedCountry">RepresentedCountry</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-Subdivision.html"><abbr title="\GeoIp2\Record\Subdivision">Subdivision</abbr></a></li>
+                                                    <li class="class"><a href="../classes/GeoIp2-Record-Traits.html"><abbr title="\GeoIp2\Record\Traits">Traits</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1911956793"></a>
+                                <a href="../namespaces/geoip2-webservice.html" style="margin-left: 30px; padding-left: 0">WebService</a>
+            </div>
+            <div id="namespace-1911956793" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/GeoIp2-WebService-Client.html"><abbr title="\GeoIp2\WebService\Client">Client</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/GeoIp2-ProviderInterface.html"><abbr title="\GeoIp2\ProviderInterface">ProviderInterface</abbr></a></li>
+                                                                                                    <li class="class"><a href="../classes/GeoIp2-Util.html"><abbr title="\GeoIp2\Util">Util</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2108680378"></a>
+                                <a href="../namespaces/maxmind.html" style="margin-left: 30px; padding-left: 0">MaxMind</a>
+            </div>
+            <div id="namespace-2108680378" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-75692388"></a>
+                                <a href="../namespaces/maxmind-minfraud.html" style="margin-left: 30px; padding-left: 0">MinFraud</a>
+            </div>
+            <div id="namespace-75692388" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1751462258"></a>
+                                <a href="../namespaces/maxmind-minfraud-model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-1751462258" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-AbstractModel.html"><abbr title="\MaxMind\MinFraud\Model\AbstractModel">AbstractModel</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Address.html"><abbr title="\MaxMind\MinFraud\Model\Address">Address</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-BillingAddress.html"><abbr title="\MaxMind\MinFraud\Model\BillingAddress">BillingAddress</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-CreditCard.html"><abbr title="\MaxMind\MinFraud\Model\CreditCard">CreditCard</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Device.html"><abbr title="\MaxMind\MinFraud\Model\Device">Device</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Disposition.html"><abbr title="\MaxMind\MinFraud\Model\Disposition">Disposition</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Email.html"><abbr title="\MaxMind\MinFraud\Model\Email">Email</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-EmailDomain.html"><abbr title="\MaxMind\MinFraud\Model\EmailDomain">EmailDomain</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Factors.html"><abbr title="\MaxMind\MinFraud\Model\Factors">Factors</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-GeoIp2Country.html"><abbr title="\MaxMind\MinFraud\Model\GeoIp2Country">GeoIp2Country</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-GeoIp2Location.html"><abbr title="\MaxMind\MinFraud\Model\GeoIp2Location">GeoIp2Location</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Insights.html"><abbr title="\MaxMind\MinFraud\Model\Insights">Insights</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-IpAddress.html"><abbr title="\MaxMind\MinFraud\Model\IpAddress">IpAddress</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Issuer.html"><abbr title="\MaxMind\MinFraud\Model\Issuer">Issuer</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Score.html"><abbr title="\MaxMind\MinFraud\Model\Score">Score</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-ScoreIpAddress.html"><abbr title="\MaxMind\MinFraud\Model\ScoreIpAddress">ScoreIpAddress</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-ShippingAddress.html"><abbr title="\MaxMind\MinFraud\Model\ShippingAddress">ShippingAddress</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Subscores.html"><abbr title="\MaxMind\MinFraud\Model\Subscores">Subscores</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Model-Warning.html"><abbr title="\MaxMind\MinFraud\Model\Warning">Warning</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-320984623"></a>
+                                <a href="../namespaces/maxmind-minfraud-validation.html" style="margin-left: 30px; padding-left: 0">Validation</a>
+            </div>
+            <div id="namespace-320984623" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1349688927"></a>
+                                <a href="../namespaces/maxmind-minfraud-validation-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-1349688927" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Exceptions-Md5Exception.html"><abbr title="\MaxMind\MinFraud\Validation\Exceptions\Md5Exception">Md5Exception</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Exceptions-SubdivisionIsoCodeException.html"><abbr title="\MaxMind\MinFraud\Validation\Exceptions\SubdivisionIsoCodeException">SubdivisionIsoCodeException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Exceptions-TelephoneCountryCodeException.html"><abbr title="\MaxMind\MinFraud\Validation\Exceptions\TelephoneCountryCodeException">TelephoneCountryCodeException</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-358554257"></a>
+                                <a href="../namespaces/maxmind-minfraud-validation-rules.html" style="margin-left: 30px; padding-left: 0">Rules</a>
+            </div>
+            <div id="namespace-358554257" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Account.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Account">Account</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Billing.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Billing">Billing</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-CreditCard.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\CreditCard">CreditCard</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-CustomInputs.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\CustomInputs">CustomInputs</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Device.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Device">Device</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Email.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Email">Email</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Event.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Event">Event</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-IntOrString.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\IntOrString">IntOrString</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Md5.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Md5">Md5</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Order.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Order">Order</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Payment.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Payment">Payment</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-PaymentProcessor.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\PaymentProcessor">PaymentProcessor</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Shipping.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Shipping">Shipping</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-ShoppingCartItem.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\ShoppingCartItem">ShoppingCartItem</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-SubdivisionIsoCode.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\SubdivisionIsoCode">SubdivisionIsoCode</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-TelephoneCountryCode.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\TelephoneCountryCode">TelephoneCountryCode</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-Transaction.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\Transaction">Transaction</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-Validation-Rules-TransactionReport.html"><abbr title="\MaxMind\MinFraud\Validation\Rules\TransactionReport">TransactionReport</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-ReportTransaction.html"><abbr title="\MaxMind\MinFraud\ReportTransaction">ReportTransaction</abbr></a></li>
+                                                    <li class="class"><a href="../classes/MaxMind-MinFraud-ServiceClient.html"><abbr title="\MaxMind\MinFraud\ServiceClient">ServiceClient</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/MaxMind-MinFraud.html"><abbr title="\MaxMind\MinFraud">MinFraud</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/maxmind-minfraud-model.html"><abbr title="\MaxMind\MinFraud\Model">normal</abbr></a> <i class="icon-level-up"></i>
+                                            </nav>
+                    
+                    <h1><small>\MaxMind\MinFraud\Model</small>Email</h1>
+                    <p><em>Model containing information about the email address.</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-Email.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-AbstractModel.html#method_jsonSerialize" class="">jsonSerialize()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-Email.html#property_domain" class="">$domain</a><br />
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-Email.html#property_firstSeen" class="">$firstSeen</a><br />
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-Email.html#property_isDisposable" class="">$isDisposable</a><br />
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-Email.html#property_isFree" class="">$isFree</a><br />
+                                                                    <a href="../classes/MaxMind-MinFraud-Model-Email.html#property_isHighRisk" class="">$isHighRisk</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/minfraud-model-email.html"><div class="path-wrapper">MinFraud/Model/Email.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/MaxMind-MinFraud-Model-AbstractModel.html"><abbr title="\MaxMind\MinFraud\Model\AbstractModel">normal</abbr></a></div>
+                                                                                                    <div class="namespace-wrapper">\MaxMind\MinFraud\Model\Email</div>
+                            </dd>
+
+                        
+                        
+                        
+                                                
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_domain" name="property_domain" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$domain</h3>
+                <pre class="signature">$domain : \MaxMind\MinFraud\Model\EmailDomain</pre>
+                <p><em></em></p>
+                <p>An object
+containing information about the email domain.</p>
+
+                                <h4>Type</h4>
+                <a href="../classes/MaxMind-MinFraud-Model-EmailDomain.html"><abbr title="\MaxMind\MinFraud\Model\EmailDomain">normal</abbr></a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_firstSeen" name="property_firstSeen" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$firstSeen</h3>
+                <pre class="signature">$firstSeen : string|null</pre>
+                <p><em></em></p>
+                <p>A date string (e.g. 2017-04-24) to
+identify the date an email address was first seen by MaxMind. This is
+expressed using the ISO 8601 date format.</p>
+
+                                <h4>Type</h4>
+                <a href="../string|null"><abbr title="string|null">normal</abbr></a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_isDisposable" name="property_isDisposable" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$isDisposable</h3>
+                <pre class="signature">$isDisposable : bool|null</pre>
+                <p><em></em></p>
+                <p>Whether this email address is from
+a disposable email provider. The value will be <code class="prettyprint">null</code> when no email address
+or email domain has been passed as an input.</p>
+
+                                <h4>Type</h4>
+                <a href="../bool|null"><abbr title="bool|null">normal</abbr></a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_isFree" name="property_isFree" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$isFree</h3>
+                <pre class="signature">$isFree : bool|null</pre>
+                <p><em></em></p>
+                <p>This property is true if MaxMind believes
+that this email is hosted by a free email provider such as Gmail or Yahoo!
+Mail.</p>
+
+                                <h4>Type</h4>
+                <a href="../bool|null"><abbr title="bool|null">normal</abbr></a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_isHighRisk" name="property_isHighRisk" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$isHighRisk</h3>
+                <pre class="signature">$isHighRisk : bool|null</pre>
+                <p><em></em></p>
+                <p>This field is true if MaxMind believes
+that this email is likely to be used for fraud. Note that this is also
+factored into the overall risk_score in the response as well.</p>
+
+                                <h4>Type</h4>
+                <a href="../bool|null"><abbr title="bool|null">normal</abbr></a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(mixed  <span class="argument">$response</span>, mixed  <span class="argument">$locales = [&#039;en&#039;]</span>) : mixed</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$response </td>
+                                <td><p>the array corresponding to the object in the
+minFraud Insights response</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$locales </td>
+                                <td><p>list of locale codes to use in name property from
+most preferred to least preferred</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/MaxMind-MinFraud-Model-Email.html"><div class="path-wrapper">\MaxMind\MinFraud\Model\Email</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_jsonSerialize" name="method_jsonSerialize" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">jsonSerialize()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">jsonSerialize() : array</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>data that can be serialized by json_encode</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/MaxMind-MinFraud-Model-AbstractModel.html"><div class="path-wrapper">\MaxMind\MinFraud\Model\AbstractModel</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Email.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/MinFraud/Model/Email.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/geoip2.html"><abbr title="\GeoIp2">normal</abbr></a></li>
+                                                                            <li><a href="../namespaces/maxmind.html"><abbr title="\MaxMind">normal</abbr></a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on May 29th, 2020 at 14:28.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
