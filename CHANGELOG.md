@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.13.0 (XXXX-XX-XX)
+1.13.0 (2020-05-29)
 -------------------
 
 * Added support for the Report Transactions API. We encourage the use of this
