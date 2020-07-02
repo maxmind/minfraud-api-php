@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+1.14.0
+-------------------
+
+* Added the following new values to the payment processor validation:
+  * `cashfree`
+  * `first_atlantic_commerce`
+  * `komoju`
+  * `paytm`
+  * `razorpay`
+  * `systempay`
+
 1.13.0 (2020-05-29)
 -------------------
 
