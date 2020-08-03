@@ -28,10 +28,15 @@ namespace MaxMind\MinFraud\Model;
  * shipping country. If present, this is a value in the range 0.01 to 99.
  * @property-read float|null $cvvResult The risk associated with the CVV result. If
  * present, this is a value in the range 0.01 to 99.
+ * @property-read float|null $device The risk associated with the device. If
+ * present, this is a value in the range 0.01 to 99.
  * @property-read float|null $emailAddress The risk associated with the particular
  * email address. If present, this is a value in the range 0.01 to 99.
  * @property-read float|null $emailDomain The general risk associated with the
  * email domain. If present, this is a value in the range 0.01 to 99.
+ * @property-read float|null $emailLocalPart The risk associated with the email
+ * address local part (the part of the email address before the @ symbol). If
+ * present, this is a value in the range 0.01 to 99.
  * @property-read float|null $emailTenure The risk associated with the issuer ID
  * number on the email domain. If present, this is a value in the range 0.01
  * to 99. <b>Deprecated effective August 29, 2019. This subscore will default
@@ -51,6 +56,8 @@ namespace MaxMind\MinFraud\Model;
  * the range 0.01 to 99.
  * @property-read float|null $phoneNumber The risk associated with the particular
  * phone number. If present, this is a value in the range 0.01 to 99.
+ * @property-read float|null $shippingAddress The risk associated with the
+ * shipping address. If present, this is a value in the range 0.01 to 99.
  * @property-read float|null $shippingAddressDistanceToIpLocation The risk
  * associated with the distance between the shipping address and the IP
  * location for the given IP address. If present, this is a value in the
@@ -104,12 +111,22 @@ class Subscores extends AbstractModel
     /**
      * @internal
      */
+    protected $device;
+
+    /**
+     * @internal
+     */
     protected $emailAddress;
 
     /**
      * @internal
      */
     protected $emailDomain;
+
+    /**
+     * @internal
+     */
+    protected $emailLocalPart;
 
     /**
      * @internal
@@ -146,6 +163,11 @@ class Subscores extends AbstractModel
     /**
      * @internal
      */
+    protected $shippingAddress;
+
+    /**
+     * @internal
+     */
     protected $shippingAddressDistanceToIpLocation;
 
     /**
@@ -166,13 +188,16 @@ class Subscores extends AbstractModel
         $this->country = $this->safeArrayLookup($response['country']);
         $this->countryMismatch = $this->safeArrayLookup($response['country_mismatch']);
         $this->cvvResult = $this->safeArrayLookup($response['cvv_result']);
+        $this->device = $this->safeArrayLookup($response['device']);
         $this->emailAddress = $this->safeArrayLookup($response['email_address']);
         $this->emailDomain = $this->safeArrayLookup($response['email_domain']);
+        $this->emailLocalPart = $this->safeArrayLookup($response['email_local_part']);
         $this->emailTenure = $this->safeArrayLookup($response['email_tenure']);
         $this->ipTenure = $this->safeArrayLookup($response['ip_tenure']);
         $this->issuerIdNumber = $this->safeArrayLookup($response['issuer_id_number']);
         $this->orderAmount = $this->safeArrayLookup($response['order_amount']);
         $this->phoneNumber = $this->safeArrayLookup($response['phone_number']);
+        $this->shippingAddress = $this->safeArrayLookup($response['shipping_address']);
         $this->shippingAddressDistanceToIpLocation
             = $this->safeArrayLookup($response['shipping_address_distance_to_ip_location']);
         $this->timeOfDay = $this->safeArrayLookup($response['time_of_day']);
