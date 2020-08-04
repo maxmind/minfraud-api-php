@@ -11,6 +11,10 @@ CHANGELOG
   * `paytm`
   * `razorpay`
   * `systempay`
+* Added support for the `/subscores/device`, `/subscores/email_local_part` and
+  `/subscores/shipping_address` outputs. They are exposed as the `device`,
+  `emailLocalPart` and `shippingAddress` properties on
+  `MaxMind\MinFraud\Model\Subscores`.
 
 1.13.0 (2020-05-29)
 -------------------

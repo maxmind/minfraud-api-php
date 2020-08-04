@@ -154,15 +154,18 @@
     "country": 0.06,
     "country_mismatch": 0.07,
     "cvv_result": 0.08,
-    "email_address": 0.09,
-    "email_domain": 0.1,
-    "email_tenure": 0.11,
-    "ip_tenure": 0.12,
-    "issuer_id_number": 0.13,
-    "order_amount": 0.14,
-    "phone_number": 0.15,
-    "shipping_address_distance_to_ip_location": 0.16,
-    "time_of_day": 0.17
+    "device": 0.09,
+    "email_address": 0.1,
+    "email_domain": 0.11,
+    "email_local_part": 0.12,
+    "email_tenure": 0.13,
+    "ip_tenure": 0.14,
+    "issuer_id_number": 0.15,
+    "order_amount": 0.16,
+    "phone_number": 0.17,
+    "shipping_address": 0.18,
+    "shipping_address_distance_to_ip_location": 0.19,
+    "time_of_day": 0.2
   },
   "warnings": [
     {
