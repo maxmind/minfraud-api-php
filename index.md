@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.13.0
+version: v1.14.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
