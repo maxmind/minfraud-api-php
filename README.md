@@ -144,7 +144,7 @@ $mf = new MinFraud(1, 'ABCD567890');
 # that if you separate the calls into separate statements without chaining,
 # you should assign the return value to a variable each time.
 $request = $mf->withDevice([
-    'ip_address'  => '81.2.69.160',
+    'ip_address'  => '152.216.7.110',
     'session_age' => 3600.5,
     'session_id'  => 'foobar',
     'user_agent'  =>
@@ -305,7 +305,7 @@ use MaxMind\MinFraud\ReportTransaction;
 $rt = new ReportTransaction(1, 'ABCD567890');
 
 $rt->report(
-    'ip_address'      => '81.2.69.160',
+    'ip_address'      => '152.216.7.110',
     'tag'             => 'chargeback',
     'chargeback_code' => 'UA02',
     'minfraud_id'     => '26ae87e4-5112-4f76-b0f7-4132d45d72b2',
