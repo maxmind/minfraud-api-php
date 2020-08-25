@@ -171,7 +171,7 @@ $request = $mf->withDevice([
     'region'             => 'CT',
     'country'            => 'US',
     'postal'             => '06510',
-    'phone_number'       => '323-123-4321',
+    'phone_number'       => '123-456-7890',
     'phone_country_code' => '1',
 ])->withShipping([
     'first_name'         => 'ShipFirst',
@@ -183,7 +183,7 @@ $request = $mf->withDevice([
     'region'             => 'OK',
     'country'            => 'US',
     'postal'             => '73003',
-    'phone_number'       => '403-321-2323',
+    'phone_number'       => '123-456-0000',
     'phone_country_code' => '1',
     'delivery_speed'     => 'same_day',
 ])->withPayment([
@@ -195,7 +195,7 @@ $request = $mf->withDevice([
     'last_4_digits'           => '7643',
     'bank_name'               => 'Bank of No Hope',
     'bank_phone_country_code' => '1',
-    'bank_phone_number'       => '800-342-1232',
+    'bank_phone_number'       => '123-456-1234',
     'avs_result'              => 'Y',
     'cvv_result'              => 'N',
 ])->withOrder([
