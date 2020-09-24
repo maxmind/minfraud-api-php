@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.15.0
+-------------------
+
+* IMPORTANT: PHP 7.2 or greater is now required.
+* Additional type hints have been added.
+* Added the `isResidentialProxy` property to `GeoIp2\Record\Traits`.
+
 1.14.0 (2020-08-05)
 -------------------
 
