@@ -26,9 +26,7 @@ abstract class ServiceClientTest extends TestCase
         $userId = 1;
         $licenseKey = 'abcdefghij';
 
-        $stub = $this->getMockForAbstractClass(
-            'MaxMind\\WebService\\Http\\Request'
-        );
+        $stub = $this->createMock(\MaxMind\WebService\Http\Request::class);
 
         $stub->expects($this->exactly($callsToRequest))
             ->method('post')
