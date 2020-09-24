@@ -14,10 +14,10 @@ class Payment extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::keySet(
+        parent::__construct(v::keySet(
             v::key('processor', new PaymentProcessor(), false),
             v::key('was_authorized', v::boolVal(), false),
             v::key('decline_code', v::stringType(), false)
-        );
+        ));
     }
 }

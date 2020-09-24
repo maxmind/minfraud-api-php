@@ -129,7 +129,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function testInvalidChargebackCodes($chargebackCode)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('chargeback_code must be a string');
+        $this->expectExceptionMessage('chargeback_code must be of type string');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -149,7 +149,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function testInvalidNotes($notes)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('notes must be a string');
+        $this->expectExceptionMessage('notes must be of type string');
 
         $req = array_merge(Data::minimalRequest(), ['notes' => $notes]);
         $this->createReportTransactionRequest(
@@ -166,7 +166,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function testInvalidTransactionIds($transactionId)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('transaction_id must be a string');
+        $this->expectExceptionMessage('transaction_id must be of type string');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -224,7 +224,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function testInvalidMaxmindIds($maxmindId)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('maxmind_id must have a length between 8 and 8');
+        $this->expectExceptionMessage('maxmind_id must have a length of 8');
 
         $req = array_merge(
             Data::minimalRequest(),

@@ -28,7 +28,7 @@ class DeviceTest extends TestCase
         $validator = new Device();
 
         $this->assertTrue(
-            $validator->check([
+            $validator->validate([
                'session_age' => 1.2,
             ])
         );

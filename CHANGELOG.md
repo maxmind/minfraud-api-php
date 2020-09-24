@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.17.0
+-------------------
+
+* The dependency Respect\Validation has been upgrade from 1.x to 2.1.
+
 1.16.1 (2020-11-02)
 -------------------
 
