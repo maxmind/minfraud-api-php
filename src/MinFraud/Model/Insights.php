@@ -55,7 +55,7 @@ class Insights extends Score
      */
     protected $shippingAddress;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
 

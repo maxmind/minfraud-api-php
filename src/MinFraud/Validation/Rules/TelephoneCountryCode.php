@@ -11,7 +11,7 @@ use Respect\Validation\Rules\Regex;
  */
 class TelephoneCountryCode extends Regex
 {
-    public function __construct($useLocale = false)
+    public function __construct()
     {
         parent::__construct('/^[0-9]{1,4}$/');
     }

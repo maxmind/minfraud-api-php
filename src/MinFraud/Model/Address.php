@@ -47,7 +47,7 @@ abstract class Address extends AbstractModel
      */
     protected $isInIpCountry;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
 

@@ -177,7 +177,7 @@ class Subscores extends AbstractModel
      */
     protected $timeOfDay;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
 

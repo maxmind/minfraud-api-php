@@ -49,7 +49,7 @@ class Device extends AbstractModel
      */
     protected $localTime;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->confidence = $this->safeArrayLookup($response['confidence']);

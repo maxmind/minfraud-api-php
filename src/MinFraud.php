@@ -10,7 +10,6 @@ use MaxMind\Exception\InsufficientFundsException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
-use MaxMind\MinFraud\Validation;
 
 /**
  * This class provides a client API for accessing MaxMind minFraud Score,
@@ -62,9 +61,9 @@ class MinFraud extends MinFraud\ServiceClient
      *   before deployment.
      */
     public function __construct(
-        $accountId,
-        $licenseKey,
-        $options = []
+        int $accountId,
+        string $licenseKey,
+        array $options = []
     ) {
         if (isset($options['locales'])) {
             $this->locales = $options['locales'];
@@ -81,12 +80,10 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @link https://dev.maxmind.com/minfraud/ minFraud API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function with($values)
+    public function with(array $values): self
     {
         $values = $this->cleanAndValidate('Transaction', $values);
 
@@ -103,12 +100,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Device_device
      *     minFraud device API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withDevice($values)
+    public function withDevice(array $values): self
     {
         return $this->validateAndAdd('Device', 'device', $values);
     }
@@ -120,12 +115,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Event_event
      *     minFraud event API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withEvent($values)
+    public function withEvent(array $values): self
     {
         return $this->validateAndAdd('Event', 'event', $values);
     }
@@ -137,12 +130,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Account_account
      *     minFraud account API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withAccount($values)
+    public function withAccount(array $values): self
     {
         return $this->validateAndAdd('Account', 'account', $values);
     }
@@ -154,12 +145,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Email_email
      *     minFraud email API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withEmail($values)
+    public function withEmail(array $values): self
     {
         return $this->validateAndAdd('Email', 'email', $values);
     }
@@ -171,12 +160,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Billing_billing
      *     minFraud billing API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withBilling($values)
+    public function withBilling(array $values): self
     {
         return $this->validateAndAdd('Billing', 'billing', $values);
     }
@@ -188,12 +175,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Shipping_shipping
      *     minFraud shipping API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withShipping($values)
+    public function withShipping(array $values): self
     {
         return $this->validateAndAdd('Shipping', 'shipping', $values);
     }
@@ -205,12 +190,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Payment_payment
      *     minFraud payment API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withPayment($values)
+    public function withPayment(array $values): self
     {
         return $this->validateAndAdd('Payment', 'payment', $values);
     }
@@ -222,12 +205,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Credit_Card_credit_card
      *     minFraud credit_card API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withCreditCard($values)
+    public function withCreditCard(array $values): self
     {
         return $this->validateAndAdd('CreditCard', 'credit_card', $values);
     }
@@ -236,12 +217,10 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `custom_inputs` array set to
      * `$values`. Existing `custom_inputs` data will be replaced.
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withCustomInputs($values)
+    public function withCustomInputs(array $values): self
     {
         return $this->validateAndAdd('CustomInputs', 'custom_inputs', $values);
     }
@@ -253,12 +232,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Order_order
      *     minFraud order API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withOrder($values)
+    public function withOrder(array $values): self
     {
         return $this->validateAndAdd('Order', 'order', $values);
     }
@@ -270,12 +247,10 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/#Shopping_Cart_Item
      *     minFraud shopping cart item API docs
      *
-     * @param array $values
-     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
-    public function withShoppingCartItem($values)
+    public function withShoppingCartItem(array $values): self
     {
         $values = $this->cleanAndValidate('ShoppingCartItem', $values);
 
@@ -294,10 +269,8 @@ class MinFraud extends MinFraud\ServiceClient
      * @param array  $values    The values to validate
      *
      * @throws InvalidInputException when $values does not validate
-     *
-     * @return MinFraud
      */
-    private function validateAndAdd($className, $key, $values)
+    private function validateAndAdd(string $className, string $key, array $values): self
     {
         $values = $this->cleanAndValidate($className, $values);
         $new = clone $this;
@@ -321,9 +294,9 @@ class MinFraud extends MinFraud\ServiceClient
      * @throws WebServiceException        when some other error occurs. This also
      *                                    serves as the base class for the above exceptions.
      *
-     * @return MinFraud\Model\Score minFraud Score model object
+     * @return \MaxMind\MinFraud\Model\Score minFraud Score model object
      */
-    public function score()
+    public function score(): \MaxMind\MinFraud\Model\Score
     {
         return $this->post('Score');
     }
@@ -343,9 +316,9 @@ class MinFraud extends MinFraud\ServiceClient
      * @throws WebServiceException        when some other error occurs. This also
      *                                    serves as the base class for the above exceptions.
      *
-     * @return MinFraud\Model\Insights minFraud Insights model object
+     * @return \MaxMind\MinFraud\Model\Insights minFraud Insights model object
      */
-    public function insights()
+    public function insights(): \MaxMind\MinFraud\Model\Insights
     {
         return $this->post('Insights');
     }
@@ -365,9 +338,9 @@ class MinFraud extends MinFraud\ServiceClient
      * @throws WebServiceException        when some other error occurs. This also
      *                                    serves as the base class for the above exceptions.
      *
-     * @return MinFraud\Model\Factors minFraud Factors model object
+     * @return \MaxMind\MinFraud\Model\Factors minFraud Factors model object
      */
-    public function factors()
+    public function factors(): \MaxMind\MinFraud\Model\Factors
     {
         return $this->post('Factors');
     }
@@ -388,7 +361,7 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return mixed the model class for the service
      */
-    private function post($service)
+    private function post(string $service)
     {
         if (!isset($this->content['device']['ip_address'])) {
             throw new InvalidInputException('Key ip_address must be present in device');

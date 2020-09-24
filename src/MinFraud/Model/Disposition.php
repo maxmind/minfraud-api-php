@@ -29,7 +29,7 @@ class Disposition extends AbstractModel
      */
     protected $reason;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->action = $this->safeArrayLookup($response['action']);
