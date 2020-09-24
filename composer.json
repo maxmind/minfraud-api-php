@@ -17,7 +17,7 @@
     }
   ],
   "require": {
-    "php": ">=5.6",
+    "php": ">=7.2",
     "ext-json": "*",
     "geoip2/geoip2": "^2.10",
     "maxmind/web-service-common": "^0.7",
