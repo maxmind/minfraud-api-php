@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud;
 
 use MaxMind\Exception\InvalidInputException;
