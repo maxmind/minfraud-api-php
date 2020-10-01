@@ -144,7 +144,7 @@ $mf = new MinFraud(1, 'ABCD567890');
 # that if you separate the calls into separate statements without chaining,
 # you should assign the return value to a variable each time.
 $request = $mf->withDevice([
-    'ip_address'  => '81.2.69.160',
+    'ip_address'  => '152.216.7.110',
     'session_age' => 3600.5,
     'session_id'  => 'foobar',
     'user_agent'  =>
@@ -171,7 +171,7 @@ $request = $mf->withDevice([
     'region'             => 'CT',
     'country'            => 'US',
     'postal'             => '06510',
-    'phone_number'       => '323-123-4321',
+    'phone_number'       => '123-456-7890',
     'phone_country_code' => '1',
 ])->withShipping([
     'first_name'         => 'ShipFirst',
@@ -183,7 +183,7 @@ $request = $mf->withDevice([
     'region'             => 'OK',
     'country'            => 'US',
     'postal'             => '73003',
-    'phone_number'       => '403-321-2323',
+    'phone_number'       => '123-456-0000',
     'phone_country_code' => '1',
     'delivery_speed'     => 'same_day',
 ])->withPayment([
@@ -191,11 +191,11 @@ $request = $mf->withDevice([
     'was_authorized'        => false,
     'decline_code'          => 'invalid number',
 ])->withCreditCard([
-    'issuer_id_number'        => '323132',
+    'issuer_id_number'        => '411111',
     'last_4_digits'           => '7643',
     'bank_name'               => 'Bank of No Hope',
     'bank_phone_country_code' => '1',
-    'bank_phone_number'       => '800-342-1232',
+    'bank_phone_number'       => '123-456-1234',
     'avs_result'              => 'Y',
     'cvv_result'              => 'N',
 ])->withOrder([
@@ -305,7 +305,7 @@ use MaxMind\MinFraud\ReportTransaction;
 $rt = new ReportTransaction(1, 'ABCD567890');
 
 $rt->report(
-    'ip_address'      => '81.2.69.160',
+    'ip_address'      => '152.216.7.110',
     'tag'             => 'chargeback',
     'chargeback_code' => 'UA02',
     'minfraud_id'     => '26ae87e4-5112-4f76-b0f7-4132d45d72b2',

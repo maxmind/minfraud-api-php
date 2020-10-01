@@ -23,7 +23,7 @@
     "region": "CT",
     "country": "US",
     "postal": "06510",
-    "phone_number": "323-123-4321",
+    "phone_number": "123-456-7890",
     "phone_country_code": "1"
   },
   "shipping": {
@@ -36,7 +36,7 @@
     "region": "OK",
     "country": "US",
     "postal": "73003",
-    "phone_number": "403-321-2323",
+    "phone_number": "123-456-0000",
     "phone_country_code": "1",
     "delivery_speed": "same_day"
   },
@@ -46,11 +46,11 @@
     "decline_code": "invalid number"
   },
   "credit_card": {
-    "issuer_id_number": "323132",
+    "issuer_id_number": "411111",
     "last_4_digits": "7643",
     "bank_name": "Bank of No Hope",
     "bank_phone_country_code": "1",
-    "bank_phone_number": "800-342-1232",
+    "bank_phone_number": "123-456-1234",
     "avs_result": "Y",
     "cvv_result": "N",
     "token": "123456abc1234"
@@ -86,7 +86,7 @@
     }
   ],
   "device": {
-    "ip_address": "81.2.69.160",
+    "ip_address": "152.216.7.110",
     "session_age": 3600.5,
     "session_id": "foobar",
     "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36",
