@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.16.0
+-------------------
+
+* Added `tsys` to the payment processor validation.
+
 1.15.0 (2020-10-01)
 -------------------
 

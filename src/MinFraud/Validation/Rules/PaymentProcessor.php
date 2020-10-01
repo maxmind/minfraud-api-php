@@ -136,6 +136,7 @@ class PaymentProcessor extends AbstractWrapper
                 'telerecargas',
                 'towah',
                 'transact_pro',
+                'tsys',
                 'usa_epay',
                 'vantiv',
                 'verepay',
