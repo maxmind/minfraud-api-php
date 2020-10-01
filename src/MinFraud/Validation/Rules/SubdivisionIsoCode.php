@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud\Validation\Rules;
 
 use Respect\Validation\Rules\Regex;
@@ -9,7 +11,7 @@ use Respect\Validation\Rules\Regex;
  */
 class SubdivisionIsoCode extends Regex
 {
-    public function __construct($useLocale = false)
+    public function __construct()
     {
         parent::__construct('/^[0-9A-Z]{1,4}$/');
     }

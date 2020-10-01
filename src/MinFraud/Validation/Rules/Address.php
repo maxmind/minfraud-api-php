@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud\Validation\Rules;
 
 use Respect\Validation\Validator as v;

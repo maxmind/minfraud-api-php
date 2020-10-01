@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud;
 
 use MaxMind\Exception\InvalidInputException;
@@ -16,9 +18,9 @@ abstract class ServiceClient
     protected $validateInput = true;
 
     public function __construct(
-        $accountId,
-        $licenseKey,
-        $options = []
+        int $accountId,
+        string $licenseKey,
+        array $options = []
     ) {
         if (!isset($options['host'])) {
             $options['host'] = self::$host;
@@ -34,7 +36,7 @@ abstract class ServiceClient
     /**
      * @return string the prefix for the User-Agent header
      */
-    protected function userAgent()
+    protected function userAgent(): string
     {
         return 'minFraud-API/' . self::VERSION;
     }
@@ -47,7 +49,7 @@ abstract class ServiceClient
      *
      * @return array The cleaned values
      */
-    protected function cleanAndValidate($className, $values)
+    protected function cleanAndValidate(string $className, array $values): array
     {
         $values = $this->clean($values);
 
@@ -66,7 +68,7 @@ abstract class ServiceClient
         return $values;
     }
 
-    protected function clean($array)
+    protected function clean(array $array): array
     {
         $cleaned = [];
         foreach ($array as $key => $value) {

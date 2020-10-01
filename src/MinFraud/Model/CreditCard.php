@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud\Model;
 
 /**
@@ -71,7 +73,7 @@ class CreditCard extends AbstractModel
      */
     protected $type;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
 

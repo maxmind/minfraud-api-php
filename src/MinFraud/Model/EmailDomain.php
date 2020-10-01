@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud\Model;
 
 /**
@@ -16,7 +18,7 @@ class EmailDomain extends AbstractModel
      */
     protected $firstSeen;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
         $this->firstSeen = $this->safeArrayLookup($response['first_seen']);

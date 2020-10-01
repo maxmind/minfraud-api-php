@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\Test;
 
 use MaxMind\Exception\InvalidInputException;
@@ -806,7 +808,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
     public function testBadReferrerUri($uri)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageRegExp('/must be an? URL/');
+        $this->expectExceptionMessageMatches('/must be an? URL/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -877,7 +879,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
     public function testBadOrderAmount($value)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageRegExp('/(must be greater than or equal to 0|must be a float)/');
+        $this->expectExceptionMessageMatches('/(must be greater than or equal to 0|must be a float)/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -902,7 +904,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
     public function testBadShoppingCartItemPrice($value)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageRegExp('/(must be greater than or equal to 0|must be a float)/');
+        $this->expectExceptionMessageMatches('/(must be greater than or equal to 0|must be a float)/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -918,7 +920,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
     public function testBadShoppingCartItemQuantity($value)
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageRegExp('/(must be greater than 0|must be an int)/');
+        $this->expectExceptionMessageMatches('/(must be greater than 0|must be an int)/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',

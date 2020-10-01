@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MaxMind\MinFraud\Model;
 
 use GeoIp2\Model\Insights as GeoIp2Insights;
@@ -18,8 +20,11 @@ class IpAddress extends GeoIp2Insights
      */
     protected $risk;
 
-    public function __construct($response, $locales = ['en'])
+    public function __construct(?array $response, array $locales = ['en'])
     {
+        if ($response === null) {
+            $response = [];
+        }
         parent::__construct($response, $locales);
         $this->country = new GeoIp2Country($this->get('country'), $locales);
         $this->location = new GeoIp2Location($this->get('location'));
