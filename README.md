@@ -313,7 +313,6 @@ $rt->report(
     'notes'           => 'Found due to non-existent shipping address',
     'transaction_id'  => 'cart123456789',
 );
-
 ```
 
 ## Support ##
