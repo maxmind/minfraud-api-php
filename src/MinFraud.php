@@ -363,9 +363,6 @@ class MinFraud extends MinFraud\ServiceClient
      */
     private function post(string $service)
     {
-        if (!isset($this->content['device']['ip_address'])) {
-            throw new InvalidInputException('Key ip_address must be present in device');
-        }
         $url = self::$basePath . strtolower($service);
         $class = 'MaxMind\\MinFraud\\Model\\' . $service;
 

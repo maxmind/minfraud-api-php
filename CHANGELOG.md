@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.16.0
+-------------------
+
+* The device IP address is no longer a required input.
+
 1.15.0 (2020-10-01)
 -------------------
 
