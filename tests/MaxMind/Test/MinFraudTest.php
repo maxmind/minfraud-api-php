@@ -151,12 +151,26 @@ class MinFraudTest extends MinFraud\ServiceClientTest
      */
     public function testMissingIpAddress($class, $service)
     {
-        $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must have keys');
+        $device = [
+            'session_age' => 1.2,
+        ];
+        $request = [
+            'device' => $device,
+        ];
 
-        $this->createMinFraudRequestWithFullResponse($service, 0)
-            ->with(Data::fullRequest())
-            ->withDevice([])->$service();
+        $got = $this->createMinFraudRequestWithFullResponse(
+            $service,
+            1,
+            [],
+            $request
+        )->withDevice($device)->$service();
+
+        $responseMeth = $service . 'FullResponse';
+
+        $this->assertEquals(
+            new $class(Data::$responseMeth()),
+            $got
+        );
     }
 
     /**
@@ -167,15 +181,26 @@ class MinFraudTest extends MinFraud\ServiceClientTest
      */
     public function testMissingIpAddressWithoutValidation($class, $service)
     {
-        $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Key ip_address must be present');
+        $device = [
+            'session_age' => 1.2,
+        ];
+        $request = [
+            'device' => $device,
+        ];
 
-        $this->createMinFraudRequestWithFullResponse(
+        $got = $this->createMinFraudRequestWithFullResponse(
             $service,
-            0,
-            ['validateInput' => false]
-        )->with(Data::fullRequest())
-            ->withDevice([])->$service();
+            1,
+            ['validateInput' => false],
+            $request
+        )->withDevice($device)->$service();
+
+        $responseMeth = $service . 'FullResponse';
+
+        $this->assertEquals(
+            new $class(Data::$responseMeth()),
+            $got
+        );
     }
 
     /**

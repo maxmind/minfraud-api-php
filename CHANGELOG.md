@@ -5,6 +5,7 @@ CHANGELOG
 -------------------
 
 * Added `tsys` to the payment processor validation.
+* The device IP address is no longer a required input.
 
 1.15.0 (2020-10-01)
 -------------------
