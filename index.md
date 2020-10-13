@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.15.0
+version: v1.16.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -117,9 +117,7 @@ All externally visible exceptions are in the `\MaxMind\Exception` namespace.
 The possible exceptions are:
 
 * `InvalidInputException` - This will be thrown when a `->with*` method is
-  called with invalid input data or when `->score()`, `->insights()`, or
-  `->factors()` is called on a request where the required `ip_address` field in
-  the `device` array is missing.
+  called with invalid input data.
 * `AuthenticationException` - This will be thrown on calling `->score()`,
   `->insights()`, or `->factors()` when the server is unable to authenticate
   the request, e.g., if the license key or account ID is invalid.
@@ -320,7 +318,6 @@ $rt->report(
     'notes'           => 'Found due to non-existent shipping address',
     'transaction_id'  => 'cart123456789',
 );
-
 ```
 
 ## Support ##
