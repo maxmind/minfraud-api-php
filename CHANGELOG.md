@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.16.1 (2020-11-02)
+-------------------
+
+* `maxmind/web-service-common` has been updated to 0.8.1 to fix an issue when
+  using the `reportTransaction` method. Reported by Dmitry Malashko. GitHub
+  #99.
+
 1.16.0 (2020-10-13)
 -------------------
 
