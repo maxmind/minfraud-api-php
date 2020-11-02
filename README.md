@@ -302,7 +302,7 @@ use MaxMind\MinFraud\ReportTransaction;
 # and optionally an array of options.
 $rt = new ReportTransaction(1, 'ABCD567890');
 
-$rt->report(
+$rt->report([
     'ip_address'      => '152.216.7.110',
     'tag'             => 'chargeback',
     'chargeback_code' => 'UA02',
@@ -310,7 +310,7 @@ $rt->report(
     'maxmind_id'      => 'aBcDeFgH',
     'notes'           => 'Found due to non-existent shipping address',
     'transaction_id'  => 'cart123456789',
-);
+]);
 ```
 
 ## Support ##
