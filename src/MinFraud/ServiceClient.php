@@ -10,7 +10,7 @@ use Respect\Validation\Exceptions\ValidationException;
 
 abstract class ServiceClient
 {
-    const VERSION = 'v1.16.0';
+    const VERSION = 'v1.16.1';
 
     protected $client;
     protected static $host = 'minfraud.maxmind.com';
