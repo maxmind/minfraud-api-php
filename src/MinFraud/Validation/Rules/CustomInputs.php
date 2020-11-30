@@ -14,13 +14,17 @@ class CustomInputs extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::arrayVal()->each(
-            v::oneOf(
-                v::stringType()->not(v::contains("\n"))->length(1, 255),
-                v::numeric()->max(1e13 - 1)->min(-1e13 + 1),
-                v::boolType()
+        parent::__construct(
+            v::allOf(
+                v::arrayVal()->each(
+                    v::anyOf(
+                        v::stringType()->not(v::contains("\n"))->length(1, 255),
+                        v::numericVal()->max(1e13 - 1)->min(-1e13 + 1),
+                        v::boolType()
+                    ),
+                ),
+                v::call('array_keys', v::each(v::regex('/^[a-z0-9_]{1,25}\Z/'))),
             ),
-            v::regex('/^[a-z0-9_]{1,25}\Z/')
         );
     }
 }

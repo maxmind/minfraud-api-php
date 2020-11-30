@@ -14,7 +14,7 @@ class Transaction extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::keySet(
+        parent::__construct(v::keySet(
             v::key('account', new Account(), false),
             v::key('billing', new Billing(), false),
             v::key('credit_card', new CreditCard(), false),
@@ -26,6 +26,6 @@ class Transaction extends AbstractWrapper
             v::key('payment', new Payment(), false),
             v::key('shipping', new Shipping(), false),
             v::key('shopping_cart', v::arrayVal()->each(new ShoppingCartItem()))
-        );
+        ));
     }
 }

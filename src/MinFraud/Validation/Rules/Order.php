@@ -14,7 +14,7 @@ class Order extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::keySet(
+        parent::__construct(v::keySet(
             v::key('affiliate_id', v::stringType(), false),
             v::key('amount', v::floatVal()->min(0), false),
             v::key('currency', v::regex('/^[A-Z]{3}$/'), false),
@@ -23,6 +23,6 @@ class Order extends AbstractWrapper
             v::key('is_gift', v::boolVal(), false),
             v::key('referrer_uri', v::url(), false),
             v::key('subaffiliate_id', v::stringType(), false)
-        );
+        ));
     }
 }

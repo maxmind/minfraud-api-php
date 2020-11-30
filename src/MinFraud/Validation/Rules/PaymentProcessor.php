@@ -14,7 +14,7 @@ class PaymentProcessor extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::in(
+        parent::__construct(v::in(
             [
                 'adyen',
                 'affirm',
@@ -148,6 +148,6 @@ class PaymentProcessor extends AbstractWrapper
                 'wirecard',
                 'worldpay',
             ]
-        );
+        ));
     }
 }

@@ -14,11 +14,11 @@ class ShoppingCartItem extends AbstractWrapper
 {
     public function __construct()
     {
-        $this->validatable = v::keySet(
+        parent::__construct(v::keySet(
             v::key('category', v::stringType(), false),
             v::key('item_id', new IntOrString(), false),
             v::key('price', v::floatVal()->min(0), false),
-            v::key('quantity', v::intVal()->min(0, false), false)
-        );
+            v::key('quantity', v::intVal()->greaterThan(0), false)
+        ));
     }
 }

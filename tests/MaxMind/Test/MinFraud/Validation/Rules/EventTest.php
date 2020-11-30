@@ -22,7 +22,7 @@ class EventTest extends TestCase
         $validator = new Event();
 
         $this->assertTrue(
-            $validator->check(['type' => $good]),
+            $validator->validate(['type' => $good]),
             $good
         );
     }
