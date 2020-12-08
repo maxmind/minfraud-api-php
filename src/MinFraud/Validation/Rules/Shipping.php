@@ -17,14 +17,14 @@ class Shipping extends AbstractWrapper
     public function __construct()
     {
         $keys = Address::keys();
-        array_push(
-            $keys,
+
+        $keys[] =
             v::key(
                 'delivery_speed',
                 v::in(['same_day', 'overnight', 'expedited', 'standard']),
                 false
             )
-        );
+        ;
         parent::__construct(\call_user_func_array('Respect\Validation\Validator::keySet', $keys));
     }
 }

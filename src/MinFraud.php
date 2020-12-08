@@ -258,7 +258,7 @@ class MinFraud extends MinFraud\ServiceClient
         if (!isset($new->content['shopping_cart'])) {
             $new->content['shopping_cart'] = [];
         }
-        array_push($new->content['shopping_cart'], $values);
+        $new->content['shopping_cart'][] = $values;
 
         return $new;
     }
@@ -296,7 +296,7 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return \MaxMind\MinFraud\Model\Score minFraud Score model object
      */
-    public function score(): \MaxMind\MinFraud\Model\Score
+    public function score(): MinFraud\Model\Score
     {
         return $this->post('Score');
     }
@@ -318,7 +318,7 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return \MaxMind\MinFraud\Model\Insights minFraud Insights model object
      */
-    public function insights(): \MaxMind\MinFraud\Model\Insights
+    public function insights(): MinFraud\Model\Insights
     {
         return $this->post('Insights');
     }
@@ -340,7 +340,7 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return \MaxMind\MinFraud\Model\Factors minFraud Factors model object
      */
-    public function factors(): \MaxMind\MinFraud\Model\Factors
+    public function factors(): MinFraud\Model\Factors
     {
         return $this->post('Factors');
     }
