@@ -87,7 +87,7 @@ class Score extends AbstractModel
 
         $this->warnings = [];
         foreach ($this->safeArrayLookup($response['warnings'], []) as $warning) {
-            array_push($this->warnings, new Warning($warning));
+            $this->warnings[] = new Warning($warning);
         }
     }
 }
