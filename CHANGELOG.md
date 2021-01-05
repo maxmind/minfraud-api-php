@@ -6,6 +6,9 @@ CHANGELOG
 
 * IMPORTANT: PHP 7.3 or greater is now required.
 * The dependency Respect\Validation has been upgrade from 1.x to 2.1.
+* Added the following new values to the payment processor validation:
+  * `apple_pay`
+  * `aps_payments`
 
 1.16.1 (2020-11-02)
 -------------------
