@@ -22,6 +22,8 @@ class PaymentProcessor extends AbstractWrapper
                 'altapay',
                 'amazon_payments',
                 'american_express_payment_gateway',
+                'apple_pay',
+                'aps_payments',
                 'authorizenet',
                 'balanced',
                 'beanstream',
