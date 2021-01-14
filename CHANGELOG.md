@@ -5,7 +5,9 @@ CHANGELOG
 -------------------
 
 * IMPORTANT: PHP 7.3 or greater is now required.
-* The dependency Respect\Validation has been upgrade from 1.x to 2.1.
+* The dependency `Respect\Validation` has been upgrade from 1.x to 2.1.
+* The `with()` method on `MaxMind\MinFraud` may now be used when
+  `device` and `shopping_cart` are not set.
 * Added the following new values to the payment processor validation:
   * `apple_pay`
   * `aps_payments`
