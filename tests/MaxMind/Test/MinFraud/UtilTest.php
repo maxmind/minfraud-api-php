@@ -138,16 +138,6 @@ class UtilTest extends TestCase
                 ],
             ],
             [
-                'name' => 'IDN in domain',
-                'input' => ['email' => ['address' => 'test@bücher.com']],
-                'expected' => [
-                    'email' => [
-                        'address' => '24948acabac551360cd510d5e5e2b464',
-                        'domain' => 'xn--bcher-kva.com',
-                    ],
-                ],
-            ],
-            [
                 'name' => 'only + in local part',
                 'input' => ['email' => ['address' => '+@MaxMind.com']],
                 'expected' => [
@@ -167,6 +157,22 @@ class UtilTest extends TestCase
                 ],
             ],
         ];
+
+        if (\function_exists('idn_to_ascii')) {
+            array_push(
+                $tests,
+                [
+                    'name' => 'IDN in domain',
+                    'input' => ['email' => ['address' => 'test@bücher.com']],
+                    'expected' => [
+                        'email' => [
+                            'address' => '24948acabac551360cd510d5e5e2b464',
+                            'domain' => 'xn--bcher-kva.com',
+                        ],
+                    ],
+                ],
+            );
+        }
 
         foreach ($tests as &$test) {
             $this->assertSame(
