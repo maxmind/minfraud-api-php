@@ -59,7 +59,7 @@ class Util
         if (!$domain) {
             return $domain;
         }
-        $domain = idn_to_ascii($domain);
+        $domain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
 
         return isset(self::$typoDomains[$domain]) ? self::$typoDomains[$domain] : $domain;
     }
