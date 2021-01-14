@@ -11,6 +11,11 @@ CHANGELOG
 * Added the following new values to the payment processor validation:
   * `apple_pay`
   * `aps_payments`
+* You may now enable client-side email hashing by setting `hashEmail` to
+  `true` in the `MaxMind\MinFraud` constructor's options parameter. When set,
+  this normalizes the email address and sends an MD5 hash of it to the web
+  service rather than the plain-text address. Note that the email domain will
+  still be sent in plain text.
 
 1.16.1 (2020-11-02)
 -------------------

@@ -10,6 +10,7 @@ use MaxMind\Exception\InsufficientFundsException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
+use MaxMind\MinFraud\Util;
 
 /**
  * This class provides a client API for accessing MaxMind minFraud Score,
@@ -38,6 +39,7 @@ use MaxMind\Exception\WebServiceException;
 class MinFraud extends MinFraud\ServiceClient
 {
     private $content;
+    private $hashEmail;
     private $locales;
 
     /**
@@ -50,6 +52,10 @@ class MinFraud extends MinFraud\ServiceClient
      *   request.
      * * `caBundle` - The bundle of CA root certificates to use in the request.
      * * `connectTimeout` - The connect timeout to use for the request.
+     * * `hashEmail` - By default, the email address is sent in plain text.
+     *   If this is set to `true`, the email address will be normalized and
+     *   converted to an MD5 hash before the request is sent. The email domain
+     *   will continue to be sent in plain text.
      * * `timeout` - The timeout to use for the request.
      * * `proxy` - The HTTP proxy to use. May include a schema, port,
      *   username, and password, e.g., `http://username:password@127.0.0.1:10`.
@@ -65,6 +71,8 @@ class MinFraud extends MinFraud\ServiceClient
         string $licenseKey,
         array $options = []
     ) {
+        $this->hashEmail = isset($options['hashEmail']) && $options['hashEmail'];
+
         if (isset($options['locales'])) {
             $this->locales = $options['locales'];
         } else {
@@ -86,6 +94,10 @@ class MinFraud extends MinFraud\ServiceClient
     public function with(array $values): self
     {
         $values = $this->cleanAndValidate('Transaction', $values);
+
+        if ($this->hashEmail) {
+            $values = Util::maybeHashEmail($values);
+        }
 
         $new = clone $this;
         $new->content = $values;
@@ -150,7 +162,13 @@ class MinFraud extends MinFraud\ServiceClient
      */
     public function withEmail(array $values): self
     {
-        return $this->validateAndAdd('Email', 'email', $values);
+        $obj = $this->validateAndAdd('Email', 'email', $values);
+
+        if ($this->hashEmail) {
+            $obj->content = Util::maybeHashEmail($obj->content);
+        }
+
+        return $obj;
     }
 
     /**
