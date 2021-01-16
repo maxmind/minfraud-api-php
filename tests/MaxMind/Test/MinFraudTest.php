@@ -84,6 +84,83 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
+    public function testEmailHashingDisabled()
+    {
+        // Reflection isn't ideal, but this is the easiest way to check.
+        $class = new \ReflectionClass(\MaxMind\MinFraud::class);
+        $prop = $class->getProperty('content');
+        $prop->setAccessible(true);
+
+        $client = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0,
+            ['hashEmail' => false],
+        )->withEmail(['address' => 'test@gmail.com']);
+
+        $this->assertSame(
+            ['email' => ['address' => 'test@gmail.com']],
+            $prop->getValue($client),
+            'hashing disabled using withEmail',
+        );
+
+        $client = $client->with(['email' => ['address' => 'test@yahoo.com']]);
+
+        $this->assertSame(
+            ['email' => ['address' => 'test@yahoo.com']],
+            $prop->getValue($client),
+            'hashing disabled using with',
+        );
+
+        $client = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0,
+        )->withEmail(['address' => 'test@gmail.com']);
+
+        $this->assertSame(
+            ['email' => ['address' => 'test@gmail.com']],
+            $prop->getValue($client),
+            'hashing is disabled by default',
+        );
+    }
+
+    public function testEmailHashingEnabled()
+    {
+        // Reflection isn't ideal, but this is the easiest way to check.
+        $class = new \ReflectionClass(\MaxMind\MinFraud::class);
+        $prop = $class->getProperty('content');
+        $prop->setAccessible(true);
+
+        $client = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0,
+            ['hashEmail' => true],
+        )->withEmail(['address' => 'test@gmail.com']);
+
+        $this->assertSame(
+            [
+                'email' => [
+                    'address' => '1aedb8d9dc4751e229a335e371db8058',
+                    'domain' => 'gmail.com',
+                ],
+            ],
+            $prop->getValue($client),
+            'hashing enabled using withEmail',
+        );
+
+        $client = $client->with(['email' => ['address' => 'test@yahoo.com']]);
+
+        $this->assertSame(
+            [
+                'email' => [
+                    'address' => '88e478531ab3bc303f1b5da82c2e9bbb',
+                    'domain' => 'yahoo.com',
+                ],
+            ],
+            $prop->getValue($client),
+            'hashing enabled using with',
+        );
+    }
+
     public function testRequestsWithNulls()
     {
         $insights = $this->createNullRequest()

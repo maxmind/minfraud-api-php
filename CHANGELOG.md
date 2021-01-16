@@ -5,10 +5,17 @@ CHANGELOG
 -------------------
 
 * IMPORTANT: PHP 7.3 or greater is now required.
-* The dependency Respect\Validation has been upgrade from 1.x to 2.1.
+* The dependency `Respect\Validation` has been upgraded from 1.x to 2.1.
+* The `with()` method on `MaxMind\MinFraud` may now be used when
+  `device` and `shopping_cart` are not set.
 * Added the following new values to the payment processor validation:
   * `apple_pay`
   * `aps_payments`
+* You may now enable client-side email hashing by setting `hashEmail` to
+  `true` in the `MaxMind\MinFraud` constructor's options parameter. When set,
+  this normalizes the email address and sends an MD5 hash of it to the web
+  service rather than the plain-text address. Note that the email domain will
+  still be sent in plain text.
 
 1.16.1 (2020-11-02)
 -------------------
