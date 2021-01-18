@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DispositionTest extends TestCase
 {
-    public function testDisposition()
+    public function testDisposition(): void
     {
         $array = [
             'action' => 'manual_review',

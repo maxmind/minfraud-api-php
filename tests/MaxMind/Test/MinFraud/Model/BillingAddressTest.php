@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BillingAddressTest extends TestCase
 {
-    public function testBillingAddress()
+    public function testBillingAddress(): void
     {
         $array = [
             'is_postal_in_city' => true,

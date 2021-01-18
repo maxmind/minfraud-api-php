@@ -12,17 +12,17 @@ use MaxMind\Test\MinFraudData as Data;
  */
 class FactorsTest extends InsightsTest
 {
-    protected function response()
+    protected function response(): array
     {
         return Data::factorsFullResponse();
     }
 
-    protected function model()
+    protected function model(): Factors
     {
         return new Factors($this->response(), ['fr']);
     }
 
-    public function testFactorsProperties()
+    public function testFactorsProperties(): void
     {
         $array = $this->response();
         $factors = $this->model();

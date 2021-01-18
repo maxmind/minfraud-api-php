@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IssuerTest extends TestCase
 {
-    public function testIssuer()
+    public function testIssuer(): void
     {
         $array = [
             'name' => 'Bank',

@@ -13,17 +13,23 @@ use PHPUnit\Framework\TestCase;
  */
 class ScoreTest extends TestCase
 {
-    protected function response()
+    protected function response(): array
     {
         return Data::scoreFullResponse();
     }
 
+    /**
+     * This is specified here as PHP 7.3 doesn't allow us to set it to
+     * a subclass of Score in subclasses of this test class.
+     *
+     * @return Score
+     */
     protected function model()
     {
         return new Score($this->response());
     }
 
-    public function testScoreProperties()
+    public function testScoreProperties(): void
     {
         $array = $this->response();
         $score = $this->model();

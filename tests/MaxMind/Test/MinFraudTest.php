@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace MaxMind\Test;
 
 use MaxMind\Exception\InvalidInputException;
+use MaxMind\MinFraud;
 use MaxMind\Test\MinFraudData as Data;
 
 /**
  * @coversNothing
  */
-class MinFraudTest extends MinFraud\ServiceClientTest
+class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 {
     /**
      * @dataProvider services
-     *
-     * @param mixed $class
-     * @param mixed $service
      */
-    public function testFullRequest($class, $service)
+    public function testFullRequest(string $class, string $service): void
     {
         $responseMeth = $service . 'FullResponse';
         $this->assertEquals(
@@ -31,11 +29,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider services
-     *
-     * @param mixed $class
-     * @param mixed $service
      */
-    public function testFullInsightsRequestBuiltPiecemeal($class, $service)
+    public function testFullInsightsRequestBuiltPiecemeal(string $class, string $service): void
     {
         $incompleteMf = $this->createMinFraudRequestWithFullResponse($service)
             ->withEvent(Data::fullRequest()['event'])
@@ -67,7 +62,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
-    public function testLocalesOption()
+    public function testLocalesOption(): void
     {
         $insights = $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -84,7 +79,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
-    public function testEmailHashingDisabled()
+    public function testEmailHashingDisabled(): void
     {
         // Reflection isn't ideal, but this is the easiest way to check.
         $class = new \ReflectionClass(\MaxMind\MinFraud::class);
@@ -123,7 +118,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
-    public function testEmailHashingEnabled()
+    public function testEmailHashingEnabled(): void
     {
         // Reflection isn't ideal, but this is the easiest way to check.
         $class = new \ReflectionClass(\MaxMind\MinFraud::class);
@@ -161,7 +156,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
-    public function testRequestsWithNulls()
+    public function testRequestsWithNulls(): void
     {
         $insights = $this->createNullRequest()
             ->with([
@@ -185,7 +180,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
-    public function testRequestsWithNullsPiecemeal()
+    public function testRequestsWithNullsPiecemeal(): void
     {
         $insights = $this->createNullRequest()
             ->withDevice(['ip_address' => '1.1.1.1'])
@@ -206,7 +201,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         );
     }
 
-    private function createNullRequest()
+    private function createNullRequest(): MinFraud
     {
         return $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -222,11 +217,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider services
-     *
-     * @param mixed $class
-     * @param mixed $service
      */
-    public function testMissingIpAddress($class, $service)
+    public function testMissingIpAddress(string $class, string $service): void
     {
         $device = [
             'session_age' => 1.2,
@@ -252,11 +244,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider services
-     *
-     * @param mixed $class
-     * @param mixed $service
      */
-    public function testMissingIpAddressWithoutValidation($class, $service)
+    public function testMissingIpAddressWithoutValidation(string $class, string $service): void
     {
         $device = [
             'session_age' => 1.2,
@@ -282,10 +271,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider withMethods
-     *
-     * @param mixed $method
      */
-    public function testUnknownKeys($method)
+    public function testUnknownKeys(string $method): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('Must have keys');
@@ -296,7 +283,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->$method(['unknown' => 'some value']);
     }
 
-    public function withMethods()
+    public function withMethods(): array
     {
         return [
             ['withEvent'],
@@ -313,10 +300,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badMd5s
-     *
-     * @param mixed $md5
      */
-    public function testAccountWithBadUsernameMd5($md5)
+    public function testAccountWithBadUsernameMd5(string $md5): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be an MD5');
@@ -329,10 +314,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badMd5s
-     *
-     * @param mixed $md5
      */
-    public function testEmailWithBadAddress($md5)
+    public function testEmailWithBadAddress(string $md5): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be an MD5');
@@ -343,7 +326,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withEmail(['address' => $md5]);
     }
 
-    public function badMd5s()
+    public function badMd5s(): array
     {
         return [
             ['14c4b06b824ec593239362517f538b2'],
@@ -355,11 +338,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badRegions
-     *
-     * @param mixed $method
-     * @param mixed $region
      */
-    public function testBadRegions($method, $region)
+    public function testBadRegions(string $method, string $region): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be an ISO 3166-2');
@@ -370,7 +350,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->$method(['region' => $region]);
     }
 
-    public function badRegions()
+    public function badRegions(): array
     {
         return [
             ['withBilling', 'AAAAA'],
@@ -382,11 +362,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badCountryCodes
-     *
-     * @param mixed $method
-     * @param mixed $code
      */
-    public function testBadCountryCode($method, $code)
+    public function testBadCountryCode(string $method, string $code): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be a valid country');
@@ -397,7 +374,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->$method(['country' => $code]);
     }
 
-    public function badCountryCodes()
+    public function badCountryCodes(): array
     {
         return [
             ['withBilling', 'A'],
@@ -411,12 +388,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badPhoneCodes
-     *
-     * @param mixed $method
-     * @param mixed $key
-     * @param mixed $code
      */
-    public function testBadPhoneCodes($method, $key, $code)
+    public function testBadPhoneCodes(string $method, string $key, string $code): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be a valid telephone country code');
@@ -427,7 +400,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->$method([$key => $code]);
     }
 
-    public function badPhoneCodes()
+    public function badPhoneCodes(): array
     {
         return [
             ['withBilling', 'phone_country_code', '12344'],
@@ -439,7 +412,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         ];
     }
 
-    public function testBadDeliverySpeed()
+    public function testBadDeliverySpeed(): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('delivery_speed must be in');
@@ -452,10 +425,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badIins
-     *
-     * @param mixed $iin
      */
-    public function testBadIin($iin)
+    public function testBadIin(string $iin): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must validate against');
@@ -466,7 +437,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard(['issuer_id_number' => $iin]);
     }
 
-    public function badIins()
+    public function badIins(): array
     {
         return [
             ['12345'],
@@ -477,10 +448,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badLast4Digits
-     *
-     * @param mixed $last4
      */
-    public function testCreditCardWithBadLast4($last4)
+    public function testCreditCardWithBadLast4(string $last4): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must validate against');
@@ -491,7 +460,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard(['last_4_digits' => $last4]);
     }
 
-    public function badLast4Digits()
+    public function badLast4Digits(): array
     {
         return [
             ['12345'],
@@ -502,10 +471,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider numericToken
-     *
-     * @param mixed $token
      */
-    public function testCreditCardWithNumericToken($token)
+    public function testCreditCardWithNumericToken(string $token): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must not validate against');
@@ -516,7 +483,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function numericToken()
+    public function numericToken(): array
     {
         return [
             ['123456'],
@@ -526,10 +493,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider invalidRangeToken
-     *
-     * @param mixed $token
      */
-    public function testCreditCardWithInvalidRangeToken($token)
+    public function testCreditCardWithInvalidRangeToken(string $token): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must validate against');
@@ -540,7 +505,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function invalidRangeToken()
+    public function invalidRangeToken(): array
     {
         return [
                 ["\x20"],
@@ -550,10 +515,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider longToken
-     *
-     * @param mixed $token
      */
-    public function testCreditCardWithLongToken($token)
+    public function testCreditCardWithLongToken(string $token): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must validate against');
@@ -564,7 +527,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function longToken()
+    public function longToken(): array
     {
         return [
                 [str_repeat('x', 256)],
@@ -573,10 +536,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider goodToken
-     *
-     * @param mixed $token
      */
-    public function testCreditCardWithGoodToken($token)
+    public function testCreditCardWithGoodToken(string $token): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -584,7 +545,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function goodToken()
+    public function goodToken(): array
     {
         return [
                 ['123456abc1234'],
@@ -595,10 +556,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider avsAndCvv
-     *
-     * @param mixed $key
      */
-    public function testAvsAndCCv($key)
+    public function testAvsAndCCv(string $key): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must have a length');
@@ -609,7 +568,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCreditCard([$key => 'Aa']);
     }
 
-    public function avsAndCvv()
+    public function avsAndCvv(): array
     {
         return [
             ['avs_result'],
@@ -619,10 +578,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badIps
-     *
-     * @param mixed $ip
      */
-    public function testBadIps($ip)
+    public function testBadIps(string $ip): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be an IP address');
@@ -633,7 +590,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => $ip]);
     }
 
-    public function badIps()
+    public function badIps(): array
     {
         return [
             ['1.2.3.'],
@@ -644,10 +601,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider negativeSessionAge
-     *
-     * @param mixed $age
      */
-    public function testNegativeSessionAge($age)
+    public function testNegativeSessionAge(int $age): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be greater than or equal to 0');
@@ -658,7 +613,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
-    public function negativeSessionAge()
+    public function negativeSessionAge(): array
     {
         return [
             [-1],
@@ -667,10 +622,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badSessionAge
-     *
-     * @param mixed $age
      */
-    public function testBadSessionAge($age)
+    public function testBadSessionAge(string $age): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be a float number');
@@ -681,7 +634,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
-    public function badSessionAge()
+    public function badSessionAge(): array
     {
         return [
             ['X'],
@@ -693,7 +646,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
      *
      * @param mixed $age
      */
-    public function testGoodSessionAge($age)
+    public function testGoodSessionAge($age): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -701,7 +654,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
-    public function goodSessionAge()
+    public function goodSessionAge(): array
     {
         return [
             [0],
@@ -713,10 +666,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badSessionId
-     *
-     * @param mixed $id
      */
-    public function testBadSessionId($id)
+    public function testBadSessionId(string $id): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must have a length between 1 and 255');
@@ -727,7 +678,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
     }
 
-    public function badSessionId()
+    public function badSessionId(): array
     {
         return [
             [str_repeat('X', 256)],
@@ -736,10 +687,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider goodSessionId
-     *
-     * @param mixed $id
      */
-    public function testGoodSessionId($id)
+    public function testGoodSessionId(int $id): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -747,7 +696,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
     }
 
-    public function goodSessionId()
+    public function goodSessionId(): array
     {
         return [
             [0],
@@ -757,10 +706,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider goodIps
-     *
-     * @param mixed $ip
      */
-    public function testGoodIps($ip)
+    public function testGoodIps(string $ip): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -768,7 +715,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => $ip]);
     }
 
-    public function goodIps()
+    public function goodIps(): array
     {
         return [
             ['1.2.3.4'],
@@ -779,10 +726,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badDomains
-     *
-     * @param mixed $domain
      */
-    public function testBadDomains($domain)
+    public function testBadDomains(string $domain): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must');
@@ -793,7 +738,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withEmail(['domain' => $domain]);
     }
 
-    public function badDomains()
+    public function badDomains(): array
     {
         return [
             ['bad'],
@@ -803,10 +748,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider goodDomains
-     *
-     * @param mixed $domain
      */
-    public function testGoodDomains($domain)
+    public function testGoodDomains(string $domain): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -814,7 +757,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withEmail(['domain' => $domain]);
     }
 
-    public function goodDomains()
+    public function goodDomains(): array
     {
         return [
             ['maxmind.com'],
@@ -825,10 +768,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider goodTimes
-     *
-     * @param mixed $time
      */
-    public function testGoodEventTimes($time)
+    public function testGoodEventTimes(string $time): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -836,7 +777,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withEvent(['time' => $time]);
     }
 
-    public function goodTimes()
+    public function goodTimes(): array
     {
         $tests = [
             ['2014-04-12T23:20:50+01:00'],
@@ -854,7 +795,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         return $tests;
     }
 
-    public function testBadEventTime()
+    public function testBadEventTime(): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be a valid date');
@@ -865,7 +806,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withEvent(['time' => '2014/04/04 19:20']);
     }
 
-    public function testBadEventType()
+    public function testBadEventType(): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be');
@@ -878,10 +819,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badCurrency
-     *
-     * @param mixed $currency
      */
-    public function testBadCurrency($currency)
+    public function testBadCurrency(string $currency): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must validate against');
@@ -892,7 +831,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withOrder(['currency' => $currency]);
     }
 
-    public function badCurrency()
+    public function badCurrency(): array
     {
         return [
             ['usd'],
@@ -904,10 +843,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badReferrerUri
-     *
-     * @param mixed $uri
      */
-    public function testBadReferrerUri($uri)
+    public function testBadReferrerUri(string $uri): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessageMatches('/must be an? URL/');
@@ -918,7 +855,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withOrder(['referrer_uri' => $uri]);
     }
 
-    public function badReferrerUri()
+    public function badReferrerUri(): array
     {
         return [
             ['/blah/'],
@@ -926,7 +863,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         ];
     }
 
-    public function testBadPaymentProcessor()
+    public function testBadPaymentProcessor(): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be');
@@ -939,10 +876,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider validAmounts
-     *
-     * @param mixed $value
      */
-    public function testGoodOrderAmount($value)
+    public function testGoodOrderAmount(float $value): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -952,10 +887,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider validAmounts
-     *
-     * @param mixed $value
      */
-    public function testGoodShoppingCartItemPrice($value)
+    public function testGoodShoppingCartItemPrice(float $value): void
     {
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -963,7 +896,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withShoppingCartItem(['price' => $value]);
     }
 
-    public function validAmounts()
+    public function validAmounts(): array
     {
         return [
             [0],
@@ -978,7 +911,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
      *
      * @param mixed $value
      */
-    public function testBadOrderAmount($value)
+    public function testBadOrderAmount($value): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessageMatches('/(must be greater than or equal to 0|must be a float)/');
@@ -989,7 +922,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withOrder(['amount' => $value]);
     }
 
-    public function invalidAmounts()
+    public function invalidAmounts(): array
     {
         return [
             [-0.001],
@@ -1003,7 +936,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
      *
      * @param mixed $value
      */
-    public function testBadShoppingCartItemPrice($value)
+    public function testBadShoppingCartItemPrice($value): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessageMatches('/(must be greater than or equal to 0|must be a float)/');
@@ -1019,7 +952,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
      *
      * @param mixed $value
      */
-    public function testBadShoppingCartItemQuantity($value)
+    public function testBadShoppingCartItemQuantity($value): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessageMatches('/(must be greater than 0|must be an int)/');
@@ -1030,7 +963,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withShoppingCartItem(['quantity' => $value]);
     }
 
-    public function invalidQuantities()
+    public function invalidQuantities(): array
     {
         return [
             [-0.001],
@@ -1041,7 +974,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         ];
     }
 
-    public function testBadShoppingCartItemWithDoubleArray()
+    public function testBadShoppingCartItemWithDoubleArray(): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('Must have keys');
@@ -1052,7 +985,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withShoppingCartItem([['price' => 1]]);
     }
 
-    public function services()
+    public function services(): array
     {
         return [
             ['\MaxMind\MinFraud\Model\Factors', 'factors'],
@@ -1063,10 +996,8 @@ class MinFraudTest extends MinFraud\ServiceClientTest
 
     /**
      * @dataProvider badCustomInputs
-     *
-     * @param mixed $inputs
      */
-    public function testBadCustomInputs($inputs)
+    public function testBadCustomInputs(array $inputs): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must');
@@ -1077,7 +1008,7 @@ class MinFraudTest extends MinFraud\ServiceClientTest
         )->withCustomInputs($inputs);
     }
 
-    public function badCustomInputs()
+    public function badCustomInputs(): array
     {
         return [
             [['InvalidKey' => 1]],
@@ -1090,11 +1021,11 @@ class MinFraudTest extends MinFraud\ServiceClientTest
     }
 
     private function createMinFraudRequestWithFullResponse(
-        $service,
-        $callsToRequest = 1,
-        $options = [],
-        $request = null
-    ) {
+        string $service,
+        int $callsToRequest = 1,
+        array $options = [],
+        ?array $request = null
+    ): MinFraud {
         if ($request === null) {
             $request = Data::fullRequest();
         }
@@ -1113,14 +1044,15 @@ class MinFraudTest extends MinFraud\ServiceClientTest
     }
 
     private function createMinFraudRequest(
-        $service,
-        $requestContent,
-        $statusCode,
-        $contentType,
-        $responseBody,
-        $options = [],
-        $callsToRequest = 1
-    ) {
+        string $service,
+        array $requestContent,
+        int $statusCode,
+        string $contentType,
+        ?string $responseBody,
+        array $options = [],
+        int $callsToRequest = 1
+    ): MinFraud {
+        // @phpstan-ignore-next-line
         return $this->createRequest(
             '\MaxMind\MinFraud',
             $service,

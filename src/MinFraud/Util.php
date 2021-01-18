@@ -12,6 +12,9 @@ namespace MaxMind\MinFraud;
  */
 class Util
 {
+    /**
+     * @var array<string, string>
+     */
     private static $typoDomains = [
         // gmail.com
         '35gmai.com' => 'gmail.com',

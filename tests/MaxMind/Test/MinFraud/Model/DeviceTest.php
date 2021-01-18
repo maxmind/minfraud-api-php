@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DeviceTest extends TestCase
 {
-    public function testDevice()
+    public function testDevice(): void
     {
         $array = [
             'confidence' => 99,

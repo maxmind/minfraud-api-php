@@ -17,8 +17,10 @@ abstract class AbstractModel implements \JsonSerializable
      * @param array      $locales  list of locale codes to use in name property from
      *                             most preferred to least preferred
      */
+    // @phpstan-ignore-next-line
     public function __construct(?array $response, array $locales = ['en'])
     {
+        // @phpstan-ignore-next-line
         $this->rawResponse = $response;
     }
 
@@ -70,6 +72,7 @@ abstract class AbstractModel implements \JsonSerializable
      */
     public function jsonSerialize(): ?array
     {
+        // @phpstan-ignore-next-line
         return $this->rawResponse;
     }
 }

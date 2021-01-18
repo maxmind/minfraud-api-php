@@ -72,66 +72,92 @@ class Subscores extends AbstractModel
 {
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $avsResult;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $billingAddress;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $billingAddressDistanceToIpLocation;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $browser;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $chargeback;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $country;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $countryMismatch;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $cvvResult;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $device;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $emailAddress;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $emailDomain;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $emailLocalPart;
 
     /**
      * @internal
+     *
+     * @var float|null
      *
      * @deprecated This subscore will default to 1 and will be removed in a
      * future release. The user tenure on email is reflected in the
@@ -142,6 +168,8 @@ class Subscores extends AbstractModel
     /**
      * @internal
      *
+     * @var float|null
+     *
      * @deprecated This subscore will default to 1 and will be removed in a
      * future release. The IP tenure is reflected in the overall risk score.
      */
@@ -149,31 +177,43 @@ class Subscores extends AbstractModel
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $issuerIdNumber;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $orderAmount;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $phoneNumber;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $shippingAddress;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $shippingAddressDistanceToIpLocation;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $timeOfDay;
 

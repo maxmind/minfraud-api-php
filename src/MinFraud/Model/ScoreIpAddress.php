@@ -15,6 +15,8 @@ class ScoreIpAddress extends AbstractModel
 {
     /**
      * @ignore
+     *
+     * @var float
      */
     protected $risk;
 

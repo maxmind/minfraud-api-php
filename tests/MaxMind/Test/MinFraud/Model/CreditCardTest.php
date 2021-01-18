@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CreditCardTest extends TestCase
 {
-    public function testCreditCard()
+    public function testCreditCard(): void
     {
         $array = [
             'issuer' => [

@@ -16,6 +16,8 @@ class GeoIp2Country extends Country
 {
     /**
      * @internal
+     *
+     * @var array<string>
      */
     protected $validAttributes = [
         'confidence',

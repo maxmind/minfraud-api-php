@@ -12,17 +12,23 @@ use MaxMind\Test\MinFraudData as Data;
  */
 class InsightsTest extends ScoreTest
 {
-    protected function response()
+    protected function response(): array
     {
         return Data::insightsFullResponse();
     }
 
+    /**
+     * This is specified here as PHP 7.3 doesn't allow us to set it to
+     * Insights.
+     *
+     * @return Insights
+     */
     protected function model()
     {
         return new Insights($this->response(), ['fr']);
     }
 
-    public function testInsightsProperties()
+    public function testInsightsProperties(): void
     {
         $array = $this->response();
         $insights = $this->model();

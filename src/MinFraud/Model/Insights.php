@@ -27,31 +27,43 @@ class Insights extends Score
 {
     /**
      * @internal
+     *
+     * @var BillingAddress
      */
     protected $billingAddress;
 
     /**
      * @internal
+     *
+     * @var CreditCard
      */
     protected $creditCard;
 
     /**
      * @internal
+     *
+     * @var Device
      */
     protected $device;
 
     /**
      * @internal
+     *
+     * @var Email
      */
     protected $email;
 
     /**
      * @internal
+     *
+     * @var IpAddress
      */
     protected $ipAddress;
 
     /**
      * @internal
+     *
+     * @var ShippingAddress
      */
     protected $shippingAddress;
 

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UtilTest extends TestCase
 {
-    public function testMaybeHashEmail()
+    public function testMaybeHashEmail(): void
     {
         $tests = [
             [

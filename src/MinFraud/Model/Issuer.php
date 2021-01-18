@@ -25,21 +25,29 @@ class Issuer extends AbstractModel
 {
     /**
      * @internal
+     *
+     * @var string|null
      */
     protected $name;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $matchesProvidedName;
 
     /**
      * @internal
+     *
+     * @var string|null
      */
     protected $phoneNumber;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $matchesProvidedPhoneNumber;
 
