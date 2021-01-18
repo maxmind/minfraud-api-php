@@ -70,7 +70,7 @@ abstract class ServiceClientTest extends TestCase
                         'headers' => $headers,
                         'userAgent' => 'minFraud-API/' . $class::VERSION
                             . ' MaxMind-WS-API/' . Client::VERSION
-                            . ' PHP/' . PHP_VERSION
+                            . ' PHP/' . \PHP_VERSION
                             . ' curl/' . $curlVersion['version'],
                         'connectTimeout' => isset($options['connectTimeout'])
                             ? $options['connectTimeout'] : null,
