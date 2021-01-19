@@ -10,6 +10,8 @@ use MaxMind\Test\MinFraud\ReportTransaction\ReportTransactionData as Data;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
 class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 {

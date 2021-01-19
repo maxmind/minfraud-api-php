@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
 class IpLocationTest extends TestCase
 {
@@ -73,11 +75,15 @@ class IpLocationTest extends TestCase
             'postal code'
         );
 
-        $this->assertFalse($ipAddress->registeredCountry->isInEuropeanUnion,
-            'registered country is in European Union');
+        $this->assertFalse(
+            $ipAddress->registeredCountry->isInEuropeanUnion,
+            'registered country is in European Union'
+        );
 
-        $this->assertFalse($ipAddress->representedCountry->isInEuropeanUnion,
-            'represented country is in European Union');
+        $this->assertFalse(
+            $ipAddress->representedCountry->isInEuropeanUnion,
+            'represented country is in European Union'
+        );
 
         $this->assertSame(
             $array,

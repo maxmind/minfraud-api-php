@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
 class DeviceTest extends TestCase
 {
@@ -19,7 +21,7 @@ class DeviceTest extends TestCase
         $this->expectException(\Respect\Validation\Exceptions\IpException::class);
 
         $validator->check([
-           'ip_address' => '1.2.3',
+            'ip_address' => '1.2.3',
         ]);
     }
 
@@ -29,7 +31,7 @@ class DeviceTest extends TestCase
 
         $this->assertTrue(
             $validator->validate([
-               'session_age' => 1.2,
+                'session_age' => 1.2,
             ])
         );
     }
