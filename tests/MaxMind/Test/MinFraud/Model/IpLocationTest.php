@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IpLocationTest extends TestCase
 {
-    public function testIpAddress()
+    public function testIpAddress(): void
     {
         $array = [
             'risk' => 0.01,

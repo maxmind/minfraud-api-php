@@ -14,10 +14,8 @@ class EventTest extends TestCase
 {
     /**
      * @dataProvider eventTypeDataProvider
-     *
-     * @param mixed $good
      */
-    public function testEventType($good)
+    public function testEventType(string $good): void
     {
         $validator = new Event();
 
@@ -27,7 +25,7 @@ class EventTest extends TestCase
         );
     }
 
-    public function eventTypeDataProvider()
+    public function eventTypeDataProvider(): array
     {
         return [
             ['account_creation'],

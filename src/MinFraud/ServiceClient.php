@@ -12,9 +12,21 @@ abstract class ServiceClient
 {
     const VERSION = 'v1.16.1';
 
+    /**
+     * @var Client
+     */
     protected $client;
+    /**
+     * @var string
+     */
     protected static $host = 'minfraud.maxmind.com';
+    /**
+     * @var string
+     */
     protected static $basePath = '/minfraud/v2.0/';
+    /**
+     * @var bool
+     */
     protected $validateInput = true;
 
     public function __construct(

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class WarningTest extends TestCase
 {
-    public function testWarning()
+    public function testWarning(): void
     {
         $array = [
             'code' => 'INVALID_INPUT',

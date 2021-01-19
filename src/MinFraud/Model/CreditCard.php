@@ -35,41 +35,57 @@ class CreditCard extends AbstractModel
 {
     /**
      * @internal
+     *
+     * @var string|null
      */
     protected $brand;
 
     /**
      * @internal
+     *
+     * @var string|null
      */
     protected $country;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isBusiness;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isIssuedInBillingAddressCountry;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isPrepaid;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isVirtual;
 
     /**
      * @internal
+     *
+     * @var Issuer
      */
     protected $issuer;
 
     /**
      * @internal
+     *
+     * @var string|null
      */
     protected $type;
 

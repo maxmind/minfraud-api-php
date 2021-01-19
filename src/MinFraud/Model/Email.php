@@ -26,26 +26,36 @@ class Email extends AbstractModel
 {
     /**
      * @internal
+     *
+     * @var EmailDomain
      */
     protected $domain;
 
     /**
      * @internal
+     *
+     * @var string|null
      */
     protected $firstSeen;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isDisposable;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isFree;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isHighRisk;
 

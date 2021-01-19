@@ -12,6 +12,9 @@ namespace MaxMind\MinFraud;
  */
 class Util
 {
+    /**
+     * @var array<string, string>
+     */
     private static $typoDomains = [
         // gmail.com
         '35gmai.com' => 'gmail.com',
@@ -60,7 +63,7 @@ class Util
             return $domain;
         }
         if (\function_exists('idn_to_ascii')) {
-            $ascii_domain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+            $ascii_domain = idn_to_ascii($domain, \IDNA_NONTRANSITIONAL_TO_ASCII, \INTL_IDNA_VARIANT_UTS46);
 
             // idn_to_ascii returns false on failure
             if ($ascii_domain !== false) {

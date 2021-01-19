@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EmailDomainTest extends TestCase
 {
-    public function testEmailDomain()
+    public function testEmailDomain(): void
     {
         $array = [
             'first_seen' => '2017-01-02',

@@ -15,6 +15,8 @@ class Factors extends Insights
 {
     /**
      * @internal
+     *
+     * @var Subscores
      */
     protected $subscores;
 

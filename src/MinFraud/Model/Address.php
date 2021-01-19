@@ -24,26 +24,36 @@ abstract class Address extends AbstractModel
 {
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isPostalInCity;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $latitude;
 
     /**
      * @internal
+     *
+     * @var float|null
      */
     protected $longitude;
 
     /**
      * @internal
+     *
+     * @var int|null
      */
     protected $distanceToIpLocation;
 
     /**
      * @internal
+     *
+     * @var bool|null
      */
     protected $isInIpCountry;
 

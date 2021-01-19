@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UtilTest extends TestCase
 {
-    public function testMaybeHashEmail()
+    public function testMaybeHashEmail(): void
     {
         $tests = [
             [
@@ -159,10 +159,10 @@ class UtilTest extends TestCase
         ];
 
         if (\function_exists('idn_to_ascii') &&
-            idn_to_ascii('bücher.com', IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46) === 'xn--bcher-kva.com' &&
+            idn_to_ascii('bücher.com', \IDNA_NONTRANSITIONAL_TO_ASCII, \INTL_IDNA_VARIANT_UTS46) === 'xn--bcher-kva.com' &&
             // This test fails on this combo and it is hard to tell what is going on
             // without actual access to such a machine.
-            (PHP_OS !== 'Darwin' || PHP_MAJOR_VERSION !== 7)
+            (\PHP_OS !== 'Darwin' || \PHP_MAJOR_VERSION !== 7)
         ) {
             array_push(
                 $tests,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\Test\MinFraud\ReportTransaction;
 
 use MaxMind\Exception\InvalidInputException;
+use MaxMind\MinFraud\ReportTransaction;
 use MaxMind\Test\MinFraud\ReportTransaction\ReportTransactionData as Data;
 
 /**
@@ -12,9 +13,10 @@ use MaxMind\Test\MinFraud\ReportTransaction\ReportTransactionData as Data;
  */
 class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 {
-    public function testMinimalRequest()
+    public function testMinimalRequest(): void
     {
         $this->assertEmpty(
+            // @phpstan-ignore-next-line
             $this->createReportTransactionRequest(
                 Data::minimalRequest(),
                 1
@@ -23,10 +25,11 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         );
     }
 
-    public function testFullRequest()
+    public function testFullRequest(): void
     {
         $req = Data::fullRequest();
         $this->assertEmpty(
+            // @phpstan-ignore-next-line
             $this->createReportTransactionRequest(
                 $req
             )->report($req),
@@ -34,7 +37,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         );
     }
 
-    public function testRequestsWithNulls()
+    public function testRequestsWithNulls(): void
     {
         $req = array_merge(
             Data::minimalRequest(),
@@ -47,6 +50,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
             ]
         );
         $this->assertEmpty(
+            // @phpstan-ignore-next-line
             $this->createReportTransactionRequest(
                 Data::minimalRequest(),
                 1
@@ -57,10 +61,8 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 
     /**
      * @dataProvider requestsMissingRequiredFields
-     *
-     * @param array $req
      */
-    public function testMissingRequiredFields($req)
+    public function testMissingRequiredFields(array $req): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('Must have keys');
@@ -73,10 +75,8 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 
     /**
      * @dataProvider requestsMissingRequiredFields
-     *
-     * @param array $req
      */
-    public function testMissingRequiredFieldsWithoutValidation($req)
+    public function testMissingRequiredFieldsWithoutValidation(array $req): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must be present in request');
@@ -88,7 +88,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function requestsMissingRequiredFields()
+    public function requestsMissingRequiredFields(): array
     {
         return [
             'Missing ip_address' => [
@@ -106,7 +106,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         ];
     }
 
-    public function testUnknownKey()
+    public function testUnknownKey(): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('Must have keys');
@@ -126,7 +126,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
      *
      * @param mixed $chargebackCode
      */
-    public function testInvalidChargebackCodes($chargebackCode)
+    public function testInvalidChargebackCodes($chargebackCode): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('chargeback_code must be of type string');
@@ -146,7 +146,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
      *
      * @param mixed $notes
      */
-    public function testInvalidNotes($notes)
+    public function testInvalidNotes($notes): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('notes must be of type string');
@@ -163,7 +163,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
      *
      * @param mixed $transactionId
      */
-    public function testInvalidTransactionIds($transactionId)
+    public function testInvalidTransactionIds($transactionId): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('transaction_id must be of type string');
@@ -178,7 +178,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function notStringTypes()
+    public function notStringTypes(): array
     {
         return [
             [1],
@@ -188,11 +188,9 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @dataProvider notStringTypes
-     *
-     * @param mixed $ip
+     * @dataProvider invalidIpAddresses
      */
-    public function testInvalidIpAddresses($ip)
+    public function testInvalidIpAddresses(string $ip): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('ip_address must be an IP address');
@@ -207,7 +205,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidIpAddresses()
+    public function invalidIpAddresses(): array
     {
         return [
             ['1.2.3.'],
@@ -218,10 +216,8 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 
     /**
      * @dataProvider invalidMaxmindIds
-     *
-     * @param mixed $maxmindId
      */
-    public function testInvalidMaxmindIds($maxmindId)
+    public function testInvalidMaxmindIds(string $maxmindId): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('maxmind_id must have a length of 8');
@@ -236,7 +232,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidMaxmindIds()
+    public function invalidMaxmindIds(): array
     {
         return [
             ['1234567'],
@@ -247,10 +243,8 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 
     /**
      * @dataProvider invalidMinfraudIds
-     *
-     * @param mixed $minfraudId
      */
-    public function testInvalidMinfraudIds($minfraudId)
+    public function testInvalidMinfraudIds(string $minfraudId): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('minfraud_id must validate against');
@@ -265,7 +259,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidMinfraudIds()
+    public function invalidMinfraudIds(): array
     {
         return [
             ['1234567812341234123412345678901'],
@@ -279,10 +273,8 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 
     /**
      * @dataProvider invalidTags
-     *
-     * @param mixed $tag
      */
-    public function testInvalidTags($tag)
+    public function testInvalidTags(string $tag): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('tag must be in');
@@ -294,7 +286,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidTags()
+    public function invalidTags(): array
     {
         return [
             ['risky_business'],
@@ -303,13 +295,14 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     private function createReportTransactionRequest(
-        $requestContent,
-        $callsToRequest = 1,
-        $options = [],
-        $statusCode = 204,
-        $contentType = 'application/json',
-        $responseBody = null
-    ) {
+        array $requestContent,
+        int $callsToRequest = 1,
+        array $options = [],
+        int $statusCode = 204,
+        string $contentType = 'application/json',
+        ?string $responseBody = null
+    ): ReportTransaction {
+        // @phpstan-ignore-next-line
         return $this->createRequest(
             '\MaxMind\MinFraud\ReportTransaction',
             'transactions/report',

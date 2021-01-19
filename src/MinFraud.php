@@ -38,8 +38,17 @@ use MaxMind\MinFraud\Util;
  */
 class MinFraud extends MinFraud\ServiceClient
 {
+    /**
+     * @var array
+     */
     private $content;
+    /**
+     * @var bool
+     */
     private $hashEmail;
+    /**
+     * @var array<string>
+     */
     private $locales;
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\Test\MinFraud;
 
 use Composer\CaBundle\CaBundle;
+use MaxMind\MinFraud\ServiceClient;
 use MaxMind\WebService\Client;
 use PHPUnit\Framework\TestCase;
 
@@ -14,15 +15,15 @@ use PHPUnit\Framework\TestCase;
 abstract class ServiceClientTest extends TestCase
 {
     protected function createRequest(
-        $class,
-        $urlTail,
-        $requestContent,
-        $statusCode,
-        $contentType,
-        $responseBody,
-        $options = [],
-        $callsToRequest = 1
-    ) {
+        string $class,
+        string $urlTail,
+        array $requestContent,
+        int $statusCode,
+        string $contentType,
+        ?string $responseBody,
+        array $options = [],
+        int $callsToRequest = 1
+    ): ServiceClient {
         $userId = 1;
         $licenseKey = 'abcdefghij';
 
@@ -69,7 +70,7 @@ abstract class ServiceClientTest extends TestCase
                         'headers' => $headers,
                         'userAgent' => 'minFraud-API/' . $class::VERSION
                             . ' MaxMind-WS-API/' . Client::VERSION
-                            . ' PHP/' . PHP_VERSION
+                            . ' PHP/' . \PHP_VERSION
                             . ' curl/' . $curlVersion['version'],
                         'connectTimeout' => isset($options['connectTimeout'])
                             ? $options['connectTimeout'] : null,

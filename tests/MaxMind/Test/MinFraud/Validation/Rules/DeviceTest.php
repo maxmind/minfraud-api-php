@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DeviceTest extends TestCase
 {
-    public function testInvalidIP()
+    public function testInvalidIP(): void
     {
         $validator = new Device();
 
@@ -23,7 +23,7 @@ class DeviceTest extends TestCase
         ]);
     }
 
-    public function testMissingIP()
+    public function testMissingIP(): void
     {
         $validator = new Device();
 
