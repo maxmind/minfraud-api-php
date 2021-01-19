@@ -10,6 +10,8 @@ use MaxMind\Test\MinFraudData as Data;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
 class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 {
@@ -22,7 +24,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->assertEquals(
             new $class(Data::$responseMeth()),
             $this->createMinFraudRequestWithFullResponse($service)
-                ->with(Data::fullRequest())->$service(),
+                ->with(Data::fullRequest())->{$service}(),
             'response for full request'
         );
     }
@@ -51,7 +53,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $responseMeth = $service . 'FullResponse';
         $this->assertEquals(
             new $class(Data::$responseMeth()),
-            $mf->$service(),
+            $mf->{$service}(),
             'response for full request built piece by piece'
         );
 
@@ -232,7 +234,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
             1,
             [],
             $request
-        )->withDevice($device)->$service();
+        )->withDevice($device)->{$service}();
 
         $responseMeth = $service . 'FullResponse';
 
@@ -259,7 +261,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
             1,
             ['validateInput' => false],
             $request
-        )->withDevice($device)->$service();
+        )->withDevice($device)->{$service}();
 
         $responseMeth = $service . 'FullResponse';
 
@@ -280,7 +282,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(['unknown' => 'some value']);
+        )->{$method}(['unknown' => 'some value']);
     }
 
     public function withMethods(): array
@@ -347,7 +349,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(['region' => $region]);
+        )->{$method}(['region' => $region]);
     }
 
     public function badRegions(): array
@@ -371,7 +373,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method(['country' => $code]);
+        )->{$method}(['country' => $code]);
     }
 
     public function badCountryCodes(): array
@@ -397,7 +399,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->$method([$key => $code]);
+        )->{$method}([$key => $code]);
     }
 
     public function badPhoneCodes(): array
@@ -508,8 +510,8 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function invalidRangeToken(): array
     {
         return [
-                ["\x20"],
-                ["\x7G"],
+            ["\x20"],
+            ["\x7G"],
         ];
     }
 
@@ -530,7 +532,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function longToken(): array
     {
         return [
-                [str_repeat('x', 256)],
+            [str_repeat('x', 256)],
         ];
     }
 
@@ -548,9 +550,9 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     public function goodToken(): array
     {
         return [
-                ['123456abc1234'],
-                ["\x21"],
-                [str_repeat('1', 20)],
+            ['123456abc1234'],
+            ["\x21"],
+            [str_repeat('1', 20)],
         ];
     }
 

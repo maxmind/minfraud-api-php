@@ -10,7 +10,7 @@ use Respect\Validation\Exceptions\ValidationException;
 
 abstract class ServiceClient
 {
-    const VERSION = 'v1.16.1';
+    public const VERSION = 'v1.16.1';
 
     /**
      * @var Client
@@ -71,6 +71,7 @@ abstract class ServiceClient
 
         $class = '\\MaxMind\\MinFraud\\Validation\\Rules\\' . $className;
         $validator = new $class();
+
         try {
             $validator->check($values);
         } catch (ValidationException $exception) {

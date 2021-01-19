@@ -9,6 +9,8 @@ use MaxMind\Test\MinFraudData as Data;
 
 /**
  * @coversNothing
+ *
+ * @internal
  */
 class InsightsTest extends ScoreTest
 {
@@ -97,13 +99,13 @@ class InsightsTest extends ScoreTest
         );
 
         foreach (['isAnonymous',
-                  'isAnonymousVpn',
-                  'isHostingProvider',
-                  'isPublicProxy',
-                  'isSatelliteProvider',
-                  'isTorExitNode',
-                 ] as $property) {
-            $this->assertTrue($insights->ipAddress->traits->$property);
+            'isAnonymousVpn',
+            'isHostingProvider',
+            'isPublicProxy',
+            'isSatelliteProvider',
+            'isTorExitNode',
+        ] as $property) {
+            $this->assertTrue($insights->ipAddress->traits->{$property});
         }
     }
 }
