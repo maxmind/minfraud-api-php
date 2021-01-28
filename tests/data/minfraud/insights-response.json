@@ -9,6 +9,16 @@
   },
   "ip_address": {
     "risk": 0.01,
+    "risk_reasons": [
+      {
+        "code": "ANONYMOUS_IP",
+        "reason": "The IP address belongs to an anonymous network. See /ip_address/traits for more details."
+      },
+      {
+        "code": "MINFRAUD_NETWORK_ACTIVITY",
+        "reason": "Suspicious activity has been seen on this IP address across minFraud customers."
+      }
+    ],
     "city": {
       "confidence": 42,
       "geoname_id": 2643743,

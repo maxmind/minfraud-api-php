@@ -16,6 +16,9 @@ CHANGELOG
   this normalizes the email address and sends an MD5 hash of it to the web
   service rather than the plain-text address. Note that the email domain will
   still be sent in plain text.
+* Added support for the IP address risk reasons in the minFraud Insights and
+  Factors responses. This is available at `->ipAddress->riskReasons`. It is
+  an array of `MaxMind\MinFraud\Model\IpRiskReason` objects.
 
 1.16.1 (2020-11-02)
 -------------------

@@ -44,6 +44,12 @@ class InsightsTest extends ScoreTest
             'correct French country name'
         );
 
+        $this->assertSame(
+            $array['ip_address']['risk_reasons'][0]['code'],
+            $insights->ipAddress->riskReasons[0]->code,
+            'correct IP risk reason code'
+        );
+
         $this->assertTrue(
             $insights->ipAddress->country->isInEuropeanUnion,
             'country is in EU'
