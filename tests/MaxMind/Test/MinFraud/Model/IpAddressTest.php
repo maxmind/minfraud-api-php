@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class IpLocationTest extends TestCase
+class IpAddressTest extends TestCase
 {
     public function testIpAddress(): void
     {
