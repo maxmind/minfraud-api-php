@@ -17,6 +17,10 @@ use GeoIp2\Model\Insights as GeoIp2Insights;
  * @property-read float|null $risk This field contains the risk associated with the IP
  * address. The value ranges from 0.01 to 99. A higher score indicates a
  * higher risk.
+ * @property-read array<IpRiskReason> $riskReasons This array contains
+ * \MaxMind\MinFraud\Model\IpRiskReason objects identifying the reasons why
+ * the IP address received the associated risk. This will be an empty array if
+ * there are no reasons.
  */
 class IpAddress extends GeoIp2Insights
 {
@@ -26,6 +30,13 @@ class IpAddress extends GeoIp2Insights
      * @var float|null
      */
     protected $risk;
+
+    /**
+     * @internal
+     *
+     * @var array<IpRiskReason>
+     */
+    protected $riskReasons;
 
     public function __construct(?array $response, array $locales = ['en'])
     {
@@ -38,5 +49,13 @@ class IpAddress extends GeoIp2Insights
         // @phpstan-ignore-next-line
         $this->location = new GeoIp2Location($this->get('location'));
         $this->risk = $this->get('risk');
+
+        $this->riskReasons = [];
+
+        if (isset($response['risk_reasons'])) {
+            foreach ($response['risk_reasons'] as $reason) {
+                $this->riskReasons[] = new IpRiskReason($reason);
+            }
+        }
     }
 }

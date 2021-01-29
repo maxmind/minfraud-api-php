@@ -12,12 +12,22 @@ use PHPUnit\Framework\TestCase;
  *
  * @internal
  */
-class IpLocationTest extends TestCase
+class IpAddressTest extends TestCase
 {
     public function testIpAddress(): void
     {
         $array = [
             'risk' => 0.01,
+            'risk_reasons' => [
+                [
+                    'code' => 'ANONYMOUS_IP',
+                    'reason' => 'The IP address belongs to an anonymous network. See /ip_address/traits for more details.',
+                ],
+                [
+                    'code' => 'MINFRAUD_NETWORK_ACTIVITY',
+                    'reason' => 'Suspicious activity has been seen on this IP address across minFraud customers.',
+                ],
+            ],
             'country' => [
                 'is_in_european_union' => true,
                 'iso_code' => 'US',
@@ -39,6 +49,26 @@ class IpLocationTest extends TestCase
             $ipAddress->risk,
             'IP risk'
         );
+
+        $this->assertSame(
+            \count($array['risk_reasons']),
+            \count($ipAddress->riskReasons),
+            'correct number of risk reasons'
+        );
+
+        for ($i = 0; $i < 2; $i++) {
+            $this->assertSame(
+                $array['risk_reasons'][$i]['code'],
+                $ipAddress->riskReasons[$i]->code,
+                "risk reason $i has correct code"
+            );
+
+            $this->assertSame(
+                $array['risk_reasons'][$i]['reason'],
+                $ipAddress->riskReasons[$i]->reason,
+                "risk reason $i has correct reason"
+            );
+        }
 
         $this->assertTrue(
             $ipAddress->country->isInEuropeanUnion,
