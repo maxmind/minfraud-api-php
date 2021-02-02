@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.17.0
+1.17.0 (2021-02-02)
 -------------------
 
 * IMPORTANT: PHP 7.3 or greater is now required.
