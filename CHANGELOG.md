@@ -1,6 +1,17 @@
 CHANGELOG
 =========
 
+1.18.0
+-------------------
+
+* Added the following new values to the payment processor validation:
+  * `cardknox`
+  * `creditguard`
+  * `credorax`
+  * `dlocal`
+  * `onpay`
+  * `safecharge`
+
 1.17.0 (2021-02-02)
 -------------------
 
