@@ -24,7 +24,7 @@
     "respect/validation": "~2.1"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "*",
+    "friendsofphp/php-cs-fixer": "3.*",
     "phpunit/phpunit": "^8.0 || ^9.0",
     "squizlabs/php_codesniffer": "*",
     "phpstan/phpstan": "*"
