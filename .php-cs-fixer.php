@@ -1,8 +1,8 @@
 <?php
 
-declare(strict_types=1);
+$config = new PhpCsFixer\Config();
 
-return PhpCsFixer\Config::create()
+return $config
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
@@ -21,13 +21,10 @@ return PhpCsFixer\Config::create()
         'increment_style' => false,
         'list_syntax' => ['syntax' => 'short'],
         'multiline_whitespace_before_semicolons' => false,
-        'no_extra_consecutive_blank_lines' => ['break', 'continue', 'extra', 'return', 'throw', 'use', 'parenthesis_brace_block', 'square_brace_block', 'curly_brace_block'],
-        'no_short_echo_tag' => true,
         'no_unreachable_default_argument_value' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_imports' => true,
-        'pre_increment' => false,
         // Although we generally want to use assertSame, there are times
         // when we do not, such as comparing two object for non-referential
         // equality.
