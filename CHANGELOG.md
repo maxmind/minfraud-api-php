@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.18.0
+1.18.0 (2021-06-07)
 -------------------
 
 * Added the following new values to the payment processor validation:
