@@ -53,6 +53,7 @@ class PaymentProcessor extends AbstractWrapper
                 'cybersource',
                 'dalenys',
                 'dalpay',
+                'datacap',
                 'datacash',
                 'dibs',
                 'digital_river',

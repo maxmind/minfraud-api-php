@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.19.0
+-------------------
+
+* Added `datacap` to the payment processor validation.
+
 1.18.0 (2021-06-07)
 -------------------
 
