@@ -5,6 +5,7 @@ CHANGELOG
 -------------------
 
 * Added `datacap` to the payment processor validation.
+* Added `ruleLabel` to minFraud output `Disposition`.
 
 1.18.0 (2021-06-07)
 -------------------
