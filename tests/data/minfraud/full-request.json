@@ -53,7 +53,8 @@
     "bank_phone_number": "123-456-1234",
     "avs_result": "Y",
     "cvv_result": "N",
-    "token": "123456abc1234"
+    "token": "123456abc1234",
+    "was_3d_secure_successful": true
   },
   "custom_inputs": {
     "float_input": 12.1,

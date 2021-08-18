@@ -6,6 +6,7 @@ CHANGELOG
 
 * Added `datacap` to the payment processor validation.
 * Added `ruleLabel` to minFraud output `Disposition`.
+* Added `was_3d_secure_successful` to `/credit_card` validation.
 
 1.18.0 (2021-06-07)
 -------------------
