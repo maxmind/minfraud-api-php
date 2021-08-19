@@ -17,8 +17,9 @@ namespace MaxMind\MinFraud\Model;
  * possible values are "custom_rule", "block_list", and "default". If you do
  * not have custom rules set up, `null` will be returned.
  * @property-read string|null $ruleLabel The label of the custom rule that was
- * triggered. If you do not have custom rule set up, or the custom rule that
- * was triggered does not have a label, `null` will be returned.
+ * triggered. If you do not have custom rules set up, the triggered custom rule
+ * does not have a label, or no custom rule was triggered, `null` will be
+ * returned.
  */
 class Disposition extends AbstractModel
 {
