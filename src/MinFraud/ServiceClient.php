@@ -10,7 +10,7 @@ use Respect\Validation\Exceptions\ValidationException;
 
 abstract class ServiceClient
 {
-    public const VERSION = 'v1.18.0';
+    public const VERSION = 'v1.19.0';
 
     /**
      * @var Client
