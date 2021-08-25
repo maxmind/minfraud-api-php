@@ -19,6 +19,7 @@ class DispositionTest extends TestCase
         $array = [
             'action' => 'manual_review',
             'reason' => 'custom_rule',
+            'rule_label' => 'custom rule label',
         ];
         $disposition = new Disposition($array);
 
@@ -32,6 +33,12 @@ class DispositionTest extends TestCase
             $array['reason'],
             $disposition->reason,
             'reason'
+        );
+
+        $this->assertSame(
+            $array['rule_label'],
+            $disposition->ruleLabel,
+            'ruleLabel'
         );
 
         $this->assertSame(
