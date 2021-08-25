@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.18.0
+version: v1.19.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -196,13 +196,14 @@ $request = $mf->withDevice([
     'was_authorized'        => false,
     'decline_code'          => 'invalid number',
 ])->withCreditCard([
-    'issuer_id_number'        => '411111',
-    'last_4_digits'           => '7643',
-    'bank_name'               => 'Bank of No Hope',
-    'bank_phone_country_code' => '1',
-    'bank_phone_number'       => '123-456-1234',
-    'avs_result'              => 'Y',
-    'cvv_result'              => 'N',
+    'issuer_id_number'         => '411111',
+    'last_4_digits'            => '7643',
+    'bank_name'                => 'Bank of No Hope',
+    'bank_phone_country_code'  => '1',
+    'bank_phone_number'        => '123-456-1234',
+    'avs_result'               => 'Y',
+    'cvv_result'               => 'N',
+    'was_3d_secure_successful' => true,
 ])->withOrder([
     'amount'           => 323.21,
     'currency'         => 'USD',
