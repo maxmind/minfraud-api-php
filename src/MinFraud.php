@@ -95,7 +95,8 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the array to be sent to the web
      * service set to `$values`. Existing values will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/ minFraud API docs
+     * @link https://dev.maxmind.com/minfraud/api-documentation?lang=en
+     * minFraud API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -118,7 +119,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `device` array set to
      * `$values`. Existing `device` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Device_device
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--device
      *     minFraud device API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -133,7 +134,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `events` array set to
      * `$values`. Existing `event` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Event_event
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--event
      *     minFraud event API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -148,7 +149,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `account` array set to
      * `$values`. Existing `account` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Account_account
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--account
      *     minFraud account API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -163,7 +164,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `email` array set to
      * `$values`. Existing `email` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Email_email
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--email
      *     minFraud email API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -184,7 +185,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `billing` array set to
      * `$values`. Existing `billing` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Billing_billing
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--billing
      *     minFraud billing API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -199,7 +200,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `shipping` array set to
      * `$values`. Existing `shipping` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Shipping_shipping
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--shipping
      *     minFraud shipping API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -214,7 +215,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `payment` array set to
      * `$values`. Existing `payment` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Payment_payment
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--payment
      *     minFraud payment API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -229,7 +230,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `credit_card` array set to
      * `$values`. Existing `credit_card` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Credit_Card_credit_card
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--credit-card
      *     minFraud credit_card API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -256,7 +257,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `order` array set to
      * `$values`. Existing `order` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/#Order_order
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--order
      *     minFraud order API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
@@ -271,7 +272,7 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with `$values` added to the shopping
      * cart array.
      *
-     * @link https://dev.maxmind.com/minfraud/#Shopping_Cart_Item
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--shopping-cart--item
      *     minFraud shopping cart item API docs
      *
      * @return MinFraud A new immutable MinFraud object. This object is
