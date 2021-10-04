@@ -1,6 +1,21 @@
 CHANGELOG
 =========
 
+1.20.0
+-------------------
+
+* Added the following new values to the payment processor validation:
+  * `boacompra`
+  * `boku`
+  * `coregateway`
+  * `fiserv`
+  * `neopay`
+  * `neosurf`
+  * `openbucks`
+  * `paysera`
+  * `payvision`
+  * `trustly`
+
 1.19.0 (2021-08-25)
 -------------------
 
