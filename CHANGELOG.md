@@ -25,6 +25,15 @@ CHANGELOG
 * The return type on `\MaxMind\MinFraud\Model\AbstractModel::jsonSerialize` has
   been removed so that it does not to conflict with
   `JsonSerializable::jsonSerialize` on PHP 8+.
+* The `/credit_card/last_4_digits` input has been deprecated in favor of
+  `/credit_card/last_digits` and will be removed in a future release.
+  `last_digits`/`last_4_digits` also now supports two digit values in
+  addition to the previous four digit values.
+* Eight digit `/credit_card/issuer_id_number` inputs are now supported in
+  addition to the previously accepted six digit `issuer_id_number`. If you
+  send six digits for the `issuer_id_number`, you should send the last four
+  digits for `last_digits`. If you send eight digits for `issuer_id_number`
+  you should send the last two digits for `last_digits`.
 
 1.19.0 (2021-08-25)
 -------------------
