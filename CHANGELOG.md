@@ -4,6 +4,11 @@ CHANGELOG
 1.20.0
 -------------------
 
+* Upgraded `geoip2/geoip2` to 2.12.0. This adds mobile country code (MCC)
+  and mobile network code (MNC) to minFraud Insights and Factors responses.
+  These are available at `$response->ipAddress->traits->mobileCountryCode` and
+  `$response->ipAddress->traits->mobileNetworkCode`. We expect this data to be
+  available by late January, 2022.
 * `minfraud.phar` is now generated with Box 3.x.
 * Added the following new values to the payment processor validation:
   * `boacompra`
