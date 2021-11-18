@@ -4,6 +4,7 @@ CHANGELOG
 1.20.0
 -------------------
 
+* `minfraud.phar` is now generated with Box 3.x.
 * Added the following new values to the payment processor validation:
   * `boacompra`
   * `boku`

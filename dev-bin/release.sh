@@ -47,10 +47,10 @@ php composer.phar update --no-dev
 perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud/ServiceClient.php
 
 if [ ! -f box.phar ]; then
-    wget -O box.phar "https://github.com/box-project/box2/releases/download/2.6.1/box-2.6.1.phar"
+    wget -O box.phar "https://github.com/box-project/box/releases/download/3.13.0/box.phar"
 fi
 
-php box.phar build
+php box.phar compile
 
 phar_test=$(./dev-bin/phar-test.php)
 if [[ -n $phar_test ]]; then
