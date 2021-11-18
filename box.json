@@ -3,9 +3,8 @@
     "main": "phar-stub.php",
     "output": "minfraud.phar",
     "compactors": [
-        "Herrera\\Box\\Compactor\\Composer",
-        "Herrera\\Box\\Compactor\\Json",
-        "Herrera\\Box\\Compactor\\Php"
+        "KevinGH\\Box\\Compactor\\Php",
+        "KevinGH\\Box\\Compactor\\Json"
     ],
     "files": [
         "LICENSE"
@@ -31,6 +30,5 @@
     ],
     "directories": ["src/"],
     "git-version": "git-version",
-    "shebang": false,
-    "stub": true
+    "shebang": false
 }

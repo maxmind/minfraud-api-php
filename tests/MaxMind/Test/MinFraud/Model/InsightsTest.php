@@ -113,5 +113,17 @@ class InsightsTest extends ScoreTest
         ] as $property) {
             $this->assertTrue($insights->ipAddress->traits->{$property});
         }
+
+        $this->assertSame(
+            $array['ip_address']['traits']['mobile_country_code'],
+            $insights->ipAddress->traits->mobileCountryCode,
+            'correct mobile country code'
+        );
+
+        $this->assertSame(
+            $array['ip_address']['traits']['mobile_network_code'],
+            $insights->ipAddress->traits->mobileNetworkCode,
+            'correct mobile network code'
+        );
     }
 }
