@@ -1,6 +1,6 @@
 {
-    "alias": "minfraud.phar",
-    "main": "phar-stub.php",
+    "stub": "phar-stub.php",
+    "main": false,
     "output": "minfraud.phar",
     "compactors": [
         "KevinGH\\Box\\Compactor\\Php",
@@ -29,6 +29,5 @@
             }
     ],
     "directories": ["src/"],
-    "git-version": "git-version",
-    "shebang": false
+    "git-version": "git-version"
 }
