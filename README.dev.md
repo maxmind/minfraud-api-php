@@ -6,7 +6,7 @@ Steps for releasing:
 3. Bump copyright year in `README.md`, if necessary.
 4. Review `CHANGELOG.md` for completeness and correctness. Update its release
    date.
-5. Install or update [hub](https://github.com/github/hub) as it used by the
+5. Install or update [gh](https://github.com/cli/cli) as it used by the
    release script.
 6. Run `./dev-bin/release.sh`. This will build the phar, generate the docs,
    tag the release, push it to origin, and update the GH releases with the
