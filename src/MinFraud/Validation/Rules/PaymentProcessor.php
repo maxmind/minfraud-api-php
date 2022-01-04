@@ -164,6 +164,7 @@ class PaymentProcessor extends AbstractWrapper
                 'virtual_card_services',
                 'vme',
                 'vpos',
+                'windcave',
                 'wirecard',
                 'worldpay',
             ]
