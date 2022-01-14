@@ -16,14 +16,17 @@ abstract class ServiceClient
      * @var Client
      */
     protected $client;
+
     /**
      * @var string
      */
     protected static $host = 'minfraud.maxmind.com';
+
     /**
      * @var string
      */
     protected static $basePath = '/minfraud/v2.0/';
+
     /**
      * @var bool
      */
