@@ -22,6 +22,9 @@ CHANGELOG
   * `payvision`
   * `trustly`
   * `windcave`
+* The return type on `\MaxMind\MinFraud\Model\AbstractModel::jsonSerialize` has
+  been removed so that it does not to conflict with
+  `JsonSerializable::jsonSerialize` on PHP 8+.
 
 1.19.0 (2021-08-25)
 -------------------
