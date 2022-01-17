@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\MinFraud\Model;
 
 /**
- * Subscores for components that are used in calculating the riskScore.
+ * The scores for risk factors that are used in calculating the riskScore.
  *
  * @property-read float|null $avsResult The risk associated with the AVS result. If
  * present, this is a value in the range 0.01 to 99.
@@ -41,14 +41,14 @@ namespace MaxMind\MinFraud\Model;
  * present, this is a value in the range 0.01 to 99.
  * @property-read float|null $emailTenure The risk associated with the issuer ID
  * number on the email domain. If present, this is a value in the range 0.01
- * to 99. <b>Deprecated effective August 29, 2019. This subscore will default
- * to 1 and will be removed in a future release. The user tenure on email is
- * reflected in the `/subscores/email_address` output.</b>
+ * to 99. <b>Deprecated effective August 29, 2019. This risk factor score will
+ * default to 1 and will be removed in a future release. The user tenure on
+ * email is reflected in the `/subscores/email_address` output.</b>
  * @property-read float|null $ipTenure The risk associated with the issuer ID
  * number on the IP address. If present, this is a value in the range 0.01 to
- * 99. <b>Deprecated effective August 29, 2019. This subscore will default to
- * 1 and will be removed in a future release. The IP tenure is reflected in the
- * overall risk score.</b>
+ * 99. <b>Deprecated effective August 29, 2019. This risk factor score will
+ * default to 1 and will be removed in a future release. The IP tenure is
+ * reflected in the overall risk score.</b>
  * @property-read float|null $issuerIdNumber The risk associated with the
  * particular issuer ID number (IIN) given the billing location and the
  * history of usage of the IIN on your account and shop ID. If present, this
@@ -159,9 +159,9 @@ class Subscores extends AbstractModel
      *
      * @var float|null
      *
-     * @deprecated This subscore will default to 1 and will be removed in a
-     * future release. The user tenure on email is reflected in the
-     * `/subscores/email_address` output.
+     * @deprecated This risk factor score will default to 1 and will be
+     * removed in a future release. The user tenure on email is reflected in
+     * the `/subscores/email_address` output.
      */
     protected $emailTenure;
 
@@ -170,8 +170,9 @@ class Subscores extends AbstractModel
      *
      * @var float|null
      *
-     * @deprecated This subscore will default to 1 and will be removed in a
-     * future release. The IP tenure is reflected in the overall risk score.
+     * @deprecated This risk factor score will default to 1 and will be
+     * removed in a future release. The IP tenure is reflected in the overall
+     * risk score.
      */
     protected $ipTenure;
 
