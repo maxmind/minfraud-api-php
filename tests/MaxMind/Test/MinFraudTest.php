@@ -473,9 +473,6 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
 
     public function testCreditCard8DigitIIN4DigitLastDigits(): void
     {
-        $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must validate against');
-
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
