@@ -449,9 +449,9 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
     }
 
     /**
-     * @dataProvider badLast4Digits
+     * @dataProvider badLastDigits
      */
-    public function testCreditCardWithBadLast4(string $last4): void
+    public function testCreditCardWithBadLastDigits(string $lastDigits): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('must validate against');
@@ -459,16 +459,32 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withCreditCard(['last_4_digits' => $last4]);
+        )->withCreditCard(['last_digits' => $lastDigits]);
     }
 
-    public function badLast4Digits(): array
+    public function badLastDigits(): array
     {
         return [
             ['12345'],
             ['123'],
             ['a234'],
         ];
+    }
+
+    public function testCreditCard8DigitIIN4DigitLastDigits(): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCreditCard(['issuer_id_number' => '88888888', 'last_digits' => '1234']);
+    }
+
+    public function testCreditCardDeprecatedLast4Digits(): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withCreditCard(['issuer_id_number' => '666666', 'last_4_digits' => '1234']);
     }
 
     /**

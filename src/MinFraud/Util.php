@@ -86,4 +86,15 @@ class Util
 
         return md5("$localPart@$domain");
     }
+
+    public static function cleanCreditCard(array $values): array
+    {
+        if (isset($values['last_4_digits'])) {
+            @trigger_error('last_4_digits has been deprecated in favor of last_digits', \E_USER_DEPRECATED);
+            $values['last_digits'] = $values['last_4_digits'];
+            unset($values['last_4_digits']);
+        }
+
+        return $values;
+    }
 }

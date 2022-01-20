@@ -240,6 +240,8 @@ class MinFraud extends MinFraud\ServiceClient
      */
     public function withCreditCard(array $values): self
     {
+        $values = Util::cleanCreditCard($values);
+
         return $this->validateAndAdd('CreditCard', 'credit_card', $values);
     }
 
