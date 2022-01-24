@@ -22,9 +22,6 @@ CHANGELOG
   * `payvision`
   * `trustly`
   * `windcave`
-* The return type on `\MaxMind\MinFraud\Model\AbstractModel::jsonSerialize` has
-  been removed so that it does not to conflict with
-  `JsonSerializable::jsonSerialize` on PHP 8+.
 * The `/credit_card/last_4_digits` input has been deprecated in favor of
   `/credit_card/last_digits` and will be removed in a future release.
   `last_digits`/`last_4_digits` also now supports two digit values in
