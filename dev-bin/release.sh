@@ -47,7 +47,7 @@ php composer.phar update --no-dev
 perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud/ServiceClient.php
 
 if [ ! -f box.phar ]; then
-    wget -O box.phar "https://github.com/box-project/box/releases/download/3.13.0/box.phar"
+    wget -O box.phar "https://github.com/box-project/box/releases/download/3.14.0/box.phar"
 fi
 
 php box.phar compile
@@ -89,7 +89,7 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 # Using Composer is possible, but they don't recommend it.
-wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.1.2/phpDocumentor.phar
+wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.3.0/phpDocumentor.phar
 
 # Use cache dir in /tmp as otherwise cache files get into the output directory.
 cachedir="/tmp/phpdoc-$$-$RANDOM"

@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.20.0
+1.20.0 (2022-01-25)
 -------------------
 
 * Upgraded `geoip2/geoip2` to 2.12.0. This adds mobile country code (MCC)
