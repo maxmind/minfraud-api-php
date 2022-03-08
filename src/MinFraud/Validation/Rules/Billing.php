@@ -11,8 +11,6 @@ use Respect\Validation\Rules\AbstractWrapper;
  */
 class Billing extends AbstractWrapper
 {
-    use Address;
-
     public function __construct()
     {
         parent::__construct(\call_user_func_array('Respect\Validation\Validator::keySet', Address::keys()));

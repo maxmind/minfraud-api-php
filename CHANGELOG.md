@@ -8,6 +8,7 @@ CHANGELOG
   of the card is located. This may be passed instead of
   `/credit_card/issuer_id_number` if you do not wish to pass partial account
   numbers or if your payment processor does not provide them.
+* Fixed PHP 8.1 deprecation warning in internal validation classes.
 
 1.20.0 (2022-01-25)
 -------------------

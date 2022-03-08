@@ -12,8 +12,6 @@ use Respect\Validation\Validator as v;
  */
 class Shipping extends AbstractWrapper
 {
-    use Address;
-
     public function __construct()
     {
         $keys = Address::keys();
