@@ -9,7 +9,7 @@ use Respect\Validation\Validator as v;
 /**
  * @internal
  */
-trait Address
+class Address
 {
     public static function keys(): array
     {

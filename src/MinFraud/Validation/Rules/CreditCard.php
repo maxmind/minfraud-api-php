@@ -20,6 +20,7 @@ class CreditCard extends AbstractWrapper
                 v::key('bank_name', v::stringType(), false),
                 v::key('bank_phone_country_code', new TelephoneCountryCode(), false),
                 v::key('bank_phone_number', v::stringType(), false),
+                v::key('country', v::countryCode(), false),
                 v::key('cvv_result', v::stringType()->length(1, 1), false),
                 v::key('issuer_id_number', v::regex('/^(?:[0-9]{6}|[0-9]{8})$/'), false),
                 v::key('last_digits', v::regex('/^(?:[0-9]{2}|[0-9]{4})$/'), false),
