@@ -46,9 +46,13 @@ php composer.phar update --no-dev
 
 perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud/ServiceClient.php
 
-if [ ! -f box.phar ]; then
-    wget -O box.phar "https://github.com/box-project/box/releases/download/3.14.0/box.phar"
+box_phar_hash='f508e28f309d7e95a319bdcd5f13dcfbb18eb91cb7a6cac9b69bc7799d78bdf9 box.phar'
+
+if ! echo "$box_phar_hash" | sha256sum -c; then
+    wget -O box.phar "https://github.com/box-project/box/releases/download/3.16.0/box.phar"
 fi
+
+echo "$box_phar_hash" | sha256sum -c
 
 php box.phar compile
 
