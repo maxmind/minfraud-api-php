@@ -142,6 +142,7 @@ class PaymentProcessor extends AbstractWrapper
                 'safecharge',
                 'sagepay',
                 'securetrading',
+                'shopify_payments',
                 'simplify_commerce',
                 'skrill',
                 'smartcoin',
