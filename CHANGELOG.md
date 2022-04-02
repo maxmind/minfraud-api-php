@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.22.0
+-------------------
+
+* Added `shopify_payments` to the payment processor validation.
+
 1.21.0 (2022-03-28)
 -------------------
 
