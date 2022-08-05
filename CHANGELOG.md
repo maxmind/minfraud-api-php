@@ -4,6 +4,8 @@ CHANGELOG
 1.22.0
 -------------------
 
+* The model class names are no longer constructed by concatenating strings.
+  This change was made to improve support for tools like PHP-Scoper.
 * Added `shopify_payments` to the payment processor validation.
 
 1.21.0 (2022-03-28)

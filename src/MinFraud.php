@@ -10,6 +10,9 @@ use MaxMind\Exception\InsufficientFundsException;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
+use MaxMind\MinFraud\Model\Factors;
+use MaxMind\MinFraud\Model\Insights;
+use MaxMind\MinFraud\Model\Score;
 use MaxMind\MinFraud\Util;
 
 /**
@@ -328,9 +331,9 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return \MaxMind\MinFraud\Model\Score minFraud Score model object
      */
-    public function score(): MinFraud\Model\Score
+    public function score(): Score
     {
-        return $this->post('Score');
+        return $this->post(Score::class, 'score');
     }
 
     /**
@@ -350,9 +353,9 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return \MaxMind\MinFraud\Model\Insights minFraud Insights model object
      */
-    public function insights(): MinFraud\Model\Insights
+    public function insights(): Insights
     {
-        return $this->post('Insights');
+        return $this->post(Insights::class, 'insights');
     }
 
     /**
@@ -372,13 +375,14 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return \MaxMind\MinFraud\Model\Factors minFraud Factors model object
      */
-    public function factors(): MinFraud\Model\Factors
+    public function factors(): Factors
     {
-        return $this->post('Factors');
+        return $this->post(Factors::class, 'factors');
     }
 
     /**
-     * @param string $service the name of the service to use
+     * @param string $class the model class name to use
+     * @param string $path  the service path suffix to use
      *
      * @throws InvalidInputException      when the request has missing or invalid
      *                                    data
@@ -393,10 +397,11 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @return mixed the model class for the service
      */
-    private function post(string $service)
+    private function post(string $class, string $path)
     {
-        $url = self::$basePath . strtolower($service);
-        $class = 'MaxMind\\MinFraud\\Model\\' . $service;
+        $url = self::$basePath . $path;
+
+        $service = 'minFraud ' . ucfirst($path);
 
         return new $class(
             $this->client->post($service, $url, $this->content),
