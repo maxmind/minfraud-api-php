@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.22.0
+1.22.0 (2022-08-05)
 -------------------
 
 * The model class names are no longer constructed by concatenating strings.
