@@ -23,7 +23,7 @@ version="${BASH_REMATCH[1]}"
 date="${BASH_REMATCH[2]}"
 notes="$(echo "${BASH_REMATCH[3]}" | sed -n -E '/^[0-9]+\.[0-9]+\.[0-9]+/,$!p')"
 
-if [[ "$date" -ne  $(date +"%Y-%m-%d") ]]; then
+if [[ "$date" !=  $(date +"%Y-%m-%d") ]]; then
     echo "$date is not today!"
     exit 1
 fi
@@ -46,10 +46,10 @@ php composer.phar update --no-dev
 
 perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud/ServiceClient.php
 
-box_phar_hash='f508e28f309d7e95a319bdcd5f13dcfbb18eb91cb7a6cac9b69bc7799d78bdf9 box.phar'
+box_phar_hash='d862951a7acca5641bdd3d3e289e675f3c46810c7994aebfe0c9188a80f6cac1  box.phar'
 
 if ! echo "$box_phar_hash" | sha256sum -c; then
-    wget -O box.phar "https://github.com/box-project/box/releases/download/3.16.0/box.phar"
+    wget -O box.phar "https://github.com/box-project/box/releases/download/4.0.1/box.phar"
 fi
 
 echo "$box_phar_hash" | sha256sum -c

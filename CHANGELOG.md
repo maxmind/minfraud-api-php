@@ -1,12 +1,13 @@
 CHANGELOG
 =========
 
-1.22.0
+1.22.0 (2022-08-05)
 -------------------
 
 * The model class names are no longer constructed by concatenating strings.
   This change was made to improve support for tools like PHP-Scoper.
 * Added `shopify_payments` to the payment processor validation.
+* Box 4.0.1 is now used to generate the `geoip2.phar` file.
 
 1.21.0 (2022-03-28)
 -------------------
