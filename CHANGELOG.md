@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.23.0
+-------------------
+
+* Added `google_pay` to the payment processor validation.
+
 1.22.0 (2022-08-05)
 -------------------
 

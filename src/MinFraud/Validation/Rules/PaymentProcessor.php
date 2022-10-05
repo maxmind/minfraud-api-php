@@ -78,6 +78,7 @@ class PaymentProcessor extends AbstractWrapper
                 'g2a_pay',
                 'global_payments',
                 'gocardless',
+                'google_pay',
                 'heartland',
                 'hipay',
                 'ingenico',
