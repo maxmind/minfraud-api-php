@@ -130,6 +130,7 @@ class PaymentProcessor extends AbstractWrapper
                 'payway',
                 'payza',
                 'pinpayments',
+                'placetopay',
                 'posconnect',
                 'princeton_payment_solutions',
                 'psigate',
