@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-1.23.0
+1.23.0 (2023-03-06)
 -------------------
 
 * Fixed "creation of a dynamic property" deprecation warning on newer PHP
