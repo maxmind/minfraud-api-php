@@ -12,6 +12,13 @@ namespace MaxMind\MinFraud\Model;
 abstract class AbstractModel implements \JsonSerializable
 {
     /**
+     * @internal
+     *
+     * @var array
+     */
+    protected $rawResponse;
+
+    /**
      * @param array|null $response the array corresponding to the object in the
      *                             minFraud Insights response
      * @param array      $locales  list of locale codes to use in name property from
@@ -20,7 +27,6 @@ abstract class AbstractModel implements \JsonSerializable
     // @phpstan-ignore-next-line
     public function __construct(?array $response, array $locales = ['en'])
     {
-        // @phpstan-ignore-next-line
         $this->rawResponse = $response;
     }
 
@@ -72,7 +78,6 @@ abstract class AbstractModel implements \JsonSerializable
      */
     public function jsonSerialize(): ?array
     {
-        // @phpstan-ignore-next-line
         return $this->rawResponse;
     }
 }
