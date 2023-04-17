@@ -44,9 +44,7 @@ class IpAddress extends GeoIp2Insights
             $response = [];
         }
         parent::__construct($response, $locales);
-        // @phpstan-ignore-next-line
         $this->country = new GeoIp2Country($this->get('country'), $locales);
-        // @phpstan-ignore-next-line
         $this->location = new GeoIp2Location($this->get('location'));
         $this->risk = $this->get('risk');
 
