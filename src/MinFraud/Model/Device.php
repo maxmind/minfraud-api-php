@@ -18,10 +18,7 @@ namespace MaxMind\MinFraud\Model;
  * similar devices. A confidence of 0.01 indicates very low confidence that
  * the device is unique, whereas 99 indicates very high confidence.
  * @property-read string|null $id A UUID that MaxMind uses for the device associated
- * with this IP address. Note that many devices cannot be uniquely identified
- * because they are too common (for example, all iPhones of a given model and
- * OS release). In these cases, the minFraud service will simply not return a
- * UUID for that device.
+ * with this IP address.
  * @property-read string|null $lastSeen This is the date and time of the last
  * sighting of the device. This is an RFC 3339 date-time.
  * @property-read string|null $localTime This is the local date and time of
