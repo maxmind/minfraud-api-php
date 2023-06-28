@@ -226,7 +226,7 @@ $request = $mf->withDevice([
 # To get the minFraud Factors response model, use ->factors():
 $factorsResponse = $request->factors();
 
-print($factorsResponse->subscores->email . "\n");
+print($factorsResponse->subscores->emailAddress . "\n");
 
 # To get the minFraud Insights response model, use ->insights():
 $insightsResponse = $request->insights();
