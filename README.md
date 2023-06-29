@@ -83,7 +83,7 @@ and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/) A
 
 ### minFraud API ###
 
-To use the MinFraud API, create a new `\MaxMind\MinFraud` object. The constructor
+To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructor
 takes your MaxMind account ID, license key, and an optional options array as
 arguments. This object is immutable. You then build up the request using the
 `->with*` methods as shown below. Each method call returns a new object. The
@@ -226,7 +226,7 @@ $request = $mf->withDevice([
 # To get the minFraud Factors response model, use ->factors():
 $factorsResponse = $request->factors();
 
-print($factorsResponse->subscores->email . "\n");
+print($factorsResponse->subscores->emailAddress . "\n");
 
 # To get the minFraud Insights response model, use ->insights():
 $insightsResponse = $request->insights();
