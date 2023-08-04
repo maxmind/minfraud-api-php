@@ -83,10 +83,26 @@ and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/) A
 
 ### minFraud API ###
 
-To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructor
-takes your MaxMind account ID, license key, and an optional [options](#Options) array as
-arguments. This object is immutable. You then build up the request using the
-`->with*` methods as shown below. Each method call returns a new object. The
+To use the MinFraud API, you'll need to create a new `MaxMind\MinFraud` object. The constructor
+requires your MaxMind account ID, license key, and an optional [`options`](https://maxmind.github.io/minfraud-api-php/doc/v1.23.0/classes/MaxMind-MinFraud.html#method___construct) array as arguments. The `options` array can be used to set additional parameters such as `host` and `timeout`. Remember that this object is immutable.
+
+Here's an example of creating a `MinFraud` object and calling the Sandbox endpoint:
+
+```php
+<?php
+// Set any options you need, such as the host for the Sandbox environment
+$options = [
+    'host' => 'sandbox.maxmind.com'
+];
+
+// Create a MinFraud object with your account ID, license key, and options
+$mf = new MaxMind\MinFraud(1, 'ABCD567890', $options);
+
+// Now you can use the $mf object to interact with the MinFraud API
+?>
+```
+
+Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The
 previous object is not modified.
 
 If there is a validation error in the data passed to a `->with*` method, a
@@ -312,40 +328,6 @@ $rt->report([
     'notes'           => 'Found due to non-existent shipping address',
     'transaction_id'  => 'cart123456789',
 ]);
-```
-
-## Options
-
-When using the MinFraud client in PHP, you have the flexibility to customize its behavior by providing various options. The options parameter is used to pass these customizations to the client when instantiating it.
-
-| Option           | Description                                                                                                                                                                          |
-|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **host**         | The host to use when connecting to the web service. By default, the client connects to the production host. However, during testing and development, you can set this option to '[sandbox.maxmind.com](sandbox.maxmind.com)' to use the sandbox host. The sandbox host allows you to experiment with the API without affecting your production data. |
-| **userAgent**    | The prefix for the User-Agent header to use in the request. The User-Agent header provides information about the client making the API request. You can customize the User-Agent by providing a custom prefix. This can be useful for identifying your API requests separately from other clients. |
-| **caBundle**     | The bundle of CA root certificates to use in the request. When making secure connections (HTTPS), the client needs to validate the server's SSL certificate. You can provide the path to a certificate bundle file (e.g., `/path/to/cabundle.pem`) to establish secure connections with proper certificate validation. |
-| **connectTimeout** | The connect timeout to use for the request in seconds. This option determines the maximum time allowed for the client to establish a connection with the server. If the connection cannot be established within this time, the request will be considered timed out. |
-| **hashEmail**    | By default, the email address is sent in plain text when using the withEmail() method. However, if this option is set to true, the email address will be normalized and converted to an MD5 hash before the request is sent. The email domain will continue to be sent in plain text. Hashing the email can be useful for privacy and security reasons. |
-| **timeout**      | The timeout to use for the request in seconds. This option determines the maximum time allowed for the entire request process, including establishing the connection, sending the data, and receiving the response. If the request exceeds this time, it will be considered timed out. |
-| **proxy**        | The HTTP proxy to use. If your server requires an HTTP proxy to connect to external services, you can set this option to specify the proxy details. Provide the proxy details, including the schema, port, username, and password if required. |
-| **locales**      | An array of locale codes to use for the location name properties. The MinFraud API provides location names in different languages. By specifying multiple locale codes (e.g., ['en', 'fr']), you can receive localized location names in the response. |
-| **validateInput** | Default is true. Determines whether values passed to the with*() methods are validated. It is recommended that you leave validation on while developing and only (optionally) disable it before deployment. Validation helps ensure that the data passed to the client's methods meets the required criteria. |
-
-
-
-```php
-$options = [
-    'host' => 'sandbox.maxmind.com',
-    'userAgent' => 'MyCustomUserAgentPrefix',
-    'caBundle' => '/path/to/cabundle.pem',
-    'connectTimeout' => 5, // in seconds
-    'hashEmail' => true,
-    'timeout' => 10, // in seconds
-    'proxy' => 'http://username:password@127.0.0.1:8080',
-    'locales' => ['en', 'fr'],
-    'validateInput' => true,
-];
-
-$mf = new MinFraud(1, 'ABCD567890', $options);
 ```
 
 ## Support ##
