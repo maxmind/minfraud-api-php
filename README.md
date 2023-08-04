@@ -83,27 +83,17 @@ and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/) A
 
 ### minFraud API ###
 
-To use the MinFraud API, you'll need to create a new `MaxMind\MinFraud` object. The constructor
-requires your MaxMind account ID, license key, and an optional [`options`](https://maxmind.github.io/minfraud-api-php/doc/v1.23.0/classes/MaxMind-MinFraud.html#method___construct) array as arguments. The `options` array can be used to set additional parameters such as `host` and `timeout`. Remember that this object is immutable.
+To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructor
+takes your MaxMind account ID, license key, and an optional `options` array as
+arguments. This object is immutable. See the API documentation for the possible options.
 
-Here's an example of creating a `MinFraud` object and calling the Sandbox endpoint:
+For instance, to call the Sandbox environment instead of the minFraud 2 web service:
 
 ```php
-<?php
-// Set any options you need, such as the host for the Sandbox environment
-$options = [
-    'host' => 'sandbox.maxmind.com'
-];
-
-// Create a MinFraud object with your account ID, license key, and options
-$mf = new MaxMind\MinFraud(1, 'ABCD567890', $options);
-
-// Now you can use the $mf object to interact with the MinFraud API
-?>
+$mf = new MinFraud(1, 'ABCD567890', [ 'host' => 'sandbox.maxmind.com' ]);
 ```
 
-Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The
-previous object is not modified.
+Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The previous object is not modified.
 
 If there is a validation error in the data passed to a `->with*` method, a
 `\MaxMind\Exception` will be thrown. This validation can be disabled by
