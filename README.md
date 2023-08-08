@@ -87,7 +87,7 @@ To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructo
 takes your MaxMind account ID, license key, and an optional `options` array as
 arguments. This object is immutable. See the API documentation for the possible options.
 
-For instance, to call the Sandbox environment instead of the minFraud 2 web service:
+For instance, to use the Sandbox web service instead of the production web service, you can provide the host option:
 
 ```php
 $mf = new MinFraud(1, 'ABCD567890', [ 'host' => 'sandbox.maxmind.com' ]);
