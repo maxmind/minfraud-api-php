@@ -84,10 +84,16 @@ and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/) A
 ### minFraud API ###
 
 To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructor
-takes your MaxMind account ID, license key, and an optional options array as
-arguments. This object is immutable. You then build up the request using the
-`->with*` methods as shown below. Each method call returns a new object. The
-previous object is not modified.
+takes your MaxMind account ID, license key, and an optional `options` array as
+arguments. This object is immutable. See the API documentation for the possible options.
+
+For instance, to use the Sandbox web service instead of the production web service, you can provide the host option:
+
+```php
+$mf = new MinFraud(1, 'ABCD567890', [ 'host' => 'sandbox.maxmind.com' ]);
+```
+
+Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The previous object is not modified.
 
 If there is a validation error in the data passed to a `->with*` method, a
 `\MaxMind\Exception` will be thrown. This validation can be disabled by

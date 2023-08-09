@@ -62,6 +62,11 @@ class MinFraud extends MinFraud\ServiceClient
      * @param array  $options    An array of options. Possible keys:
      *
      * * `host` - The host to use when connecting to the web service.
+     *   By default, the client connects to the production host. However,
+     *   during testing and development, you can set this option to
+     *   'sandbox.maxmind.com' to use the Sandbox environment's host. The
+     *   sandbox allows you to experiment with the API without affecting your
+     *   production data.
      * * `userAgent` - The prefix for the User-Agent header to use in the
      *   request.
      * * `caBundle` - The bundle of CA root certificates to use in the request.
