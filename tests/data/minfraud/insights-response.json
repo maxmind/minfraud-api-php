@@ -98,6 +98,7 @@
       }
     ],
     "traits": {
+      "connection_type": "Cable/DSL",
       "domain": "in-addr.arpa",
       "ip_address": "152.216.7.110",
       "is_anonymous": true,
@@ -107,8 +108,8 @@
       "is_satellite_provider": true,
       "is_tor_exit_node": true,
       "isp": "Andrews & Arnold Ltd",
-      "mobile_country_code" : "310",
-      "mobile_network_code" : "004",
+      "mobile_country_code": "310",
+      "mobile_network_code": "004",
       "organization": "STONEHOUSE office network",
       "user_type": "government"
     }
