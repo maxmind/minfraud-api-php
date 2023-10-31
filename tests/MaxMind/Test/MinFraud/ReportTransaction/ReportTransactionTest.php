@@ -13,7 +13,7 @@ use MaxMind\Test\MinFraud\ReportTransaction\ReportTransactionData as Data;
  *
  * @internal
  */
-class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
+class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTester
 {
     public function testMinimalRequest(): void
     {

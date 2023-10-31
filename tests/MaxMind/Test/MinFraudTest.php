@@ -13,7 +13,7 @@ use MaxMind\Test\MinFraudData as Data;
  *
  * @internal
  */
-class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
+class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTester
 {
     /**
      * @dataProvider services
