@@ -331,7 +331,7 @@ to the client API, please see
 
 ## Requirements  ##
 
-This code requires PHP 7.3 or greater. Older versions of PHP are not
+This code requires PHP 8.1 or greater. Older versions of PHP are not
 supported.
 
 There are several other dependencies as defined in the `composer.json` file.

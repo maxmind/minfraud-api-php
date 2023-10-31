@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.0.0
+-------------------
+
+* IMPORTANT: PHP 8.1 or greater is now required.
+
 1.23.0 (2023-03-06)
 -------------------
 
