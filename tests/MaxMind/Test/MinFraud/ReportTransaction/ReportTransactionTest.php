@@ -90,7 +90,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function requestsMissingRequiredFields(): array
+    public static function requestsMissingRequiredFields(): array
     {
         return [
             'Missing ip_address' => [
@@ -180,7 +180,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function notStringTypes(): array
+    public static function notStringTypes(): array
     {
         return [
             [1],
@@ -207,7 +207,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidIpAddresses(): array
+    public static function invalidIpAddresses(): array
     {
         return [
             ['1.2.3.'],
@@ -234,7 +234,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidMaxmindIds(): array
+    public static function invalidMaxmindIds(): array
     {
         return [
             ['1234567'],
@@ -261,7 +261,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidMinfraudIds(): array
+    public static function invalidMinfraudIds(): array
     {
         return [
             ['1234567812341234123412345678901'],
@@ -288,7 +288,7 @@ class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->report($req);
     }
 
-    public function invalidTags(): array
+    public static function invalidTags(): array
     {
         return [
             ['risky_business'],

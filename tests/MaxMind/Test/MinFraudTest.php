@@ -285,7 +285,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->{$method}(['unknown' => 'some value']);
     }
 
-    public function withMethods(): array
+    public static function withMethods(): array
     {
         return [
             ['withEvent'],
@@ -328,7 +328,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withEmail(['address' => $md5]);
     }
 
-    public function badMd5s(): array
+    public static function badMd5s(): array
     {
         return [
             ['14c4b06b824ec593239362517f538b2'],
@@ -352,7 +352,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->{$method}(['region' => $region]);
     }
 
-    public function badRegions(): array
+    public static function badRegions(): array
     {
         return [
             ['withBilling', 'AAAAA'],
@@ -376,7 +376,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->{$method}(['country' => $code]);
     }
 
-    public function badCountryCodes(): array
+    public static function badCountryCodes(): array
     {
         return [
             ['withBilling', 'A'],
@@ -402,7 +402,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->{$method}([$key => $code]);
     }
 
-    public function badPhoneCodes(): array
+    public static function badPhoneCodes(): array
     {
         return [
             ['withBilling', 'phone_country_code', '12344'],
@@ -439,7 +439,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard(['issuer_id_number' => $iin]);
     }
 
-    public function badIins(): array
+    public static function badIins(): array
     {
         return [
             ['12345'],
@@ -462,7 +462,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard(['last_digits' => $lastDigits]);
     }
 
-    public function badLastDigits(): array
+    public static function badLastDigits(): array
     {
         return [
             ['12345'],
@@ -501,7 +501,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function numericToken(): array
+    public static function numericToken(): array
     {
         return [
             ['123456'],
@@ -523,7 +523,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function invalidRangeToken(): array
+    public static function invalidRangeToken(): array
     {
         return [
             ["\x20"],
@@ -545,7 +545,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function longToken(): array
+    public static function longToken(): array
     {
         return [
             [str_repeat('x', 256)],
@@ -563,7 +563,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard(['token' => $token]);
     }
 
-    public function goodToken(): array
+    public static function goodToken(): array
     {
         return [
             ['123456abc1234'],
@@ -586,7 +586,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCreditCard([$key => 'Aa']);
     }
 
-    public function avsAndCvv(): array
+    public static function avsAndCvv(): array
     {
         return [
             ['avs_result'],
@@ -608,7 +608,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => $ip]);
     }
 
-    public function badIps(): array
+    public static function badIps(): array
     {
         return [
             ['1.2.3.'],
@@ -631,7 +631,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
-    public function negativeSessionAge(): array
+    public static function negativeSessionAge(): array
     {
         return [
             [-1],
@@ -652,7 +652,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
-    public function badSessionAge(): array
+    public static function badSessionAge(): array
     {
         return [
             ['X'],
@@ -672,7 +672,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
-    public function goodSessionAge(): array
+    public static function goodSessionAge(): array
     {
         return [
             [0],
@@ -696,7 +696,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
     }
 
-    public function badSessionId(): array
+    public static function badSessionId(): array
     {
         return [
             [str_repeat('X', 256)],
@@ -714,7 +714,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
     }
 
-    public function goodSessionId(): array
+    public static function goodSessionId(): array
     {
         return [
             [0],
@@ -733,7 +733,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withDevice(['ip_address' => $ip]);
     }
 
-    public function goodIps(): array
+    public static function goodIps(): array
     {
         return [
             ['1.2.3.4'],
@@ -756,7 +756,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withEmail(['domain' => $domain]);
     }
 
-    public function badDomains(): array
+    public static function badDomains(): array
     {
         return [
             ['bad'],
@@ -775,7 +775,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withEmail(['domain' => $domain]);
     }
 
-    public function goodDomains(): array
+    public static function goodDomains(): array
     {
         return [
             ['maxmind.com'],
@@ -795,7 +795,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withEvent(['time' => $time]);
     }
 
-    public function goodTimes(): array
+    public static function goodTimes(): array
     {
         $tests = [
             ['2014-04-12T23:20:50+01:00'],
@@ -849,7 +849,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withOrder(['currency' => $currency]);
     }
 
-    public function badCurrency(): array
+    public static function badCurrency(): array
     {
         return [
             ['usd'],
@@ -873,7 +873,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withOrder(['referrer_uri' => $uri]);
     }
 
-    public function badReferrerUri(): array
+    public static function badReferrerUri(): array
     {
         return [
             ['/blah/'],
@@ -914,7 +914,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withShoppingCartItem(['price' => $value]);
     }
 
-    public function validAmounts(): array
+    public static function validAmounts(): array
     {
         return [
             [0],
@@ -940,7 +940,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withOrder(['amount' => $value]);
     }
 
-    public function invalidAmounts(): array
+    public static function invalidAmounts(): array
     {
         return [
             [-0.001],
@@ -981,7 +981,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withShoppingCartItem(['quantity' => $value]);
     }
 
-    public function invalidQuantities(): array
+    public static function invalidQuantities(): array
     {
         return [
             [-0.001],
@@ -1003,7 +1003,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withShoppingCartItem([['price' => 1]]);
     }
 
-    public function services(): array
+    public static function services(): array
     {
         return [
             ['\MaxMind\MinFraud\Model\Factors', 'factors'],
@@ -1026,7 +1026,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTest
         )->withCustomInputs($inputs);
     }
 
-    public function badCustomInputs(): array
+    public static function badCustomInputs(): array
     {
         return [
             [['InvalidKey' => 1]],
