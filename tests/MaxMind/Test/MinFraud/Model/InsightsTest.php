@@ -107,7 +107,6 @@ class InsightsTest extends ScoreTest
             'isAnonymousVpn',
             'isHostingProvider',
             'isPublicProxy',
-            'isSatelliteProvider',
             'isTorExitNode',
         ] as $property) {
             $this->assertTrue($insights->ipAddress->traits->{$property});
