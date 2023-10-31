@@ -42,8 +42,6 @@ class FactorsTest extends InsightsTest
             'email_address' => 'emailAddress',
             'email_domain' => 'emailDomain',
             'email_local_part' => 'emailLocalPart',
-            'email_tenure' => 'emailTenure',
-            'ip_tenure' => 'ipTenure',
             'issuer_id_number' => 'issuerIdNumber',
             'order_amount' => 'orderAmount',
             'phone_number' => 'phoneNumber',

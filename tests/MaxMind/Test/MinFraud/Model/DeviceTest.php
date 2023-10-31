@@ -17,7 +17,7 @@ class DeviceTest extends TestCase
     public function testDevice(): void
     {
         $array = [
-            'confidence' => 99,
+            'confidence' => 99.0,
             'id' => '915d5202-d6c5-4616-b2c1-87683975dadb',
             'last_seen' => '2016-06-08T14:16:38Z',
             'local_time' => '2016-06-10T14:19:10-08:00',

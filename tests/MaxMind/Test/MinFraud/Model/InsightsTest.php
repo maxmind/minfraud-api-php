@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\Test\MinFraud\Model;
 
 use MaxMind\MinFraud\Model\Insights;
+use MaxMind\MinFraud\Model\Score;
 use MaxMind\Test\MinFraudData as Data;
 
 /**
@@ -22,10 +23,8 @@ class InsightsTest extends ScoreTest
     /**
      * This is specified here as PHP 7.3 doesn't allow us to set it to
      * Insights.
-     *
-     * @return Insights
      */
-    protected function model()
+    protected function model(): Insights|Score
     {
         return new Insights($this->response(), ['fr']);
     }

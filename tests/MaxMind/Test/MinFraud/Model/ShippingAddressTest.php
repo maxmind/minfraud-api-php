@@ -19,7 +19,7 @@ class ShippingAddressTest extends TestCase
         $array = [
             'is_postal_in_city' => true,
             'latitude' => 12.3,
-            'longitude' => 132,
+            'longitude' => 132.0,
             'distance_to_ip_location' => 240,
             'is_in_ip_country' => false,
             'is_high_risk' => true,
@@ -69,7 +69,7 @@ class ShippingAddressTest extends TestCase
             'isInIpCountry'
         );
 
-        $this->assertSame(
+        $this->assertEquals(
             $array,
             $shipping->jsonSerialize(),
             'correctly implements JsonSerializable'

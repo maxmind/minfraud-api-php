@@ -8,7 +8,7 @@
     "reason": "custom_rule"
   },
   "ip_address": {
-    "risk": 99
+    "risk": 99.00
   },
   "warnings": [
     {
