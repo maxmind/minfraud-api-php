@@ -19,7 +19,7 @@ class BillingAddressTest extends TestCase
         $array = [
             'is_postal_in_city' => true,
             'latitude' => 12.3,
-            'longitude' => 132,
+            'longitude' => 132.0,
             'distance_to_ip_location' => 240,
             'is_in_ip_country' => false,
         ];
@@ -55,7 +55,7 @@ class BillingAddressTest extends TestCase
             'isInIpCountry'
         );
 
-        $this->assertSame(
+        $this->assertEquals(
             $array,
             $billing->jsonSerialize(),
             'correctly implements JsonSerializable'

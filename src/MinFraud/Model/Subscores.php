@@ -6,243 +6,214 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * The scores for risk factors that are used in calculating the riskScore.
- *
- * @property-read float|null $avsResult The risk associated with the AVS result. If
- * present, this is a value in the range 0.01 to 99.
- * @property-read float|null $billingAddress The risk associated with the billing
- * address. If present, this is a value in the range 0.01 to 99.
- * @property-read float|null $billingAddressDistanceToIpLocation The risk
- * associated with the distance between the billing address and the
- * location for the given IP address. If present, this is a value in the
- * range 0.01 to 99.
- * @property-read float|null $browser The risk associated with the browser
- * attributes such as the User-Agent and Accept-Language. If present, this is
- * a value in the range 0.01 to 99.
- * @property-read float|null $chargeback Individualized risk of chargeback for the
- * given IP address given for your account and any shop ID passed. This is
- * only available to users sending chargeback data to MaxMind. If present,
- * this is a value in the range 0.01 to 99.
- * @property-read float|null $country The risk associated with the country the
- * transaction originated from. If present, this is a value in the range 0.01
- * to 99.
- * @property-read float|null $countryMismatch The risk associated with the
- * combination of IP country, card issuer country, billing country, and
- * shipping country. If present, this is a value in the range 0.01 to 99.
- * @property-read float|null $cvvResult The risk associated with the CVV result. If
- * present, this is a value in the range 0.01 to 99.
- * @property-read float|null $device The risk associated with the device. If
- * present, this is a value in the range 0.01 to 99.
- * @property-read float|null $emailAddress The risk associated with the particular
- * email address. If present, this is a value in the range 0.01 to 99.
- * @property-read float|null $emailDomain The general risk associated with the
- * email domain. If present, this is a value in the range 0.01 to 99.
- * @property-read float|null $emailLocalPart The risk associated with the email
- * address local part (the part of the email address before the @ symbol). If
- * present, this is a value in the range 0.01 to 99.
- * @property-read float|null $emailTenure The risk associated with the issuer ID
- * number on the email domain. If present, this is a value in the range 0.01
- * to 99. <b>Deprecated effective August 29, 2019. This risk factor score will
- * default to 1 and will be removed in a future release. The user tenure on
- * email is reflected in the `/subscores/email_address` output.</b>
- * @property-read float|null $ipTenure The risk associated with the issuer ID
- * number on the IP address. If present, this is a value in the range 0.01 to
- * 99. <b>Deprecated effective August 29, 2019. This risk factor score will
- * default to 1 and will be removed in a future release. The IP tenure is
- * reflected in the overall risk score.</b>
- * @property-read float|null $issuerIdNumber The risk associated with the
- * particular issuer ID number (IIN) given the billing location and the
- * history of usage of the IIN on your account and shop ID. If present, this
- * is a value in the range 0.01 to 99.
- * @property-read float|null $orderAmount The risk associated with the particular
- * order amount for your account and shop ID. If present, this is a value in
- * the range 0.01 to 99.
- * @property-read float|null $phoneNumber The risk associated with the particular
- * phone number. If present, this is a value in the range 0.01 to 99.
- * @property-read float|null $shippingAddress The risk associated with the
- * shipping address. If present, this is a value in the range 0.01 to 99.
- * @property-read float|null $shippingAddressDistanceToIpLocation The risk
- * associated with the distance between the shipping address and the IP
- * location for the given IP address. If present, this is a value in the
- * range 0.01 to 99.
- * @property-read float|null $timeOfDay The risk associated with the local time of
- * day of the transaction in the IP address location. If present, this is a
- * value in the range 0.01 to 99.
  */
-class Subscores extends AbstractModel
+class Subscores implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the AVS result. If
+     *                 present, this is a value in the range 0.01 to 99.
      */
-    protected $avsResult;
+    public readonly ?float $avsResult;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the billing
+     *                 address. If present, this is a value in the range 0.01 to 99.
      */
-    protected $billingAddress;
+    public readonly ?float $billingAddress;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk
+     *                 associated with the distance between the billing address and the
+     *                 location for the given IP address. If present, this is a value in the
+     *                 range 0.01 to 99.
      */
-    protected $billingAddressDistanceToIpLocation;
+    public readonly ?float $billingAddressDistanceToIpLocation;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the browser
+     *                 attributes such as the User-Agent and Accept-Language. If present, this is
+     *                 a value in the range 0.01 to 99.
      */
-    protected $browser;
+    public readonly ?float $browser;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null Individualized risk of chargeback for the
+     *                 given IP address given for your account and any shop ID passed. This is
+     *                 only available to users sending chargeback data to MaxMind. If present,
+     *                 this is a value in the range 0.01 to 99.
      */
-    protected $chargeback;
+    public readonly ?float $chargeback;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the country the
+     *                 transaction originated from. If present, this is a value in the range 0.01
+     *                 to 99.
      */
-    protected $country;
+    public readonly ?float $country;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the
+     *                 combination of IP country, card issuer country, billing country, and
+     *                 shipping country. If present, this is a value in the range 0.01 to 99.
      */
-    protected $countryMismatch;
+    public readonly ?float $countryMismatch;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the CVV result. If
+     *                 present, this is a value in the range 0.01 to 99.
      */
-    protected $cvvResult;
+    public readonly ?float $cvvResult;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the device. If
+     *                 present, this is a value in the range 0.01 to 99.
      */
-    protected $device;
+    public readonly ?float $device;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the particular
+     *                 email address. If present, this is a value in the range 0.01 to 99.
      */
-    protected $emailAddress;
+    public readonly ?float $emailAddress;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The general risk associated with the
+     *                 email domain. If present, this is a value in the range 0.01 to 99.
      */
-    protected $emailDomain;
+    public readonly ?float $emailDomain;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the email
+     *                 address local part (the part of the email address before the @ symbol). If
+     *                 present, this is a value in the range 0.01 to 99.
      */
-    protected $emailLocalPart;
+    public readonly ?float $emailLocalPart;
 
     /**
-     * @internal
-     *
-     * @var float|null
-     *
-     * @deprecated This risk factor score will default to 1 and will be
-     * removed in a future release. The user tenure on email is reflected in
-     * the `/subscores/email_address` output.
+     * @var float|null The risk associated with the
+     *                 particular issuer ID number (IIN) given the billing location and the
+     *                 history of usage of the IIN on your account and shop ID. If present, this
+     *                 is a value in the range 0.01 to 99.
      */
-    protected $emailTenure;
+    public readonly ?float $issuerIdNumber;
 
     /**
-     * @internal
-     *
-     * @var float|null
-     *
-     * @deprecated This risk factor score will default to 1 and will be
-     * removed in a future release. The IP tenure is reflected in the overall
-     * risk score.
+     * @var float|null The risk associated with the particular
+     *                 order amount for your account and shop ID. If present, this is a value in
+     *                 the range 0.01 to 99.
      */
-    protected $ipTenure;
+    public readonly ?float $orderAmount;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the particular
+     *                 phone number. If present, this is a value in the range 0.01 to 99.
      */
-    protected $issuerIdNumber;
+    public readonly ?float $phoneNumber;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the
+     *                 shipping address. If present, this is a value in the range 0.01 to 99.
      */
-    protected $orderAmount;
+    public readonly ?float $shippingAddress;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk
+     *                 associated with the distance between the shipping address and the IP
+     *                 location for the given IP address. If present, this is a value in the
+     *                 range 0.01 to 99.
      */
-    protected $phoneNumber;
+    public readonly ?float $shippingAddressDistanceToIpLocation;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var float|null The risk associated with the local time of
+     *                 day of the transaction in the IP address location. If present, this is a
+     *                 value in the range 0.01 to 99.
      */
-    protected $shippingAddress;
+    public readonly ?float $timeOfDay;
 
-    /**
-     * @internal
-     *
-     * @var float|null
-     */
-    protected $shippingAddressDistanceToIpLocation;
-
-    /**
-     * @internal
-     *
-     * @var float|null
-     */
-    protected $timeOfDay;
-
-    public function __construct(?array $response, array $locales = ['en'])
+    public function __construct(?array $response)
     {
-        parent::__construct($response, $locales);
-
-        $this->avsResult = $this->safeArrayLookup($response['avs_result']);
-        $this->billingAddress = $this->safeArrayLookup($response['billing_address']);
+        $this->avsResult = $response['avs_result'] ?? null;
+        $this->billingAddress = $response['billing_address'] ?? null;
         $this->billingAddressDistanceToIpLocation
-            = $this->safeArrayLookup($response['billing_address_distance_to_ip_location']);
-        $this->browser = $this->safeArrayLookup($response['browser']);
-        $this->chargeback = $this->safeArrayLookup($response['chargeback']);
-        $this->country = $this->safeArrayLookup($response['country']);
-        $this->countryMismatch = $this->safeArrayLookup($response['country_mismatch']);
-        $this->cvvResult = $this->safeArrayLookup($response['cvv_result']);
-        $this->device = $this->safeArrayLookup($response['device']);
-        $this->emailAddress = $this->safeArrayLookup($response['email_address']);
-        $this->emailDomain = $this->safeArrayLookup($response['email_domain']);
-        $this->emailLocalPart = $this->safeArrayLookup($response['email_local_part']);
-        $this->emailTenure = $this->safeArrayLookup($response['email_tenure']);
-        $this->ipTenure = $this->safeArrayLookup($response['ip_tenure']);
-        $this->issuerIdNumber = $this->safeArrayLookup($response['issuer_id_number']);
-        $this->orderAmount = $this->safeArrayLookup($response['order_amount']);
-        $this->phoneNumber = $this->safeArrayLookup($response['phone_number']);
-        $this->shippingAddress = $this->safeArrayLookup($response['shipping_address']);
+            = $response['billing_address_distance_to_ip_location'] ?? null;
+        $this->browser = $response['browser'] ?? null;
+        $this->chargeback = $response['chargeback'] ?? null;
+        $this->country = $response['country'] ?? null;
+        $this->countryMismatch = $response['country_mismatch'] ?? null;
+        $this->cvvResult = $response['cvv_result'] ?? null;
+        $this->device = $response['device'] ?? null;
+        $this->emailAddress = $response['email_address'] ?? null;
+        $this->emailDomain = $response['email_domain'] ?? null;
+        $this->emailLocalPart = $response['email_local_part'] ?? null;
+        $this->issuerIdNumber = $response['issuer_id_number'] ?? null;
+        $this->orderAmount = $response['order_amount'] ?? null;
+        $this->phoneNumber = $response['phone_number'] ?? null;
+        $this->shippingAddress = $response['shipping_address'] ?? null;
         $this->shippingAddressDistanceToIpLocation
-            = $this->safeArrayLookup($response['shipping_address_distance_to_ip_location']);
-        $this->timeOfDay = $this->safeArrayLookup($response['time_of_day']);
+            = $response['shipping_address_distance_to_ip_location'] ?? null;
+        $this->timeOfDay = $response['time_of_day'] ?? null;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        if ($this->avsResult !== null) {
+            $js['avs_result'] = $this->avsResult;
+        }
+        if ($this->billingAddress !== null) {
+            $js['billing_address'] = $this->billingAddress;
+        }
+        if ($this->billingAddressDistanceToIpLocation !== null) {
+            $js['billing_address_distance_to_ip_location'] = $this->billingAddressDistanceToIpLocation;
+        }
+        if ($this->browser !== null) {
+            $js['browser'] = $this->browser;
+        }
+        if ($this->chargeback !== null) {
+            $js['chargeback'] = $this->chargeback;
+        }
+        if ($this->country !== null) {
+            $js['country'] = $this->country;
+        }
+        if ($this->countryMismatch !== null) {
+            $js['country_mismatch'] = $this->countryMismatch;
+        }
+        if ($this->cvvResult !== null) {
+            $js['cvv_result'] = $this->cvvResult;
+        }
+        if ($this->device !== null) {
+            $js['device'] = $this->device;
+        }
+        if ($this->emailAddress !== null) {
+            $js['email_address'] = $this->emailAddress;
+        }
+        if ($this->emailDomain !== null) {
+            $js['email_domain'] = $this->emailDomain;
+        }
+        if ($this->emailLocalPart !== null) {
+            $js['email_local_part'] = $this->emailLocalPart;
+        }
+        if ($this->issuerIdNumber !== null) {
+            $js['issuer_id_number'] = $this->issuerIdNumber;
+        }
+        if ($this->orderAmount !== null) {
+            $js['order_amount'] = $this->orderAmount;
+        }
+        if ($this->phoneNumber !== null) {
+            $js['phone_number'] = $this->phoneNumber;
+        }
+        if ($this->shippingAddress !== null) {
+            $js['shipping_address'] = $this->shippingAddress;
+        }
+        if ($this->shippingAddressDistanceToIpLocation !== null) {
+            $js['shipping_address_distance_to_ip_location'] = $this->shippingAddressDistanceToIpLocation;
+        }
+        if ($this->timeOfDay !== null) {
+            $js['time_of_day'] = $this->timeOfDay;
+        }
+
+        return $js;
     }
 }

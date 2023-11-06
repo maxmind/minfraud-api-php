@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @coversNothing
  */
-abstract class ServiceClientTest extends TestCase
+abstract class ServiceClientTester extends TestCase
 {
     protected function createRequest(
         string $class,

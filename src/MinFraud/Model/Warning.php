@@ -31,46 +31,45 @@ namespace MaxMind\MinFraud\Model;
  *   our database.
  * * `SHIPPING_POSTAL_NOT_FOUND` - the shipping postal could not be found in
  *   our database.
- *
- * @property-read string $code This value is a machine-readable code identifying the
- * warning.
- * @property-read string $warning This property provides a human-readable
- * explanation of the warning. The description may change at any time and
- * should not be matched against.
- * @property-read array|null $inputPointer A JSON Pointer to the input field
- * that the warning is associated with. For instance, if the warning was about
- * the billing city, this would be `/billing/city`. If it was for the price in
- * the second shopping cart item, it would be `/shopping_cart/1/price`.
  */
-class Warning extends AbstractModel
+class Warning implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var string
+     * @var string this value is a machine-readable code identifying the
+     *             warning
      */
-    protected $code;
+    public readonly string $code;
 
     /**
-     * @internal
-     *
-     * @var string
+     * @var string This property provides a human-readable
+     *             explanation of the warning. The description may change at any time and
+     *             should not be matched against.
      */
-    protected $warning;
+    public readonly string $warning;
 
     /**
-     * @internal
-     *
-     * @var string
+     * @var string|null A JSON Pointer to the input field
+     *                  that the warning is associated with. For instance, if the warning was about
+     *                  the billing city, this would be `/billing/city`. If it was for the price in
+     *                  the second shopping cart item, it would be `/shopping_cart/1/price`.
      */
-    protected $inputPointer;
+    public readonly ?string $inputPointer;
 
-    public function __construct(array $response, array $locales = ['en'])
+    public function __construct(array $response)
     {
-        parent::__construct($response, $locales);
+        $this->code = $response['code'];
+        $this->warning = $response['warning'];
+        $this->inputPointer = $response['input_pointer'] ?? null;
+    }
 
-        $this->code = $this->safeArrayLookup($response['code']);
-        $this->warning = $this->safeArrayLookup($response['warning']);
-        $this->inputPointer = $this->safeArrayLookup($response['input_pointer']);
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        $js['code'] = $this->code;
+        $js['warning'] = $this->warning;
+        $js['input_pointer'] = $this->inputPointer;
+
+        return $js;
     }
 }

@@ -25,34 +25,35 @@ namespace MaxMind\MinFraud\Model;
  *   seen on this IP address.
  * * `MINFRAUD_NETWORK_ACTIVITY` - Suspicious activity has been seen on this
  *   IP address across minFraud customers.
- *
- * @property-read string $code This value is a machine-readable code
- * identifying the reason.
- * @property-read string $reason This property provides a human-readable
- * explanation of the reason. The description may change at any time and
- * should not be matched against.
  */
-class IpRiskReason extends AbstractModel
+class IpRiskReason implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var string
+     * @var string this value is a machine-readable code
+     *             identifying the reason
      */
-    protected $code;
+    public readonly ?string $code;
 
     /**
-     * @internal
-     *
-     * @var string
+     * @var string This property provides a human-readable
+     *             explanation of the reason. The description may change at any time and
+     *             should not be matched against.
      */
-    protected $reason;
+    public readonly ?string $reason;
 
-    public function __construct(array $response, array $locales = ['en'])
+    public function __construct(array $response)
     {
-        parent::__construct($response, $locales);
+        $this->code = $response['code'];
+        $this->reason = $response['reason'];
+    }
 
-        $this->code = $this->safeArrayLookup($response['code']);
-        $this->reason = $this->safeArrayLookup($response['reason']);
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        $js['code'] = $this->code;
+        $js['reason'] = $this->reason;
+
+        return $js;
     }
 }

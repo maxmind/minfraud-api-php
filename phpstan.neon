@@ -6,4 +6,3 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - '/Parameter \#\d+ \.\.\.\$rule of static method Respect\\Validation\\StaticValidator::keySet\(\) expects Respect\\Validation\\Rules\\Key, Respect\\Validation\\ChainedValidator given\./'
-        - '/PHPDoc type MaxMind\\MinFraud\\Model\\IpAddress of property MaxMind\\MinFraud\\Model\\Insights::\$ipAddress is not covariant with PHPDoc type MaxMind\\MinFraud\\Model\\ScoreIpAddress of overridden property MaxMind\\MinFraud\\Model\\Score::\$ipAddress\./'

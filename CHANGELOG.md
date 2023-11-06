@@ -1,6 +1,16 @@
 CHANGELOG
 =========
 
+2.0.0
+-------------------
+
+* IMPORTANT: PHP 8.1 or greater is now required.
+* BREAKING: Read-only properties are now used for the model class rather than
+  magic methods.
+* BREAKING: The `rawResponse` property on model classess has been removed. Use
+  the `jsonSerialize` method instead.
+* BREAKING: The inheritance hierarchy on model classes has changed.
+
 1.23.0 (2023-03-06)
 -------------------
 

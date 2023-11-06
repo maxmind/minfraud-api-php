@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MaxMind\Test\MinFraud\Model;
 
+use MaxMind\MinFraud\Model\Insights;
 use MaxMind\MinFraud\Model\Score;
 use MaxMind\Test\MinFraudData as Data;
 use PHPUnit\Framework\TestCase;
@@ -23,10 +24,8 @@ class ScoreTest extends TestCase
     /**
      * This is specified here as PHP 7.3 doesn't allow us to set it to
      * a subclass of Score in subclasses of this test class.
-     *
-     * @return Score
      */
-    protected function model()
+    protected function model(): Insights|Score
     {
         return new Score($this->response());
     }
@@ -84,7 +83,7 @@ class ScoreTest extends TestCase
             'first warning has correct code'
         );
 
-        $this->assertSame(
+        $this->assertEquals(
             $array,
             $score->jsonSerialize(),
             'correctly implements JsonSerializable'

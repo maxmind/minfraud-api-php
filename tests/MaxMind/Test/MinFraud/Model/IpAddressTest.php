@@ -31,7 +31,6 @@ class IpAddressTest extends TestCase
             'country' => [
                 'is_in_european_union' => true,
                 'iso_code' => 'US',
-                'is_high_risk' => false,
             ],
             'location' => [
                 'local_time' => '2015-04-12T18:51:19-01:00',
@@ -82,12 +81,6 @@ class IpAddressTest extends TestCase
         );
 
         $this->assertSame(
-            $array['country']['is_high_risk'],
-            $ipAddress->country->isHighRisk,
-            'country is not high risk'
-        );
-
-        $this->assertSame(
             $array['location']['local_time'],
             $ipAddress->location->localTime,
             'local time'
@@ -115,7 +108,7 @@ class IpAddressTest extends TestCase
             'represented country is in European Union'
         );
 
-        $this->assertSame(
+        $this->assertEquals(
             $array,
             $ipAddress->jsonSerialize(),
             'correctly implements JsonSerializable'

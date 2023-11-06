@@ -6,65 +6,69 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Abstract model for a postal address.
- *
- * @property-read int|null $distanceToIpLocation The distance in kilometers from
- * the address to the IP location.
- * @property-read bool|null $isInIpCountry This property is true if the address
- * is in the IP country. The property is false when the address is not in the
- * IP country. If the address could not be parsed or was not provided or if
- * the IP address could not be geolocated, the property will be null.
- * @property-read bool|null $isPostalInCity This property is true if the postal
- * code provided with the address is in the city for the address. The property
- * is false when the postal code is not in the city. If the address was not
- * provided or could not be parsed, the property will be null.
- * @property-read float|null $latitude The latitude associated with the address.
- * @property-read float|null $longitude The longitude associated with the address.
  */
-abstract class Address extends AbstractModel
+abstract class Address implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var int|null the distance in kilometers from
+     *               the address to the IP location
      */
-    protected $isPostalInCity;
+    public readonly ?int $distanceToIpLocation;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var bool|null This property is true if the address is in the IP
+     *                country. The property is false when the address is not in the IP
+     *                country. If the address could not be parsed or was not provided or if
+     *                the IP address could not be geolocated, the property will be null.
      */
-    protected $latitude;
+    public readonly ?bool $isInIpCountry;
 
     /**
-     * @internal
-     *
-     * @var float|null
+     * @var bool|null This property is true if the postal code provided with
+     *                the address is in the city for the address. The property is false when
+     *                the postal code is not in the city. If the address was not provided or
+     *                could not be parsed, the property will be null.
      */
-    protected $longitude;
+    public readonly ?bool $isPostalInCity;
 
     /**
-     * @internal
-     *
-     * @var int|null
+     * @var float|null the latitude associated with the address
      */
-    protected $distanceToIpLocation;
+    public readonly ?float $latitude;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var float|null the longitude associated with the address
      */
-    protected $isInIpCountry;
+    public readonly ?float $longitude;
 
-    public function __construct(?array $response, array $locales = ['en'])
+    public function __construct(?array $response)
     {
-        parent::__construct($response, $locales);
+        $this->distanceToIpLocation = $response['distance_to_ip_location'] ?? null;
+        $this->isInIpCountry = $response['is_in_ip_country'] ?? null;
+        $this->isPostalInCity = $response['is_postal_in_city'] ?? null;
+        $this->latitude = $response['latitude'] ?? null;
+        $this->longitude = $response['longitude'] ?? null;
+    }
 
-        $this->isPostalInCity = $this->safeArrayLookup($response['is_postal_in_city']);
-        $this->latitude = $this->safeArrayLookup($response['latitude']);
-        $this->longitude = $this->safeArrayLookup($response['longitude']);
-        $this->distanceToIpLocation = $this->safeArrayLookup($response['distance_to_ip_location']);
-        $this->isInIpCountry = $this->safeArrayLookup($response['is_in_ip_country']);
+    public function jsonSerialize(): array
+    {
+        $js = [];
+        if ($this->distanceToIpLocation !== null) {
+            $js['distance_to_ip_location'] = $this->distanceToIpLocation;
+        }
+        if ($this->isInIpCountry !== null) {
+            $js['is_in_ip_country'] = $this->isInIpCountry;
+        }
+        if ($this->isPostalInCity !== null) {
+            $js['is_postal_in_city'] = $this->isPostalInCity;
+        }
+        if ($this->latitude !== null) {
+            $js['latitude'] = $this->latitude;
+        }
+        if ($this->longitude !== null) {
+            $js['longitude'] = $this->longitude;
+        }
+
+        return $js;
     }
 }

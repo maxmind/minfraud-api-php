@@ -49,7 +49,6 @@
     "country": {
       "confidence": 99,
       "geoname_id": 2635167,
-      "is_high_risk": false,
       "is_in_european_union": true,
       "iso_code": "GB",
       "names": {
@@ -105,11 +104,11 @@
       "is_anonymous_vpn": true,
       "is_hosting_provider": true,
       "is_public_proxy": true,
-      "is_satellite_provider": true,
       "is_tor_exit_node": true,
       "isp": "Andrews & Arnold Ltd",
       "mobile_country_code": "310",
       "mobile_network_code": "004",
+      "network": "152.216.7.0/24",
       "organization": "STONEHOUSE office network",
       "user_type": "government"
     }
@@ -136,7 +135,7 @@
     "type": "credit"
   },
   "device": {
-    "confidence": 99,
+    "confidence": 99.00,
     "id": "7835b099-d385-4e5b-969e-7df26181d73b",
     "last_seen": "2016-06-08T14:16:38Z"
   },
@@ -171,8 +170,6 @@
     "email_address": 0.1,
     "email_domain": 0.11,
     "email_local_part": 0.12,
-    "email_tenure": 0.13,
-    "ip_tenure": 0.14,
     "issuer_id_number": 0.15,
     "order_amount": 0.16,
     "phone_number": 0.17,

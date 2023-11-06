@@ -6,23 +6,29 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing information about the email domain.
- *
- * @property-read string|null $firstSeen A date string (e.g. 2017-04-24) to
- * identify the date an email domain was first seen by MaxMind. This is
- * expressed using the ISO 8601 date format.
  */
-class EmailDomain extends AbstractModel
+class EmailDomain implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var string|null
+     * @var string|null A date string (e.g. 2017-04-24) to
+     *                  identify the date an email domain was first seen by MaxMind. This is
+     *                  expressed using the ISO 8601 date format.
      */
-    protected $firstSeen;
+    public readonly ?string $firstSeen;
 
-    public function __construct(?array $response, array $locales = ['en'])
+    public function __construct(?array $response)
     {
-        parent::__construct($response, $locales);
-        $this->firstSeen = $this->safeArrayLookup($response['first_seen']);
+        $this->firstSeen = $response['first_seen'] ?? null;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        if ($this->firstSeen !== null) {
+            $js['first_seen'] = $this->firstSeen;
+        }
+
+        return $js;
     }
 }

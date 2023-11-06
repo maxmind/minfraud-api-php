@@ -6,67 +6,77 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing information about the email address.
- *
- * @property-read \MaxMind\MinFraud\Model\EmailDomain $domain An object
- * containing information about the email domain.
- * @property-read string|null $firstSeen A date string (e.g. 2017-04-24) to
- * identify the date an email address was first seen by MaxMind. This is
- * expressed using the ISO 8601 date format.
- * @property-read bool|null $isDisposable Whether this email address is from
- * a disposable email provider. The value will be `null` when no email address
- * or email domain has been passed as an input.
- * @property-read bool|null $isFree This property is true if MaxMind believes
- * that this email is hosted by a free email provider such as Gmail or Yahoo!
- * Mail.
- * @property-read bool|null $isHighRisk This field is true if MaxMind believes
- * that this email is likely to be used for fraud. Note that this is also
- * factored into the overall risk_score in the response as well.
  */
-class Email extends AbstractModel
+class Email implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var EmailDomain
+     * @var \MaxMind\MinFraud\Model\EmailDomain an object
+     *                                          containing information about the email domain
      */
-    protected $domain;
+    public readonly EmailDomain $domain;
 
     /**
-     * @internal
-     *
-     * @var string|null
+     * @var string|null A date string (e.g. 2017-04-24) to
+     *                  identify the date an email address was first seen by MaxMind. This is
+     *                  expressed using the ISO 8601 date format.
      */
-    protected $firstSeen;
+    public readonly ?string $firstSeen;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null Whether this email address is from
+     *                a disposable email provider. The value will be `null` when no email address
+     *                or email domain has been passed as an input.
      */
-    protected $isDisposable;
+    public readonly ?bool $isDisposable;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null this property is true if MaxMind believes
+     *                that this email is hosted by a free email provider such as Gmail or Yahoo!
+     *                Mail
      */
-    protected $isFree;
+    public readonly ?bool $isFree;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null This field is true if MaxMind believes
+     *                that this email is likely to be used for fraud. Note that this is also
+     *                factored into the overall risk_score in the response as well.
      */
-    protected $isHighRisk;
+    public readonly ?bool $isHighRisk;
 
-    public function __construct(?array $response, array $locales = ['en'])
+    public function __construct(?array $response)
     {
-        parent::__construct($response, $locales);
+        $this->domain = new EmailDomain($response['domain'] ?? null);
+        $this->firstSeen = $response['first_seen'] ?? null;
+        $this->isDisposable = $response['is_disposable'] ?? null;
+        $this->isFree = $response['is_free'] ?? null;
+        $this->isHighRisk = $response['is_high_risk'] ?? null;
+    }
 
-        $this->domain = new EmailDomain($this->safeArrayLookup($response['domain']));
-        $this->firstSeen = $this->safeArrayLookup($response['first_seen']);
-        $this->isDisposable = $this->safeArrayLookup($response['is_disposable']);
-        $this->isFree = $this->safeArrayLookup($response['is_free']);
-        $this->isHighRisk = $this->safeArrayLookup($response['is_high_risk']);
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        $domain = $this->domain->jsonSerialize();
+        if (!empty($domain)) {
+            $js['domain'] = $domain;
+        }
+
+        if ($this->firstSeen !== null) {
+            $js['first_seen'] = $this->firstSeen;
+        }
+
+        if ($this->isDisposable !== null) {
+            $js['is_disposable'] = $this->isDisposable;
+        }
+
+        if ($this->isFree !== null) {
+            $js['is_free'] = $this->isFree;
+        }
+
+        if ($this->isHighRisk !== null) {
+            $js['is_high_risk'] = $this->isHighRisk;
+        }
+
+        return $js;
     }
 }

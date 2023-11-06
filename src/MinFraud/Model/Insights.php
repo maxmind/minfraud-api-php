@@ -6,82 +6,171 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model of the Insights response.
- *
- * @property-read \MaxMind\MinFraud\Model\BillingAddress $billingAddress An object
- * containing minFraud data related to the billing address used in the
- * transaction.
- * @property-read \MaxMind\MinFraud\Model\CreditCard $creditCard An object containing
- * minFraud data about the credit card used in the transaction.
- * @property-read \MaxMind\MinFraud\Model\Device $device This object contains
- * information about the device that MaxMind believes is associated with the
- * IP address passed in the request.
- * @property-read \MaxMind\MinFraud\Model\Email $email This object contains
- * information about the email address passed in the request.
- * @property-read \MaxMind\MinFraud\Model\IpAddress $ipAddress An object containing
- * GeoIP2 and minFraud Insights information about the geolocated IP address.
- * @property-read \MaxMind\MinFraud\Model\ShippingAddress $shippingAddress An object
- * containing minFraud data related to the shipping address used in the
- * transaction.
  */
-class Insights extends Score
+class Insights implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var BillingAddress
+     * @var \MaxMind\MinFraud\Model\BillingAddress an object
+     *                                             containing minFraud data related to the billing address used in the
+     *                                             transaction
      */
-    protected $billingAddress;
+    public readonly BillingAddress $billingAddress;
 
     /**
-     * @internal
-     *
-     * @var CreditCard
+     * @var \MaxMind\MinFraud\Model\CreditCard an object containing
+     *                                         minFraud data about the credit card used in the transaction
      */
-    protected $creditCard;
+    public readonly CreditCard $creditCard;
 
     /**
-     * @internal
-     *
-     * @var Device
+     * @var \MaxMind\MinFraud\Model\Device this object contains
+     *                                     information about the device that MaxMind believes is associated with the
+     *                                     IP address passed in the request
      */
-    protected $device;
+    public readonly Device $device;
 
     /**
-     * @internal
-     *
-     * @var Email
+     * @var \MaxMind\MinFraud\Model\Disposition an object
+     *                                          containing the disposition set by custom rules
      */
-    protected $email;
+    public readonly Disposition $disposition;
 
     /**
-     * @internal
-     *
-     * @var IpAddress
+     * @var \MaxMind\MinFraud\Model\Email this object contains
+     *                                    information about the email address passed in the request
      */
-    protected $ipAddress;
+    public readonly Email $email;
 
     /**
-     * @internal
-     *
-     * @var ShippingAddress
+     * @var float the approximate US dollar value of the
+     *            funds remaining on your MaxMind account
      */
-    protected $shippingAddress;
+    public readonly float $fundsRemaining;
+
+    /**
+     * @var string This is a UUID that identifies the minFraud request.
+     *             Please use this ID in bug reports or support requests to MaxMind so that we
+     *             can easily identify a particular request.
+     */
+    public readonly string $id;
+
+    /**
+     * @var \MaxMind\MinFraud\Model\IpAddress an object containing
+     *                                        GeoIP2 and minFraud Insights information about the geolocated IP address
+     */
+    public readonly IpAddress $ipAddress;
+
+    /**
+     * @var int the approximate number of queries
+     *          remaining for this service before your account runs out of funds
+     */
+    public readonly int $queriesRemaining;
+
+    /**
+     * @var float This property contains the risk score, from 0.01
+     *            to 99. A higher score indicates a higher risk of fraud. For example, a
+     *            score of 20 indicates a 20% chance that a transaction is fraudulent. We
+     *            never return a risk score of 0, since all transactions have the possibility
+     *            of being fraudulent. Likewise we never return a risk score of 100.
+     */
+    public readonly float $riskScore;
+
+    /**
+     * @var \MaxMind\MinFraud\Model\ShippingAddress an object
+     *                                              containing minFraud data related to the shipping address used in the
+     *                                              transaction
+     */
+    public readonly ShippingAddress $shippingAddress;
+
+    /**
+     * @var array This array contains
+     *            \MaxMind\MinFraud\Model\Warning objects detailing issues with the request
+     *            that was sent, such as invalid or unknown inputs. It is highly recommended
+     *            that you check this array for issues when integrating the web service.
+     */
+    public readonly array $warnings;
 
     public function __construct(array $response, array $locales = ['en'])
     {
-        parent::__construct($response, $locales);
+        $this->disposition
+            = new Disposition($response['disposition'] ?? []);
+        $this->fundsRemaining = $response['funds_remaining'];
+        $this->queriesRemaining = $response['queries_remaining'];
+        $this->id = $response['id'];
+        $this->riskScore = $response['risk_score'];
 
-        $this->billingAddress
-            = new BillingAddress($this->safeArrayLookup($response['billing_address']));
-        $this->creditCard
-            = new CreditCard($this->safeArrayLookup($response['credit_card']));
-        $this->device
-            = new Device($this->safeArrayLookup($response['device']));
-        $this->email
-            = new Email($this->safeArrayLookup($response['email']));
-        $this->ipAddress
-            = new IpAddress($this->safeArrayLookup($response['ip_address']), $locales);
-        $this->shippingAddress
-            = new ShippingAddress($this->safeArrayLookup($response['shipping_address']));
+        $warnings = [];
+        if (isset($response['warnings'])) {
+            foreach ($response['warnings'] as $warning) {
+                $warnings[] = new Warning($warning);
+            }
+        }
+        $this->warnings = $warnings;
+
+        $this->billingAddress = new BillingAddress($response['billing_address'] ?? []);
+        $this->creditCard = new CreditCard($response['credit_card'] ?? []);
+        $this->device = new Device($response['device'] ?? []);
+        $this->email = new Email($response['email'] ?? []);
+        $this->ipAddress = new IpAddress($response['ip_address'] ?? [], $locales);
+        $this->shippingAddress = new ShippingAddress($response['shipping_address'] ?? []);
+    }
+
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        $billingAddress = $this->billingAddress->jsonSerialize();
+        if (!empty($billingAddress)) {
+            $js['billing_address'] = $billingAddress;
+        }
+
+        $creditCard = $this->creditCard->jsonSerialize();
+        if (!empty($creditCard)) {
+            $js['credit_card'] = $creditCard;
+        }
+
+        $device =
+          $this->device->jsonSerialize();
+        if (!empty($device)) {
+            $js['device'] = $device;
+        }
+
+        $disposition = $this->disposition->jsonSerialize();
+        if (!empty($disposition)) {
+            $js['disposition'] = $disposition;
+        }
+
+        $email = $this->email->jsonSerialize();
+        if (!empty($email)) {
+            $js['email'] = $email;
+        }
+
+        $js['funds_remaining'] = $this->fundsRemaining;
+
+        $ipAddress = $this->ipAddress->jsonSerialize();
+        if (!empty($ipAddress)) {
+            $js['ip_address'] = $ipAddress;
+        }
+
+        $js['id'] = $this->id;
+
+        $js['queries_remaining'] = $this->queriesRemaining;
+
+        $js['risk_score'] = $this->riskScore;
+
+        $shippingAddress = $this->shippingAddress->jsonSerialize();
+        if (!empty($shippingAddress)) {
+            $js['shipping_address'] = $shippingAddress;
+        }
+
+        if (!empty($this->warnings)) {
+            $warnings = [];
+            foreach ($this->warnings as $warning) {
+                $warnings[] = $warning->jsonSerialize();
+            }
+            $js['warnings'] = $warnings;
+        }
+
+        return $js;
     }
 }

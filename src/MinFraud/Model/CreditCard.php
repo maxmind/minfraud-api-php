@@ -6,102 +6,115 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model with details about the credit card used.
- *
- * @property-read string|null $brand The card brand, such as "Visa", "Discover",
- * "American Express", etc.
- * @property-read string|null $country This property contains the two letter
- * ISO 3166-1 alpha-2 country code
- * (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) associated with the
- * location of the majority of customers using this credit card as determined
- * by their billing address. In cases where the location of customers is highly
- * mixed, this defaults to the country of the bank issuing the card.
- * @property-read bool|null $isBusiness This property is true if the card is a
- * business card.
- * @property-read bool|null $isIssuedInBillingAddressCountry This property is
- * true if the country of the billing address matches the country of the
- * majority of customers using this credit card. In cases where the location
- * of customers is highly mixed, the match is to the country of the bank
- * issuing the card.
- * @property-read bool|null $isPrepaid This property is true if the card is a
- * prepaid card.
- * @property-read bool|null $isVirtual This property is true if the card is a
- * virtual card.
- * @property-read \MaxMind\MinFraud\Model\Issuer $issuer An object containing
- * information about the credit card issuer.
- * @property-read string|null $type The card's type. The valid values are: charge,
- * credit, debit.
  */
-class CreditCard extends AbstractModel
+class CreditCard implements \JsonSerializable
 {
     /**
-     * @internal
-     *
-     * @var string|null
+     * @var string|null the card brand, such as "Visa", "Discover",
+     *                  "American Express", etc
      */
-    protected $brand;
+    public readonly ?string $brand;
 
     /**
-     * @internal
-     *
-     * @var string|null
+     * @var string|null This property contains the two letter
+     *                  ISO 3166-1 alpha-2 country code
+     *                  (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) associated with the
+     *                  location of the majority of customers using this credit card as determined
+     *                  by their billing address. In cases where the location of customers is highly
+     *                  mixed, this defaults to the country of the bank issuing the card.
      */
-    protected $country;
+    public readonly ?string $country;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null this property is true if the card is a
+     *                business card
      */
-    protected $isBusiness;
+    public readonly ?bool $isBusiness;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null This property is
+     *                true if the country of the billing address matches the country of the
+     *                majority of customers using this credit card. In cases where the location
+     *                of customers is highly mixed, the match is to the country of the bank
+     *                issuing the card.
      */
-    protected $isIssuedInBillingAddressCountry;
+    public readonly ?bool $isIssuedInBillingAddressCountry;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null this property is true if the card is a
+     *                prepaid card
      */
-    protected $isPrepaid;
+    public readonly ?bool $isPrepaid;
 
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var bool|null this property is true if the card is a
+     *                virtual card
      */
-    protected $isVirtual;
+    public readonly ?bool $isVirtual;
 
     /**
-     * @internal
-     *
-     * @var Issuer
+     * @var \MaxMind\MinFraud\Model\Issuer an object containing
+     *                                     information about the credit card issuer
      */
-    protected $issuer;
+    public readonly Issuer $issuer;
 
     /**
-     * @internal
-     *
-     * @var string|null
+     * @var string|null The card's type. The valid values are: charge,
+     *                  credit, debit.
      */
-    protected $type;
+    public readonly ?string $type;
 
-    public function __construct(?array $response, array $locales = ['en'])
+    public function __construct(?array $response)
     {
-        parent::__construct($response, $locales);
+        $this->issuer = new Issuer($response['issuer'] ?? []);
 
-        $this->issuer = new Issuer($this->safeArrayLookup($response['issuer']));
-
-        $this->brand = $this->safeArrayLookup($response['brand']);
-        $this->country = $this->safeArrayLookup($response['country']);
-        $this->isBusiness = $this->safeArrayLookup($response['is_business']);
+        $this->brand = $response['brand'] ?? null;
+        $this->country = $response['country'] ?? null;
+        $this->isBusiness = $response['is_business'] ?? null;
         $this->isIssuedInBillingAddressCountry
-            = $this->safeArrayLookup($response['is_issued_in_billing_address_country']);
-        $this->isPrepaid = $this->safeArrayLookup($response['is_prepaid']);
-        $this->isVirtual = $this->safeArrayLookup($response['is_virtual']);
-        $this->type = $this->safeArrayLookup($response['type']);
+            = $response['is_issued_in_billing_address_country'] ?? null;
+        $this->isPrepaid = $response['is_prepaid'] ?? null;
+        $this->isVirtual = $response['is_virtual'] ?? null;
+        $this->type = $response['type'] ?? null;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $js = [];
+
+        $issuer = $this->issuer->jsonSerialize();
+        if (!empty($issuer)) {
+            $js['issuer'] = $issuer;
+        }
+
+        if ($this->brand !== null) {
+            $js['brand'] = $this->brand;
+        }
+
+        if ($this->country !== null) {
+            $js['country'] = $this->country;
+        }
+
+        if ($this->isBusiness !== null) {
+            $js['is_business'] = $this->isBusiness;
+        }
+
+        if ($this->isIssuedInBillingAddressCountry !== null) {
+            $js['is_issued_in_billing_address_country'] = $this->isIssuedInBillingAddressCountry;
+        }
+
+        if ($this->isPrepaid !== null) {
+            $js['is_prepaid'] = $this->isPrepaid;
+        }
+
+        if ($this->isVirtual !== null) {
+            $js['is_virtual'] = $this->isVirtual;
+        }
+
+        if ($this->type !== null) {
+            $js['type'] = $this->type;
+        }
+
+        return $js;
     }
 }

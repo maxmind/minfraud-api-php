@@ -30,7 +30,7 @@ class CreditCardTest extends TestCase
         ]);
     }
 
-    public function invalidCountries(): array
+    public static function invalidCountries(): array
     {
         return [
             ['USA'],
@@ -56,7 +56,7 @@ class CreditCardTest extends TestCase
         );
     }
 
-    public function validCountries(): array
+    public static function validCountries(): array
     {
         return [
             ['US'],

@@ -27,7 +27,7 @@ class EventTest extends TestCase
         );
     }
 
-    public function eventTypeDataProvider(): array
+    public static function eventTypeDataProvider(): array
     {
         return [
             ['account_creation'],

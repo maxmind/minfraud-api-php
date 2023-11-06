@@ -4,56 +4,189 @@ declare(strict_types=1);
 
 namespace MaxMind\MinFraud\Model;
 
-use GeoIp2\Model\Insights as GeoIp2Insights;
+use GeoIp2\Model\Insights;
 
 /**
  * Model containing GeoIP2 data and the risk for the IP address.
- *
- * @property-read \MaxMind\MinFraud\Model\GeoIp2Country $country Country data
- * for the requested IP address. This object represents the country where MaxMind
- * believes the end user is located.
- * @property-read \MaxMind\MinFraud\Model\GeoIp2Location $location Location data
- * for the requested IP address.
- * @property-read float|null $risk This field contains the risk associated with the IP
- * address. The value ranges from 0.01 to 99. A higher score indicates a
- * higher risk.
- * @property-read array<IpRiskReason> $riskReasons This array contains
- * \MaxMind\MinFraud\Model\IpRiskReason objects identifying the reasons why
- * the IP address received the associated risk. This will be an empty array if
- * there are no reasons.
  */
-class IpAddress extends GeoIp2Insights
+class IpAddress implements \JsonSerializable
 {
     /**
-     * @ignore
-     *
-     * @var float|null
+     * @var \GeoIp2\Record\City city data for the requested IP address
      */
-    protected $risk;
+    public readonly \GeoIp2\Record\City $city;
 
     /**
-     * @internal
-     *
-     * @var array<IpRiskReason>
+     * @var \GeoIp2\Record\Continent continent data for the requested IP
+     *                               address
      */
-    protected $riskReasons;
+    public readonly \GeoIp2\Record\Continent $continent;
+
+    /**
+     * @var \GeoIp2\Record\Country Country data for the requested IP address.
+     *                             This object represents the country where MaxMind believes the end
+     *                             user is located.
+     */
+    public readonly \GeoIp2\Record\Country $country;
+
+    /**
+     * @var \GeoIp2\Record\Country Registered country data for the requested
+     *                             IP address. This record represents the country where the ISP has
+     *                             registered a given IP block and may differ from the user's country.
+     */
+    public readonly \GeoIp2\Record\Country $registeredCountry;
+
+    /**
+     * @var \MaxMind\MinFraud\Model\GeoIp2Location location data for the requested IP
+     *                                             address
+     */
+    public readonly \MaxMind\MinFraud\Model\GeoIp2Location $location;
+
+    /**
+     * @var \GeoIp2\Record\Subdivision An object representing the most
+     *                                 specific subdivision returned. If the response did not contain any
+     *                                 subdivisions, this method returns an empty \GeoIp2\Record\Subdivision
+     *                                 object.
+     */
+    public readonly \GeoIp2\Record\Subdivision $mostSpecificSubdivision;
+
+    /**
+     * @var \GeoIp2\Record\Postal postal data for the requested IP address
+     */
+    public readonly \GeoIp2\Record\Postal $postal;
+
+    /**
+     * @var \GeoIp2\Record\RepresentedCountry Represented country data for
+     *                                        the requested IP address. The represented country is used for things
+     *                                        like military bases. It is only present when the represented country
+     *                                        differs from the country.
+     */
+    public readonly \GeoIp2\Record\RepresentedCountry $representedCountry;
+
+    /**
+     * @var float|null This field contains the risk associated with the IP
+     *                 address. The value ranges from 0.01 to 99. A higher score indicates a
+     *                 higher risk.
+     */
+    public readonly ?float $risk;
+
+    /**
+     * @var array<IpRiskReason> This array contains
+     *                          \MaxMind\MinFraud\Model\IpRiskReason objects identifying the reasons why
+     *                          the IP address received the associated risk. This will be an empty array if
+     *                          there are no reasons.
+     */
+    public readonly array $riskReasons;
+
+    /**
+     * @var array An array of \GeoIp2\Record\Subdivision objects representing
+     *            the country subdivisions for the requested IP address. The number and
+     *            type of subdivisions varies by country, but a subdivision is typically
+     *            a state, province, county, etc. Subdivisions are ordered from most
+     *            general (largest) to most specific (smallest). If the response did not
+     *            contain any subdivisions, this method returns an empty array.
+     */
+    public readonly array $subdivisions;
+
+    /**
+     * @var \GeoIp2\Record\Traits data for the traits of the requested IP
+     *                            address
+     */
+    public readonly \GeoIp2\Record\Traits $traits;
 
     public function __construct(?array $response, array $locales = ['en'])
     {
         if ($response === null) {
             $response = [];
         }
-        parent::__construct($response, $locales);
-        $this->country = new GeoIp2Country($this->get('country'), $locales);
-        $this->location = new GeoIp2Location($this->get('location'));
-        $this->risk = $this->get('risk');
 
-        $this->riskReasons = [];
+        $insights = new Insights($response, $locales);
+        $this->city = $insights->city;
+        $this->continent = $insights->continent;
+        $this->country = $insights->country;
+        $this->mostSpecificSubdivision = $insights->mostSpecificSubdivision;
+        $this->postal = $insights->postal;
+        $this->registeredCountry = $insights->registeredCountry;
+        $this->representedCountry = $insights->representedCountry;
+        $this->subdivisions = $insights->subdivisions;
+        $this->traits = $insights->traits;
 
+        $this->location = new GeoIp2Location($response['location'] ?? []);
+        $this->risk = $response['risk'] ?? null;
+
+        $riskReasons = [];
         if (isset($response['risk_reasons'])) {
             foreach ($response['risk_reasons'] as $reason) {
-                $this->riskReasons[] = new IpRiskReason($reason);
+                $riskReasons[] = new IpRiskReason($reason);
             }
         }
+        $this->riskReasons = $riskReasons;
+    }
+
+    public function jsonSerialize(): ?array
+    {
+        $js = [];
+
+        $city = $this->city->jsonSerialize();
+        if (!empty($city)) {
+            $js['city'] = $city;
+        }
+
+        $continent = $this->continent->jsonSerialize();
+        if (!empty($continent)) {
+            $js['continent'] = $continent;
+        }
+
+        $country = $this->country->jsonSerialize();
+        if (!empty($country)) {
+            $js['country'] = $country;
+        }
+
+        $location = $this->location->jsonSerialize();
+        if (!empty($location)) {
+            $js['location'] = $location;
+        }
+
+        $registeredCountry = $this->registeredCountry->jsonSerialize();
+        if (!empty($registeredCountry)) {
+            $js['registered_country'] = $registeredCountry;
+        }
+
+        $representedCountry = $this->representedCountry->jsonSerialize();
+        if (!empty($representedCountry)) {
+            $js['represented_country'] = $representedCountry;
+        }
+
+        $traits = $this->traits->jsonSerialize();
+        if (!empty($traits)) {
+            $js['traits'] = $traits;
+        }
+
+        $postal = $this->postal->jsonSerialize();
+        if (!empty($postal)) {
+            $js['postal'] = $postal;
+        }
+
+        if ($this->risk !== null) {
+            $js['risk'] = $this->risk;
+        }
+
+        if (!empty($this->riskReasons)) {
+            $reasons = [];
+            foreach ($this->riskReasons as $reason) {
+                $reasons[] = $reason->jsonSerialize();
+            }
+            $js['risk_reasons'] = $reasons;
+        }
+
+        $subdivisions = [];
+        foreach ($this->subdivisions as $sub) {
+            $subdivisions[] = $sub->jsonSerialize();
+        }
+        if (!empty($subdivisions)) {
+            $js['subdivisions'] = $subdivisions;
+        }
+
+        return $js;
     }
 }

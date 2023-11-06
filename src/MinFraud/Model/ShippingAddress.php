@@ -6,35 +6,43 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing properties of the shipping address.
- *
- * @property-read int|null $distanceToBillingAddress The distance in kilometers
- * from the shipping address to billing address.
- * @property-read bool|null $isHighRisk This property is true if the shipping
- * address is an address associated with fraudulent transactions. The property
- * is false when the address is not associated with increased risk. The
- * property will be `null` when a shipping address is not provided.
  */
 class ShippingAddress extends Address
 {
     /**
-     * @internal
-     *
-     * @var bool|null
+     * @var int|null the distance in kilometers
+     *               from the shipping address to billing address
      */
-    protected $isHighRisk;
+    public readonly ?int $distanceToBillingAddress;
 
     /**
-     * @internal
-     *
-     * @var int|null
+     * @var bool|null This property is true if the shipping
+     *                address is an address associated with fraudulent transactions. The property
+     *                is false when the address is not associated with increased risk. The
+     *                property will be `null` when a shipping address is not provided.
      */
-    protected $distanceToBillingAddress;
+    public readonly ?bool $isHighRisk;
 
-    public function __construct(?array $response, array $locales = ['en'])
+    public function __construct(?array $response)
     {
-        parent::__construct($response, $locales);
-        $this->isHighRisk = $this->safeArrayLookup($response['is_high_risk']);
+        parent::__construct($response);
+        $this->isHighRisk = $response['is_high_risk'] ?? null;
         $this->distanceToBillingAddress
-            = $this->safeArrayLookup($response['distance_to_billing_address']);
+            = $response['distance_to_billing_address'] ?? null;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $js = parent::jsonSerialize();
+
+        if ($this->distanceToBillingAddress !== null) {
+            $js['distance_to_billing_address'] = $this->distanceToBillingAddress;
+        }
+
+        if ($this->isHighRisk !== null) {
+            $js['is_high_risk'] = $this->isHighRisk;
+        }
+
+        return $js;
     }
 }
