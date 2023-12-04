@@ -10,6 +10,10 @@ CHANGELOG
 * BREAKING: The `rawResponse` property on model classess has been removed. Use
   the `jsonSerialize` method instead.
 * BREAKING: The inheritance hierarchy on model classes has changed.
+* Updated `geoip2/geoip2` to version that includes the `isAnycast` property on
+ `GeoIp2\Record\Traits`. This property is `true` if the IP address belongs to
+  an [anycast network](https://en.wikipedia.org/wiki/Anycast). This is available
+  in minFraud Insights and Factors.
 
 1.23.0 (2023-03-06)
 -------------------
