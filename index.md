@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v1.23.0
+version: v2.0.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -90,11 +90,17 @@ and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/) A
 
 ### minFraud API ###
 
-To use the MinFraud API, create a new `\MaxMind\MinFraud` object. The constructor
-takes your MaxMind account ID, license key, and an optional options array as
-arguments. This object is immutable. You then build up the request using the
-`->with*` methods as shown below. Each method call returns a new object. The
-previous object is not modified.
+To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructor
+takes your MaxMind account ID, license key, and an optional `options` array as
+arguments. This object is immutable. See the API documentation for the possible options.
+
+For instance, to use the Sandbox web service instead of the production web service, you can provide the host option:
+
+```php
+$mf = new MinFraud(1, 'ABCD567890', [ 'host' => 'sandbox.maxmind.com' ]);
+```
+
+Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The previous object is not modified.
 
 If there is a validation error in the data passed to a `->with*` method, a
 `\MaxMind\Exception` will be thrown. This validation can be disabled by
@@ -233,7 +239,7 @@ $request = $mf->withDevice([
 # To get the minFraud Factors response model, use ->factors():
 $factorsResponse = $request->factors();
 
-print($factorsResponse->subscores->email . "\n");
+print($factorsResponse->subscores->emailAddress . "\n");
 
 # To get the minFraud Insights response model, use ->insights():
 $insightsResponse = $request->insights();
@@ -332,7 +338,7 @@ to the client API, please see
 
 ## Requirements  ##
 
-This code requires PHP 7.3 or greater. Older versions of PHP are not
+This code requires PHP 8.1 or greater. Older versions of PHP are not
 supported.
 
 There are several other dependencies as defined in the `composer.json` file.
