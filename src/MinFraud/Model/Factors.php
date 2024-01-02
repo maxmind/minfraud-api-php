@@ -10,9 +10,9 @@ namespace MaxMind\MinFraud\Model;
 class Factors extends Insights
 {
     /**
-     * @var \MaxMind\MinFraud\Model\Subscores an object
-     *                                        containing scores for many of the individual risk factors that are used to
-     *                                        calculate the overall risk score
+     * @var Subscores an object containing scores for many of the individual
+     *                risk factors that are used to calculate the overall risk
+     *                score
      */
     public readonly Subscores $subscores;
 

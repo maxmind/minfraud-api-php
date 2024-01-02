@@ -10,83 +10,83 @@ namespace MaxMind\MinFraud\Model;
 class Insights implements \JsonSerializable
 {
     /**
-     * @var \MaxMind\MinFraud\Model\BillingAddress an object
-     *                                             containing minFraud data related to the billing address used in the
-     *                                             transaction
+     * @var BillingAddress an object containing minFraud data related to the
+     *                     billing address used in the transaction
      */
     public readonly BillingAddress $billingAddress;
 
     /**
-     * @var \MaxMind\MinFraud\Model\CreditCard an object containing
-     *                                         minFraud data about the credit card used in the transaction
+     * @var CreditCard an object containing minFraud data about the credit
+     *                 card used in the transaction
      */
     public readonly CreditCard $creditCard;
 
     /**
-     * @var \MaxMind\MinFraud\Model\Device this object contains
-     *                                     information about the device that MaxMind believes is associated with the
-     *                                     IP address passed in the request
+     * @var Device this object contains information about the device that
+     *             MaxMind believes is associated with the IP address passed
+     *             in the request
      */
     public readonly Device $device;
 
     /**
-     * @var \MaxMind\MinFraud\Model\Disposition an object
-     *                                          containing the disposition set by custom rules
+     * @var Disposition an object containing the disposition set by custom
+     *                  rules
      */
     public readonly Disposition $disposition;
 
     /**
-     * @var \MaxMind\MinFraud\Model\Email this object contains
-     *                                    information about the email address passed in the request
+     * @var Email this object contains information about the email address
+     *            passed in the request
      */
     public readonly Email $email;
 
     /**
-     * @var float the approximate US dollar value of the
-     *            funds remaining on your MaxMind account
+     * @var float the approximate US dollar value of the funds remaining on
+     *            your MaxMind account
      */
     public readonly float $fundsRemaining;
 
     /**
-     * @var string This is a UUID that identifies the minFraud request.
-     *             Please use this ID in bug reports or support requests to MaxMind so that we
-     *             can easily identify a particular request.
+     * @var string This is a UUID that identifies the minFraud request. Please
+     *             use this ID in bug reports or support requests to MaxMind
+     *             so that we can easily identify a particular request.
      */
     public readonly string $id;
 
     /**
-     * @var \MaxMind\MinFraud\Model\IpAddress an object containing
-     *                                        GeoIP2 and minFraud Insights information about the geolocated IP address
+     * @var IpAddress an object containing GeoIP2 and minFraud Insights
+     *                information about the geolocated IP address
      */
     public readonly IpAddress $ipAddress;
 
     /**
-     * @var int the approximate number of queries
-     *          remaining for this service before your account runs out of funds
+     * @var int the approximate number of queries remaining for this service
+     *          before your account runs out of funds
      */
     public readonly int $queriesRemaining;
 
     /**
-     * @var float This property contains the risk score, from 0.01
-     *            to 99. A higher score indicates a higher risk of fraud. For example, a
-     *            score of 20 indicates a 20% chance that a transaction is fraudulent. We
-     *            never return a risk score of 0, since all transactions have the possibility
-     *            of being fraudulent. Likewise we never return a risk score of 100.
+     * @var float This property contains the risk score, from 0.01 to 99. A
+     *            higher score indicates a higher risk of fraud. For example, a
+     *            score of 20 indicates a 20% chance that a transaction is
+     *            fraudulent. We never return a risk score of 0, since all
+     *            transactions have the possibility of being fraudulent.
+     *            Likewise we never return a risk score of 100.
      */
     public readonly float $riskScore;
 
     /**
-     * @var \MaxMind\MinFraud\Model\ShippingAddress an object
-     *                                              containing minFraud data related to the shipping address used in the
-     *                                              transaction
+     * @var ShippingAddress an object containing minFraud data related to the
+     *                      shipping address used in the transaction
      */
     public readonly ShippingAddress $shippingAddress;
 
     /**
-     * @var array This array contains
-     *            \MaxMind\MinFraud\Model\Warning objects detailing issues with the request
-     *            that was sent, such as invalid or unknown inputs. It is highly recommended
-     *            that you check this array for issues when integrating the web service.
+     * @var array This array contains \MaxMind\MinFraud\Model\Warning objects
+     *            detailing issues with the request that was sent, such as
+     *            invalid or unknown inputs. It is highly recommended that
+     *            you check this array for issues when integrating the web
+     *            service.
      */
     public readonly array $warnings;
 

@@ -6,6 +6,7 @@ namespace MaxMind\Test\MinFraud\Validation\Rules;
 
 use MaxMind\MinFraud\Validation\Rules\Device;
 use PHPUnit\Framework\TestCase;
+use Respect\Validation\Exceptions\IpException;
 
 /**
  * @coversNothing
@@ -18,7 +19,7 @@ class DeviceTest extends TestCase
     {
         $validator = new Device();
 
-        $this->expectException(\Respect\Validation\Exceptions\IpException::class);
+        $this->expectException(IpException::class);
 
         $validator->check([
             'ip_address' => '1.2.3',

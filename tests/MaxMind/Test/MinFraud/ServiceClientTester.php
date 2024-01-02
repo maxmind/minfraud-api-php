@@ -7,6 +7,7 @@ namespace MaxMind\Test\MinFraud;
 use Composer\CaBundle\CaBundle;
 use MaxMind\MinFraud\ServiceClient;
 use MaxMind\WebService\Client;
+use MaxMind\WebService\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,7 +28,7 @@ abstract class ServiceClientTester extends TestCase
         $userId = 1;
         $licenseKey = 'abcdefghij';
 
-        $stub = $this->createMock(\MaxMind\WebService\Http\Request::class);
+        $stub = $this->createMock(Request::class);
 
         $stub->expects($this->exactly($callsToRequest))
             ->method('post')
