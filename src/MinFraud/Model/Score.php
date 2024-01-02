@@ -10,50 +10,50 @@ namespace MaxMind\MinFraud\Model;
 class Score implements \JsonSerializable
 {
     /**
-     * @var Disposition an object
-     *                  containing the disposition set by custom rules
+     * @var Disposition an object containing the disposition set by custom
+     *                  rules
      */
     public readonly Disposition $disposition;
 
     /**
-     * @var float the approximate US dollar value of the
-     *            funds remaining on your MaxMind account
+     * @var float the approximate US dollar value of the funds remaining on
+     *            your MaxMind account
      */
     public readonly float $fundsRemaining;
 
     /**
-     * @var string This is a UUID that identifies the minFraud request.
-     *             Please use this ID in bug reports or support requests to MaxMind so that we
-     *             can easily identify a particular request.
+     * @var string This is a UUID that identifies the minFraud request. Please
+     *             use this ID in bug reports or support requests to MaxMind
+     *             so that we can easily identify a particular request.
      */
     public readonly string $id;
 
     /**
-     * @var ScoreIpAddress an object
-     *                     containing the IP risk for the transaction
+     * @var ScoreIpAddress an object containing the IP risk for the transaction
      */
     public readonly ScoreIpAddress $ipAddress;
 
     /**
-     * @var int the approximate number of queries
-     *          remaining for this service before your account runs out of funds
+     * @var int the approximate number of queries remaining for this service
+     *          before your account runs out of funds
      */
     public readonly int $queriesRemaining;
 
     /**
-     * @var float This property contains the risk score, from 0.01
-     *            to 99. A higher score indicates a higher risk of fraud. For example, a
-     *            score of 20 indicates a 20% chance that a transaction is fraudulent. We
-     *            never return a risk score of 0, since all transactions have the possibility
-     *            of being fraudulent. Likewise we never return a risk score of 100.
+     * @var float This property contains the risk score, from 0.01 to 99. A
+     *            higher score indicates a higher risk of fraud. For example,
+     *            a score of 20 indicates a 20% chance that a transaction is
+     *            fraudulent. We never return a risk score of 0, since all
+     *            transactions have the possibility of being fraudulent.
+     *            Likewise we never return a risk score of 100.
      */
     public readonly float $riskScore;
 
     /**
-     * @var array This array contains
-     *            \MaxMind\MinFraud\Model\Warning objects detailing issues with the request
-     *            that was sent, such as invalid or unknown inputs. It is highly recommended
-     *            that you check this array for issues when integrating the web service.
+     * @var array This array contains \MaxMind\MinFraud\Model\Warning objects
+     *            detailing issues with the request that was sent, such as
+     *            invalid or unknown inputs. It is highly recommended that you
+     *            check this array for issues when integrating the web service.
      */
     public readonly array $warnings;
 

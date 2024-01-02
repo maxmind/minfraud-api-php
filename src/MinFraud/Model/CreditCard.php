@@ -53,8 +53,7 @@ class CreditCard implements \JsonSerializable
     public readonly ?bool $isVirtual;
 
     /**
-     * @var Issuer an object containing
-     *             information about the credit card issuer
+     * @var Issuer an object containing information about the credit card issuer
      */
     public readonly Issuer $issuer;
 

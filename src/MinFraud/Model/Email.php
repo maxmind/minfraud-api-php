@@ -10,8 +10,7 @@ namespace MaxMind\MinFraud\Model;
 class Email implements \JsonSerializable
 {
     /**
-     * @var EmailDomain an object
-     *                  containing information about the email domain
+     * @var EmailDomain an object containing information about the email domain
      */
     public readonly EmailDomain $domain;
 

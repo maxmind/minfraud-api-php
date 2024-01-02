@@ -24,36 +24,35 @@ class IpAddress implements \JsonSerializable
     public readonly \GeoIp2\Record\City $city;
 
     /**
-     * @var Continent continent data for the requested IP
-     *                address
+     * @var Continent continent data for the requested IP address
      */
     public readonly \GeoIp2\Record\Continent $continent;
 
     /**
-     * @var Country Country data for the requested IP address.
-     *              This object represents the country where MaxMind believes the end
+     * @var Country Country data for the requested IP address. This object
+     *              represents the country where MaxMind believes the end
      *              user is located.
      */
     public readonly \GeoIp2\Record\Country $country;
 
     /**
-     * @var Country Registered country data for the requested
-     *              IP address. This record represents the country where the ISP has
-     *              registered a given IP block and may differ from the user's country.
+     * @var Country Registered country data for the requested IP address.
+     *              This record represents the country where the ISP has
+     *              registered a given IP block and may differ from the
+     *              user's country.
      */
     public readonly \GeoIp2\Record\Country $registeredCountry;
 
     /**
-     * @var GeoIp2Location location data for the requested IP
-     *                     address
+     * @var GeoIp2Location location data for the requested IP address
      */
     public readonly \MaxMind\MinFraud\Model\GeoIp2Location $location;
 
     /**
-     * @var Subdivision An object representing the most
-     *                  specific subdivision returned. If the response did not contain any
-     *                  subdivisions, this method returns an empty \GeoIp2\Record\Subdivision
-     *                  object.
+     * @var Subdivision An object representing the most specific subdivision
+     *                  returned. If the response did not contain any
+     *                  subdivisions, this method returns an empty
+     *                  \GeoIp2\Record\Subdivision object.
      */
     public readonly \GeoIp2\Record\Subdivision $mostSpecificSubdivision;
 
@@ -63,35 +62,38 @@ class IpAddress implements \JsonSerializable
     public readonly \GeoIp2\Record\Postal $postal;
 
     /**
-     * @var RepresentedCountry Represented country data for
-     *                         the requested IP address. The represented country is used for things
-     *                         like military bases. It is only present when the represented country
-     *                         differs from the country.
+     * @var RepresentedCountry Represented country data for the requested IP
+     *                         address. The represented country is used for
+     *                         things like military bases. It is only present
+     *                         when the represented country differs from the
+     *                         country.
      */
     public readonly \GeoIp2\Record\RepresentedCountry $representedCountry;
 
     /**
      * @var float|null This field contains the risk associated with the IP
-     *                 address. The value ranges from 0.01 to 99. A higher score indicates a
-     *                 higher risk.
+     *                 address. The value ranges from 0.01 to 99. A higher
+     *                 score indicates a higher risk.
      */
     public readonly ?float $risk;
 
     /**
      * @var array<IpRiskReason> This array contains
-     *                          \MaxMind\MinFraud\Model\IpRiskReason objects identifying the reasons why
-     *                          the IP address received the associated risk. This will be an empty array if
-     *                          there are no reasons.
+     *                          \MaxMind\MinFraud\Model\IpRiskReason objects
+     *                          identifying the reasons why the IP address
+     *                          received the associated risk. This will be an
+     *                          empty array if there are no reasons.
      */
     public readonly array $riskReasons;
 
     /**
      * @var array An array of \GeoIp2\Record\Subdivision objects representing
-     *            the country subdivisions for the requested IP address. The number and
-     *            type of subdivisions varies by country, but a subdivision is typically
-     *            a state, province, county, etc. Subdivisions are ordered from most
-     *            general (largest) to most specific (smallest). If the response did not
-     *            contain any subdivisions, this method returns an empty array.
+     *            the country subdivisions for the requested IP address. The
+     *            number and type of subdivisions varies by country, but a
+     *            subdivision is typically a state, province, county, etc.
+     *            Subdivisions are ordered from most general (largest) to most
+     *            specific (smallest). If the response did not contain any
+     *            subdivisions, this method returns an empty array.
      */
     public readonly array $subdivisions;
 
