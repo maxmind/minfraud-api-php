@@ -334,7 +334,7 @@ class MinFraud extends MinFraud\ServiceClient
      * @throws WebServiceException        when some other error occurs. This also
      *                                    serves as the base class for the above exceptions.
      *
-     * @return \MaxMind\MinFraud\Model\Score minFraud Score model object
+     * @return Score minFraud Score model object
      */
     public function score(): Score
     {
@@ -356,7 +356,7 @@ class MinFraud extends MinFraud\ServiceClient
      * @throws WebServiceException        when some other error occurs. This also
      *                                    serves as the base class for the above exceptions.
      *
-     * @return \MaxMind\MinFraud\Model\Insights minFraud Insights model object
+     * @return Insights minFraud Insights model object
      */
     public function insights(): Insights
     {
@@ -378,7 +378,7 @@ class MinFraud extends MinFraud\ServiceClient
      * @throws WebServiceException        when some other error occurs. This also
      *                                    serves as the base class for the above exceptions.
      *
-     * @return \MaxMind\MinFraud\Model\Factors minFraud Factors model object
+     * @return Factors minFraud Factors model object
      */
     public function factors(): Factors
     {

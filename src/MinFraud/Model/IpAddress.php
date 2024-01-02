@@ -5,6 +5,13 @@ declare(strict_types=1);
 namespace MaxMind\MinFraud\Model;
 
 use GeoIp2\Model\Insights;
+use GeoIp2\Record\City;
+use GeoIp2\Record\Continent;
+use GeoIp2\Record\Country;
+use GeoIp2\Record\Postal;
+use GeoIp2\Record\RepresentedCountry;
+use GeoIp2\Record\Subdivision;
+use GeoIp2\Record\Traits;
 
 /**
  * Model containing GeoIP2 data and the risk for the IP address.
@@ -12,54 +19,54 @@ use GeoIp2\Model\Insights;
 class IpAddress implements \JsonSerializable
 {
     /**
-     * @var \GeoIp2\Record\City city data for the requested IP address
+     * @var City city data for the requested IP address
      */
     public readonly \GeoIp2\Record\City $city;
 
     /**
-     * @var \GeoIp2\Record\Continent continent data for the requested IP
-     *                               address
+     * @var Continent continent data for the requested IP
+     *                address
      */
     public readonly \GeoIp2\Record\Continent $continent;
 
     /**
-     * @var \GeoIp2\Record\Country Country data for the requested IP address.
-     *                             This object represents the country where MaxMind believes the end
-     *                             user is located.
+     * @var Country Country data for the requested IP address.
+     *              This object represents the country where MaxMind believes the end
+     *              user is located.
      */
     public readonly \GeoIp2\Record\Country $country;
 
     /**
-     * @var \GeoIp2\Record\Country Registered country data for the requested
-     *                             IP address. This record represents the country where the ISP has
-     *                             registered a given IP block and may differ from the user's country.
+     * @var Country Registered country data for the requested
+     *              IP address. This record represents the country where the ISP has
+     *              registered a given IP block and may differ from the user's country.
      */
     public readonly \GeoIp2\Record\Country $registeredCountry;
 
     /**
-     * @var \MaxMind\MinFraud\Model\GeoIp2Location location data for the requested IP
-     *                                             address
+     * @var GeoIp2Location location data for the requested IP
+     *                     address
      */
     public readonly \MaxMind\MinFraud\Model\GeoIp2Location $location;
 
     /**
-     * @var \GeoIp2\Record\Subdivision An object representing the most
-     *                                 specific subdivision returned. If the response did not contain any
-     *                                 subdivisions, this method returns an empty \GeoIp2\Record\Subdivision
-     *                                 object.
+     * @var Subdivision An object representing the most
+     *                  specific subdivision returned. If the response did not contain any
+     *                  subdivisions, this method returns an empty \GeoIp2\Record\Subdivision
+     *                  object.
      */
     public readonly \GeoIp2\Record\Subdivision $mostSpecificSubdivision;
 
     /**
-     * @var \GeoIp2\Record\Postal postal data for the requested IP address
+     * @var Postal postal data for the requested IP address
      */
     public readonly \GeoIp2\Record\Postal $postal;
 
     /**
-     * @var \GeoIp2\Record\RepresentedCountry Represented country data for
-     *                                        the requested IP address. The represented country is used for things
-     *                                        like military bases. It is only present when the represented country
-     *                                        differs from the country.
+     * @var RepresentedCountry Represented country data for
+     *                         the requested IP address. The represented country is used for things
+     *                         like military bases. It is only present when the represented country
+     *                         differs from the country.
      */
     public readonly \GeoIp2\Record\RepresentedCountry $representedCountry;
 
@@ -89,8 +96,8 @@ class IpAddress implements \JsonSerializable
     public readonly array $subdivisions;
 
     /**
-     * @var \GeoIp2\Record\Traits data for the traits of the requested IP
-     *                            address
+     * @var Traits data for the traits of the requested IP
+     *             address
      */
     public readonly \GeoIp2\Record\Traits $traits;
 

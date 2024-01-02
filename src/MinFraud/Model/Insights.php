@@ -10,34 +10,34 @@ namespace MaxMind\MinFraud\Model;
 class Insights implements \JsonSerializable
 {
     /**
-     * @var \MaxMind\MinFraud\Model\BillingAddress an object
-     *                                             containing minFraud data related to the billing address used in the
-     *                                             transaction
+     * @var BillingAddress an object
+     *                     containing minFraud data related to the billing address used in the
+     *                     transaction
      */
     public readonly BillingAddress $billingAddress;
 
     /**
-     * @var \MaxMind\MinFraud\Model\CreditCard an object containing
-     *                                         minFraud data about the credit card used in the transaction
+     * @var CreditCard an object containing
+     *                 minFraud data about the credit card used in the transaction
      */
     public readonly CreditCard $creditCard;
 
     /**
-     * @var \MaxMind\MinFraud\Model\Device this object contains
-     *                                     information about the device that MaxMind believes is associated with the
-     *                                     IP address passed in the request
+     * @var Device this object contains
+     *             information about the device that MaxMind believes is associated with the
+     *             IP address passed in the request
      */
     public readonly Device $device;
 
     /**
-     * @var \MaxMind\MinFraud\Model\Disposition an object
-     *                                          containing the disposition set by custom rules
+     * @var Disposition an object
+     *                  containing the disposition set by custom rules
      */
     public readonly Disposition $disposition;
 
     /**
-     * @var \MaxMind\MinFraud\Model\Email this object contains
-     *                                    information about the email address passed in the request
+     * @var Email this object contains
+     *            information about the email address passed in the request
      */
     public readonly Email $email;
 
@@ -55,8 +55,8 @@ class Insights implements \JsonSerializable
     public readonly string $id;
 
     /**
-     * @var \MaxMind\MinFraud\Model\IpAddress an object containing
-     *                                        GeoIP2 and minFraud Insights information about the geolocated IP address
+     * @var IpAddress an object containing
+     *                GeoIP2 and minFraud Insights information about the geolocated IP address
      */
     public readonly IpAddress $ipAddress;
 
@@ -76,9 +76,9 @@ class Insights implements \JsonSerializable
     public readonly float $riskScore;
 
     /**
-     * @var \MaxMind\MinFraud\Model\ShippingAddress an object
-     *                                              containing minFraud data related to the shipping address used in the
-     *                                              transaction
+     * @var ShippingAddress an object
+     *                      containing minFraud data related to the shipping address used in the
+     *                      transaction
      */
     public readonly ShippingAddress $shippingAddress;
 

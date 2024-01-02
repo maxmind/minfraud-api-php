@@ -10,8 +10,8 @@ namespace MaxMind\MinFraud\Model;
 class Score implements \JsonSerializable
 {
     /**
-     * @var \MaxMind\MinFraud\Model\Disposition an object
-     *                                          containing the disposition set by custom rules
+     * @var Disposition an object
+     *                  containing the disposition set by custom rules
      */
     public readonly Disposition $disposition;
 
@@ -29,8 +29,8 @@ class Score implements \JsonSerializable
     public readonly string $id;
 
     /**
-     * @var \MaxMind\MinFraud\Model\ScoreIpAddress an object
-     *                                             containing the IP risk for the transaction
+     * @var ScoreIpAddress an object
+     *                     containing the IP risk for the transaction
      */
     public readonly ScoreIpAddress $ipAddress;
 

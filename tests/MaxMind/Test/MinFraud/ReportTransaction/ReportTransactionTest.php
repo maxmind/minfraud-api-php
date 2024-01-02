@@ -7,13 +7,14 @@ namespace MaxMind\Test\MinFraud\ReportTransaction;
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\MinFraud\ReportTransaction;
 use MaxMind\Test\MinFraud\ReportTransaction\ReportTransactionData as Data;
+use MaxMind\Test\MinFraud\ServiceClientTester;
 
 /**
  * @coversNothing
  *
  * @internal
  */
-class ReportTransactionTest extends \MaxMind\Test\MinFraud\ServiceClientTester
+class ReportTransactionTest extends ServiceClientTester
 {
     public function testMinimalRequest(): void
     {

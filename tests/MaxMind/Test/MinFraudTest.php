@@ -6,6 +6,7 @@ namespace MaxMind\Test;
 
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\MinFraud;
+use MaxMind\Test\MinFraud\ServiceClientTester;
 use MaxMind\Test\MinFraudData as Data;
 
 /**
@@ -13,7 +14,7 @@ use MaxMind\Test\MinFraudData as Data;
  *
  * @internal
  */
-class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTester
+class MinFraudTest extends ServiceClientTester
 {
     /**
      * @dataProvider services
@@ -84,7 +85,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTester
     public function testEmailHashingDisabled(): void
     {
         // Reflection isn't ideal, but this is the easiest way to check.
-        $class = new \ReflectionClass(\MaxMind\MinFraud::class);
+        $class = new \ReflectionClass(MinFraud::class);
         $prop = $class->getProperty('content');
         $prop->setAccessible(true);
 
@@ -123,7 +124,7 @@ class MinFraudTest extends \MaxMind\Test\MinFraud\ServiceClientTester
     public function testEmailHashingEnabled(): void
     {
         // Reflection isn't ideal, but this is the easiest way to check.
-        $class = new \ReflectionClass(\MaxMind\MinFraud::class);
+        $class = new \ReflectionClass(MinFraud::class);
         $prop = $class->getProperty('content');
         $prop->setAccessible(true);
 

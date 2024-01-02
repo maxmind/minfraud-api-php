@@ -37,7 +37,7 @@ class ReportTransaction extends ServiceClient
     /**
      * @param array $values the transaction parameters
      *
-     * @throws \MaxMind\Exception\InvalidInputException   when the request has missing or invalid
+     * @throws InvalidInputException                      when the request has missing or invalid
      *                                                    data
      * @throws \MaxMind\Exception\AuthenticationException when there is an issue authenticating the
      *                                                    request
