@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.1.0
+------------------
+
+* Added `pxp_financial` and `trustpay` to the payment processor validation.
+
 2.0.0 (2023-12-04)
 ------------------
 
