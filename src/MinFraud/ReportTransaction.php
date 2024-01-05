@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace MaxMind\MinFraud;
 
+use MaxMind\Exception\AuthenticationException;
+use MaxMind\Exception\HttpException;
 use MaxMind\Exception\InvalidInputException;
+use MaxMind\Exception\InvalidRequestException;
+use MaxMind\Exception\WebServiceException;
 
 class ReportTransaction extends ServiceClient
 {
@@ -37,15 +41,17 @@ class ReportTransaction extends ServiceClient
     /**
      * @param array $values the transaction parameters
      *
-     * @throws InvalidInputException                      when the request has missing or invalid
-     *                                                    data
-     * @throws \MaxMind\Exception\AuthenticationException when there is an issue authenticating the
-     *                                                    request
-     * @throws \MaxMind\Exception\InvalidRequestException when the request is invalid for some
-     *                                                    other reason, e.g., invalid JSON in the POST.
-     * @throws \MaxMind\Exception\HttpException           when an unexpected HTTP error occurs
-     * @throws \MaxMind\Exception\WebServiceException     when some other error occurs. This also
-     *                                                    serves as the base class for the above exceptions.
+     * @throws InvalidInputException   when the request has missing or invalid
+     *                                 data
+     * @throws AuthenticationException when there is an issue authenticating
+     *                                 the request
+     * @throws InvalidRequestException when the request is invalid for some
+     *                                 other reason, e.g., invalid JSON in the
+     *                                 POST.
+     * @throws HttpException           when an unexpected HTTP error occurs
+     * @throws WebServiceException     when some other error occurs. This also
+     *                                 serves as the base class for the above
+     *                                 exceptions.
      */
     public function report(array $values): void
     {
