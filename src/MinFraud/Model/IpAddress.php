@@ -21,19 +21,19 @@ class IpAddress implements \JsonSerializable
     /**
      * @var City city data for the requested IP address
      */
-    public readonly \GeoIp2\Record\City $city;
+    public readonly City $city;
 
     /**
      * @var Continent continent data for the requested IP address
      */
-    public readonly \GeoIp2\Record\Continent $continent;
+    public readonly Continent $continent;
 
     /**
      * @var Country Country data for the requested IP address. This object
      *              represents the country where MaxMind believes the end
      *              user is located.
      */
-    public readonly \GeoIp2\Record\Country $country;
+    public readonly Country $country;
 
     /**
      * @var Country Registered country data for the requested IP address.
@@ -41,12 +41,12 @@ class IpAddress implements \JsonSerializable
      *              registered a given IP block and may differ from the
      *              user's country.
      */
-    public readonly \GeoIp2\Record\Country $registeredCountry;
+    public readonly Country $registeredCountry;
 
     /**
      * @var GeoIp2Location location data for the requested IP address
      */
-    public readonly \MaxMind\MinFraud\Model\GeoIp2Location $location;
+    public readonly GeoIp2Location $location;
 
     /**
      * @var Subdivision An object representing the most specific subdivision
@@ -54,12 +54,12 @@ class IpAddress implements \JsonSerializable
      *                  subdivisions, this method returns an empty
      *                  \GeoIp2\Record\Subdivision object.
      */
-    public readonly \GeoIp2\Record\Subdivision $mostSpecificSubdivision;
+    public readonly Subdivision $mostSpecificSubdivision;
 
     /**
      * @var Postal postal data for the requested IP address
      */
-    public readonly \GeoIp2\Record\Postal $postal;
+    public readonly Postal $postal;
 
     /**
      * @var RepresentedCountry Represented country data for the requested IP
@@ -68,7 +68,7 @@ class IpAddress implements \JsonSerializable
      *                         when the represented country differs from the
      *                         country.
      */
-    public readonly \GeoIp2\Record\RepresentedCountry $representedCountry;
+    public readonly RepresentedCountry $representedCountry;
 
     /**
      * @var float|null This field contains the risk associated with the IP
@@ -101,7 +101,7 @@ class IpAddress implements \JsonSerializable
      * @var Traits data for the traits of the requested IP
      *             address
      */
-    public readonly \GeoIp2\Record\Traits $traits;
+    public readonly Traits $traits;
 
     public function __construct(?array $response, array $locales = ['en'])
     {
