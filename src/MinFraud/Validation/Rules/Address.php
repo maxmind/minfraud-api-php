@@ -18,7 +18,7 @@ class Address
             v::key('address_2', new IntOrString(), false),
             v::key('city', v::stringType(), false),
             v::key('company', v::stringType(), false),
-            v::key('country', v::countryCode(), false),
+            v::key('country', v::allOf(v::countryCode(), v::uppercase()), false),
             v::key('first_name', v::stringType(), false),
             v::key('last_name', v::stringType(), false),
             v::key('phone_country_code', new TelephoneCountryCode(), false),
