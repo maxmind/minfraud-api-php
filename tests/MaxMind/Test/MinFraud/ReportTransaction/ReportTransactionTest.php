@@ -112,7 +112,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testUnknownKey(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must have keys');
+        $this->expectExceptionMessage('Must not have keys');
 
         $req = array_merge(
             Data::minimalRequest(),

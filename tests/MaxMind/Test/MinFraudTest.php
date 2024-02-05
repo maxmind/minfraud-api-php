@@ -278,7 +278,7 @@ class MinFraudTest extends ServiceClientTester
     public function testUnknownKeys(string $method): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must have keys');
+        $this->expectExceptionMessage('Must not have keys');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -996,7 +996,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadShoppingCartItemWithDoubleArray(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must have keys');
+        $this->expectExceptionMessage('Must not have keys');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',

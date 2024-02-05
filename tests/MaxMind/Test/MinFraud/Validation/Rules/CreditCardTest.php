@@ -6,7 +6,6 @@ namespace MaxMind\Test\MinFraud\Validation\Rules;
 
 use MaxMind\MinFraud\Validation\Rules\CreditCard;
 use PHPUnit\Framework\TestCase;
-use Respect\Validation\Exceptions\CountryCodeException;
 
 /**
  * @coversNothing
@@ -24,7 +23,7 @@ class CreditCardTest extends TestCase
     {
         $validator = new CreditCard();
 
-        $this->expectException(CountryCodeException::class);
+        $this->expectExceptionMessageMatches('/^country must be a valid country|country must be uppercase$/');
 
         $validator->check([
             'country' => $code,

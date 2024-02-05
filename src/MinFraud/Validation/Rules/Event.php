@@ -20,7 +20,12 @@ class Event extends AbstractWrapper
                 'time',
                 v::anyOf(
                     v::dateTime(\DateTime::RFC3339),
-                    v::dateTime(\DateTime::RFC3339_EXTENDED)
+                    v::dateTime(\DateTime::RFC3339_EXTENDED),
+                    // Respect/Validation no longer correctly supports the RFC 3339
+                    // formats as of 2.3. See
+                    // https://github.com/Respect/Validation/issues/1442.
+                    v::dateTime('Y-m-d\TH:i:sp'),
+                    v::dateTime('Y-m-d\TH:i:s.vp'),
                 ),
                 false
             ),
