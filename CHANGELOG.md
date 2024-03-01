@@ -20,6 +20,9 @@ CHANGELOG
 * Duplicate `.com`s are now removed from email domain names when
   `hashEmail` is used. For example, `example.com.com` will become
   `example.com`.
+* Extraneous characters after `.com` are now removed from email domain
+  names when `hashEmail` is used. For example, `example.comfoo` will become
+  `example.com`.
 
 2.0.0 (2023-12-04)
 ------------------

@@ -268,6 +268,7 @@ class Util
         }
 
         $domain = preg_replace('/(?:\.com){2,}$/', '.com', $domain);
+        $domain = preg_replace('/\.com[^.]+$/', '.com', $domain);
 
         if (isset(self::$typoDomains[$domain])) {
             $domain = self::$typoDomains[$domain];

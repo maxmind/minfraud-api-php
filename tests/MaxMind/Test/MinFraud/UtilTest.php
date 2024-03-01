@@ -208,6 +208,16 @@ class UtilTest extends TestCase
                     ],
                 ],
             ],
+            [
+                'name' => 'Extra characters after .com',
+                'input' => ['email' => ['address' => 'foo@example.comfoo']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@example.com'),
+                        'domain' => 'example.com',
+                    ],
+                ],
+            ],
         ];
 
         if (\function_exists('idn_to_ascii')
