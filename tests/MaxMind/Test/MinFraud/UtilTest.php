@@ -178,6 +178,16 @@ class UtilTest extends TestCase
                     ],
                 ],
             ],
+            [
+                'name' => 'Fastmail alias domain',
+                'input' => ['email' => ['address' => 'alias@user.fastmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('user@fastmail.com'),
+                        'domain' => 'user.fastmail.com',
+                    ],
+                ],
+            ],
         ];
 
         if (\function_exists('idn_to_ascii')

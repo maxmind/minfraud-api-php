@@ -43,6 +43,129 @@ class Util
     ];
 
     /**
+     * @var array<string, bool>
+     */
+    private static $fastmailDomains = [
+        '123mail.org' => true,
+        '150mail.com' => true,
+        '150ml.com' => true,
+        '16mail.com' => true,
+        '2-mail.com' => true,
+        '4email.net' => true,
+        '50mail.com' => true,
+        'airpost.net' => true,
+        'allmail.net' => true,
+        'bestmail.us' => true,
+        'cluemail.com' => true,
+        'elitemail.org' => true,
+        'emailcorner.net' => true,
+        'emailengine.net' => true,
+        'emailengine.org' => true,
+        'emailgroups.net' => true,
+        'emailplus.org' => true,
+        'emailuser.net' => true,
+        'eml.cc' => true,
+        'f-m.fm' => true,
+        'fast-email.com' => true,
+        'fast-mail.org' => true,
+        'fastem.com' => true,
+        'fastemail.us' => true,
+        'fastemailer.com' => true,
+        'fastest.cc' => true,
+        'fastimap.com' => true,
+        'fastmail.cn' => true,
+        'fastmail.co.uk' => true,
+        'fastmail.com' => true,
+        'fastmail.com.au' => true,
+        'fastmail.de' => true,
+        'fastmail.es' => true,
+        'fastmail.fm' => true,
+        'fastmail.fr' => true,
+        'fastmail.im' => true,
+        'fastmail.in' => true,
+        'fastmail.jp' => true,
+        'fastmail.mx' => true,
+        'fastmail.net' => true,
+        'fastmail.nl' => true,
+        'fastmail.org' => true,
+        'fastmail.se' => true,
+        'fastmail.to' => true,
+        'fastmail.tw' => true,
+        'fastmail.uk' => true,
+        'fastmail.us' => true,
+        'fastmailbox.net' => true,
+        'fastmessaging.com' => true,
+        'fea.st' => true,
+        'fmail.co.uk' => true,
+        'fmailbox.com' => true,
+        'fmgirl.com' => true,
+        'fmguy.com' => true,
+        'ftml.net' => true,
+        'h-mail.us' => true,
+        'hailmail.net' => true,
+        'imap-mail.com' => true,
+        'imap.cc' => true,
+        'imapmail.org' => true,
+        'inoutbox.com' => true,
+        'internet-e-mail.com' => true,
+        'internet-mail.org' => true,
+        'internetemails.net' => true,
+        'internetmailing.net' => true,
+        'jetemail.net' => true,
+        'justemail.net' => true,
+        'letterboxes.org' => true,
+        'mail-central.com' => true,
+        'mail-page.com' => true,
+        'mailandftp.com' => true,
+        'mailas.com' => true,
+        'mailbolt.com' => true,
+        'mailc.net' => true,
+        'mailcan.com' => true,
+        'mailforce.net' => true,
+        'mailftp.com' => true,
+        'mailhaven.com' => true,
+        'mailingaddress.org' => true,
+        'mailite.com' => true,
+        'mailmight.com' => true,
+        'mailnew.com' => true,
+        'mailsent.net' => true,
+        'mailservice.ms' => true,
+        'mailup.net' => true,
+        'mailworks.org' => true,
+        'ml1.net' => true,
+        'mm.st' => true,
+        'myfastmail.com' => true,
+        'mymacmail.com' => true,
+        'nospammail.net' => true,
+        'ownmail.net' => true,
+        'petml.com' => true,
+        'postinbox.com' => true,
+        'postpro.net' => true,
+        'proinbox.com' => true,
+        'promessage.com' => true,
+        'realemail.net' => true,
+        'reallyfast.biz' => true,
+        'reallyfast.info' => true,
+        'rushpost.com' => true,
+        'sent.as' => true,
+        'sent.at' => true,
+        'sent.com' => true,
+        'speedpost.net' => true,
+        'speedymail.org' => true,
+        'ssl-mail.com' => true,
+        'swift-mail.com' => true,
+        'the-fastest.net' => true,
+        'the-quickest.com' => true,
+        'theinternetemail.com' => true,
+        'veryfast.biz' => true,
+        'veryspeedy.net' => true,
+        'warpmail.net' => true,
+        'xsmail.com' => true,
+        'yepmail.net' => true,
+        'your-mail.com' => true,
+    ];
+
+    /**
      * @ignore
      */
     public static function maybeHashEmail(array $values): array
@@ -108,6 +231,17 @@ class Util
 
         if ($domain === 'gmail.com') {
             $localPart = str_replace('.', '', $localPart);
+        }
+
+        $domainParts = explode('.', $domain);
+        if (\count($domainParts) > 2) {
+            $possibleDomain = implode('.', \array_slice($domainParts, 1));
+            if (isset(self::$fastmailDomains[$possibleDomain])) {
+                $domain = $possibleDomain;
+            }
+            if ($localPart !== '') {
+                $localPart = $domainParts[0];
+            }
         }
 
         return md5("$localPart@$domain");
