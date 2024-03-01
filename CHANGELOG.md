@@ -23,6 +23,8 @@ CHANGELOG
 * Extraneous characters after `.com` are now removed from email domain
   names when `hashEmail` is used. For example, `example.comfoo` will become
   `example.com`.
+* Certain `.com` typos are now normalized to `.com` when `hashEmail` is
+  used. For example, `example.cam` will become `example.com`.
 
 2.0.0 (2023-12-04)
 ------------------
