@@ -7,6 +7,9 @@ CHANGELOG
 * Added `pxp_financial` and `trustpay` to the payment processor validation.
 * Equivalent domain names are now normalized when `hashEmail` is used.
   For example, `googlemail.com` will become `gmail.com`.
+* Periods are now removed from `gmail.com` email address local parts when
+  `hashEmail` is used. For example, `f.o.o@gmail.com` will become
+  `foo@gmail.com`.
 
 2.0.0 (2023-12-04)
 ------------------

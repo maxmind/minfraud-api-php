@@ -168,6 +168,16 @@ class UtilTest extends TestCase
                     ],
                 ],
             ],
+            [
+                'name' => 'Periods in gmail localpart',
+                'input' => ['email' => ['address' => 'foo.bar@gmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foobar@gmail.com'),
+                        'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
         ];
 
         if (\function_exists('idn_to_ascii')

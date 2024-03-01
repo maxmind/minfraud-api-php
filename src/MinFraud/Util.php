@@ -106,6 +106,10 @@ class Util
             $localPart = substr($localPart, 0, $aliasIdx);
         }
 
+        if ($domain === 'gmail.com') {
+            $localPart = str_replace('.', '', $localPart);
+        }
+
         return md5("$localPart@$domain");
     }
 
