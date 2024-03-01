@@ -29,6 +29,20 @@ class Util
     ];
 
     /**
+     * @var array<string, string>
+     */
+    private static $equivalentDomains = [
+        'googlemail.com' => 'gmail.com',
+        'pm.me' => 'protonmail.com',
+        'proton.me' => 'protonmail.com',
+        'yandex.by' => 'yandex.ru',
+        'yandex.com' => 'yandex.ru',
+        'yandex.kz' => 'yandex.ru',
+        'yandex.ua' => 'yandex.ru',
+        'ya.ru' => 'yandex.ru',
+    ];
+
+    /**
      * @ignore
      */
     public static function maybeHashEmail(array $values): array
@@ -71,7 +85,15 @@ class Util
             }
         }
 
-        return isset(self::$typoDomains[$domain]) ? self::$typoDomains[$domain] : $domain;
+        if (isset(self::$typoDomains[$domain])) {
+            $domain = self::$typoDomains[$domain];
+        }
+
+        if (isset(self::$equivalentDomains[$domain])) {
+            $domain = self::$equivalentDomains[$domain];
+        }
+
+        return $domain;
     }
 
     private static function hashEmail(string $localPart, string $domain): string
