@@ -28,6 +28,8 @@ CHANGELOG
 * Additional `gmail.com` domain names with leading digits are now
   normalized when `hashEmail` is used. For example, `100gmail.com` will
   become `gmail.com`.
+* Additional `gmail.com` typos are now normalized when `hashEmail` is used.
+  For example, `gmali.com` will become `gmail.com`.
 
 2.0.0 (2023-12-04)
 ------------------

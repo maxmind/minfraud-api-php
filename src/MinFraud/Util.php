@@ -17,12 +17,15 @@ class Util
      */
     private static $typoDomains = [
         // gmail.com
-        '35gmai.com' => 'gmail.com',
-        '636gmail.com' => 'gmail.com',
+        'gmai.com' => 'gmail.com',
         'gamil.com' => 'gmail.com',
-        'gmail.comu' => 'gmail.com',
+        'gmali.com' => 'gmail.com',
         'gmial.com' => 'gmail.com',
         'gmil.com' => 'gmail.com',
+        'gmaill.com' => 'gmail.com',
+        'gmailm.com' => 'gmail.com',
+        'gmailo.com' => 'gmail.com',
+        'gmailyhoo.com'  => 'gmail.com',
         'yahoogmail.com' => 'gmail.com',
         // outlook.com
         'putlook.com' => 'outlook.com',
