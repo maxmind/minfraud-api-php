@@ -25,6 +25,9 @@ CHANGELOG
   `example.com`.
 * Certain `.com` typos are now normalized to `.com` when `hashEmail` is
   used. For example, `example.cam` will become `example.com`.
+* Additional `gmail.com` domain names with leading digits are now
+  normalized when `hashEmail` is used. For example, `100gmail.com` will
+  become `gmail.com`.
 
 2.0.0 (2023-12-04)
 ------------------

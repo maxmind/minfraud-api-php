@@ -228,6 +228,16 @@ class UtilTest extends TestCase
                     ],
                 ],
             ],
+            [
+                'name' => 'gmail leading digit domain',
+                'input' => ['email' => ['address' => 'foo@10000gmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@gmail.com'),
+                        'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
         ];
 
         if (\function_exists('idn_to_ascii')
