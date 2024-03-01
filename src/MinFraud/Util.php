@@ -166,6 +166,65 @@ class Util
     ];
 
     /**
+     * @var array<string, bool>
+     */
+    private static $yahooDomains = [
+        'y7mail.com' => true,
+        'yahoo.at' => true,
+        'yahoo.be' => true,
+        'yahoo.bg' => true,
+        'yahoo.ca' => true,
+        'yahoo.cl' => true,
+        'yahoo.co.id' => true,
+        'yahoo.co.il' => true,
+        'yahoo.co.in' => true,
+        'yahoo.co.kr' => true,
+        'yahoo.co.nz' => true,
+        'yahoo.co.th' => true,
+        'yahoo.co.uk' => true,
+        'yahoo.co.za' => true,
+        'yahoo.com' => true,
+        'yahoo.com.ar' => true,
+        'yahoo.com.au' => true,
+        'yahoo.com.br' => true,
+        'yahoo.com.co' => true,
+        'yahoo.com.hk' => true,
+        'yahoo.com.hr' => true,
+        'yahoo.com.mx' => true,
+        'yahoo.com.my' => true,
+        'yahoo.com.pe' => true,
+        'yahoo.com.ph' => true,
+        'yahoo.com.sg' => true,
+        'yahoo.com.tr' => true,
+        'yahoo.com.tw' => true,
+        'yahoo.com.ua' => true,
+        'yahoo.com.ve' => true,
+        'yahoo.com.vn' => true,
+        'yahoo.cz' => true,
+        'yahoo.de' => true,
+        'yahoo.dk' => true,
+        'yahoo.ee' => true,
+        'yahoo.es' => true,
+        'yahoo.fi' => true,
+        'yahoo.fr' => true,
+        'yahoo.gr' => true,
+        'yahoo.hu' => true,
+        'yahoo.ie' => true,
+        'yahoo.in' => true,
+        'yahoo.it' => true,
+        'yahoo.lt' => true,
+        'yahoo.lv' => true,
+        'yahoo.nl' => true,
+        'yahoo.no' => true,
+        'yahoo.pl' => true,
+        'yahoo.pt' => true,
+        'yahoo.ro' => true,
+        'yahoo.se' => true,
+        'yahoo.sk' => true,
+        'ymail.com' => true,
+    ];
+
+    /**
      * @ignore
      */
     public static function maybeHashEmail(array $values): array
@@ -222,7 +281,7 @@ class Util
     private static function hashEmail(string $localPart, string $domain): string
     {
         // Strip off aliased part of email address
-        $divider = $domain === 'yahoo.com' ? '-' : '+';
+        $divider = isset(self::$yahooDomains[$domain]) ? '-' : '+';
 
         $aliasIdx = strpos($localPart, $divider);
         if ($aliasIdx) {
