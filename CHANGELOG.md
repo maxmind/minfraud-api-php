@@ -17,6 +17,9 @@ CHANGELOG
   their local part when `hashEmail` is used. For example,
   `foo-bar@yahoo.com` will become `foo@yahoo.com` for additional
   `yahoo.com` domains.
+* Duplicate `.com`s are now removed from email domain names when
+  `hashEmail` is used. For example, `example.com.com` will become
+  `example.com`.
 
 2.0.0 (2023-12-04)
 ------------------
