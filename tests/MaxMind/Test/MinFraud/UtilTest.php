@@ -189,6 +189,16 @@ class UtilTest extends TestCase
                 ],
             ],
             [
+                'name' => 'Domain with multiple host parts',
+                'input' => ['email' => ['address' => 'foo@bar.example.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@bar.example.com'),
+                        'domain' => 'bar.example.com',
+                    ],
+                ],
+            ],
+            [
                 'name' => 'Yahoo domain',
                 'input' => ['email' => ['address' => 'foo-bar@ymail.com']],
                 'expected' => [

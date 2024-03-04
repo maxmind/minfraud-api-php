@@ -305,9 +305,9 @@ class Util
             $possibleDomain = implode('.', \array_slice($domainParts, 1));
             if (isset(self::$fastmailDomains[$possibleDomain])) {
                 $domain = $possibleDomain;
-            }
-            if ($localPart !== '') {
-                $localPart = $domainParts[0];
+                if ($localPart !== '') {
+                    $localPart = $domainParts[0];
+                }
             }
         }
 
