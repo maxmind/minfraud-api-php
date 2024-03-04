@@ -5,6 +5,31 @@ CHANGELOG
 ------------------
 
 * Added `pxp_financial` and `trustpay` to the payment processor validation.
+* Equivalent domain names are now normalized when `hashEmail` is used.
+  For example, `googlemail.com` will become `gmail.com`.
+* Periods are now removed from `gmail.com` email address local parts when
+  `hashEmail` is used. For example, `f.o.o@gmail.com` will become
+  `foo@gmail.com`.
+* Fastmail alias subdomain email addresses are now normalized when
+  `hashEmail` is used. For example, `alias@user.fastmail.com` will become
+  `user@fastmail.com`.
+* Additional `yahoo.com` email addresses now have aliases removed from
+  their local part when `hashEmail` is used. For example,
+  `foo-bar@yahoo.com` will become `foo@yahoo.com` for additional
+  `yahoo.com` domains.
+* Duplicate `.com`s are now removed from email domain names when
+  `hashEmail` is used. For example, `example.com.com` will become
+  `example.com`.
+* Extraneous characters after `.com` are now removed from email domain
+  names when `hashEmail` is used. For example, `example.comfoo` will become
+  `example.com`.
+* Certain `.com` typos are now normalized to `.com` when `hashEmail` is
+  used. For example, `example.cam` will become `example.com`.
+* Additional `gmail.com` domain names with leading digits are now
+  normalized when `hashEmail` is used. For example, `100gmail.com` will
+  become `gmail.com`.
+* Additional `gmail.com` typos are now normalized when `hashEmail` is used.
+  For example, `gmali.com` will become `gmail.com`.
 
 2.0.0 (2023-12-04)
 ------------------

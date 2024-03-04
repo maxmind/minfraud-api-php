@@ -158,6 +158,96 @@ class UtilTest extends TestCase
                     ],
                 ],
             ],
+            [
+                'name' => 'Equivalent domain',
+                'input' => ['email' => ['address' => 'foo@googlemail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@gmail.com'),
+                        'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Periods in gmail localpart',
+                'input' => ['email' => ['address' => 'foo.bar@gmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foobar@gmail.com'),
+                        'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Fastmail alias domain',
+                'input' => ['email' => ['address' => 'alias@user.fastmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('user@fastmail.com'),
+                        'domain' => 'user.fastmail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Yahoo domain',
+                'input' => ['email' => ['address' => 'foo-bar@ymail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@ymail.com'),
+                        'domain' => 'ymail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => '.com.com',
+                'input' => ['email' => ['address' => 'foo@example.com.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@example.com'),
+                        'domain' => 'example.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Extra characters after .com',
+                'input' => ['email' => ['address' => 'foo@example.comfoo']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@example.com'),
+                        'domain' => 'example.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => '.com typo',
+                'input' => ['email' => ['address' => 'foo@example.cam']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@example.com'),
+                        'domain' => 'example.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'gmail leading digit domain',
+                'input' => ['email' => ['address' => 'foo@10000gmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@gmail.com'),
+                        'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'gmail typo',
+                'input' => ['email' => ['address' => 'foo@yahoogmail.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@gmail.com'),
+                        'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
         ];
 
         if (\function_exists('idn_to_ascii')
