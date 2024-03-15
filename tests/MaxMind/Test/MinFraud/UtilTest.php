@@ -223,18 +223,18 @@ class UtilTest extends TestCase
                 'input' => ['email' => ['address' => 'foo@example.comfoo']],
                 'expected' => [
                     'email' => [
-                        'address' => md5('foo@example.com'),
-                        'domain' => 'example.com',
+                        'address' => md5('foo@example.comfoo'),
+                        'domain' => 'example.comfoo',
                     ],
                 ],
             ],
             [
-                'name' => '.com typo',
+                'name' => '.cam',
                 'input' => ['email' => ['address' => 'foo@example.cam']],
                 'expected' => [
                     'email' => [
-                        'address' => md5('foo@example.com'),
-                        'domain' => 'example.com',
+                        'address' => md5('foo@example.cam'),
+                        'domain' => 'example.cam',
                     ],
                 ],
             ],
@@ -255,6 +255,16 @@ class UtilTest extends TestCase
                     'email' => [
                         'address' => md5('foo@gmail.com'),
                         'domain' => 'gmail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'TLD typo',
+                'input' => ['email' => ['address' => 'foo@example.comcom']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('foo@example.com'),
+                        'domain' => 'example.com',
                     ],
                 ],
             ],
