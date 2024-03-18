@@ -34,6 +34,57 @@ class Util
     /**
      * @var array<string, string>
      */
+    private static $typoTLDs = [
+        'comm' => 'com',
+        'commm' => 'com',
+        'commmm' => 'com',
+        'comn' => 'com',
+
+        'cbm' => 'com',
+        'ccm' => 'com',
+        'cdm' => 'com',
+        'cem' => 'com',
+        'cfm' => 'com',
+        'cgm' => 'com',
+        'chm' => 'com',
+        'cim' => 'com',
+        'cjm' => 'com',
+        'ckm' => 'com',
+        'clm' => 'com',
+        'cmm' => 'com',
+        'cnm' => 'com',
+        'cpm' => 'com',
+        'cqm' => 'com',
+        'crm' => 'com',
+        'csm' => 'com',
+        'ctm' => 'com',
+        'cum' => 'com',
+        'cvm' => 'com',
+        'cwm' => 'com',
+        'cxm' => 'com',
+        'cym' => 'com',
+        'czm' => 'com',
+
+        'col' => 'com',
+        'con' => 'com',
+
+        'dom' => 'com',
+        'don' => 'com',
+        'som' => 'com',
+        'son' => 'com',
+        'vom' => 'com',
+        'von' => 'com',
+        'xom' => 'com',
+        'xon' => 'com',
+
+        'clam' => 'com',
+        'colm' => 'com',
+        'comcom' => 'com',
+    ];
+
+    /**
+     * @var array<string, string>
+     */
     private static $equivalentDomains = [
         'googlemail.com' => 'gmail.com',
         'pm.me' => 'protonmail.com',
@@ -271,9 +322,15 @@ class Util
         }
 
         $domain = preg_replace('/(?:\.com){2,}$/', '.com', $domain);
-        $domain = preg_replace('/\.com[^.]+$/', '.com', $domain);
-        $domain = preg_replace('/(?:\.(?:com|c[a-z]{1,2}m|co[ln]|[dsvx]o[mn]|))$/', '.com', $domain);
         $domain = preg_replace('/^\d+(?:gmail?\.com)$/', 'gmail.com', $domain);
+
+        $idx = strrpos($domain, '.');
+        if ($idx !== false) {
+            $tld = substr($domain, $idx + 1);
+            if (isset(self::$typoTLDs[$tld])) {
+                $domain = substr($domain, 0, $idx) . '.' . self::$typoTLDs[$tld];
+            }
+        }
 
         if (isset(self::$typoDomains[$domain])) {
             $domain = self::$typoDomains[$domain];
