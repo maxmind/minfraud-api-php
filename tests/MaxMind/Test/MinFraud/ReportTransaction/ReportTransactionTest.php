@@ -68,7 +68,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testMissingRequiredFields(array $req): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must have keys');
+        $this->expectExceptionMessageMatches('/Expected|is required/');
 
         $this->createReportTransactionRequest(
             $req,
@@ -82,7 +82,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testMissingRequiredFieldsWithoutValidation(array $req): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be present in request');
+        $this->expectExceptionMessageMatches('/Expected|is required/');
 
         $this->createReportTransactionRequest(
             $req,
@@ -112,7 +112,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testUnknownKey(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must not have keys');
+        $this->expectExceptionMessage('Unknown keys');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -132,7 +132,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidChargebackCodes($chargebackCode): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('chargeback_code must be of type string');
+        $this->expectExceptionMessage('Expected chargeback_code');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -152,7 +152,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidNotes($notes): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('notes must be of type string');
+        $this->expectExceptionMessage('Expected notes');
 
         $req = array_merge(Data::minimalRequest(), ['notes' => $notes]);
         $this->createReportTransactionRequest(
@@ -169,7 +169,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidTransactionIds($transactionId): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('transaction_id must be of type string');
+        $this->expectExceptionMessage('Expected transaction_id');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -196,7 +196,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidIpAddresses(string $ip): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('ip_address must be an IP address');
+        $this->expectExceptionMessage('is an invalid IP address');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -223,7 +223,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidMaxmindIds(string $maxmindId): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('maxmind_id must have a length of 8');
+        $this->expectExceptionMessage('must be 8 characters long');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -250,7 +250,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidMinfraudIds(string $minfraudId): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('minfraud_id must validate against');
+        $this->expectExceptionMessage('must be a valid minFraud ID');
 
         $req = array_merge(
             Data::minimalRequest(),
@@ -280,7 +280,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testInvalidTags(string $tag): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('tag must be in');
+        $this->expectExceptionMessage('must be one of');
 
         $req = array_merge(Data::minimalRequest(), ['tag' => $tag]);
         $this->createReportTransactionRequest(

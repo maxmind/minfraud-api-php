@@ -33,6 +33,19 @@ class MinFraudData
             throw new \Exception("getting tests file $file failed!");
         }
 
-        return json_decode($contents, true);
+        $a = json_decode($contents, true);
+        self::recursiveKSort($a);
+
+        return $a;
+    }
+
+    private static function recursiveKSort(array &$array): void
+    {
+        ksort($array);
+        foreach ($array as &$value) {
+            if (\is_array($value)) {
+                self::recursiveKSort($value);
+            }
+        }
     }
 }

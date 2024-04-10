@@ -53,15 +53,82 @@ class ReportTransaction extends ServiceClient
      *                                 serves as the base class for the above
      *                                 exceptions.
      */
-    public function report(array $values): void
-    {
-        $values = $this->cleanAndValidate('TransactionReport', $values);
+    public function report(
+        array $values = [],
+        ?string $chargebackCode = null,
+        ?string $ipAddress = null,
+        ?string $maxmindId = null,
+        ?string $minfraudId = null,
+        ?string $notes = null,
+        ?string $tag = null,
+        ?string $transactionId = null
+    ): void {
+        if (\count($values) !== 0) {
+            if (\func_num_args() !== 1) {
+                throw new \InvalidArgumentException(
+                    'You may only provide the $values array or named arguments, not both.',
+                );
+            }
 
-        if (!isset($values['ip_address'])) {
-            throw new InvalidInputException('Key ip_address must be present in request');
+            $chargebackCode = $this->remove($values, 'chargeback_code');
+            $ipAddress = $this->remove($values, 'ip_address');
+            $maxmindId = $this->remove($values, 'maxmind_id');
+            $minfraudId = $this->remove($values, 'minfraud_id');
+            $notes = $this->remove($values, 'notes');
+            $tag = $this->remove($values, 'tag');
+            $transactionId = $this->remove($values, 'transaction_id');
+
+            $this->verifyEmpty($values);
         }
-        if (!isset($values['tag'])) {
-            throw new InvalidInputException('Key tag must be present in request');
+
+        if ($chargebackCode !== null) {
+            $values['chargeback_code'] = $chargebackCode;
+        }
+
+        if ($ipAddress === null) {
+            // This is required so we always throw an exception if it is not set
+            throw new InvalidInputException('An IP address is required');
+        }
+        if (!filter_var($ipAddress, \FILTER_VALIDATE_IP)) {
+            $this->maybeThrowInvalidInputException("$ipAddress is an invalid IP address");
+        }
+        $values['ip_address'] = $ipAddress;
+
+        if ($maxmindId !== null) {
+            if (\strlen($maxmindId) !== 8) {
+                $this->maybeThrowInvalidInputException("$maxmindId must be 8 characters long");
+            }
+            $values['maxmind_id'] = $maxmindId;
+        }
+
+        if ($minfraudId !== null) {
+            if (!preg_match(
+                '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i',
+                $minfraudId,
+            )) {
+                $this->maybeThrowInvalidInputException("$minfraudId must be a valid minFraud ID");
+            }
+
+            $values['minfraud_id'] = $minfraudId;
+        }
+
+        if ($notes !== null) {
+            $values['notes'] = $notes;
+        }
+
+        if ($tag === null) {
+            // This is required so we always throw an exception if it is not set
+            throw new InvalidInputException('A tag is required');
+        }
+        if (!\in_array($tag, ['not_fraud', 'suspected_fraud', 'spam_or_abuse', 'chargeback'], true)) {
+            $this->maybeThrowInvalidInputException(
+                "$tag must be one of 'not_fraud', 'suspected_fraud', 'spam_or_abuse', or 'chargeback'",
+            );
+        }
+        $values['tag'] = $tag;
+
+        if ($transactionId !== null) {
+            $values['transaction_id'] = $transactionId;
         }
 
         $url = self::$basePath . 'transactions/report';

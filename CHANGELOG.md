@@ -1,9 +1,10 @@
 CHANGELOG
 =========
 
-2.1.0
+3.0.0
 ------------------
 
+* This library no longer uses `Respect\Validation`.
 * Added `pxp_financial` and `trustpay` to the payment processor validation.
 * Equivalent domain names are now normalized when `hashEmail` is used.
   For example, `googlemail.com` will become `gmail.com`.
