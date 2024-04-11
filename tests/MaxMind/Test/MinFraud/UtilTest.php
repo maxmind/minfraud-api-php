@@ -328,6 +328,26 @@ class UtilTest extends TestCase
                         ],
                     ],
                 ],
+                [
+                    'name' => 'email local part nfc normalization form 1',
+                    'input' => ['email' => ['address' => "bu\u{0308}cher@example.com"]],
+                    'expected' => [
+                        'email' => [
+                            'address' => '53550c712b146287a2d0dd30e5ed6f4b',
+                            'domain' => 'example.com',
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'email local part nfc normalization form 2',
+                    'input' => ['email' => ['address' => "b\u{00FC}cher@example.com"]],
+                    'expected' => [
+                        'email' => [
+                            'address' => '53550c712b146287a2d0dd30e5ed6f4b',
+                            'domain' => 'example.com',
+                        ],
+                    ],
+                ],
             );
         }
 
