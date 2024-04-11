@@ -65,6 +65,114 @@ class MinFraudTest extends ServiceClientTester
         );
     }
 
+    /**
+     * @dataProvider services
+     */
+    public function testFullInsightsRequestUsingNamedArgs(string $class, string $service): void
+    {
+        $mf = $this->createMinFraudRequestWithFullResponse($service)
+            ->withAccount(
+                userId: '3132',
+                usernameMd5: '570a90bfbf8c7eab5dc5d4e26832d5b1'
+            )
+            ->withBilling(
+                firstName: 'First',
+                lastName: 'Last',
+                company: 'Company',
+                address: '101 Address Rd.',
+                address2: 'Unit 5',
+                city: 'City of Thorns',
+                region: 'CT',
+                country: 'US',
+                postal: '06510',
+                phoneNumber: '123-456-7890',
+                phoneCountryCode: '1'
+            )
+            ->withCreditCard(
+                country: 'US',
+                issuerIdNumber: '411111',
+                lastDigits: '7643',
+                bankName: 'Bank of No Hope',
+                bankPhoneCountryCode: '1',
+                bankPhoneNumber: '123-456-1234',
+                avsResult: 'Y',
+                cvvResult: 'N',
+                token: '123456abc1234',
+                was3dSecureSuccessful: true
+            )
+            ->withCustomInputs([
+                'boolean_input' => true,
+                'float_input' => 12.1,
+                'integer_input' => 3123,
+                'string_input' => 'This is a string input.',
+            ])
+            ->withDevice(
+                acceptLanguage: 'en-US,en;q=0.8',
+                ipAddress: '152.216.7.110',
+                sessionAge: 3600.5,
+                sessionId: 'foobar',
+                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
+            )
+            ->withEmail(
+                address: '977577b140bfb7c516e4746204fbdb01',
+                domain: 'maxmind.com'
+            )
+            ->withEvent(
+                transactionId: 'txn3134133',
+                shopId: 's2123',
+                time: '2014-04-12T23:20:50+00:00',
+                type: 'purchase'
+            )
+            ->withOrder(
+                amount: 323.21,
+                currency: 'USD',
+                discountCode: 'FIRST',
+                affiliateId: 'af12',
+                subaffiliateId: 'saf42',
+                isGift: true,
+                hasGiftMessage: false,
+                referrerUri: 'http://www.amazon.com/'
+            )
+            ->withPayment(
+                processor: 'stripe',
+                wasAuthorized: false,
+                declineCode: 'invalid number'
+            )
+            ->withShipping(
+                firstName: 'ShipFirst',
+                lastName: 'ShipLast',
+                company: 'ShipCo',
+                address: '322 Ship Addr. Ln.',
+                address2: 'St. 43',
+                city: 'Nowhere',
+                region: 'OK',
+                country: 'US',
+                postal: '73003',
+                phoneNumber: '123-456-0000',
+                phoneCountryCode: '1',
+                deliverySpeed: 'same_day'
+            )
+            ->withShoppingCartItem(
+                category: 'pets',
+                itemId: 'ad23232',
+                quantity: 2,
+                price: 20.43
+            )
+            ->withShoppingCartItem(
+                category: 'beauty',
+                itemId: 'bst112',
+                quantity: 1,
+                price: 100.0
+            );
+
+        $responseMeth = $service . 'FullResponse';
+        $this->assertEquals(
+            new $class(Data::$responseMeth()),
+            $mf->{$service}(),
+            'response for full request built piece by piece'
+        );
+    }
+
     public function testLocalesOption(): void
     {
         $insights = $this->createMinFraudRequestWithFullResponse(
