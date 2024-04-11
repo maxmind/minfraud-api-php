@@ -29,6 +29,9 @@
     "squizlabs/php_codesniffer": "*",
     "phpstan/phpstan": "*"
   },
+  "suggest": {
+    "ext-intl": "Enables improved email address IDN normalization"
+  },
   "autoload": {
     "psr-4": {
       "MaxMind\\": "src"
