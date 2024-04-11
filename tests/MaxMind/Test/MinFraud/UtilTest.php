@@ -308,6 +308,26 @@ class UtilTest extends TestCase
                         ],
                     ],
                 ],
+                [
+                    'name' => 'email domain nfc normalization form 1',
+                    'input' => ['email' => ['address' => "example@bu\u{0308}cher.com"]],
+                    'expected' => [
+                        'email' => [
+                            'address' => '2b21bc76dab3c8b1622837c1d698936c',
+                            'domain' => 'xn--bcher-kva.com',
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'email domain nfc normalization form 2',
+                    'input' => ['email' => ['address' => "example@b\u{00FC}cher.com"]],
+                    'expected' => [
+                        'email' => [
+                            'address' => '2b21bc76dab3c8b1622837c1d698936c',
+                            'domain' => 'xn--bcher-kva.com',
+                        ],
+                    ],
+                ],
             );
         }
 
