@@ -5,31 +5,35 @@ CHANGELOG
 ------------------
 
 * This library no longer uses `Respect\Validation`.
+* The `with*` methods can now be used with named arguments instead of
+  an array. This provides better editor completion, type checking,
+  and documentation.
+* Email normalization has been improved:
+  * Equivalent domain names are now normalized when `hashEmail` is used.
+    For example, `googlemail.com` will become `gmail.com`.
+  * Periods are now removed from `gmail.com` email address local parts when
+    `hashEmail` is used. For example, `f.o.o@gmail.com` will become
+    `foo@gmail.com`.
+  * Fastmail alias subdomain email addresses are now normalized when
+    `hashEmail` is used. For example, `alias@user.fastmail.com` will become
+    `user@fastmail.com`.
+  * Additional `yahoo.com` email addresses now have aliases removed from
+    their local part when `hashEmail` is used. For example,
+    `foo-bar@yahoo.com` will become `foo@yahoo.com` for additional
+    `yahoo.com` domains.
+  * Duplicate `.com`s are now removed from email domain names when
+    `hashEmail` is used. For example, `example.com.com` will become
+    `example.com`.
+  * Certain TLD typos are now normalized when `hashEmail` is used. For
+    example, `example.comcom` will become `example.com`.
+  * Additional `gmail.com` domain names with leading digits are now
+    normalized when `hashEmail` is used. For example, `100gmail.com` will
+    become `gmail.com`.
+  * Additional `gmail.com` typos are now normalized when `hashEmail` is used.
+    For example, `gmali.com` will become `gmail.com`.
+  * When `hashEmail` is used, the local part of an email address is now
+    normalized to NFC.
 * Added `pxp_financial` and `trustpay` to the payment processor validation.
-* Equivalent domain names are now normalized when `hashEmail` is used.
-  For example, `googlemail.com` will become `gmail.com`.
-* Periods are now removed from `gmail.com` email address local parts when
-  `hashEmail` is used. For example, `f.o.o@gmail.com` will become
-  `foo@gmail.com`.
-* Fastmail alias subdomain email addresses are now normalized when
-  `hashEmail` is used. For example, `alias@user.fastmail.com` will become
-  `user@fastmail.com`.
-* Additional `yahoo.com` email addresses now have aliases removed from
-  their local part when `hashEmail` is used. For example,
-  `foo-bar@yahoo.com` will become `foo@yahoo.com` for additional
-  `yahoo.com` domains.
-* Duplicate `.com`s are now removed from email domain names when
-  `hashEmail` is used. For example, `example.com.com` will become
-  `example.com`.
-* Certain TLD typos are now normalized when `hashEmail` is used. For
-  example, `example.comcom` will become `example.com`.
-* Additional `gmail.com` domain names with leading digits are now
-  normalized when `hashEmail` is used. For example, `100gmail.com` will
-  become `gmail.com`.
-* Additional `gmail.com` typos are now normalized when `hashEmail` is used.
-  For example, `gmali.com` will become `gmail.com`.
-* When `hashEmail` is used, the local part of an email address is now
-  normalized to NFC.
 
 2.0.0 (2023-12-04)
 ------------------
