@@ -6,7 +6,6 @@ namespace MaxMind\MinFraud;
 
 use MaxMind\Exception\InvalidInputException;
 use MaxMind\WebService\Client;
-use Respect\Validation\Exceptions\ValidationException;
 
 abstract class ServiceClient
 {
@@ -56,45 +55,35 @@ abstract class ServiceClient
         return 'minFraud-API/' . self::VERSION;
     }
 
-    /**
-     * @param string $className The name of the class (but not the namespace)
-     * @param array  $values    The values to validate
-     *
-     * @throws InvalidInputException when $values does not validate
-     *
-     * @return array The cleaned values
-     */
-    protected function cleanAndValidate(string $className, array $values): array
+    protected function maybeThrowInvalidInputException(string $msg): void
     {
-        $values = $this->clean($values);
-
-        if (!$this->validateInput) {
-            return $values;
+        if ($this->validateInput) {
+            throw new InvalidInputException($msg);
         }
-
-        $class = '\\MaxMind\\MinFraud\\Validation\\Rules\\' . $className;
-        $validator = new $class();
-
-        try {
-            $validator->check($values);
-        } catch (ValidationException $exception) {
-            throw new InvalidInputException($exception->getMessage(), $exception->getCode());
-        }
-
-        return $values;
     }
 
-    protected function clean(array $array): array
+    protected function remove(array &$array, string $key, array $types = ['string']): mixed
     {
-        $cleaned = [];
-        foreach ($array as $key => $value) {
-            if (\is_array($value)) {
-                $cleaned[$key] = $this->clean($array[$key]);
-            } elseif ($array[$key] !== null) {
-                $cleaned[$key] = $array[$key];
+        if (\array_key_exists($key, $array)) {
+            $value = $array[$key];
+            $actualType = \gettype($value);
+            if ($value !== null && !\in_array($actualType, $types, true)) {
+                $this->maybeThrowInvalidInputException(
+                    "Expected $key to be in [" . implode(', ', $types) . "] but was $actualType",
+                );
             }
+            unset($array[$key]);
+
+            return $value;
         }
 
-        return $cleaned;
+        return null;
+    }
+
+    protected function verifyEmpty(array $values): void
+    {
+        if (\count($values) !== 0) {
+            $this->maybeThrowInvalidInputException('Unknown keys in array: ' . implode(', ', array_keys($values)));
+        }
     }
 }

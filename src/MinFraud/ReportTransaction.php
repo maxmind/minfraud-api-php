@@ -39,7 +39,42 @@ class ReportTransaction extends ServiceClient
     }
 
     /**
-     * @param array $values the transaction parameters
+     * This call allows you to report transactions to MaxMind for use in
+     * updating the fraud score of future queries. The transaction should have
+     * been previously submitted to minFraud.
+     *
+     * @param array  $values         An array of transaction parameters. The keys are the same
+     *                               as the JSON keys. You may use either this or the named
+     *                               arguments, but not both.
+     * @param string $ipAddress      Required. The IP address of the customer placing the
+     *                               order. This should be passed as a string like
+     *                               "44.55.66.77" or "2001:db8::2:1".
+     * @param string $tag            Required. A string indicating the likelihood that a
+     *                               transaction may be fraudulent. Possible values:
+     *                               not_fraud, suspected_fraud, spam_or_abuse, or
+     *                               chargeback.
+     * @param string $chargebackCode Optional. A string which is provided by your payment
+     *                               processor indicating the reason for the chargeback.
+     * @param string $maxmindId      Optional. A unique eight character string identifying
+     *                               a minFraud Standard or Premium request. These IDs are
+     *                               returned in the maxmindID field of a response for a
+     *                               successful minFraud request. This field is not
+     *                               required, but you are encouraged to provide it, if
+     *                               possible.
+     * @param string $minfraudId     Optional. A UUID that identifies a minFraud Score,
+     *                               minFraud Insights, or minFraud Factors request. This
+     *                               ID is returned at /id in the response. This field is
+     *                               not required, but you are encouraged to provide it if
+     *                               the request was made to one of these services.
+     * @param string $notes          Optional. Your notes on the fraud tag associated with
+     *                               the transaction. We manually review many reported
+     *                               transactions to improve our scoring for you so any
+     *                               additional details to help us understand context are
+     *                               helpful.
+     * @param string $transactionId  Optional. The transaction ID you originally passed to
+     *                               minFraud. This field is not required, but you are
+     *                               encouraged to provide it or the transaction's
+     *                               maxmind_id or minfraud_id.
      *
      * @throws InvalidInputException   when the request has missing or invalid
      *                                 data
@@ -53,15 +88,82 @@ class ReportTransaction extends ServiceClient
      *                                 serves as the base class for the above
      *                                 exceptions.
      */
-    public function report(array $values): void
-    {
-        $values = $this->cleanAndValidate('TransactionReport', $values);
+    public function report(
+        array $values = [],
+        ?string $chargebackCode = null,
+        ?string $ipAddress = null,
+        ?string $maxmindId = null,
+        ?string $minfraudId = null,
+        ?string $notes = null,
+        ?string $tag = null,
+        ?string $transactionId = null
+    ): void {
+        if (\count($values) !== 0) {
+            if (\func_num_args() !== 1) {
+                throw new \InvalidArgumentException(
+                    'You may only provide the $values array or named arguments, not both.',
+                );
+            }
 
-        if (!isset($values['ip_address'])) {
-            throw new InvalidInputException('Key ip_address must be present in request');
+            $chargebackCode = $this->remove($values, 'chargeback_code');
+            $ipAddress = $this->remove($values, 'ip_address');
+            $maxmindId = $this->remove($values, 'maxmind_id');
+            $minfraudId = $this->remove($values, 'minfraud_id');
+            $notes = $this->remove($values, 'notes');
+            $tag = $this->remove($values, 'tag');
+            $transactionId = $this->remove($values, 'transaction_id');
+
+            $this->verifyEmpty($values);
         }
-        if (!isset($values['tag'])) {
-            throw new InvalidInputException('Key tag must be present in request');
+
+        if ($chargebackCode !== null) {
+            $values['chargeback_code'] = $chargebackCode;
+        }
+
+        if ($ipAddress === null) {
+            // This is required so we always throw an exception if it is not set
+            throw new InvalidInputException('An IP address is required');
+        }
+        if (!filter_var($ipAddress, \FILTER_VALIDATE_IP)) {
+            $this->maybeThrowInvalidInputException("$ipAddress is an invalid IP address");
+        }
+        $values['ip_address'] = $ipAddress;
+
+        if ($maxmindId !== null) {
+            if (\strlen($maxmindId) !== 8) {
+                $this->maybeThrowInvalidInputException("$maxmindId must be 8 characters long");
+            }
+            $values['maxmind_id'] = $maxmindId;
+        }
+
+        if ($minfraudId !== null) {
+            if (!preg_match(
+                '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i',
+                $minfraudId,
+            )) {
+                $this->maybeThrowInvalidInputException("$minfraudId must be a valid minFraud ID");
+            }
+
+            $values['minfraud_id'] = $minfraudId;
+        }
+
+        if ($notes !== null) {
+            $values['notes'] = $notes;
+        }
+
+        if ($tag === null) {
+            // This is required so we always throw an exception if it is not set
+            throw new InvalidInputException('A tag is required');
+        }
+        if (!\in_array($tag, ['not_fraud', 'suspected_fraud', 'spam_or_abuse', 'chargeback'], true)) {
+            $this->maybeThrowInvalidInputException(
+                "$tag must be one of 'not_fraud', 'suspected_fraud', 'spam_or_abuse', or 'chargeback'",
+            );
+        }
+        $values['tag'] = $tag;
+
+        if ($transactionId !== null) {
+            $values['transaction_id'] = $transactionId;
         }
 
         $url = self::$basePath . 'transactions/report';

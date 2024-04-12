@@ -1,9 +1,9 @@
 {
-    "ip_address": "152.216.7.110",
-    "tag": "chargeback",
-    "chargeback_code": "UA01 Fraud - Card Present Transaction",
-    "minfraud_id": "c8ce89f9-734d-4411-a174-91560f5ec07a",
-    "maxmind_id": "a1b2c3d4",
-    "notes": "Fraudster was wearing a clown outfit.",
-    "transaction_id": "txn3134133"
+  "chargeback_code": "UA01 Fraud - Card Present Transaction",
+  "ip_address": "152.216.7.110",
+  "maxmind_id": "a1b2c3d4",
+  "minfraud_id": "c8ce89f9-734d-4411-a174-91560f5ec07a",
+  "notes": "Fraudster was wearing a clown outfit.",
+  "tag": "chargeback",
+  "transaction_id": "txn3134133"
 }

@@ -36,20 +36,20 @@ class MinFraudTest extends ServiceClientTester
     public function testFullInsightsRequestBuiltPiecemeal(string $class, string $service): void
     {
         $incompleteMf = $this->createMinFraudRequestWithFullResponse($service)
-            ->withEvent(Data::fullRequest()['event'])
             ->withAccount(Data::fullRequest()['account'])
-            ->withEmail(Data::fullRequest()['email'])
             ->withBilling(Data::fullRequest()['billing'])
-            ->withShipping(Data::fullRequest()['shipping'])
-            ->withPayment(Data::fullRequest()['payment'])
             ->withCreditCard(Data::fullRequest()['credit_card'])
             ->withCustomInputs(Data::fullRequest()['custom_inputs'])
+            ->withDevice(Data::fullRequest()['device'])
+            ->withEmail(Data::fullRequest()['email'])
+            ->withEvent(Data::fullRequest()['event'])
             ->withOrder(Data::fullRequest()['order'])
+            ->withPayment(Data::fullRequest()['payment'])
+            ->withShipping(Data::fullRequest()['shipping'])
             ->withShoppingCartItem(Data::fullRequest()['shopping_cart'][0]);
 
         $mf = $incompleteMf
-            ->withShoppingCartItem(Data::fullRequest()['shopping_cart'][1])
-            ->withDevice(Data::fullRequest()['device']);
+            ->withShoppingCartItem(Data::fullRequest()['shopping_cart'][1]);
 
         $responseMeth = $service . 'FullResponse';
         $this->assertEquals(
@@ -62,6 +62,114 @@ class MinFraudTest extends ServiceClientTester
             $mf,
             $incompleteMf,
             'intermediate object not mutated'
+        );
+    }
+
+    /**
+     * @dataProvider services
+     */
+    public function testFullInsightsRequestUsingNamedArgs(string $class, string $service): void
+    {
+        $mf = $this->createMinFraudRequestWithFullResponse($service)
+            ->withAccount(
+                userId: '3132',
+                usernameMd5: '570a90bfbf8c7eab5dc5d4e26832d5b1'
+            )
+            ->withBilling(
+                firstName: 'First',
+                lastName: 'Last',
+                company: 'Company',
+                address: '101 Address Rd.',
+                address2: 'Unit 5',
+                city: 'City of Thorns',
+                region: 'CT',
+                country: 'US',
+                postal: '06510',
+                phoneNumber: '123-456-7890',
+                phoneCountryCode: '1'
+            )
+            ->withCreditCard(
+                country: 'US',
+                issuerIdNumber: '411111',
+                lastDigits: '7643',
+                bankName: 'Bank of No Hope',
+                bankPhoneCountryCode: '1',
+                bankPhoneNumber: '123-456-1234',
+                avsResult: 'Y',
+                cvvResult: 'N',
+                token: '123456abc1234',
+                was3dSecureSuccessful: true
+            )
+            ->withCustomInputs([
+                'boolean_input' => true,
+                'float_input' => 12.1,
+                'integer_input' => 3123,
+                'string_input' => 'This is a string input.',
+            ])
+            ->withDevice(
+                acceptLanguage: 'en-US,en;q=0.8',
+                ipAddress: '152.216.7.110',
+                sessionAge: 3600.5,
+                sessionId: 'foobar',
+                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
+            )
+            ->withEmail(
+                address: '977577b140bfb7c516e4746204fbdb01',
+                domain: 'maxmind.com'
+            )
+            ->withEvent(
+                transactionId: 'txn3134133',
+                shopId: 's2123',
+                time: '2014-04-12T23:20:50+00:00',
+                type: 'purchase'
+            )
+            ->withOrder(
+                amount: 323.21,
+                currency: 'USD',
+                discountCode: 'FIRST',
+                affiliateId: 'af12',
+                subaffiliateId: 'saf42',
+                isGift: true,
+                hasGiftMessage: false,
+                referrerUri: 'http://www.amazon.com/'
+            )
+            ->withPayment(
+                processor: 'stripe',
+                wasAuthorized: false,
+                declineCode: 'invalid number'
+            )
+            ->withShipping(
+                firstName: 'ShipFirst',
+                lastName: 'ShipLast',
+                company: 'ShipCo',
+                address: '322 Ship Addr. Ln.',
+                address2: 'St. 43',
+                city: 'Nowhere',
+                region: 'OK',
+                country: 'US',
+                postal: '73003',
+                phoneNumber: '123-456-0000',
+                phoneCountryCode: '1',
+                deliverySpeed: 'same_day'
+            )
+            ->withShoppingCartItem(
+                category: 'pets',
+                itemId: 'ad23232',
+                quantity: 2,
+                price: 20.43
+            )
+            ->withShoppingCartItem(
+                category: 'beauty',
+                itemId: 'bst112',
+                quantity: 1,
+                price: 100.0
+            );
+
+        $responseMeth = $service . 'FullResponse';
+        $this->assertEquals(
+            new $class(Data::$responseMeth()),
+            $mf->{$service}(),
+            'response for full request built piece by piece'
         );
     }
 
@@ -163,11 +271,11 @@ class MinFraudTest extends ServiceClientTester
     {
         $insights = $this->createNullRequest()
             ->with([
-                'device' => ['ip_address' => '1.1.1.1'],
                 'billing' => [
                     'first_name' => 'firstname',
                     'last_name' => null,
                 ],
+                'device' => ['ip_address' => '1.1.1.1'],
                 'shopping_cart' => [
                     [
                         'category' => 'catname',
@@ -186,11 +294,11 @@ class MinFraudTest extends ServiceClientTester
     public function testRequestsWithNullsPiecemeal(): void
     {
         $insights = $this->createNullRequest()
-            ->withDevice(['ip_address' => '1.1.1.1'])
             ->withBilling([
                 'first_name' => 'firstname',
                 'last_name' => null,
             ])
+            ->withDevice(['ip_address' => '1.1.1.1'])
             ->withShoppingCartItem([
                 'category' => 'catname',
                 'item_id' => null,
@@ -211,8 +319,8 @@ class MinFraudTest extends ServiceClientTester
             1,
             [],
             [
-                'device' => ['ip_address' => '1.1.1.1'],
                 'billing' => ['first_name' => 'firstname'],
+                'device' => ['ip_address' => '1.1.1.1'],
                 'shopping_cart' => [['category' => 'catname']],
             ]
         );
@@ -278,7 +386,7 @@ class MinFraudTest extends ServiceClientTester
     public function testUnknownKeys(string $method): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must not have keys');
+        $this->expectExceptionMessage('Unknown keys');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -321,7 +429,7 @@ class MinFraudTest extends ServiceClientTester
     public function testEmailWithBadAddress(string $md5): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be an MD5');
+        $this->expectExceptionMessage('is an invalid email address');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -345,7 +453,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadRegions(string $method, string $region): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be an ISO 3166-2');
+        $this->expectExceptionMessage('valid ISO 3166-2 region code');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -364,12 +472,33 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider badCountryCodes
+     * @dataProvider goodCountryCodes
      */
-    public function testBadCountryCode(string $method, string $code): void
+    public function testGoodCountryCode(string $method, string $code): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->{$method}(['country' => $code]);
+    }
+
+    public static function goodCountryCodes(): array
+    {
+        return self::generateTestData(
+            ['withBilling', 'withCreditCard', 'withShipping'],
+            ['CA', 'US'],
+        );
+    }
+
+    /**
+     * @dataProvider badCountryCodes
+     *
+     * @param mixed $code
+     */
+    public function testBadCountryCode(string $method, $code): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be a valid country');
+        $this->expectExceptionMessageMatches('/Expected country|valid ISO 3166-1 country code/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -379,14 +508,30 @@ class MinFraudTest extends ServiceClientTester
 
     public static function badCountryCodes(): array
     {
-        return [
-            ['withBilling', 'A'],
-            ['withBilling', '1'],
-            ['withBilling', 'MAA'],
-            ['withShipping', 'A'],
-            ['withShipping', 'MAA'],
-            ['withShipping', '1'],
-        ];
+        return self::generateTestData(
+            ['withBilling', 'withCreditCard', 'withShipping'],
+            [
+                'A',
+                '1',
+                'MAA',
+                'USA',
+                'Canada',
+                1,
+                'ca',
+            ]
+        );
+    }
+
+    private static function generateTestData(array $methods, array $values): array
+    {
+        $tests = [];
+        foreach ($methods as $method) {
+            foreach ($values as $value) {
+                $tests[] = [$method, $value];
+            }
+        }
+
+        return $tests;
     }
 
     /**
@@ -395,7 +540,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadPhoneCodes(string $method, string $key, string $code): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be a valid telephone country code');
+        $this->expectExceptionMessage('must be a string of 1 to 4 digits');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -418,7 +563,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadDeliverySpeed(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('delivery_speed must be in');
+        $this->expectExceptionMessage('valid delivery speed');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -432,7 +577,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadIin(string $iin): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must validate against');
+        $this->expectExceptionMessage('string of 6 or 8 digits');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -455,7 +600,7 @@ class MinFraudTest extends ServiceClientTester
     public function testCreditCardWithBadLastDigits(string $lastDigits): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must validate against');
+        $this->expectExceptionMessage('string of 2 or 4 digits');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -494,7 +639,7 @@ class MinFraudTest extends ServiceClientTester
     public function testCreditCardWithNumericToken(string $token): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must not validate against');
+        $this->expectExceptionMessage('card number');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -516,7 +661,7 @@ class MinFraudTest extends ServiceClientTester
     public function testCreditCardWithInvalidRangeToken(string $token): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must validate against');
+        $this->expectExceptionMessage('string of 1 to 255 printable ASCII characters');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -538,7 +683,7 @@ class MinFraudTest extends ServiceClientTester
     public function testCreditCardWithLongToken(string $token): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must validate against');
+        $this->expectExceptionMessage('string of 1 to 255 printable ASCII characters');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -579,7 +724,7 @@ class MinFraudTest extends ServiceClientTester
     public function testAvsAndCCv(string $key): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must have a length');
+        $this->expectExceptionMessage('must be a string of length 1');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -601,7 +746,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadIps(string $ip): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be an IP address');
+        $this->expectExceptionMessage('is an invalid IP address');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -612,6 +757,7 @@ class MinFraudTest extends ServiceClientTester
     public static function badIps(): array
     {
         return [
+            ['1.2.3'],
             ['1.2.3.'],
             ['299.1.1.1'],
             ['::AF123'],
@@ -645,12 +791,12 @@ class MinFraudTest extends ServiceClientTester
     public function testBadSessionAge(string $age): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be a float number');
+        $this->expectExceptionMessage('Expected session_age');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
+        )->withDevice(['session_age' => $age]);
     }
 
     public static function badSessionAge(): array
@@ -670,7 +816,7 @@ class MinFraudTest extends ServiceClientTester
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
+        )->withDevice(['session_age' => $age]);
     }
 
     public static function goodSessionAge(): array
@@ -689,7 +835,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadSessionId(string $id): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must have a length between 1 and 255');
+        $this->expectExceptionMessage('must be a string with length between 1 and 255');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -749,7 +895,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadDomains(string $domain): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must');
+        $this->expectExceptionMessage('valid domain name');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -817,7 +963,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadEventTime(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be a valid date');
+        $this->expectExceptionMessage('valid RFC 3339');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -825,10 +971,36 @@ class MinFraudTest extends ServiceClientTester
         )->withEvent(['time' => '2014/04/04 19:20']);
     }
 
+    /**
+     * @dataProvider goodEventTypes
+     */
+    public function testGoodEventType(string $good): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(['type' => $good]);
+    }
+
+    public static function goodEventTypes(): array
+    {
+        return [
+            ['account_creation'],
+            ['account_login'],
+            ['email_change'],
+            ['password_reset'],
+            ['payout_change'],
+            ['purchase'],
+            ['recurring_purchase'],
+            ['referral'],
+            ['survey'],
+        ];
+    }
+
     public function testBadEventType(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be');
+        $this->expectExceptionMessage('valid event type');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -842,7 +1014,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadCurrency(string $currency): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must validate against');
+        $this->expectExceptionMessage('valid currency code');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -866,7 +1038,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadReferrerUri(string $uri): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageMatches('/must be an? URL/');
+        $this->expectExceptionMessageMatches('/valid URL/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -885,7 +1057,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadPaymentProcessor(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('must be');
+        $this->expectExceptionMessage('valid payment processor');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -933,7 +1105,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadOrderAmount($value): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageMatches('/(must be greater than or equal to 0|must be a float)/');
+        $this->expectExceptionMessageMatches('/Expected amount|must be greater than or equal to 0/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -958,7 +1130,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadShoppingCartItemPrice($value): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageMatches('/(must be greater than or equal to 0|must be a float)/');
+        $this->expectExceptionMessageMatches('/Expected price|must be greater than or equal to 0/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -974,7 +1146,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadShoppingCartItemQuantity($value): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageMatches('/(must be greater than 0|must be an int)/');
+        $this->expectExceptionMessageMatches('/Expected quantity|must be greater than or equal to 0/');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -996,7 +1168,7 @@ class MinFraudTest extends ServiceClientTester
     public function testBadShoppingCartItemWithDoubleArray(): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('Must not have keys');
+        $this->expectExceptionMessage('Unknown keys');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
