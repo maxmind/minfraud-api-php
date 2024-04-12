@@ -297,6 +297,10 @@ class Util
         $domain = self::cleanDomain(substr($address, $atIdx + 1));
         $localPart = substr($address, 0, $atIdx);
 
+        if (class_exists('Normalizer')) {
+            $localPart = \Normalizer::normalize($localPart, \Normalizer::FORM_C);
+        }
+
         if ($domain !== '' && !isset($values['email']['domain'])) {
             $values['email']['domain'] = $domain;
         }
