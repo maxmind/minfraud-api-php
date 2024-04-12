@@ -41,7 +41,7 @@ CHANGELOG
 * IMPORTANT: PHP 8.1 or greater is now required.
 * BREAKING: Read-only properties are now used for the model class rather than
   magic methods.
-* BREAKING: The `rawResponse` property on model classess has been removed. Use
+* BREAKING: The `rawResponse` property on model classes has been removed. Use
   the `jsonSerialize` method instead.
 * BREAKING: The inheritance hierarchy on model classes has changed.
 * Updated `geoip2/geoip2` to version that includes the `isAnycast` property on

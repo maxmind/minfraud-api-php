@@ -58,7 +58,7 @@ php box.phar compile
 
 phar_test=$(./dev-bin/phar-test.php)
 if [[ -n $phar_test ]]; then
-    echo "Phar test outputed non-empty string: $phar_test"
+    echo "Phar test outputted non-empty string: $phar_test"
     exit 1
 fi
 

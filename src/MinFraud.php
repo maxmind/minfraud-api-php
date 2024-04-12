@@ -157,7 +157,7 @@ class MinFraud extends MinFraud\ServiceClient
 
     /**
      * This returns a `MinFraud` object with the `device` array set to
-     * to the values provided. Existing `device` data will be replaced.
+     * the values provided. Existing `device` data will be replaced.
      *
      * @param array       $values         An array of device data. The keys are the same as
      *                                    the JSON keys. You may use either this or the named
@@ -168,16 +168,16 @@ class MinFraud extends MinFraud\ServiceClient
      *                                    presentation format, i.e., dotted-quad
      *                                    notation or the IPv6 hexadecimal-colon
      *                                    notation.
-     * @param string|null $userAgent      the HTTP `User-Agent` header of the browser
+     * @param string|null $userAgent      The HTTP `User-Agent` header of the browser
      *                                    used in the transaction
-     * @param string|null $acceptLanguage the HTTP `Accept-Language` header of
+     * @param string|null $acceptLanguage The HTTP `Accept-Language` header of
      *                                    the device used in the transaction
      * @param float|null  $sessionAge     The number of seconds between the creation
      *                                    of the user's session and the time of the
      *                                    transaction. Note that `session_age` is not
      *                                    the duration of the current visit, but the
      *                                    time since the start of the first visit.
-     * @param string|null $sessionId      an ID that uniquely identifies a visitor's
+     * @param string|null $sessionId      An ID that uniquely identifies a visitor's
      *                                    session on the site
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
@@ -261,7 +261,7 @@ class MinFraud extends MinFraud\ServiceClient
 
     /**
      * This returns a `MinFraud` object with the `event` array set to
-     * to the values provided. Existing `event` data will be replaced.
+     * the values provided. Existing `event` data will be replaced.
      *
      * @param array       $values        An array of event data. The keys are the same as
      *                                   the JSON keys. You may use either this or the named
@@ -363,7 +363,7 @@ class MinFraud extends MinFraud\ServiceClient
 
     /**
      * This returns a `MinFraud` object with the `account` array set to
-     * to the values provided. Existing `` data will be replaced.
+     * the values provided. Existing `` data will be replaced.
      *
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--account
      *     minFraud account API docs
@@ -485,16 +485,16 @@ class MinFraud extends MinFraud\ServiceClient
      * @param array       $values           An array of billing data. The keys are the same as
      *                                      the JSON keys. You may use either this or the named
      *                                      arguments, but not both.
-     * @param string|null $address          the first line of the user's billing address
-     * @param string|null $address2         the second line of the user's billing address
-     * @param string|null $city             the city of the user's billing address
-     * @param string|null $company          the company of the end user as provided in
+     * @param string|null $address          The first line of the user's billing address
+     * @param string|null $address2         The second line of the user's billing address
+     * @param string|null $city             The city of the user's billing address
+     * @param string|null $company          The company of the end user as provided in
      *                                      their billing information
-     * @param string|null $country          the two character ISO 3166-1 alpha-2 country
+     * @param string|null $country          The two character ISO 3166-1 alpha-2 country
      *                                      code of the user's billing address
-     * @param string|null $firstName        the first name of the end user as provided
+     * @param string|null $firstName        The first name of the end user as provided
      *                                      in their billing information
-     * @param string|null $lastName         the last name of the end user as provided
+     * @param string|null $lastName         The last name of the end user as provided
      *                                      in their billing information
      * @param string|null $phoneCountryCode The country code for phone number
      *                                      associated with the user's billing
@@ -506,8 +506,8 @@ class MinFraud extends MinFraud\ServiceClient
      *                                      characters will be stripped. After
      *                                      stripping punctuation characters, the
      *                                      number must contain only digits.
-     * @param string|null $postal           the postal code of the user's billing address
-     * @param string|null $region           the ISO 3166-2 subdivision code for the user's
+     * @param string|null $postal           The postal code of the user's billing address
+     * @param string|null $region           The ISO 3166-2 subdivision code for the user's
      *                                      billing address
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
@@ -620,15 +620,15 @@ class MinFraud extends MinFraud\ServiceClient
      * @param array       $values  An array of shipping data. The keys are the same as
      *                             the JSON keys. You may use either this or the named
      *                             arguments, but not both.
-     * @param string|null $company the company of the end user as provided in
+     * @param string|null $company The company of the end user as provided in
      *                             their shipping information
-     * @param string|null $address the first line of the user's shipping address
-     * @param string|null $city    the city of the user's shipping address
-     * @param string|null $region  the ISO 3166-2 subdivision code for the user's
+     * @param string|null $address The first line of the user's shipping address
+     * @param string|null $city    The city of the user's shipping address
+     * @param string|null $region  The ISO 3166-2 subdivision code for the user's
      *                             shipping address
-     * @param string|null $country the two character ISO 3166-1 alpha-2 country
+     * @param string|null $country The two character ISO 3166-1 alpha-2 country
      *                             code of the user's shipping address
-     * @param string|null $postal  the postal code of the user's shipping address
+     * @param string|null $postal  The postal code of the user's shipping address
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -751,7 +751,7 @@ class MinFraud extends MinFraud\ServiceClient
      * @param string|null $declineCode   The decline code as provided by your
      *                                   payment processor. If the transaction
      *                                   was not declined, do not include this field.
-     * @param string|null $processor     the payment processor used for the transaction
+     * @param string|null $processor     The payment processor used for the transaction
      * @param bool|null   $wasAuthorized The authorization outcome from the payment
      *                                   processor. If the transaction has not yet been
      *                                   approved or denied, do not include this field.
@@ -967,20 +967,20 @@ class MinFraud extends MinFraud\ServiceClient
      * @param array       $values                An array of credit card data. The keys are the same as
      *                                           the JSON keys. You may use either this or the named
      *                                           arguments, but not both.
-     * @param string|null $avsResult             the address verification system (AVS) check
+     * @param string|null $avsResult             The address verification system (AVS) check
      *                                           result, as returned to you by the credit card
      *                                           processor
-     * @param string|null $bankName              the name of the issuing bank as provided by the
+     * @param string|null $bankName              The name of the issuing bank as provided by the
      *                                           end user
-     * @param string|null $bankPhoneCountryCode  the phone country code for the
+     * @param string|null $bankPhoneCountryCode  The phone country code for the
      *                                           issuing bank as provided by the end
      *                                           user
-     * @param string|null $bankPhoneNumber       the phone number, without the country
+     * @param string|null $bankPhoneNumber       The phone number, without the country
      *                                           code, for the issuing bank as provided by
      *                                           the end user
-     * @param string|null $country               the two character ISO 3166-1 alpha-2 country
+     * @param string|null $country               The two character ISO 3166-1 alpha-2 country
      *                                           code where the issuer of the card is located
-     * @param string|null $cvvResult             the card verification value (CVV) code as
+     * @param string|null $cvvResult             The card verification value (CVV) code as
      *                                           provided by the payment processor
      * @param string|null $issuerIdNumber        The issuer ID number for the credit card.
      *                                           This is the first six or eight digits of
@@ -989,8 +989,8 @@ class MinFraud extends MinFraud\ServiceClient
      * @param string|null $lastDigits            The last digits of the credit card number.
      *                                           In most cases, you should send the last four
      *                                           digits for `lastDigits`.
-     * @param string|null $token                 a token uniquely identifying the card
-     * @param bool|null   $was3dSecureSuccessful whether the outcome of 3-D Secure
+     * @param string|null $token                 A token uniquely identifying the card
+     * @param bool|null   $was3dSecureSuccessful Whether the outcome of 3-D Secure
      *                                           verification was successful
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
@@ -1166,12 +1166,12 @@ class MinFraud extends MinFraud\ServiceClient
      *                                    You may use either this or the named arguments, but not both.
      * @param string|null $affiliateId    The ID of the affiliate where the order is coming from.
      *                                    No specific format is required.
-     * @param float|null  $amount         the total order amount
-     * @param string|null $currency       the currency code for the order amount
-     * @param string|null $discountCode   the discount code applied to the order
-     * @param bool|null   $hasGiftMessage indicates if the order has a gift message
-     * @param bool|null   $isGift         indicates if the order is a gift
-     * @param string|null $referrerUri    the URI of the referring website
+     * @param float|null  $amount         The total order amount
+     * @param string|null $currency       The currency code for the order amount
+     * @param string|null $discountCode   The discount code applied to the order
+     * @param bool|null   $hasGiftMessage Indicates if the order has a gift message
+     * @param bool|null   $isGift         Indicates if the order is a gift
+     * @param string|null $referrerUri    The URI of the referring website
      * @param string|null $subaffiliateId The ID of the sub-affiliate where the order is coming from.
      *                                    No specific format is required.
      *
