@@ -566,9 +566,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($country !== null) {
-            if (!preg_match('/^[A-Z]{2}$/', $country)) {
-                $this->maybeThrowInvalidInputException("$country is not a valid ISO 3166-1 country code");
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -581,9 +579,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($phoneCountryCode !== null) {
-            if (!preg_match('/^[0-9]{1,4}$/', $phoneCountryCode)) {
-                $this->maybeThrowInvalidInputException('Phone country code must be a string of 1 to 4 digits.');
-            }
+            $this->verifyPhoneCountryCode($phoneCountryCode);
             $values['phone_country_code'] = $phoneCountryCode;
         }
 
@@ -596,11 +592,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($region !== null) {
-            if (!preg_match('/^[0-9A-Z]{1,4}$/', $region)) {
-                $this->maybeThrowInvalidInputException(
-                    "$region is not a valid ISO 3166-2 region code (without country prefix)",
-                );
-            }
+            $this->verifyRegionCode($region);
             $values['region'] = $region;
         }
 
@@ -688,9 +680,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($country !== null) {
-            if (!preg_match('/^[A-Z]{2}$/', $country)) {
-                $this->maybeThrowInvalidInputException("$country is not a valid ISO 3166-1 country code");
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -711,9 +701,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($phoneCountryCode !== null) {
-            if (!preg_match('/^[0-9]{1,4}$/', $phoneCountryCode)) {
-                $this->maybeThrowInvalidInputException('Phone country code must be a string of 1 to 4 digits.');
-            }
+            $this->verifyPhoneCountryCode($phoneCountryCode);
             $values['phone_country_code'] = $phoneCountryCode;
         }
 
@@ -726,9 +714,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($region !== null) {
-            if (!preg_match('/^[0-9A-Z]{1,4}$/', $region)) {
-                $this->maybeThrowInvalidInputException("$region is not a valid ISO 3166-2 region code");
-            }
+            $this->verifyRegionCode($region);
             $values['region'] = $region;
         }
 
@@ -1056,9 +1042,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($country !== null) {
-            if (!preg_match('/^[A-Z]{2}$/', $country)) {
-                $this->maybeThrowInvalidInputException('Country must be a valid ISO 3166-1 country code.');
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -1425,5 +1409,28 @@ class MinFraud extends MinFraud\ServiceClient
             $this->client->post($service, $url, $this->content),
             $this->locales
         );
+    }
+
+    private function verifyCountryCode(string $country): void
+    {
+        if (!preg_match('/^[A-Z]{2}$/', $country)) {
+            $this->maybeThrowInvalidInputException("$country is not a valid ISO 3166-1 country code");
+        }
+    }
+
+    private function verifyPhoneCountryCode(string $phoneCountryCode): void
+    {
+        if (!preg_match('/^[0-9]{1,4}$/', $phoneCountryCode)) {
+            $this->maybeThrowInvalidInputException('Phone country code must be a string of 1 to 4 digits.');
+        }
+    }
+
+    private function verifyRegionCode(string $region): void
+    {
+        if (!preg_match('/^[0-9A-Z]{1,4}$/', $region)) {
+            $this->maybeThrowInvalidInputException(
+                "$region is not a valid ISO 3166-2 region code (without country prefix)",
+            );
+        }
     }
 }
