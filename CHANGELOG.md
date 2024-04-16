@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.0.0
+3.0.0 (2024-04-16)
 ------------------
 
 * This library no longer uses `Respect\Validation`.
