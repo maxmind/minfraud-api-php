@@ -381,6 +381,17 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
+     * @dataProvider services
+     */
+    public function testUserAgentWithoutSessionId(string $class, string $service): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            $service,
+            request: ['device' => ['user_agent' => 'test']],
+        )->withDevice(['user_agent' => 'test'])->{$service}();
+    }
+
+    /**
      * @dataProvider withMethods
      */
     public function testUnknownKeys(string $method): void

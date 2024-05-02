@@ -213,9 +213,7 @@ class MinFraud extends MinFraud\ServiceClient
                     $sessionId = (string) $v;
                 }
             }
-            if ($sessionId) {
-                $userAgent = $this->remove($values, 'user_agent');
-            }
+            $userAgent = $this->remove($values, 'user_agent');
 
             $this->verifyEmpty($values);
         }

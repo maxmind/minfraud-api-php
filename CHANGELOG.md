@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+3.0.1 (2024-05-02)
+------------------
+
+* When calling `withDevice` with an array, an exception was incorrectly
+  thrown if `user_agent` was set but `session_id` was not set. Reported by
+  Gregor Kuhlmann. GitHub #172.
+
 3.0.0 (2024-04-16)
 ------------------
 
