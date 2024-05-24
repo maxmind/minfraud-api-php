@@ -46,9 +46,11 @@ class ReportTransaction extends ServiceClient
      * @param array  $values         An array of transaction parameters. The keys are the same
      *                               as the JSON keys. You may use either this or the named
      *                               arguments, but not both.
-     * @param string $ipAddress      Required. The IP address of the customer placing the
+     * @param string $ipAddress      Optional. The IP address of the customer placing the
      *                               order. This should be passed as a string like
-     *                               "44.55.66.77" or "2001:db8::2:1".
+     *                               "44.55.66.77" or "2001:db8::2:1". This field is not
+     *                               required if you provide at least one of the transaction's
+     *                               maxmindId, minfraudId, or transactionId.
      * @param string $tag            Required. A string indicating the likelihood that a
      *                               transaction may be fraudulent. Possible values:
      *                               not_fraud, suspected_fraud, spam_or_abuse, or
@@ -59,22 +61,25 @@ class ReportTransaction extends ServiceClient
      *                               a minFraud Standard or Premium request. These IDs are
      *                               returned in the maxmindID field of a response for a
      *                               successful minFraud request. This field is not
-     *                               required, but you are encouraged to provide it, if
-     *                               possible.
+     *                               required if you provide at least one of the transaction's
+     *                               ipAddress, minfraudId, or transactionId. You are
+     *                               encouraged to provide it, if possible.
      * @param string $minfraudId     Optional. A UUID that identifies a minFraud Score,
      *                               minFraud Insights, or minFraud Factors request. This
      *                               ID is returned at /id in the response. This field is
-     *                               not required, but you are encouraged to provide it if
-     *                               the request was made to one of these services.
+     *                               not required if you provide at least one of the transaction's
+     *                               ipAddress, maxmindId, or transactionId. You are encouraged to
+     *                               provide it the request was made to one of these services.
      * @param string $notes          Optional. Your notes on the fraud tag associated with
      *                               the transaction. We manually review many reported
      *                               transactions to improve our scoring for you so any
      *                               additional details to help us understand context are
      *                               helpful.
      * @param string $transactionId  Optional. The transaction ID you originally passed to
-     *                               minFraud. This field is not required, but you are
-     *                               encouraged to provide it or the transaction's
-     *                               maxmind_id or minfraud_id.
+     *                               minFraud. This field is not required if you provide at
+     *                               least one of the transaction's ipAddress, maxmindId, or
+     *                               minfraudId. You are encouraged to provide it or the
+     *                               transaction's maxmind_id or minfraud_id.
      *
      * @throws InvalidInputException   when the request has missing or invalid
      *                                 data
@@ -116,18 +121,27 @@ class ReportTransaction extends ServiceClient
             $this->verifyEmpty($values);
         }
 
+        if ($ipAddress === null
+            && $minfraudId === null
+            && ($maxmindId === null || $maxmindId === '')
+            && ($transactionId === null || $transactionId === '')
+        ) {
+            throw new InvalidInputException(
+                'The user must pass at least one of the following: ' .
+                'ipAddress, minfraudId, maxmindId, transactionId.'
+            );
+        }
+
         if ($chargebackCode !== null) {
             $values['chargeback_code'] = $chargebackCode;
         }
 
-        if ($ipAddress === null) {
-            // This is required so we always throw an exception if it is not set
-            throw new InvalidInputException('An IP address is required');
+        if ($ipAddress !== null) {
+            if (!filter_var($ipAddress, \FILTER_VALIDATE_IP)) {
+                $this->maybeThrowInvalidInputException("$ipAddress is an invalid IP address");
+            }
+            $values['ip_address'] = $ipAddress;
         }
-        if (!filter_var($ipAddress, \FILTER_VALIDATE_IP)) {
-            $this->maybeThrowInvalidInputException("$ipAddress is an invalid IP address");
-        }
-        $values['ip_address'] = $ipAddress;
 
         if ($maxmindId !== null) {
             if (\strlen($maxmindId) !== 8) {
