@@ -169,8 +169,9 @@ class ReportTransaction extends ServiceClient
             $values['transaction_id'] = $transactionId;
         }
 
-        if ($ipAddress === null
-            && $minfraudId === null
+        // One of these fields is required so we always throw an exception if one is not set
+        if (($ipAddress === null || $ipAddress === '')
+            && ($minfraudId === null || $minfraudId === '')
             && ($maxmindId === null || $maxmindId === '')
             && ($transactionId === null || $transactionId === '')
         ) {
