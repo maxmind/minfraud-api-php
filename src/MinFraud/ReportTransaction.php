@@ -121,17 +121,6 @@ class ReportTransaction extends ServiceClient
             $this->verifyEmpty($values);
         }
 
-        if ($ipAddress === null
-            && $minfraudId === null
-            && ($maxmindId === null || $maxmindId === '')
-            && ($transactionId === null || $transactionId === '')
-        ) {
-            throw new InvalidInputException(
-                'The user must pass at least one of the following: ' .
-                'ipAddress, minfraudId, maxmindId, transactionId.'
-            );
-        }
-
         if ($chargebackCode !== null) {
             $values['chargeback_code'] = $chargebackCode;
         }
@@ -178,6 +167,17 @@ class ReportTransaction extends ServiceClient
 
         if ($transactionId !== null) {
             $values['transaction_id'] = $transactionId;
+        }
+
+        if ($ipAddress === null
+            && $minfraudId === null
+            && ($maxmindId === null || $maxmindId === '')
+            && ($transactionId === null || $transactionId === '')
+        ) {
+            throw new InvalidInputException(
+                'The user must pass at least one of the following: ' .
+                'ipAddress, minfraudId, maxmindId, transactionId.'
+            );
         }
 
         $url = self::$basePath . 'transactions/report';
