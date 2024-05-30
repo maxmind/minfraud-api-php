@@ -283,8 +283,8 @@ The possible exceptions are:
 
 * `InvalidInputException` - This will be thrown when the `->report()` method is
   called with invalid input data or when the required fields are missing. The
-  required fields are `tag` and one or more of the following: `ip_address`,
-  `maxmind_id`, `minfraud_id`, or `transaction_id`.
+  required fields are `tag` and one or more of the following: `ipAddress`,
+  `maxmindId`, `minfraudId`, or `transactionId`.
 * `AuthenticationException` - This will be thrown on calling `->report()`,
   when the server is unable to authenticate the request, e.g., if the license
   key or account ID is invalid.

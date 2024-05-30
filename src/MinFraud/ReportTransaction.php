@@ -50,7 +50,7 @@ class ReportTransaction extends ServiceClient
      *                               order. This should be passed as a string like
      *                               "44.55.66.77" or "2001:db8::2:1". This field is not
      *                               required if you provide at least one of the transaction's
-     *                               maxmindId, minfraudId, or transactionId.
+     *                               `maxmindId`, `minfraudId`, or `transactionId`.
      * @param string $tag            Required. A string indicating the likelihood that a
      *                               transaction may be fraudulent. Possible values:
      *                               not_fraud, suspected_fraud, spam_or_abuse, or
@@ -59,17 +59,18 @@ class ReportTransaction extends ServiceClient
      *                               processor indicating the reason for the chargeback.
      * @param string $maxmindId      Optional. A unique eight character string identifying
      *                               a minFraud Standard or Premium request. These IDs are
-     *                               returned in the maxmindID field of a response for a
+     *                               returned in the `maxmindID` field of a response for a
      *                               successful minFraud request. This field is not
      *                               required if you provide at least one of the transaction's
-     *                               ipAddress, minfraudId, or transactionId. You are
+     *                               `ipAddress`, `minfraudId`, or `transactionId`. You are
      *                               encouraged to provide it, if possible.
      * @param string $minfraudId     Optional. A UUID that identifies a minFraud Score,
      *                               minFraud Insights, or minFraud Factors request. This
      *                               ID is returned at /id in the response. This field is
      *                               not required if you provide at least one of the transaction's
-     *                               ipAddress, maxmindId, or transactionId. You are encouraged to
-     *                               provide it the request was made to one of these services.
+     *                               `ipAddress`, `maxmindId`, or `transactionId`. You are
+     *                               encouraged to provide it if the request was made to one of
+     *                               these services.
      * @param string $notes          Optional. Your notes on the fraud tag associated with
      *                               the transaction. We manually review many reported
      *                               transactions to improve our scoring for you so any
@@ -77,9 +78,9 @@ class ReportTransaction extends ServiceClient
      *                               helpful.
      * @param string $transactionId  Optional. The transaction ID you originally passed to
      *                               minFraud. This field is not required if you provide at
-     *                               least one of the transaction's ipAddress, maxmindId, or
-     *                               minfraudId. You are encouraged to provide it or the
-     *                               transaction's maxmind_id or minfraud_id.
+     *                               least one of the transaction's `ipAddress`, `maxmindId`, or
+     *                               `minfraudId`. You are encouraged to provide it or the
+     *                               transaction's `maxmindId` or `minfraudId`.
      *
      * @throws InvalidInputException   when the request has missing or invalid
      *                                 data
