@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+3.1.0
+------------------
+
+* Updated `MaxMind\MinFraud\ReportTransaction` to make the `ip_address`
+  parameter optional. Now the `tag` and at least one of the following
+  parameters must be supplied: `ipAddress`, `maxmindId`, `minfraudId`,
+  `transactionId`.
+
 3.0.1 (2024-05-02)
 ------------------
 

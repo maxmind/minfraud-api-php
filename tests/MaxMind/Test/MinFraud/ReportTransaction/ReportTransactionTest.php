@@ -62,13 +62,42 @@ class ReportTransactionTest extends ServiceClientTester
         );
     }
 
+    public function testRequiredFields(): void
+    {
+        $this->expectNotToPerformAssertions();
+
+        $req = [
+            'ip_address' => '1.1.1.1',
+            'tag' => 'not_fraud',
+        ];
+        $this->createReportTransactionRequest($req, 1)->report($req);
+
+        $req = [
+            'maxmind_id' => '12345678',
+            'tag' => 'not_fraud',
+        ];
+        $this->createReportTransactionRequest($req, 1)->report($req);
+
+        $req = [
+            'minfraud_id' => '58fa38d8-4b87-458b-a22b-f00eda1aa20d',
+            'tag' => 'not_fraud',
+        ];
+        $this->createReportTransactionRequest($req, 1)->report($req);
+
+        $req = [
+            'tag' => 'not_fraud',
+            'transaction_id' => 'abc123',
+        ];
+        $this->createReportTransactionRequest($req, 1)->report($req);
+    }
+
     /**
      * @dataProvider requestsMissingRequiredFields
      */
     public function testMissingRequiredFields(array $req): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageMatches('/Expected|is required/');
+        $this->expectExceptionMessageMatches('/Expected|is required|must pass at least one of the following/');
 
         $this->createReportTransactionRequest(
             $req,
@@ -82,7 +111,7 @@ class ReportTransactionTest extends ServiceClientTester
     public function testMissingRequiredFieldsWithoutValidation(array $req): void
     {
         $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessageMatches('/Expected|is required/');
+        $this->expectExceptionMessageMatches('/Expected|is required|must pass at least one of the following/');
 
         $this->createReportTransactionRequest(
             $req,
@@ -94,7 +123,7 @@ class ReportTransactionTest extends ServiceClientTester
     public static function requestsMissingRequiredFields(): array
     {
         return [
-            'Missing ip_address' => [
+            'Missing one of ip_address, maxmind_id, minfraud_id, or transaction_id' => [
                 ['tag' => 'not_fraud'],
             ],
             'Missing tag' => [
