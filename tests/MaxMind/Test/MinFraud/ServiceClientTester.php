@@ -36,7 +36,7 @@ abstract class ServiceClientTester extends TestCase
             ->willReturn([$statusCode, $contentType, $responseBody]);
 
         $factory = $this->getMockBuilder(
-            'MaxMind\\WebService\\Http\\RequestFactory'
+            'MaxMind\WebService\Http\RequestFactory'
         )->getMock();
 
         $host = isset($options['host']) ? $options['host'] : 'minfraud.maxmind.com';
