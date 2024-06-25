@@ -123,5 +123,17 @@ class InsightsTest extends ScoreTest
             $insights->ipAddress->traits->mobileNetworkCode,
             'correct mobile network code'
         );
+
+        $this->assertSame(
+            $array['billing_phone']['country'],
+            $insights->billingPhone->country,
+            'correct billing phone country'
+        );
+
+        $this->assertSame(
+            $array['shipping_phone']['country'],
+            $insights->shippingPhone->country,
+            'correct shipping phone country'
+        );
     }
 }

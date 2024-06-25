@@ -120,6 +120,12 @@
     "distance_to_ip_location": 5465,
     "is_in_ip_country": false
   },
+  "billing_phone": {
+    "country": "US",
+    "is_voip": true,
+    "network_operator": "Verizon/1",
+    "number_type": "fixed"
+  },
   "credit_card": {
     "issuer": {
       "name": "Bank of No Hope",
@@ -156,6 +162,12 @@
     "is_postal_in_city": false,
     "latitude": 35.704729,
     "longitude": -97.568619
+  },
+  "shipping_phone": {
+    "country": "CA",
+    "is_voip": true,
+    "network_operator": "Telus Mobility-SVR/2",
+    "number_type": "mobile"
   },
   "subscores": {
     "avs_result": 0.01,
