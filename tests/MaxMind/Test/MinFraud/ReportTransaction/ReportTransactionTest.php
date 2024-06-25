@@ -64,8 +64,6 @@ class ReportTransactionTest extends ServiceClientTester
 
     public function testRequiredFields(): void
     {
-        $this->expectNotToPerformAssertions();
-
         $req = [
             'ip_address' => '1.1.1.1',
             'tag' => 'not_fraud',
