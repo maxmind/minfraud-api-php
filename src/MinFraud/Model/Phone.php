@@ -16,9 +16,11 @@ class Phone implements \JsonSerializable
     public readonly ?string $country;
 
     /**
-     * @var bool|null This is `true` if the phone number is a Voice over Internet
-     *                Protocol (VoIP) number allocated by a regulator. Otherwise,
-     *                the property is `null`.
+     * @var bool|null This is `true` if the phone number is a Voice over
+     *                Internet Protocol (VoIP) number allocated by a regulator.
+     *                It is `false` if the phone number is not a VoIP number
+     *                allocated by a regulator. It is `null` if a valid number
+     *                was not provided or if we do not have data for the number.
      */
     public readonly ?bool $isVoip;
 
