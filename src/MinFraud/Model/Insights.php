@@ -16,7 +16,7 @@ class Insights implements \JsonSerializable
     public readonly BillingAddress $billingAddress;
 
     /**
-     * @var Phone an object containing minFraud date related to the billing
+     * @var Phone an object containing minFraud data related to the billing
      *            phone used in the transaction
      */
     public readonly Phone $billingPhone;
@@ -88,7 +88,7 @@ class Insights implements \JsonSerializable
     public readonly ShippingAddress $shippingAddress;
 
     /**
-     * @var Phone an object containing minFraud date related to the shipping
+     * @var Phone an object containing minFraud data related to the shipping
      *            phone used in the transaction
      */
     public readonly Phone $shippingPhone;
