@@ -8,6 +8,11 @@ CHANGELOG
   parameter optional. Now the `tag` and at least one of the following
   parameters must be supplied: `ipAddress`, `maxmindId`, `minfraudId`,
   `transactionId`.
+* Added `billingPhone` and `shippingPhone` properties to the minFraud Insights
+  and Factors response models. These contain objects with information about
+  the respective phone numbers. Please see [our developer
+  site](https://dev.maxmind.com/minfraud/api-documentation/responses/) for
+  more information.
 
 3.0.1 (2024-05-02)
 ------------------

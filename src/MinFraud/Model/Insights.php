@@ -16,6 +16,12 @@ class Insights implements \JsonSerializable
     public readonly BillingAddress $billingAddress;
 
     /**
+     * @var Phone an object containing minFraud data related to the billing
+     *            phone used in the transaction
+     */
+    public readonly Phone $billingPhone;
+
+    /**
      * @var CreditCard an object containing minFraud data about the credit
      *                 card used in the transaction
      */
@@ -82,6 +88,12 @@ class Insights implements \JsonSerializable
     public readonly ShippingAddress $shippingAddress;
 
     /**
+     * @var Phone an object containing minFraud data related to the shipping
+     *            phone used in the transaction
+     */
+    public readonly Phone $shippingPhone;
+
+    /**
      * @var array This array contains \MaxMind\MinFraud\Model\Warning objects
      *            detailing issues with the request that was sent, such as
      *            invalid or unknown inputs. It is highly recommended that
@@ -108,11 +120,13 @@ class Insights implements \JsonSerializable
         $this->warnings = $warnings;
 
         $this->billingAddress = new BillingAddress($response['billing_address'] ?? []);
+        $this->billingPhone = new Phone($response['billing_phone'] ?? []);
         $this->creditCard = new CreditCard($response['credit_card'] ?? []);
         $this->device = new Device($response['device'] ?? []);
         $this->email = new Email($response['email'] ?? []);
         $this->ipAddress = new IpAddress($response['ip_address'] ?? [], $locales);
         $this->shippingAddress = new ShippingAddress($response['shipping_address'] ?? []);
+        $this->shippingPhone = new Phone($response['shipping_phone'] ?? []);
     }
 
     public function jsonSerialize(): array
@@ -122,6 +136,11 @@ class Insights implements \JsonSerializable
         $billingAddress = $this->billingAddress->jsonSerialize();
         if (!empty($billingAddress)) {
             $js['billing_address'] = $billingAddress;
+        }
+
+        $billingPhone = $this->billingPhone->jsonSerialize();
+        if (!empty($billingPhone)) {
+            $js['billing_phone'] = $billingPhone;
         }
 
         $creditCard = $this->creditCard->jsonSerialize();
@@ -161,6 +180,11 @@ class Insights implements \JsonSerializable
         $shippingAddress = $this->shippingAddress->jsonSerialize();
         if (!empty($shippingAddress)) {
             $js['shipping_address'] = $shippingAddress;
+        }
+
+        $shippingPhone = $this->shippingPhone->jsonSerialize();
+        if (!empty($shippingPhone)) {
+            $js['shipping_phone'] = $shippingPhone;
         }
 
         if (!empty($this->warnings)) {
