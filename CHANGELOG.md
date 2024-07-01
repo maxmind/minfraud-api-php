@@ -13,6 +13,7 @@ CHANGELOG
   the respective phone numbers. Please see [our developer
   site](https://dev.maxmind.com/minfraud/api-documentation/responses/) for
   more information.
+* Added `payconex` to the payment processor validation.
 
 3.0.1 (2024-05-02)
 ------------------
