@@ -861,6 +861,7 @@ class MinFraud extends MinFraud\ServiceClient
                 'orangepay',
                 'other',
                 'pacnet_services',
+                'payconex',
                 'payeezy',
                 'payfast',
                 'paygate',
