@@ -2,7 +2,7 @@
 layout: default
 title: minFraud Score and Insights PHP API
 language: php
-version: v3.0.1
+version: v3.1.0
 ---
 
 # MaxMind minFraud Factors, Insights, Score PHP API #
@@ -289,8 +289,9 @@ All externally visible exceptions are in the `\MaxMind\Exception` namespace.
 The possible exceptions are:
 
 * `InvalidInputException` - This will be thrown when the `->report()` method is
-  called with invalid input data or when the required `ip_address` or `tag`
-  fields are missing.
+  called with invalid input data or when the required fields are missing. The
+  required fields are `tag` and one or more of the following: `ipAddress`,
+  `maxmindId`, `minfraudId`, or `transactionId`.
 * `AuthenticationException` - This will be thrown on calling `->report()`,
   when the server is unable to authenticate the request, e.g., if the license
   key or account ID is invalid.
