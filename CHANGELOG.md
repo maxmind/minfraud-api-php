@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.1.0
+3.1.0 (2024-07-08)
 ------------------
 
 * Updated `MaxMind\MinFraud\ReportTransaction` to make the `ip_address`
