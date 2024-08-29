@@ -55,5 +55,20 @@ class FactorsTest extends InsightsTest
                 $key
             );
         }
+
+        $this->assertCount(4, $factors->riskScoreReasons);
+        $this->assertSame(
+            $array['risk_score_reasons'][0]['multiplier'],
+            $factors->riskScoreReasons[0]->multiplier,
+        );
+        $this->assertCount(1, $factors->riskScoreReasons[0]->reasons);
+        $this->assertSame(
+            $array['risk_score_reasons'][0]['reasons'][0]['code'],
+            $factors->riskScoreReasons[0]->reasons[0]->code,
+        );
+        $this->assertSame(
+            $array['risk_score_reasons'][0]['reasons'][0]['reason'],
+            $factors->riskScoreReasons[0]->reasons[0]->reason,
+        );
     }
 }
