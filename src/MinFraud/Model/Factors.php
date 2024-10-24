@@ -23,6 +23,8 @@ class Factors extends Insights
      * @var Subscores an object containing scores for many of the individual
      *                risk factors that are used to calculate the overall risk
      *                score
+     *
+     * @deprecated use riskScoreReasons instead
      */
     public readonly Subscores $subscores;
 
