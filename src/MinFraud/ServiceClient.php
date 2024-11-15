@@ -68,8 +68,11 @@ abstract class ServiceClient
     }
 
     /**
-     * @param array<string, mixed> $array
-     * @param list<string>         $types
+     * @ignore
+     *
+     * @param array<string, mixed> $array the parent array
+     * @param string               $key   the key to remove
+     * @param list<string>         $types the expected types
      */
     protected function remove(array &$array, string $key, array $types = ['string']): mixed
     {
