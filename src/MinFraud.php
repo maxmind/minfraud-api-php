@@ -201,7 +201,7 @@ class MinFraud extends MinFraud\ServiceClient
             }
             $acceptLanguage = $this->remove($values, 'accept_language');
             $ipAddress = $this->remove($values, 'ip_address');
-            if (isset($values['session_age'])) {
+            if (\array_key_exists('session_age', $values)) {
                 $v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string']);
                 if ($v !== null) {
                     if (!is_numeric($v)) {
@@ -210,7 +210,7 @@ class MinFraud extends MinFraud\ServiceClient
                     $sessionAge = (float) $v;
                 }
             }
-            if (isset($values['session_id'])) {
+            if (\array_key_exists('session_id', $values)) {
                 $v = $this->remove($values, 'session_id', ['integer', 'string']);
                 if ($v !== null) {
                     $sessionId = (string) $v;
@@ -1279,7 +1279,7 @@ class MinFraud extends MinFraud\ServiceClient
             }
 
             $category = $this->remove($values, 'category');
-            if (isset($values['item_id'])) {
+            if (\array_key_exists('item_id', $values)) {
                 $v = $this->remove($values, 'item_id', ['integer', 'string']);
                 if ($v !== null) {
                     $itemId = (string) $v;
