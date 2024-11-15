@@ -42,6 +42,9 @@ class Email implements \JsonSerializable
      */
     public readonly ?bool $isHighRisk;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->domain = new EmailDomain($response['domain'] ?? null);
@@ -51,6 +54,9 @@ class Email implements \JsonSerializable
         $this->isHighRisk = $response['is_high_risk'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

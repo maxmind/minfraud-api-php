@@ -16,6 +16,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ScoreTest extends TestCase
 {
+    /**
+     * @return array<string, mixed>
+     */
     protected function response(): array
     {
         return Data::scoreFullResponse();

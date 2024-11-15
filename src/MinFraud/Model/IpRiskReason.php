@@ -41,12 +41,18 @@ class IpRiskReason implements \JsonSerializable
      */
     public readonly ?string $reason;
 
+    /**
+     * @param array<string, mixed> $response
+     */
     public function __construct(array $response)
     {
         $this->code = $response['code'];
         $this->reason = $response['reason'];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

@@ -133,6 +133,9 @@ class Subscores implements \JsonSerializable
      */
     public readonly ?float $timeOfDay;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->avsResult = $response['avs_result'] ?? null;
@@ -157,6 +160,9 @@ class Subscores implements \JsonSerializable
         $this->timeOfDay = $response['time_of_day'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

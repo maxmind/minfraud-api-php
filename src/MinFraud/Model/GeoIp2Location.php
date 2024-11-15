@@ -19,6 +19,9 @@ class GeoIp2Location extends Location
      */
     public readonly ?string $localTime;
 
+    /**
+     * @param array<string, mixed> $record
+     */
     public function __construct(array $record)
     {
         parent::__construct($record);
@@ -26,6 +29,9 @@ class GeoIp2Location extends Location
         $this->localTime = $record['local_time'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = parent::jsonSerialize();

@@ -15,6 +15,11 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class ServiceClientTester extends TestCase
 {
+    /**
+     * @param array<string, mixed> $requestContent
+     * @param                      $responseBody   string|null
+     * @param array<string, mixed> $options
+     */
     protected function createRequest(
         string $class,
         string $urlTail,

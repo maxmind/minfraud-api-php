@@ -41,6 +41,9 @@ abstract class Address implements \JsonSerializable
      */
     public readonly ?float $longitude;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->distanceToIpLocation = $response['distance_to_ip_location'] ?? null;
@@ -50,6 +53,9 @@ abstract class Address implements \JsonSerializable
         $this->longitude = $response['longitude'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

@@ -42,24 +42,21 @@ use MaxMind\MinFraud\Util;
 class MinFraud extends MinFraud\ServiceClient
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    private $content;
+    private array $content;
 
-    /**
-     * @var bool
-     */
-    private $hashEmail;
+    private bool $hashEmail;
 
     /**
      * @var array<string>
      */
-    private $locales;
+    private array $locales;
 
     /**
-     * @param int    $accountId  Your MaxMind account ID
-     * @param string $licenseKey Your MaxMind license key
-     * @param array  $options    An array of options. Possible keys:
+     * @param int                  $accountId  Your MaxMind account ID
+     * @param string               $licenseKey Your MaxMind license key
+     * @param array<string, mixed> $options    An array of options. Possible keys:
      *
      *                           - `host` - The host to use when connecting to the web service.
      *                             By default, the client connects to the production host. However,
@@ -107,6 +104,8 @@ class MinFraud extends MinFraud\ServiceClient
      *
      * @link https://dev.maxmind.com/minfraud/api-documentation?lang=en
      * minFraud API docs
+     *
+     * @param array<string, mixed> $values The request as a structured array
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -159,26 +158,26 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `device` array set to
      * the values provided. Existing `device` data will be replaced.
      *
-     * @param array       $values         An array of device data. The keys are the same as
-     *                                    the JSON keys. You may use either this or the named
-     *                                    arguments, but not both.
-     * @param string|null $ipAddress      The IP address associated with the device
-     *                                    used by the customer in the transaction.
-     *                                    The IP address must be in IPv4 or IPv6
-     *                                    presentation format, i.e., dotted-quad
-     *                                    notation or the IPv6 hexadecimal-colon
-     *                                    notation.
-     * @param string|null $userAgent      The HTTP `User-Agent` header of the browser
-     *                                    used in the transaction
-     * @param string|null $acceptLanguage The HTTP `Accept-Language` header of
-     *                                    the device used in the transaction
-     * @param float|null  $sessionAge     The number of seconds between the creation
-     *                                    of the user's session and the time of the
-     *                                    transaction. Note that `session_age` is not
-     *                                    the duration of the current visit, but the
-     *                                    time since the start of the first visit.
-     * @param string|null $sessionId      An ID that uniquely identifies a visitor's
-     *                                    session on the site
+     * @param array<string, mixed> $values         An array of device data. The keys are the same as
+     *                                             the JSON keys. You may use either this or the named
+     *                                             arguments, but not both.
+     * @param string|null          $ipAddress      The IP address associated with the device
+     *                                             used by the customer in the transaction.
+     *                                             The IP address must be in IPv4 or IPv6
+     *                                             presentation format, i.e., dotted-quad
+     *                                             notation or the IPv6 hexadecimal-colon
+     *                                             notation.
+     * @param string|null          $userAgent      The HTTP `User-Agent` header of the browser
+     *                                             used in the transaction
+     * @param string|null          $acceptLanguage The HTTP `Accept-Language` header of
+     *                                             the device used in the transaction
+     * @param float|null           $sessionAge     The number of seconds between the creation
+     *                                             of the user's session and the time of the
+     *                                             transaction. Note that `session_age` is not
+     *                                             the duration of the current visit, but the
+     *                                             time since the start of the first visit.
+     * @param string|null          $sessionId      An ID that uniquely identifies a visitor's
+     *                                             session on the site
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -202,17 +201,21 @@ class MinFraud extends MinFraud\ServiceClient
             }
             $acceptLanguage = $this->remove($values, 'accept_language');
             $ipAddress = $this->remove($values, 'ip_address');
-            if (($v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string'])) && $v !== null) {
+
+            $v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string']);
+            if ($v !== null) {
                 if (!is_numeric($v)) {
                     $this->maybeThrowInvalidInputException('Expected session_age to be a number');
                 }
                 $sessionAge = (float) $v;
             }
-            if (isset($values['session_id'])) {
-                if (($v = $this->remove($values, 'session_id', ['integer', 'string'])) && $v !== null) {
-                    $sessionId = (string) $v;
-                }
+
+
+            $v = $this->remove($values, 'session_id', ['integer', 'string']);
+            if ($v !== null) {
+                $sessionId = (string) $v;
             }
+
             $userAgent = $this->remove($values, 'user_agent');
 
             $this->verifyEmpty($values);
@@ -237,8 +240,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($sessionId !== null) {
-            if (!\is_string($sessionId)
-                || $sessionId === ''
+            if ($sessionId === ''
                 || \strlen($sessionId) > 255) {
                 $this->maybeThrowInvalidInputException(
                     "Session ID ($sessionId) must be a string with length between 1 and 255",
@@ -261,35 +263,35 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `event` array set to
      * the values provided. Existing `event` data will be replaced.
      *
-     * @param array       $values        An array of event data. The keys are the same as
-     *                                   the JSON keys. You may use either this or the named
-     *                                   arguments, but not both.
-     * @param string|null $shopId        Your internal ID for the shop, affiliate, or
-     *                                   merchant this order is coming from. Required for
-     *                                   minFraud users who are resellers, payment
-     *                                   providers, gateways and affiliate networks. No
-     *                                   specific format is required.
-     * @param string|null $time          The date and time the event occurred. The string
-     *                                   must be in the RFC 3339 date-time format. The time
-     *                                   must be within the past year. If this field is not
-     *                                   in the request, the current time will be used.
-     * @param string|null $transactionId Your internal ID for the transaction. We
-     *                                   can use this to locate a specific
-     *                                   transaction in our logs, and it will also
-     *                                   show up in email alerts and notifications
-     *                                   from us to you. No specific format is
-     *                                   required.
-     * @param string|null $type          The type of event being scored. The valid types
-     *                                   are:
-     *                                   - `account_creation`
-     *                                   - `account_login`
-     *                                   - `email_change`
-     *                                   - `password_reset`
-     *                                   - `payout_change`
-     *                                   - `purchase`
-     *                                   - `recurring_purchase`
-     *                                   - `referral`
-     *                                   - `survey`
+     * @param array<string, mixed> $values        An array of event data. The keys are the same as
+     *                                            the JSON keys. You may use either this or the named
+     *                                            arguments, but not both.
+     * @param string|null          $shopId        Your internal ID for the shop, affiliate, or
+     *                                            merchant this order is coming from. Required for
+     *                                            minFraud users who are resellers, payment
+     *                                            providers, gateways and affiliate networks. No
+     *                                            specific format is required.
+     * @param string|null          $time          The date and time the event occurred. The string
+     *                                            must be in the RFC 3339 date-time format. The time
+     *                                            must be within the past year. If this field is not
+     *                                            in the request, the current time will be used.
+     * @param string|null          $transactionId Your internal ID for the transaction. We
+     *                                            can use this to locate a specific
+     *                                            transaction in our logs, and it will also
+     *                                            show up in email alerts and notifications
+     *                                            from us to you. No specific format is
+     *                                            required.
+     * @param string|null          $type          The type of event being scored. The valid types
+     *                                            are:
+     *                                            - `account_creation`
+     *                                            - `account_login`
+     *                                            - `email_change`
+     *                                            - `password_reset`
+     *                                            - `payout_change`
+     *                                            - `purchase`
+     *                                            - `recurring_purchase`
+     *                                            - `referral`
+     *                                            - `survey`
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -366,14 +368,14 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--account
      *     minFraud account API docs
      *
-     * @param array       $values      An array of account data. The keys are the same as
-     *                                 the JSON keys. You may use either this or the named
-     *                                 arguments, but not both.
-     * @param string|null $userId      a unique user ID associated with the end-user
-     *                                 in your system
-     * @param string|null $usernameMd5 an MD5 hash as a hexadecimal string of
-     *                                 the username or login name associated
-     *                                 with the account
+     * @param array<string, mixed> $values      An array of account data. The keys are the same as
+     *                                          the JSON keys. You may use either this or the named
+     *                                          arguments, but not both.
+     * @param string|null          $userId      a unique user ID associated with the end-user
+     *                                          in your system
+     * @param string|null          $usernameMd5 an MD5 hash as a hexadecimal string of
+     *                                          the username or login name associated
+     *                                          with the account
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -419,14 +421,14 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--email
      *     minFraud email API docs
      *
-     * @param array       $values  An array of email data. The keys are the same as
-     *                             the JSON keys. You may use either this or the named
-     *                             arguments, but not both.
-     * @param string|null $address The email address used in the transaction.
-     *                             This field must be a valid email address.
-     * @param string|null $domain  The domain of the email address used in the
-     *                             transaction. Do not include the `@` in this
-     *                             field.
+     * @param array<string, mixed> $values  An array of email data. The keys are the same as
+     *                                      the JSON keys. You may use either this or the named
+     *                                      arguments, but not both.
+     * @param string|null          $address The email address used in the transaction.
+     *                                      This field must be a valid email address.
+     * @param string|null          $domain  The domain of the email address used in the
+     *                                      transaction. Do not include the `@` in this
+     *                                      field.
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -480,33 +482,33 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--billing
      *     minFraud billing API docs
      *
-     * @param array       $values           An array of billing data. The keys are the same as
-     *                                      the JSON keys. You may use either this or the named
-     *                                      arguments, but not both.
-     * @param string|null $address          The first line of the user's billing address
-     * @param string|null $address2         The second line of the user's billing address
-     * @param string|null $city             The city of the user's billing address
-     * @param string|null $company          The company of the end user as provided in
-     *                                      their billing information
-     * @param string|null $country          The two character ISO 3166-1 alpha-2 country
-     *                                      code of the user's billing address
-     * @param string|null $firstName        The first name of the end user as provided
-     *                                      in their billing information
-     * @param string|null $lastName         The last name of the end user as provided
-     *                                      in their billing information
-     * @param string|null $phoneCountryCode The country code for phone number
-     *                                      associated with the user's billing
-     *                                      address. If you provide this
-     *                                      information then you must provide
-     *                                      at least one digit.
-     * @param string|null $phoneNumber      The phone number without the country code
-     *                                      for the user's billing address. Punctuation
-     *                                      characters will be stripped. After
-     *                                      stripping punctuation characters, the
-     *                                      number must contain only digits.
-     * @param string|null $postal           The postal code of the user's billing address
-     * @param string|null $region           The ISO 3166-2 subdivision code for the user's
-     *                                      billing address
+     * @param array<string, mixed> $values           An array of billing data. The keys are the same as
+     *                                               the JSON keys. You may use either this or the named
+     *                                               arguments, but not both.
+     * @param string|null          $address          The first line of the user's billing address
+     * @param string|null          $address2         The second line of the user's billing address
+     * @param string|null          $city             The city of the user's billing address
+     * @param string|null          $company          The company of the end user as provided in
+     *                                               their billing information
+     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
+     *                                               code of the user's billing address
+     * @param string|null          $firstName        The first name of the end user as provided
+     *                                               in their billing information
+     * @param string|null          $lastName         The last name of the end user as provided
+     *                                               in their billing information
+     * @param string|null          $phoneCountryCode The country code for phone number
+     *                                               associated with the user's billing
+     *                                               address. If you provide this
+     *                                               information then you must provide
+     *                                               at least one digit.
+     * @param string|null          $phoneNumber      The phone number without the country code
+     *                                               for the user's billing address. Punctuation
+     *                                               characters will be stripped. After
+     *                                               stripping punctuation characters, the
+     *                                               number must contain only digits.
+     * @param string|null          $postal           The postal code of the user's billing address
+     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
+     *                                               billing address
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -607,18 +609,18 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--shipping
      *     minFraud shipping API docs
      *
-     * @param array       $values  An array of shipping data. The keys are the same as
-     *                             the JSON keys. You may use either this or the named
-     *                             arguments, but not both.
-     * @param string|null $company The company of the end user as provided in
-     *                             their shipping information
-     * @param string|null $address The first line of the user's shipping address
-     * @param string|null $city    The city of the user's shipping address
-     * @param string|null $region  The ISO 3166-2 subdivision code for the user's
-     *                             shipping address
-     * @param string|null $country The two character ISO 3166-1 alpha-2 country
-     *                             code of the user's shipping address
-     * @param string|null $postal  The postal code of the user's shipping address
+     * @param array<string, mixed> $values  An array of shipping data. The keys are the same as
+     *                                      the JSON keys. You may use either this or the named
+     *                                      arguments, but not both.
+     * @param string|null          $company The company of the end user as provided in
+     *                                      their shipping information
+     * @param string|null          $address The first line of the user's shipping address
+     * @param string|null          $city    The city of the user's shipping address
+     * @param string|null          $region  The ISO 3166-2 subdivision code for the user's
+     *                                      shipping address
+     * @param string|null          $country The two character ISO 3166-1 alpha-2 country
+     *                                      code of the user's shipping address
+     * @param string|null          $postal  The postal code of the user's shipping address
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -729,16 +731,16 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--payment
      *     minFraud payment API docs
      *
-     * @param array       $values        An array of payment data. The keys are the same as
-     *                                   the JSON keys. You may use either this or the named
-     *                                   arguments, but not both.
-     * @param string|null $declineCode   The decline code as provided by your
-     *                                   payment processor. If the transaction
-     *                                   was not declined, do not include this field.
-     * @param string|null $processor     The payment processor used for the transaction
-     * @param bool|null   $wasAuthorized The authorization outcome from the payment
-     *                                   processor. If the transaction has not yet been
-     *                                   approved or denied, do not include this field.
+     * @param array<string, mixed> $values        An array of payment data. The keys are the same as
+     *                                            the JSON keys. You may use either this or the named
+     *                                            arguments, but not both.
+     * @param string|null          $declineCode   The decline code as provided by your
+     *                                            payment processor. If the transaction
+     *                                            was not declined, do not include this field.
+     * @param string|null          $processor     The payment processor used for the transaction
+     * @param bool|null            $wasAuthorized The authorization outcome from the payment
+     *                                            processor. If the transaction has not yet been
+     *                                            approved or denied, do not include this field.
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -949,34 +951,34 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--credit-card
      *     minFraud credit_card API docs
      *
-     * @param array       $values                An array of credit card data. The keys are the same as
-     *                                           the JSON keys. You may use either this or the named
-     *                                           arguments, but not both.
-     * @param string|null $avsResult             The address verification system (AVS) check
-     *                                           result, as returned to you by the credit card
-     *                                           processor
-     * @param string|null $bankName              The name of the issuing bank as provided by the
-     *                                           end user
-     * @param string|null $bankPhoneCountryCode  The phone country code for the
-     *                                           issuing bank as provided by the end
-     *                                           user
-     * @param string|null $bankPhoneNumber       The phone number, without the country
-     *                                           code, for the issuing bank as provided by
-     *                                           the end user
-     * @param string|null $country               The two character ISO 3166-1 alpha-2 country
-     *                                           code where the issuer of the card is located
-     * @param string|null $cvvResult             The card verification value (CVV) code as
-     *                                           provided by the payment processor
-     * @param string|null $issuerIdNumber        The issuer ID number for the credit card.
-     *                                           This is the first six or eight digits of
-     *                                           the credit card number. It identifies the
-     *                                           issuing bank.
-     * @param string|null $lastDigits            The last digits of the credit card number.
-     *                                           In most cases, you should send the last four
-     *                                           digits for `lastDigits`.
-     * @param string|null $token                 A token uniquely identifying the card
-     * @param bool|null   $was3dSecureSuccessful Whether the outcome of 3-D Secure
-     *                                           verification was successful
+     * @param array<string, mixed> $values                An array of credit card data. The keys are the same as
+     *                                                    the JSON keys. You may use either this or the named
+     *                                                    arguments, but not both.
+     * @param string|null          $avsResult             The address verification system (AVS) check
+     *                                                    result, as returned to you by the credit card
+     *                                                    processor
+     * @param string|null          $bankName              The name of the issuing bank as provided by the
+     *                                                    end user
+     * @param string|null          $bankPhoneCountryCode  The phone country code for the
+     *                                                    issuing bank as provided by the end
+     *                                                    user
+     * @param string|null          $bankPhoneNumber       The phone number, without the country
+     *                                                    code, for the issuing bank as provided by
+     *                                                    the end user
+     * @param string|null          $country               The two character ISO 3166-1 alpha-2 country
+     *                                                    code where the issuer of the card is located
+     * @param string|null          $cvvResult             The card verification value (CVV) code as
+     *                                                    provided by the payment processor
+     * @param string|null          $issuerIdNumber        The issuer ID number for the credit card.
+     *                                                    This is the first six or eight digits of
+     *                                                    the credit card number. It identifies the
+     *                                                    issuing bank.
+     * @param string|null          $lastDigits            The last digits of the credit card number.
+     *                                                    In most cases, you should send the last four
+     *                                                    digits for `lastDigits`.
+     * @param string|null          $token                 A token uniquely identifying the card
+     * @param bool|null            $was3dSecureSuccessful Whether the outcome of 3-D Secure
+     *                                                    verification was successful
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -1096,6 +1098,8 @@ class MinFraud extends MinFraud\ServiceClient
      * This returns a `MinFraud` object with the `custom_inputs` array set to
      * `$values`. Existing `custom_inputs` data will be replaced.
      *
+     * @param array<string, mixed> $values the custom inputs to send in the request
+     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
@@ -1145,18 +1149,18 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--order
      *     minFraud order API docs
      *
-     * @param array       $values         An array of order data. The keys are the same as the JSON keys.
-     *                                    You may use either this or the named arguments, but not both.
-     * @param string|null $affiliateId    The ID of the affiliate where the order is coming from.
-     *                                    No specific format is required.
-     * @param float|null  $amount         The total order amount
-     * @param string|null $currency       The currency code for the order amount
-     * @param string|null $discountCode   The discount code applied to the order
-     * @param bool|null   $hasGiftMessage Indicates if the order has a gift message
-     * @param bool|null   $isGift         Indicates if the order is a gift
-     * @param string|null $referrerUri    The URI of the referring website
-     * @param string|null $subaffiliateId The ID of the sub-affiliate where the order is coming from.
-     *                                    No specific format is required.
+     * @param array<string, mixed> $values         An array of order data. The keys are the same as the JSON keys.
+     *                                             You may use either this or the named arguments, but not both.
+     * @param string|null          $affiliateId    The ID of the affiliate where the order is coming from.
+     *                                             No specific format is required.
+     * @param float|null           $amount         The total order amount
+     * @param string|null          $currency       The currency code for the order amount
+     * @param string|null          $discountCode   The discount code applied to the order
+     * @param bool|null            $hasGiftMessage Indicates if the order has a gift message
+     * @param bool|null            $isGift         Indicates if the order is a gift
+     * @param string|null          $referrerUri    The URI of the referring website
+     * @param string|null          $subaffiliateId The ID of the sub-affiliate where the order is coming from.
+     *                                             No specific format is required.
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of the original with additional data.
      *
@@ -1246,16 +1250,16 @@ class MinFraud extends MinFraud\ServiceClient
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--shopping-cart--item
      *     minFraud shopping cart item API docs
      *
-     * @param array       $values   An array of shopping cart data. The keys are the same
-     *                              as the JSON keys. You may use either this or the named
-     *                              arguments, but not both.
-     * @param string|null $category The category of the item. This can also be
-     *                              a hashed value; see below.
-     * @param float|null  $price    The per-unit price of this item in the shopping
-     *                              cart. This should use the same currency as the
-     *                              order currency.
-     * @param int|null    $quantity The quantity of the item in the shopping cart.
-     *                              The value must be a whole number.
+     * @param array<string, mixed> $values   An array of shopping cart data. The keys are the same
+     *                                       as the JSON keys. You may use either this or the named
+     *                                       arguments, but not both.
+     * @param string|null          $category The category of the item. This can also be
+     *                                       a hashed value; see below.
+     * @param float|null           $price    The per-unit price of this item in the shopping
+     *                                       cart. This should use the same currency as the
+     *                                       order currency.
+     * @param int|null             $quantity The quantity of the item in the shopping cart.
+     *                                       The value must be a whole number.
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -1275,9 +1279,12 @@ class MinFraud extends MinFraud\ServiceClient
             }
 
             $category = $this->remove($values, 'category');
-            if (($v = (string) $this->remove($values, 'item_id', ['integer', 'string'])) && $v !== null) {
-                $itemId = $v;
+
+            $v = $this->remove($values, 'item_id', ['integer', 'string']);
+            if ($v !== null) {
+                $itemId = (string) $v;
             }
+
             $price = $this->remove($values, 'price', ['double', 'float', 'integer']);
             $quantity = $this->remove($values, 'quantity', ['integer']);
 

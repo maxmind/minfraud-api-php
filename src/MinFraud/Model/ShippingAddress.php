@@ -23,6 +23,9 @@ class ShippingAddress extends Address
      */
     public readonly ?bool $isHighRisk;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         parent::__construct($response);
@@ -31,6 +34,9 @@ class ShippingAddress extends Address
             = $response['distance_to_billing_address'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = parent::jsonSerialize();

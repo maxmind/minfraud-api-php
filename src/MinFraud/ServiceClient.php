@@ -9,7 +9,7 @@ use MaxMind\WebService\Client;
 
 abstract class ServiceClient
 {
-    public const VERSION = 'v3.2.0-beta.1';
+    public const VERSION = 'v3.2.0-beta.2';
 
     /**
      * @var Client
@@ -31,6 +31,11 @@ abstract class ServiceClient
      */
     protected $validateInput = true;
 
+    /**
+     * @param int                  $accountId  your account ID
+     * @param string               $licenseKey your license key
+     * @param array<string, mixed> $options    options for the client
+     */
     public function __construct(
         int $accountId,
         string $licenseKey,
@@ -62,6 +67,13 @@ abstract class ServiceClient
         }
     }
 
+    /**
+     * @ignore
+     *
+     * @param array<string, mixed> $array the parent array
+     * @param string               $key   the key to remove
+     * @param list<string>         $types the expected types
+     */
     protected function remove(array &$array, string $key, array $types = ['string']): mixed
     {
         if (\array_key_exists($key, $array)) {
@@ -80,6 +92,9 @@ abstract class ServiceClient
         return null;
     }
 
+    /**
+     * @param array<mixed> $values
+     */
     protected function verifyEmpty(array $values): void
     {
         if (\count($values) !== 0) {

@@ -28,6 +28,10 @@ class Factors extends Insights
      */
     public readonly Subscores $subscores;
 
+    /**
+     * @param array<string, mixed> $response
+     * @param list<string>         $locales
+     */
     public function __construct(array $response, array $locales = ['en'])
     {
         parent::__construct($response, $locales);
@@ -44,6 +48,9 @@ class Factors extends Insights
             = new Subscores($response['subscores'] ?? []);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = parent::jsonSerialize();

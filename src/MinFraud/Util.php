@@ -280,6 +280,10 @@ class Util
 
     /**
      * @ignore
+     *
+     * @param array<string, mixed> $values
+     *
+     * @return array<string, mixed>
      */
     public static function maybeHashEmail(array $values): array
     {
@@ -375,6 +379,11 @@ class Util
         return md5("$localPart@$domain");
     }
 
+    /**
+     * @param array<string, mixed> $values
+     *
+     * @return array<string, mixed>
+     */
     public static function cleanCreditCard(array $values): array
     {
         if (isset($values['last_4_digits'])) {

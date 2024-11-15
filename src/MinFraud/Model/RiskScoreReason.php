@@ -23,6 +23,9 @@ class RiskScoreReason implements \JsonSerializable
      */
     public readonly array $reasons;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         if ($response === null) {
@@ -40,6 +43,9 @@ class RiskScoreReason implements \JsonSerializable
         $this->reasons = $reasons;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): ?array
     {
         $js = [];

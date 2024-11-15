@@ -405,6 +405,9 @@ class MinFraudTest extends ServiceClientTester
         )->{$method}(['unknown' => 'some value']);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function withMethods(): array
     {
         return [
@@ -448,6 +451,9 @@ class MinFraudTest extends ServiceClientTester
         )->withEmail(['address' => $md5]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badMd5s(): array
     {
         return [
@@ -472,6 +478,9 @@ class MinFraudTest extends ServiceClientTester
         )->{$method}(['region' => $region]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badRegions(): array
     {
         return [
@@ -493,6 +502,9 @@ class MinFraudTest extends ServiceClientTester
         )->{$method}(['country' => $code]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function goodCountryCodes(): array
     {
         return self::generateTestData(
@@ -517,6 +529,9 @@ class MinFraudTest extends ServiceClientTester
         )->{$method}(['country' => $code]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badCountryCodes(): array
     {
         return self::generateTestData(
@@ -533,6 +548,12 @@ class MinFraudTest extends ServiceClientTester
         );
     }
 
+    /**
+     * @param list<string> $methods
+     * @param list<mixed>  $values
+     *
+     * @return array<list<string>>
+     */
     private static function generateTestData(array $methods, array $values): array
     {
         $tests = [];
@@ -559,6 +580,9 @@ class MinFraudTest extends ServiceClientTester
         )->{$method}([$key => $code]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badPhoneCodes(): array
     {
         return [
@@ -596,6 +620,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard(['issuer_id_number' => $iin]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badIins(): array
     {
         return [
@@ -619,6 +646,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard(['last_digits' => $lastDigits]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badLastDigits(): array
     {
         return [
@@ -658,6 +688,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard(['token' => $token]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function numericToken(): array
     {
         return [
@@ -680,6 +713,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard(['token' => $token]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function invalidRangeToken(): array
     {
         return [
@@ -702,6 +738,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard(['token' => $token]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function longToken(): array
     {
         return [
@@ -720,6 +759,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard(['token' => $token]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function goodToken(): array
     {
         return [
@@ -743,6 +785,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCreditCard([$key => 'Aa']);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function avsAndCvv(): array
     {
         return [
@@ -765,6 +810,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['ip_address' => $ip]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badIps(): array
     {
         return [
@@ -789,6 +837,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['ip_address' => '1.2.3.4', 'session_age' => $age]);
     }
 
+    /**
+     * @return array<list<int>>
+     */
     public static function negativeSessionAge(): array
     {
         return [
@@ -810,6 +861,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['session_age' => $age]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badSessionAge(): array
     {
         return [
@@ -830,6 +884,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['session_age' => $age]);
     }
 
+    /**
+     * @return array<list<mixed>>
+     */
     public static function goodSessionAge(): array
     {
         return [
@@ -854,6 +911,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badSessionId(): array
     {
         return [
@@ -872,6 +932,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['ip_address' => '1.2.3.4', 'session_id' => $id]);
     }
 
+    /**
+     * @return array<list<int>>
+     */
     public static function goodSessionId(): array
     {
         return [
@@ -891,6 +954,9 @@ class MinFraudTest extends ServiceClientTester
         )->withDevice(['ip_address' => $ip]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function goodIps(): array
     {
         return [
@@ -914,6 +980,9 @@ class MinFraudTest extends ServiceClientTester
         )->withEmail(['domain' => $domain]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badDomains(): array
     {
         return [
@@ -933,6 +1002,9 @@ class MinFraudTest extends ServiceClientTester
         )->withEmail(['domain' => $domain]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function goodDomains(): array
     {
         return [
@@ -953,6 +1025,9 @@ class MinFraudTest extends ServiceClientTester
         )->withEvent(['time' => $time]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function goodTimes(): array
     {
         $tests = [
@@ -960,13 +1035,11 @@ class MinFraudTest extends ServiceClientTester
             ['2014-04-12T23:20:50Z'],
         ];
 
-        if (\PHP_VERSION_ID >= 70300) {
-            array_push(
-                $tests,
-                ['2014-04-12T23:20:50.052+01:00'],
-                ['2014-04-12T23:20:50.052Z']
-            );
-        }
+        array_push(
+            $tests,
+            ['2014-04-12T23:20:50.052+01:00'],
+            ['2014-04-12T23:20:50.052Z']
+        );
 
         return $tests;
     }
@@ -993,6 +1066,9 @@ class MinFraudTest extends ServiceClientTester
         )->withEvent(['type' => $good]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function goodEventTypes(): array
     {
         return [
@@ -1033,6 +1109,9 @@ class MinFraudTest extends ServiceClientTester
         )->withOrder(['currency' => $currency]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badCurrency(): array
     {
         return [
@@ -1057,6 +1136,9 @@ class MinFraudTest extends ServiceClientTester
         )->withOrder(['referrer_uri' => $uri]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function badReferrerUri(): array
     {
         return [
@@ -1098,6 +1180,9 @@ class MinFraudTest extends ServiceClientTester
         )->withShoppingCartItem(['price' => $value]);
     }
 
+    /**
+     * @return array<list<float>>
+     */
     public static function validAmounts(): array
     {
         return [
@@ -1124,6 +1209,9 @@ class MinFraudTest extends ServiceClientTester
         )->withOrder(['amount' => $value]);
     }
 
+    /**
+     * @return array<list<mixed>>
+     */
     public static function invalidAmounts(): array
     {
         return [
@@ -1165,6 +1253,9 @@ class MinFraudTest extends ServiceClientTester
         )->withShoppingCartItem(['quantity' => $value]);
     }
 
+    /**
+     * @return array<list<mixed>>
+     */
     public static function invalidQuantities(): array
     {
         return [
@@ -1184,9 +1275,14 @@ class MinFraudTest extends ServiceClientTester
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
+            // We are testing invalid inputs here.
+            // @phpstan-ignore-next-line
         )->withShoppingCartItem([['price' => 1]]);
     }
 
+    /**
+     * @return array<list<string>>
+     */
     public static function services(): array
     {
         return [
@@ -1198,6 +1294,8 @@ class MinFraudTest extends ServiceClientTester
 
     /**
      * @dataProvider badCustomInputs
+     *
+     * @param array<string, mixed> $inputs
      */
     public function testBadCustomInputs(array $inputs): void
     {
@@ -1210,6 +1308,9 @@ class MinFraudTest extends ServiceClientTester
         )->withCustomInputs($inputs);
     }
 
+    /**
+     * @return array<array<mixed>>
+     */
     public static function badCustomInputs(): array
     {
         return [
@@ -1222,6 +1323,10 @@ class MinFraudTest extends ServiceClientTester
         ];
     }
 
+    /**
+     * @param array<string, mixed>      $options
+     * @param array<string, mixed>|null $request
+     */
     private function createMinFraudRequestWithFullResponse(
         string $service,
         int $callsToRequest = 1,
@@ -1245,6 +1350,11 @@ class MinFraudTest extends ServiceClientTester
         );
     }
 
+    /**
+     * @param array<string, mixed> $requestContent
+     * @param                      $responseBody   string|null
+     * @param array<string, mixed> $options
+     */
     private function createMinFraudRequest(
         string $service,
         array $requestContent,
