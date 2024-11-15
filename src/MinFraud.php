@@ -240,8 +240,7 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         if ($sessionId !== null) {
-            if (!\is_string($sessionId)
-                || $sessionId === ''
+            if ($sessionId === ''
                 || \strlen($sessionId) > 255) {
                 $this->maybeThrowInvalidInputException(
                     "Session ID ($sessionId) must be a string with length between 1 and 255",
