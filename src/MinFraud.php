@@ -44,17 +44,14 @@ class MinFraud extends MinFraud\ServiceClient
     /**
      * @var array<string, mixed>
      */
-    private $content;
+    private array $content;
 
-    /**
-     * @var bool
-     */
-    private $hashEmail;
+    private bool $hashEmail;
 
     /**
      * @var array<string>
      */
-    private $locales;
+    private array $locales;
 
     /**
      * @param int                  $accountId  Your MaxMind account ID
