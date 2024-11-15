@@ -201,21 +201,21 @@ class MinFraud extends MinFraud\ServiceClient
             }
             $acceptLanguage = $this->remove($values, 'accept_language');
             $ipAddress = $this->remove($values, 'ip_address');
-            if (\array_key_exists('session_age', $values)) {
-                $v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string']);
-                if ($v !== null) {
-                    if (!is_numeric($v)) {
-                        $this->maybeThrowInvalidInputException('Expected session_age to be a number');
-                    }
-                    $sessionAge = (float) $v;
+
+            $v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string']);
+            if ($v !== null) {
+                if (!is_numeric($v)) {
+                    $this->maybeThrowInvalidInputException('Expected session_age to be a number');
                 }
+                $sessionAge = (float) $v;
             }
-            if (\array_key_exists('session_id', $values)) {
-                $v = $this->remove($values, 'session_id', ['integer', 'string']);
-                if ($v !== null) {
-                    $sessionId = (string) $v;
-                }
+
+
+            $v = $this->remove($values, 'session_id', ['integer', 'string']);
+            if ($v !== null) {
+                $sessionId = (string) $v;
             }
+
             $userAgent = $this->remove($values, 'user_agent');
 
             $this->verifyEmpty($values);
@@ -1279,12 +1279,12 @@ class MinFraud extends MinFraud\ServiceClient
             }
 
             $category = $this->remove($values, 'category');
-            if (\array_key_exists('item_id', $values)) {
-                $v = $this->remove($values, 'item_id', ['integer', 'string']);
-                if ($v !== null) {
-                    $itemId = (string) $v;
-                }
+
+            $v = $this->remove($values, 'item_id', ['integer', 'string']);
+            if ($v !== null) {
+                $itemId = (string) $v;
             }
+
             $price = $this->remove($values, 'price', ['double', 'float', 'integer']);
             $quantity = $this->remove($values, 'quantity', ['integer']);
 
