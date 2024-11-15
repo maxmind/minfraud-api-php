@@ -42,6 +42,9 @@ class Device implements \JsonSerializable
      */
     public readonly ?string $localTime;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->confidence = $response['confidence'] ?? null;
@@ -50,6 +53,9 @@ class Device implements \JsonSerializable
         $this->localTime = $response['local_time'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

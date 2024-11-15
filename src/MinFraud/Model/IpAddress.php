@@ -87,13 +87,13 @@ class IpAddress implements \JsonSerializable
     public readonly array $riskReasons;
 
     /**
-     * @var array An array of \GeoIp2\Record\Subdivision objects representing
-     *            the country subdivisions for the requested IP address. The
-     *            number and type of subdivisions varies by country, but a
-     *            subdivision is typically a state, province, county, etc.
-     *            Subdivisions are ordered from most general (largest) to most
-     *            specific (smallest). If the response did not contain any
-     *            subdivisions, this method returns an empty array.
+     * @var array<Subdivision> An array of \GeoIp2\Record\Subdivision objects representing
+     *                         the country subdivisions for the requested IP address. The
+     *                         number and type of subdivisions varies by country, but a
+     *                         subdivision is typically a state, province, county, etc.
+     *                         Subdivisions are ordered from most general (largest) to most
+     *                         specific (smallest). If the response did not contain any
+     *                         subdivisions, this method returns an empty array.
      */
     public readonly array $subdivisions;
 
@@ -103,6 +103,10 @@ class IpAddress implements \JsonSerializable
      */
     public readonly Traits $traits;
 
+    /**
+     * @param array<string, mixed>|null $response
+     * @param list<string>              $locales
+     */
     public function __construct(?array $response, array $locales = ['en'])
     {
         if ($response === null) {
@@ -132,6 +136,9 @@ class IpAddress implements \JsonSerializable
         $this->riskReasons = $riskReasons;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): ?array
     {
         $js = [];

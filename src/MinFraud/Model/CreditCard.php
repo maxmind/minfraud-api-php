@@ -63,6 +63,9 @@ class CreditCard implements \JsonSerializable
      */
     public readonly ?string $type;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->issuer = new Issuer($response['issuer'] ?? []);
@@ -77,6 +80,9 @@ class CreditCard implements \JsonSerializable
         $this->type = $response['type'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

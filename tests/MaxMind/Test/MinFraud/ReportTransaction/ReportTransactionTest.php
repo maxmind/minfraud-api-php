@@ -91,6 +91,8 @@ class ReportTransactionTest extends ServiceClientTester
 
     /**
      * @dataProvider requestsMissingRequiredFields
+     *
+     * @param array<string, mixed> $req
      */
     public function testMissingRequiredFields(array $req): void
     {
@@ -105,6 +107,8 @@ class ReportTransactionTest extends ServiceClientTester
 
     /**
      * @dataProvider requestsMissingRequiredFields
+     *
+     * @param array<string, mixed> $req
      */
     public function testMissingRequiredFieldsWithoutValidation(array $req): void
     {
@@ -118,6 +122,9 @@ class ReportTransactionTest extends ServiceClientTester
         )->report($req);
     }
 
+    /**
+     * @return array<string, list<array<string, mixed>>>
+     */
     public static function requestsMissingRequiredFields(): array
     {
         return [
@@ -208,6 +215,9 @@ class ReportTransactionTest extends ServiceClientTester
         )->report($req);
     }
 
+    /**
+     * @return list<list<mixed>>
+     */
     public static function notStringTypes(): array
     {
         return [
@@ -235,6 +245,9 @@ class ReportTransactionTest extends ServiceClientTester
         )->report($req);
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function invalidIpAddresses(): array
     {
         return [
@@ -262,6 +275,9 @@ class ReportTransactionTest extends ServiceClientTester
         )->report($req);
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function invalidMaxmindIds(): array
     {
         return [
@@ -289,6 +305,9 @@ class ReportTransactionTest extends ServiceClientTester
         )->report($req);
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function invalidMinfraudIds(): array
     {
         return [
@@ -316,6 +335,9 @@ class ReportTransactionTest extends ServiceClientTester
         )->report($req);
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function invalidTags(): array
     {
         return [
@@ -324,6 +346,11 @@ class ReportTransactionTest extends ServiceClientTester
         ];
     }
 
+    /**
+     * @param array<string, mixed> $requestContent
+     * @param array<string, mixed> $options
+     * @param                      $responseBody   string|null
+     */
     private function createReportTransactionRequest(
         array $requestContent,
         int $callsToRequest = 1,
@@ -332,8 +359,7 @@ class ReportTransactionTest extends ServiceClientTester
         string $contentType = 'application/json',
         ?string $responseBody = null
     ): ReportTransaction {
-        // @phpstan-ignore-next-line
-        return $this->createRequest(
+        $rv = $this->createRequest(
             '\MaxMind\MinFraud\ReportTransaction',
             'transactions/report',
             $requestContent,
@@ -343,5 +369,11 @@ class ReportTransactionTest extends ServiceClientTester
             $options,
             $callsToRequest
         );
+
+        if (!$rv instanceof ReportTransaction) {
+            throw new \Exception('Unexpected client type!');
+        }
+
+        return $rv;
     }
 }

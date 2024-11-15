@@ -94,14 +94,18 @@ class Insights implements \JsonSerializable
     public readonly Phone $shippingPhone;
 
     /**
-     * @var array This array contains \MaxMind\MinFraud\Model\Warning objects
-     *            detailing issues with the request that was sent, such as
-     *            invalid or unknown inputs. It is highly recommended that
-     *            you check this array for issues when integrating the web
-     *            service.
+     * @var array<Warning> This array contains \MaxMind\MinFraud\Model\Warning objects
+     *                     detailing issues with the request that was sent, such as
+     *                     invalid or unknown inputs. It is highly recommended that
+     *                     you check this array for issues when integrating the web
+     *                     service.
      */
     public readonly array $warnings;
 
+    /**
+     * @param array<string, mixed> $response
+     * @param list<string>         $locales
+     */
     public function __construct(array $response, array $locales = ['en'])
     {
         $this->disposition
@@ -129,6 +133,9 @@ class Insights implements \JsonSerializable
         $this->shippingPhone = new Phone($response['shipping_phone'] ?? []);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

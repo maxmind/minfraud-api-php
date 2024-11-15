@@ -38,6 +38,9 @@ class Issuer implements \JsonSerializable
      */
     public readonly ?bool $matchesProvidedPhoneNumber;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->name = $response['name'] ?? null;
@@ -48,6 +51,9 @@ class Issuer implements \JsonSerializable
             = $response['matches_provided_phone_number'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

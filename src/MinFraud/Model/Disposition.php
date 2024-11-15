@@ -34,6 +34,9 @@ class Disposition implements \JsonSerializable
      */
     public readonly ?string $ruleLabel;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->action = $response['action'] ?? null;
@@ -41,6 +44,9 @@ class Disposition implements \JsonSerializable
         $this->ruleLabel = $response['rule_label'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

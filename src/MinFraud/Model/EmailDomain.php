@@ -16,11 +16,17 @@ class EmailDomain implements \JsonSerializable
      */
     public readonly ?string $firstSeen;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->firstSeen = $response['first_seen'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

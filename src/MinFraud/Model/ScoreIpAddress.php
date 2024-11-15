@@ -16,11 +16,17 @@ class ScoreIpAddress implements \JsonSerializable
      */
     public readonly ?float $risk;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->risk = $response['risk'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

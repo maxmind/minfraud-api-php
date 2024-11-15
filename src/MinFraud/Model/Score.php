@@ -50,13 +50,16 @@ class Score implements \JsonSerializable
     public readonly float $riskScore;
 
     /**
-     * @var array This array contains \MaxMind\MinFraud\Model\Warning objects
-     *            detailing issues with the request that was sent, such as
-     *            invalid or unknown inputs. It is highly recommended that you
-     *            check this array for issues when integrating the web service.
+     * @var array<Warning> This array contains \MaxMind\MinFraud\Model\Warning objects
+     *                     detailing issues with the request that was sent, such as
+     *                     invalid or unknown inputs. It is highly recommended that you
+     *                     check this array for issues when integrating the web service.
      */
     public readonly array $warnings;
 
+    /**
+     * @param array<string, mixed> $response
+     */
     public function __construct(array $response)
     {
         $this->disposition
@@ -77,6 +80,9 @@ class Score implements \JsonSerializable
         $this->warnings = $warnings;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

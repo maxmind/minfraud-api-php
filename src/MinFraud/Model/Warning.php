@@ -55,6 +55,9 @@ class Warning implements \JsonSerializable
      */
     public readonly ?string $inputPointer;
 
+    /**
+     * @param array<string, mixed> $response
+     */
     public function __construct(array $response)
     {
         $this->code = $response['code'];
@@ -62,6 +65,9 @@ class Warning implements \JsonSerializable
         $this->inputPointer = $response['input_pointer'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];

@@ -38,6 +38,9 @@ class Phone implements \JsonSerializable
      */
     public readonly ?string $numberType;
 
+    /**
+     * @param array<string, mixed>|null $response
+     */
     public function __construct(?array $response)
     {
         $this->country = $response['country'] ?? null;
@@ -46,6 +49,9 @@ class Phone implements \JsonSerializable
         $this->numberType = $response['number_type'] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         $js = [];
