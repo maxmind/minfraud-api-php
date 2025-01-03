@@ -823,6 +823,7 @@ class MinFraud extends MinFraud\ServiceClient
                 'elavon',
                 'emerchantpay',
                 'epay',
+                'epayco',
                 'eprocessing_network',
                 'epx',
                 'eway',

@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+3.2.0
+------------------
+
+* Added `epayco` to the payment processor validation.
+
 3.2.0-beta.2 (2024-11-15)
 -------------------------
 
