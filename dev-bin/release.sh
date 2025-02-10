@@ -124,7 +124,7 @@ page=index.md
 cat <<EOF > $page
 ---
 layout: default
-title: minFraud Score and Insights PHP API
+title: minFraud PHP API
 language: php
 version: $tag
 ---
