@@ -1,4 +1,4 @@
-# MaxMind minFraud Factors, Insights, Score PHP API #
+# MaxMind minFraud PHP API #
 
 ## Description ##
 
