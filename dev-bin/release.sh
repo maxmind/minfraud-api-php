@@ -94,10 +94,10 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 
 # Using Composer is possible, but they don't recommend it.
-phpdocumentor_phar_hash='9760ac280a10041928a8743354f68692c22f14cd5d05135dfc15e11d3b3c25ea  phpDocumentor.phar'
+phpdocumentor_phar_hash='68e860b191799efdd7582b2b5fb738ea4dd743bb0476257608f0b22155d155f3 phpDocumentor.phar'
 
 if ! echo "$phpdocumentor_phar_hash" | sha256sum -c; then
-    wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.5.3/phpDocumentor.phar
+    wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.6.0/phpDocumentor.phar
 fi
 
 echo "$phpdocumentor_phar_hash" | sha256sum -c
