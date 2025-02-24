@@ -392,6 +392,18 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
+     * @return array<list<string>>
+     */
+    public static function services(): array
+    {
+        return [
+            ['\MaxMind\MinFraud\Model\Factors', 'factors'],
+            ['\MaxMind\MinFraud\Model\Insights', 'insights'],
+            ['\MaxMind\MinFraud\Model\Score', 'score'],
+        ];
+    }
+
+    /**
      * @dataProvider withMethods
      */
     public function testUnknownKeys(string $method): void
@@ -1278,18 +1290,6 @@ class MinFraudTest extends ServiceClientTester
             // We are testing invalid inputs here.
             // @phpstan-ignore-next-line
         )->withShoppingCartItem([['price' => 1]]);
-    }
-
-    /**
-     * @return array<list<string>>
-     */
-    public static function services(): array
-    {
-        return [
-            ['\MaxMind\MinFraud\Model\Factors', 'factors'],
-            ['\MaxMind\MinFraud\Model\Insights', 'insights'],
-            ['\MaxMind\MinFraud\Model\Score', 'score'],
-        ];
     }
 
     /**

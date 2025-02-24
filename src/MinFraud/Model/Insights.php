@@ -155,8 +155,8 @@ class Insights implements \JsonSerializable
             $js['credit_card'] = $creditCard;
         }
 
-        $device =
-          $this->device->jsonSerialize();
+        $device
+          = $this->device->jsonSerialize();
         if (!empty($device)) {
             $js['device'] = $device;
         }
