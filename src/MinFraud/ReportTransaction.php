@@ -177,8 +177,8 @@ class ReportTransaction extends ServiceClient
             && ($transactionId === null || $transactionId === '')
         ) {
             throw new InvalidInputException(
-                'The user must pass at least one of the following: ' .
-                'ipAddress, minfraudId, maxmindId, transactionId.'
+                'The user must pass at least one of the following: '
+                . 'ipAddress, minfraudId, maxmindId, transactionId.'
             );
         }
 

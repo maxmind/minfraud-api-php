@@ -62,8 +62,8 @@ abstract class ServiceClientTester extends TestCase
 
             // On macOS, when the SSL version is "SecureTransport", the system's
             // keychain will be used.
-            $caBundle = $curlVersion['ssl_version'] === 'SecureTransport' ?
-              null : CaBundle::getSystemCaRootBundlePath();
+            $caBundle = $curlVersion['ssl_version'] === 'SecureTransport'
+              ? null : CaBundle::getSystemCaRootBundlePath();
         }
 
         $curlVersion = curl_version();
