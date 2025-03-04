@@ -195,7 +195,6 @@ class MinFraudTest extends ServiceClientTester
         // Reflection isn't ideal, but this is the easiest way to check.
         $class = new \ReflectionClass(MinFraud::class);
         $prop = $class->getProperty('content');
-        $prop->setAccessible(true);
 
         $client = $this->createMinFraudRequestWithFullResponse(
             'insights',
@@ -234,7 +233,6 @@ class MinFraudTest extends ServiceClientTester
         // Reflection isn't ideal, but this is the easiest way to check.
         $class = new \ReflectionClass(MinFraud::class);
         $prop = $class->getProperty('content');
-        $prop->setAccessible(true);
 
         $client = $this->createMinFraudRequestWithFullResponse(
             'insights',

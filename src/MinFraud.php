@@ -44,7 +44,7 @@ class MinFraud extends MinFraud\ServiceClient
     /**
      * @var array<string, mixed>
      */
-    private array $content;
+    protected array $content;
 
     private bool $hashEmail;
 
