@@ -16,6 +16,24 @@ use MaxMind\Test\MinFraudData as Data;
  */
 class MinFraudTest extends ServiceClientTester
 {
+    public function testMinFraud(): void
+    {
+        $minFraud = new MinFraud(0, '', ['hashEmail' => true, 'locales' => ['en', 'fr']]);
+        $minFraud = $minFraud->withDevice(['ip_address' => '1.2.3.4']);
+
+        $array = [
+            'content' => ['device' => ['ip_address' => '1.2.3.4']],
+            'hashEmail' => true,
+            'locales' => ['en', 'fr'],
+        ];
+
+        $this->assertSame(
+            $array,
+            $minFraud->jsonSerialize(),
+            'correctly implements JsonSerializable'
+        );
+    }
+
     /**
      * @dataProvider services
      */
