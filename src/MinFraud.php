@@ -39,7 +39,7 @@ use MaxMind\MinFraud\Util;
  *
  * If the request fails, an exception is thrown.
  */
-class MinFraud extends MinFraud\ServiceClient
+class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 {
     /**
      * @var array<string, mixed>
@@ -96,6 +96,18 @@ class MinFraud extends MinFraud\ServiceClient
         }
 
         parent::__construct($accountId, $licenseKey, $options);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'content' => $this->content ?? [],
+            'hashEmail' => $this->hashEmail,
+            'locales' => $this->locales,
+        ];
     }
 
     /**
