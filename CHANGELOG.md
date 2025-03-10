@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+3.3.0
+------------------
+
+* `\MaxMind\MinFraud` now implements `JsonSerializable`. This returns an
+  array containing the contents of the request in a sub-array as well as
+  the value of the `locales` and `hashEmail` options. Pull request by Noé
+  Fleury. GitHub #193.
+
 3.2.0 (2025-02-10)
 ------------------
 
