@@ -817,6 +817,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'coregateway',
                 'creditguard',
                 'credorax',
+                'cryptomus',
                 'ct_payments',
                 'cuentadigital',
                 'curopayments',
