@@ -19,6 +19,7 @@ class PhoneTest extends TestCase
         $array = [
             'country' => 'US',
             'is_voip' => true,
+            'matches_postal' => false,
             'network_operator' => 'Verizon/1',
             'number_type' => 'fixed',
         ];
@@ -34,6 +35,12 @@ class PhoneTest extends TestCase
             $array['is_voip'],
             $phone->isVoip,
             'isVoip'
+        );
+
+        $this->assertSame(
+            $array['matches_postal'],
+            $phone->matchesPostal,
+            'matchesPostal'
         );
 
         $this->assertSame(

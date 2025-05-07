@@ -4,6 +4,9 @@ CHANGELOG
 3.4.0
 ------------------
 
+* Added support for the `/billing_phone/matches_postal` and
+  `/shipping_phone/matches_postal` outputs. These are available as the
+  `matchesPostal` property on `MaxMind\MinFraud\Model\Phone`.
 * Added `cryptomus` to the payment processor validation.
 
 3.3.0

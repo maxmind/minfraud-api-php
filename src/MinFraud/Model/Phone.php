@@ -25,6 +25,16 @@ class Phone implements \JsonSerializable
     public readonly ?bool $isVoip;
 
     /**
+     * @var bool|null This is `true` if the phone number's prefix is commonly
+     *                associated with the postal code. It is `false` if the
+     *                prefix is not associated with the postal code. It
+     *                is non-`null` only when the phone number is in the US,
+     *                the number prefix is in our database, and the postal
+     *                code and country are provided in the request.
+     */
+    public readonly ?bool $matchesPostal;
+
+    /**
      * @var string|null The name of the original network operator associated with
      *                  the phone number. This property does not reflect phone numbers
      *                  that have been ported from the original operator to another,
@@ -45,6 +55,7 @@ class Phone implements \JsonSerializable
     {
         $this->country = $response['country'] ?? null;
         $this->isVoip = $response['is_voip'] ?? null;
+        $this->matchesPostal = $response['matches_postal'] ?? null;
         $this->networkOperator = $response['network_operator'] ?? null;
         $this->numberType = $response['number_type'] ?? null;
     }
@@ -62,6 +73,10 @@ class Phone implements \JsonSerializable
 
         if ($this->isVoip !== null) {
             $js['is_voip'] = $this->isVoip;
+        }
+
+        if ($this->matchesPostal !== null) {
+            $js['matches_postal'] = $this->matchesPostal;
         }
 
         if ($this->networkOperator !== null) {
