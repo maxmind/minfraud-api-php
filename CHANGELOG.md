@@ -1,17 +1,13 @@
 CHANGELOG
 =========
 
-3.4.0
+3.3.0 (2025-05-23)
 ------------------
 
 * Added support for the `/billing_phone/matches_postal` and
   `/shipping_phone/matches_postal` outputs. These are available as the
   `matchesPostal` property on `MaxMind\MinFraud\Model\Phone`.
 * Added `cryptomus` to the payment processor validation.
-
-3.3.0
-------------------
-
 * `\MaxMind\MinFraud` now implements `JsonSerializable`. This returns an
   array containing the contents of the request in a sub-array as well as
   the value of the `locales` and `hashEmail` options. Pull request by Noé
