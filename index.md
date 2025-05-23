@@ -1,11 +1,11 @@
 ---
 layout: default
-title: minFraud Score and Insights PHP API
+title: minFraud PHP API
 language: php
-version: v3.2.0
+version: v3.3.0
 ---
 
-# MaxMind minFraud Factors, Insights, Score PHP API #
+# MaxMind minFraud PHP API #
 
 ## Description ##
 
@@ -31,7 +31,7 @@ You should now have the file `composer.phar` in your project directory.
 Run in your project root:
 
 ```
-php composer.phar require maxmind/minfraud:~1.0
+php composer.phar require maxmind/minfraud:^3.3.0
 ```
 
 You should now have the files `composer.json` and `composer.lock` as well as
