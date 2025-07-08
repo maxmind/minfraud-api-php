@@ -914,6 +914,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'rewardspay',
                 'safecharge',
                 'sagepay',
+                'securepay',
                 'securetrading',
                 'shopify_payments',
                 'simplify_commerce',
