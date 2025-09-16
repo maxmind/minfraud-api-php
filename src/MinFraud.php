@@ -770,6 +770,18 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param bool|null            $wasAuthorized The authorization outcome from the payment
      *                                            processor. If the transaction has not yet been
      *                                            approved or denied, do not include this field.
+     * @param string|null          $method        The payment method associated with the transaction.
+     *                                            The valid values are:
+     *                                            - `bank_debit`
+     *                                            - `bank_redirect`
+     *                                            - `bank_transfer`
+     *                                            - `buy_now_pay_later`
+     *                                            - `card`
+     *                                            - `crypto`
+     *                                            - `digital_wallet`
+     *                                            - `gift_card`
+     *                                            - `real_time_payment`
+     *                                            - `rewards`
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -779,6 +791,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $declineCode = null,
         ?string $processor = null,
         ?bool $wasAuthorized = null,
+        ?string $method = null,
     ): self {
         if (\count($values) !== 0) {
             if (\func_num_args() !== 1) {
@@ -788,6 +801,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             }
 
             $declineCode = $this->remove($values, 'decline_code');
+            $method = $this->remove($values, 'method');
             $processor = $this->remove($values, 'processor');
             $wasAuthorized = $this->remove($values, 'was_authorized', ['boolean']);
 
@@ -796,6 +810,24 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
         if ($declineCode !== null) {
             $values['decline_code'] = $declineCode;
+        }
+
+        if ($method !== null) {
+            if (!\in_array($method, [
+                'bank_debit',
+                'bank_redirect',
+                'bank_transfer',
+                'buy_now_pay_later',
+                'card',
+                'crypto',
+                'digital_wallet',
+                'gift_card',
+                'real_time_payment',
+                'rewards',
+            ], true)) {
+                $this->maybeThrowInvalidInputException("$method is not a valid payment method");
+            }
+            $values['method'] = $method;
         }
 
         if ($processor !== null) {

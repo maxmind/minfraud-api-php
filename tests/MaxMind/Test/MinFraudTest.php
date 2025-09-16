@@ -153,6 +153,7 @@ class MinFraudTest extends ServiceClientTester
                 referrerUri: 'http://www.amazon.com/'
             )
             ->withPayment(
+                method: 'card',
                 processor: 'stripe',
                 wasAuthorized: false,
                 declineCode: 'invalid number'
@@ -1220,6 +1221,47 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withPayment(['processor' => 'unknown']);
+    }
+
+    /**
+     * @dataProvider goodPaymentMethods
+     */
+    public function testGoodPaymentMethod(string $good): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withPayment(['method' => $good]);
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function goodPaymentMethods(): array
+    {
+        return [
+            ['bank_debit'],
+            ['bank_redirect'],
+            ['bank_transfer'],
+            ['buy_now_pay_later'],
+            ['card'],
+            ['crypto'],
+            ['digital_wallet'],
+            ['gift_card'],
+            ['real_time_payment'],
+            ['rewards'],
+        ];
+    }
+
+    public function testBadPaymentMethod(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid payment method');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withPayment(['method' => 'unknown']);
     }
 
     /**

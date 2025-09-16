@@ -191,6 +191,7 @@ $request = $mf->withDevice(
     phoneCountryCode: '1',
     deliverySpeed: 'same_day'
 )->withPayment(
+    method: 'card',
     processor: 'stripe',
     wasAuthorized: false,
     declineCode: 'invalid number'

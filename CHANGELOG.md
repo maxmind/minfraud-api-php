@@ -8,6 +8,8 @@ CHANGELOG
 * Added `credit_application` and `fund_transfer` to event type validation.
 * Added the input `/event/party`. This is the party submitting the
   transaction.
+* Added the input `/payment/method`. This is the payment method associated
+  with the transaction.
 
 3.3.0 (2025-05-23)
 ------------------
