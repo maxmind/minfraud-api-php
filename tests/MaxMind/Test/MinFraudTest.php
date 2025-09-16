@@ -136,6 +136,7 @@ class MinFraudTest extends ServiceClientTester
                 domain: 'maxmind.com'
             )
             ->withEvent(
+                party: 'customer',
                 transactionId: 'txn3134133',
                 shopId: 's2123',
                 time: '2014-04-12T23:20:50+00:00',
@@ -1123,6 +1124,39 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withEvent(['type' => 'unknown']);
+    }
+
+    /**
+     * @dataProvider goodEventParties
+     */
+    public function testGoodEventParty(string $good): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(['party' => $good]);
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function goodEventParties(): array
+    {
+        return [
+            ['agent'],
+            ['customer'],
+        ];
+    }
+
+    public function testBadEventParty(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid party');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(['party' => 'unknown']);
     }
 
     /**

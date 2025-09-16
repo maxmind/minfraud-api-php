@@ -306,6 +306,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            - `recurring_purchase`
      *                                            - `referral`
      *                                            - `survey`
+     * @param string|null          $party         The party submitting the transaction. The valid values
+     *                                            are:
+     *                                            - `agent`
+     *                                            - `customer`
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -319,6 +323,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $time = null,
         ?string $transactionId = null,
         ?string $type = null,
+        ?string $party = null,
     ): self {
         if (\count($values) !== 0) {
             if (\func_num_args() !== 1) {
@@ -326,12 +331,20 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     'You may only provide the $values array or named arguments, not both.',
                 );
             }
+            $party = $this->remove($values, 'party');
             $shopId = $this->remove($values, 'shop_id');
             $time = $this->remove($values, 'time');
             $transactionId = $this->remove($values, 'transaction_id');
             $type = $this->remove($values, 'type');
 
             $this->verifyEmpty($values);
+        }
+
+        if ($party !== null) {
+            if (!\in_array($party, ['agent', 'customer'], true)) {
+                $this->maybeThrowInvalidInputException("$party is not a valid party");
+            }
+            $values['party'] = $party;
         }
 
         if ($shopId !== null) {
