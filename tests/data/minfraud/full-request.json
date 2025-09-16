@@ -1,5 +1,6 @@
 {
   "event": {
+    "party": "customer",
     "transaction_id": "txn3134133",
     "shop_id": "s2123",
     "time": "2014-04-12T23:20:50+00:00",
@@ -41,6 +42,7 @@
     "delivery_speed": "same_day"
   },
   "payment": {
+    "method": "card",
     "processor": "stripe",
     "was_authorized": false,
     "decline_code": "invalid number"

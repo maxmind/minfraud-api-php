@@ -136,6 +136,7 @@ class MinFraudTest extends ServiceClientTester
                 domain: 'maxmind.com'
             )
             ->withEvent(
+                party: 'customer',
                 transactionId: 'txn3134133',
                 shopId: 's2123',
                 time: '2014-04-12T23:20:50+00:00',
@@ -152,6 +153,7 @@ class MinFraudTest extends ServiceClientTester
                 referrerUri: 'http://www.amazon.com/'
             )
             ->withPayment(
+                method: 'card',
                 processor: 'stripe',
                 wasAuthorized: false,
                 declineCode: 'invalid number'
@@ -1102,7 +1104,9 @@ class MinFraudTest extends ServiceClientTester
         return [
             ['account_creation'],
             ['account_login'],
+            ['credit_application'],
             ['email_change'],
+            ['fund_transfer'],
             ['password_reset'],
             ['payout_change'],
             ['purchase'],
@@ -1121,6 +1125,39 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withEvent(['type' => 'unknown']);
+    }
+
+    /**
+     * @dataProvider goodEventParties
+     */
+    public function testGoodEventParty(string $good): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(['party' => $good]);
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function goodEventParties(): array
+    {
+        return [
+            ['agent'],
+            ['customer'],
+        ];
+    }
+
+    public function testBadEventParty(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid party');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEvent(['party' => 'unknown']);
     }
 
     /**
@@ -1184,6 +1221,47 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withPayment(['processor' => 'unknown']);
+    }
+
+    /**
+     * @dataProvider goodPaymentMethods
+     */
+    public function testGoodPaymentMethod(string $good): void
+    {
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withPayment(['method' => $good]);
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function goodPaymentMethods(): array
+    {
+        return [
+            ['bank_debit'],
+            ['bank_redirect'],
+            ['bank_transfer'],
+            ['buy_now_pay_later'],
+            ['card'],
+            ['crypto'],
+            ['digital_wallet'],
+            ['gift_card'],
+            ['real_time_payment'],
+            ['rewards'],
+        ];
+    }
+
+    public function testBadPaymentMethod(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid payment method');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withPayment(['method' => 'unknown']);
     }
 
     /**
