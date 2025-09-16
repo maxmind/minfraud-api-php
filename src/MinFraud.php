@@ -297,7 +297,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            are:
      *                                            - `account_creation`
      *                                            - `account_login`
+     *                                            - `credit_application`
      *                                            - `email_change`
+     *                                            - `fund_transfer`
      *                                            - `password_reset`
      *                                            - `payout_change`
      *                                            - `purchase`
@@ -354,7 +356,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             if (!\in_array($type, [
                 'account_creation',
                 'account_login',
+                'credit_application',
                 'email_change',
+                'fund_transfer',
                 'password_reset',
                 'payout_change',
                 'purchase',

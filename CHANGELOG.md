@@ -5,6 +5,7 @@ CHANGELOG
 ------------------
 
 * Added `securepay` to the payment processor validation.
+* Added `credit_application` and `fund_transfer` to event type validation.
 
 3.3.0 (2025-05-23)
 ------------------
