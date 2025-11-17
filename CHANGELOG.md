@@ -5,7 +5,8 @@ CHANGELOG
 ------------------
 
 * Added `securepay` to the payment processor validation.
-* Added `credit_application` and `fund_transfer` to event type validation.
+* Added `credit_application`, `fund_transfer`, and `sim_swap` to event type
+  validation.
 * Added the input `/event/party`. This is the party submitting the
   transaction.
 * Added the input `/payment/method`. This is the payment method associated

@@ -305,6 +305,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            - `purchase`
      *                                            - `recurring_purchase`
      *                                            - `referral`
+     *                                            - `sim_swap`
      *                                            - `survey`
      * @param string|null          $party         The party submitting the transaction. The valid values
      *                                            are:
@@ -377,6 +378,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'purchase',
                 'recurring_purchase',
                 'referral',
+                'sim_swap',
                 'survey',
             ], true)) {
                 $this->maybeThrowInvalidInputException("$type is not a valid event type");
