@@ -11,6 +11,17 @@ CHANGELOG
   transaction.
 * Added the input `/payment/method`. This is the payment method associated
   with the transaction.
+* Added support for new `/email/domain/` outputs in minFraud Insights and
+  Factors responses:
+  * `/email/domain/classification` - categorizes the email domain type
+    (`business`, `education`, `government`, `isp_email`)
+  * `/email/domain/risk` - risk score associated with the domain (0.01 to 99)
+  * `/email/domain/volume` - activity level across the minFraud network
+    (sightings per million)
+  * `/email/domain/visit/has_redirect` - whether the domain redirects
+  * `/email/domain/visit/last_visited_on` - date of last automated check
+  * `/email/domain/visit/status` - domain status (`live`, `dns_error`,
+    `network_error`, `http_error`, `parked`, `pre_development`)
 
 3.3.0 (2025-05-23)
 ------------------
