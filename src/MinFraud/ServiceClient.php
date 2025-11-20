@@ -9,7 +9,7 @@ use MaxMind\WebService\Client;
 
 abstract class ServiceClient
 {
-    public const VERSION = 'v3.4.0';
+    public const VERSION = 'v3.5.0';
 
     /**
      * @var Client
