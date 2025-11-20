@@ -2,7 +2,7 @@
 layout: default
 title: minFraud PHP API
 language: php
-version: v3.3.0
+version: v3.4.0
 ---
 
 # MaxMind minFraud PHP API #
@@ -31,7 +31,7 @@ You should now have the file `composer.phar` in your project directory.
 Run in your project root:
 
 ```
-php composer.phar require maxmind/minfraud:^3.3.0
+php composer.phar require maxmind/minfraud:^3.4.0
 ```
 
 You should now have the files `composer.json` and `composer.lock` as well as
@@ -161,6 +161,7 @@ $request = $mf->withDevice(
     userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
     acceptLanguage: 'en-US,en;q=0.8'
 )->withEvent(
+    party: 'customer',
     transactionId: 'txn3134133',
     shopId: 's2123',
     time: '2012-04-12T23:20:50+00:00',
@@ -197,6 +198,7 @@ $request = $mf->withDevice(
     phoneCountryCode: '1',
     deliverySpeed: 'same_day'
 )->withPayment(
+    method: 'card',
     processor: 'stripe',
     wasAuthorized: false,
     declineCode: 'invalid number'
