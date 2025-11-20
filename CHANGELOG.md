@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.4.0
+3.4.0 (2025-11-20)
 ------------------
 
 * Added `securepay` to the payment processor validation.
