@@ -1,16 +1,9 @@
 CHANGELOG
 =========
 
-3.4.0
+3.5.0 (2025-11-20)
 ------------------
 
-* Added `securepay` to the payment processor validation.
-* Added `credit_application`, `fund_transfer`, and `sim_swap` to event type
-  validation.
-* Added the input `/event/party`. This is the party submitting the
-  transaction.
-* Added the input `/payment/method`. This is the payment method associated
-  with the transaction.
 * Added support for new `/email/domain/` outputs in minFraud Insights and
   Factors responses:
   * `/email/domain/classification` - categorizes the email domain type
@@ -22,6 +15,19 @@ CHANGELOG
   * `/email/domain/visit/last_visited_on` - date of last automated check
   * `/email/domain/visit/status` - domain status (`live`, `dns_error`,
     `network_error`, `http_error`, `parked`, `pre_development`)
+
+3.4.0 (2025-11-20)
+------------------
+
+* Added `securepay` to the payment processor validation.
+* Added `credit_application`, `fund_transfer`, and `sim_swap` to event type
+  validation.
+* Added the input `/event/party`. This is the party submitting the
+  transaction.
+* Added the input `/payment/method`. This is the payment method associated
+  with the transaction.
+* Updated `geoip2/geoip2` to 3.3.0, which includes new anonymizer and IP risk
+  outputs.
 
 3.3.0 (2025-05-23)
 ------------------
