@@ -844,6 +844,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'aps_payments',
                 'authorizenet',
                 'balanced',
+                'banquest',
                 'beanstream',
                 'bluepay',
                 'bluesnap',
@@ -975,6 +976,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'solidtrust_pay',
                 'sps_decidir',
                 'stripe',
+                'summit_payments',
                 'synapsefi',
                 'systempay',
                 'telerecargas',
@@ -994,6 +996,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'windcave',
                 'wirecard',
                 'worldpay',
+                'yaadpay',
             ], true)) {
                 $this->maybeThrowInvalidInputException("$processor is not a valid payment processor");
             }
