@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+3.6.0
+------------------
+
+* Added `banquest`, `summit_payments`, and `yaadpay` to the payment processor
+  validation.
+
 3.5.0 (2025-11-20)
 ------------------
 
