@@ -52,7 +52,7 @@ dependencies for this API. The latest phar archive is available on
 Please note that you must have the PHP [cURL
 extension](https://php.net/manual/en/book.curl.php) installed to use this
 archive. For Debian based distributions, this can typically be found in the
-the `php-curl` package. For other operating systems, please consult the
+`php-curl` package. For other operating systems, please consult the
 relevant documentation. After installing the extension you may need to
 restart your web server.
 
@@ -70,7 +70,7 @@ To use the archive, just require it from your script:
 require 'minfraud.phar';
 ```
 
-## API Documentation ###
+## API Documentation ##
 
 More detailed API documentation is available on [our GitHub
 Page](https://maxmind.github.io/minfraud-api-php/) under the "API" tab.
@@ -274,7 +274,7 @@ at least through development as it will help ensure that you are sending valid
 data to the web service.
 
 If the report is successful, nothing is returned. If the report fails, an
-exception with be thrown.
+exception will be thrown.
 
 See the API documentation for more details.
 
