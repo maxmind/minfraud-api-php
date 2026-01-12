@@ -95,8 +95,8 @@ $mf = new MinFraud(1, 'ABCD567890', [ 'host' => 'sandbox.maxmind.com' ]);
 
 Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The previous object is not modified.
 
-If there is a validation error in the data passed to a `->with*` method, a
-`\MaxMind\Exception` will be thrown. This validation can be disabled by
+If there is a validation error in the data passed to a `->with*` method, an
+exception in the `\MaxMind\Exception` namespace will be thrown. This validation can be disabled by
 setting `validateInput` to `false` in the options array for
 `\MaxMind\MinFraud`, but it is recommended that you keep it on at least
 through development as it will help ensure that you are sending valid data to
