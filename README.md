@@ -3,7 +3,7 @@
 ## Description
 
 This package provides an API for the
-[MaxMind minFraud Score, Insights, and Factors web services](https://dev.maxmind.com/minfraud/).
+[MaxMind minFraud web services](https://dev.maxmind.com/minfraud/).
 
 ## Install via Composer
 
