@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.6.0
+3.6.0 (2026-01-20)
 ------------------
 
 * Added the `anonymizer` property to `MaxMind\MinFraud\Model\IpAddress`. This
