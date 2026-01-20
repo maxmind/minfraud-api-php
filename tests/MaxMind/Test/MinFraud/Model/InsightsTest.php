@@ -124,6 +124,38 @@ class InsightsTest extends ScoreTest
             'correct mobile network code'
         );
 
+        // Test anonymizer object
+        foreach ([
+            'isAnonymous',
+            'isAnonymousVpn',
+            'isHostingProvider',
+            'isPublicProxy',
+            'isTorExitNode',
+        ] as $property) {
+            $this->assertTrue(
+                $insights->ipAddress->anonymizer->{$property},
+                "anonymizer {$property} is true"
+            );
+        }
+
+        $this->assertSame(
+            $array['ip_address']['anonymizer']['confidence'],
+            $insights->ipAddress->anonymizer->confidence,
+            'correct anonymizer confidence'
+        );
+
+        $this->assertSame(
+            $array['ip_address']['anonymizer']['provider_name'],
+            $insights->ipAddress->anonymizer->providerName,
+            'correct anonymizer provider name'
+        );
+
+        $this->assertSame(
+            $array['ip_address']['anonymizer']['network_last_seen'],
+            $insights->ipAddress->anonymizer->networkLastSeen,
+            'correct anonymizer network last seen'
+        );
+
         $this->assertSame(
             $array['billing_phone']['country'],
             $insights->billingPhone->country,
