@@ -2,21 +2,22 @@
 layout: default
 title: minFraud PHP API
 language: php
-version: v3.5.0
+version: v3.6.0
 ---
 
-# MaxMind minFraud PHP API #
+# MaxMind minFraud PHP API
 
-## Description ##
+## Description
 
-This package provides an API for the [MaxMind minFraud Score, Insights, and
-Factors web services](https://dev.maxmind.com/minfraud/).
+This package provides an API for the
+[MaxMind minFraud web services](https://dev.maxmind.com/minfraud/).
 
-## Install via Composer ##
+## Install via Composer
 
-We recommend installing this package with [Composer](https://getcomposer.org/).
+We recommend installing this package with
+[Composer](https://getcomposer.org/).
 
-### Download Composer ###
+### Download Composer
 
 To download Composer, run in the root directory of your project:
 
@@ -26,19 +27,19 @@ curl -sS https://getcomposer.org/installer | php
 
 You should now have the file `composer.phar` in your project directory.
 
-### Install Dependencies ###
+### Install Dependencies
 
 Run in your project root:
 
 ```
-php composer.phar require maxmind/minfraud:^3.5.0
+php composer.phar require maxmind/minfraud:^3.6.0
 ```
 
 You should now have the files `composer.json` and `composer.lock` as well as
 the directory `vendor` in your project directory. If you use a version control
 system, `composer.json` should be added to it.
 
-### Require Autoloader ###
+### Require Autoloader
 
 After installing the dependencies, you need to require the Composer autoloader
 from your code:
@@ -47,21 +48,21 @@ from your code:
 require 'vendor/autoload.php';
 ```
 
-## Install via Phar ##
+## Install via Phar
 
 Although we strongly recommend using Composer, we also provide a
 [phar archive](https://php.net/manual/en/book.phar.php) containing most of the
 dependencies for this API. The latest phar archive is available on
 [our releases page](https://github.com/maxmind/minfraud-api-php/releases).
 
-### Install Dependencies ###
+### Install Dependencies
 
-Please note that you must have the PHP [cURL
-extension](https://php.net/manual/en/book.curl.php) installed to use this
-archive. For Debian based distributions, this can typically be found in the
+Please note that you must have the PHP
+[cURL extension](https://php.net/manual/en/book.curl.php) installed to use
+this archive. For Debian based distributions, this can typically be found in
 the `php-curl` package. For other operating systems, please consult the
-relevant documentation. After installing the extension you may need to
-restart your web server.
+relevant documentation. After installing the extension you may need to restart
+your web server.
 
 If you are missing this extension, you will see errors like the following:
 
@@ -69,7 +70,7 @@ If you are missing this extension, you will see errors like the following:
 PHP Fatal error:  Uncaught Error: Call to undefined function MaxMind\WebService\curl_version()
 ```
 
-### Require Package ###
+### Require Package
 
 To use the archive, just require it from your script:
 
@@ -77,37 +78,42 @@ To use the archive, just require it from your script:
 require 'minfraud.phar';
 ```
 
-## API Documentation ###
+## API Documentation
 
-More detailed API documentation is available on [our GitHub
-Page](https://maxmind.github.io/minfraud-api-php/) under the "API" tab.
+More detailed API documentation is available on
+[our GitHub Page](https://maxmind.github.io/minfraud-api-php/) under the "API"
+tab.
 
-## Usage ##
+## Usage
 
-This library provides access to both the [minFraud (Score, Insights and
-Factors)](https://dev.maxmind.com/minfraud/)
-and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/) APIs.
+This library provides access to both the
+[minFraud (Score, Insights and Factors)](https://dev.maxmind.com/minfraud/)
+and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/)
+APIs.
 
-### minFraud API ###
+### minFraud API
 
-To use the minFraud API, create a new `\MaxMind\MinFraud` object. The constructor
-takes your MaxMind account ID, license key, and an optional `options` array as
-arguments. This object is immutable. See the API documentation for the possible options.
+To use the minFraud API, create a new `\MaxMind\MinFraud` object. The
+constructor takes your MaxMind account ID, license key, and an optional
+`options` array as arguments. This object is immutable. See the API
+documentation for the possible options.
 
-For instance, to use the Sandbox web service instead of the production web service, you can provide the host option:
+For instance, to use the Sandbox web service instead of the production web
+service, you can provide the host option:
 
 ```php
 $mf = new MinFraud(1, 'ABCD567890', [ 'host' => 'sandbox.maxmind.com' ]);
 ```
 
-Build up the request using the `->with*` methods as shown below. Each method call returns a new object. The previous object is not modified.
+Build up the request using the `->with*` methods as shown below. Each method
+call returns a new object. The previous object is not modified.
 
-If there is a validation error in the data passed to a `->with*` method, a
-`\MaxMind\Exception` will be thrown. This validation can be disabled by
-setting `validateInput` to `false` in the options array for
-`\MaxMind\MinFraud`, but it is recommended that you keep it on at least
-through development as it will help ensure that you are sending valid data to
-the web service.
+If there is a validation error in the data passed to a `->with*` method, an
+exception in the `\MaxMind\Exception` namespace will be thrown. This
+validation can be disabled by setting `validateInput` to `false` in the
+options array for `\MaxMind\MinFraud`, but it is recommended that you keep it
+on at least through development as it will help ensure that you are sending
+valid data to the web service.
 
 After creating the request object, send a Score request by calling
 `->score()`, an Insights request by calling `->insights()`, or a Factors
@@ -117,30 +123,29 @@ thrown.
 
 See the API documentation for more details.
 
-#### minFraud Exceptions ####
+#### minFraud Exceptions
 
 All externally visible exceptions are in the `\MaxMind\Exception` namespace.
 The possible exceptions are:
 
-* `InvalidInputException` - This will be thrown when a `->with*` method is
+- `InvalidInputException` - This will be thrown when a `->with*` method is
   called with invalid input data.
-* `AuthenticationException` - This will be thrown on calling `->score()`,
+- `AuthenticationException` - This will be thrown on calling `->score()`,
   `->insights()`, or `->factors()` when the server is unable to authenticate
   the request, e.g., if the license key or account ID is invalid.
-* `InsufficientFundsException` - This will be thrown on calling `->score()`,
+- `InsufficientFundsException` - This will be thrown on calling `->score()`,
   `->insights()`, or `->factors()` when your account is out of funds.
-* `InvalidRequestException` - This will be thrown on calling `->score()`,
+- `InvalidRequestException` - This will be thrown on calling `->score()`,
   `->insights()`, or `->factors()` when the server rejects the request for
   another reason such as invalid JSON in the POST.
-* `HttpException` - This will be thrown on calling `->score()`, `->insights()`,
-  or `->factors()` when an unexpected HTTP error occurs such as a firewall
-  interfering with the request to the server.
-* `WebServiceException` - This will be thrown on calling `->score()`,
+- `HttpException` - This will be thrown on calling `->score()`,
+  `->insights()`, or `->factors()` when an unexpected HTTP error occurs such
+  as a firewall interfering with the request to the server.
+- `WebServiceException` - This will be thrown on calling `->score()`,
   `->insights()`, or `->factors()` when some other error occurs. This also
   serves as the base class for the above exceptions.
 
-
-#### minFraud Example ####
+#### minFraud Example
 
 ```php
 <?php
@@ -262,52 +267,52 @@ foreach ($scoreResponse->warnings as $warning) {
 }
 ```
 
-### Report Transactions API ###
+### Report Transactions API
 
-MaxMind encourages the use of this API as data received through this channel is
-used to continually improve the accuracy of our fraud detection algorithms.
+MaxMind encourages the use of this API as data received through this channel
+is used to continually improve the accuracy of our fraud detection algorithms.
 
 To use the Report Transactions API, create a new
-`\MaxMind\MinFraud\ReportTransaction` object. The constructor takes your MaxMind
-account ID, license key, and an optional options array as arguments. This object
-is immutable. You then send one or more reports using the `->report` method as
-shown below.
+`\MaxMind\MinFraud\ReportTransaction` object. The constructor takes your
+MaxMind account ID, license key, and an optional options array as arguments.
+This object is immutable. You then send one or more reports using the
+`->report` method as shown below.
 
 If there is a validation error in the data passed to the `->report` method, a
 `\MaxMind\Exception` will be thrown. This validation can be disabled by
 setting `validateInput` to `false` in the options array for
-`\MaxMind\MinFraud\ReportTransaction`, but it is recommended that you keep it on
-at least through development as it will help ensure that you are sending valid
-data to the web service.
+`\MaxMind\MinFraud\ReportTransaction`, but it is recommended that you keep it
+on at least through development as it will help ensure that you are sending
+valid data to the web service.
 
 If the report is successful, nothing is returned. If the report fails, an
-exception with be thrown.
+exception will be thrown.
 
 See the API documentation for more details.
 
-#### Report Transaction Exceptions ####
+#### Report Transaction Exceptions
 
 All externally visible exceptions are in the `\MaxMind\Exception` namespace.
 The possible exceptions are:
 
-* `InvalidInputException` - This will be thrown when the `->report()` method is
-  called with invalid input data or when the required fields are missing. The
-  required fields are `tag` and one or more of the following: `ipAddress`,
+- `InvalidInputException` - This will be thrown when the `->report()` method
+  is called with invalid input data or when the required fields are missing.
+  The required fields are `tag` and one or more of the following: `ipAddress`,
   `maxmindId`, `minfraudId`, or `transactionId`.
-* `AuthenticationException` - This will be thrown on calling `->report()`,
+- `AuthenticationException` - This will be thrown on calling `->report()`,
   when the server is unable to authenticate the request, e.g., if the license
   key or account ID is invalid.
-* `InvalidRequestException` - This will be thrown on calling `->report()` when
-  the server rejects the request for another reason such as invalid JSON in the
-  POST.
-* `HttpException` - This will be thrown on calling `->report()` when an
+- `InvalidRequestException` - This will be thrown on calling `->report()` when
+  the server rejects the request for another reason such as invalid JSON in
+  the POST.
+- `HttpException` - This will be thrown on calling `->report()` when an
   unexpected HTTP error occurs such as a firewall interfering with the request
   to the server.
-* `WebServiceException` - This will be thrown on calling `->report()` when some
-  other error occurs. This also serves as the base class for the above
+- `WebServiceException` - This will be thrown on calling `->report()` when
+  some other error occurs. This also serves as the base class for the above
   exceptions.
 
-#### Report Transaction Example ####
+#### Report Transaction Example
 
 ```php
 <?php
@@ -329,33 +334,33 @@ $rt->report(
 );
 ```
 
-## Support ##
+## Support
 
 Please report all issues with this code using the
 [GitHub issue tracker](https://github.com/maxmind/minfraud-api-php/issues).
 
-If you are having an issue with the minFraud service that is not specific
-to the client API, please see
+If you are having an issue with the minFraud service that is not specific to
+the client API, please see
 [our support page](https://www.maxmind.com/en/support).
 
-## Requirements  ##
+## Requirements
 
 This code requires PHP 8.1 or greater. Older versions of PHP are not
 supported.
 
 There are several other dependencies as defined in the `composer.json` file.
 
-## Contributing ##
+## Contributing
 
 Patches and pull requests are encouraged. All code should follow the PSR-2
 style guidelines. Please include unit tests whenever possible.
 
-## Versioning ##
+## Versioning
 
 This API uses [Semantic Versioning](https://semver.org/).
 
-## Copyright and License ##
+## Copyright and License
 
-This software is Copyright (c) 2015-2025 by MaxMind, Inc.
+This software is Copyright (c) 2015-2026 by MaxMind, Inc.
 
 This is free software, licensed under the Apache License, Version 2.0.
