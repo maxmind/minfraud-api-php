@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\MinFraud\Model;
 
 use GeoIp2\Model\Insights;
+use GeoIp2\Record\Anonymizer;
 use GeoIp2\Record\City;
 use GeoIp2\Record\Continent;
 use GeoIp2\Record\Country;
@@ -18,6 +19,13 @@ use GeoIp2\Record\Traits;
  */
 class IpAddress implements \JsonSerializable
 {
+    /**
+     * @var Anonymizer data for the anonymizer status of the requested IP
+     *                 address. This object contains information about whether
+     *                 the IP address belongs to an anonymous network.
+     */
+    public readonly Anonymizer $anonymizer;
+
     /**
      * @var City city data for the requested IP address
      */
@@ -123,6 +131,7 @@ class IpAddress implements \JsonSerializable
         $this->representedCountry = $insights->representedCountry;
         $this->subdivisions = $insights->subdivisions;
         $this->traits = $insights->traits;
+        $this->anonymizer = $insights->anonymizer;
 
         $this->location = new GeoIp2Location($response['location'] ?? []);
         $this->risk = $response['risk'] ?? null;
@@ -142,6 +151,11 @@ class IpAddress implements \JsonSerializable
     public function jsonSerialize(): ?array
     {
         $js = [];
+
+        $anonymizer = $this->anonymizer->jsonSerialize();
+        if (!empty($anonymizer)) {
+            $js['anonymizer'] = $anonymizer;
+        }
 
         $city = $this->city->jsonSerialize();
         if (!empty($city)) {

@@ -111,6 +111,16 @@
       "network": "152.216.7.0/24",
       "organization": "STONEHOUSE office network",
       "user_type": "government"
+    },
+    "anonymizer": {
+      "confidence": 99,
+      "is_anonymous": true,
+      "is_anonymous_vpn": true,
+      "is_hosting_provider": true,
+      "is_public_proxy": true,
+      "is_tor_exit_node": true,
+      "network_last_seen": "2025-01-15",
+      "provider_name": "TestVPN"
     }
   },
   "billing_address": {

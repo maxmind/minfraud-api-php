@@ -4,6 +4,11 @@ CHANGELOG
 3.6.0
 ------------------
 
+* Added the `anonymizer` property to `MaxMind\MinFraud\Model\IpAddress`. This
+  contains anonymizer data from the GeoIP2 Insights response, including VPN
+  detection confidence, provider name, and network last seen date. This was
+  previously available in the GeoIP2 library but not exposed in minFraud
+  responses.
 * Added `banquest`, `summit_payments`, and `yaadpay` to the payment processor
   validation.
 
