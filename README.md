@@ -156,6 +156,7 @@ $request = $mf->withDevice(
     ipAddress: '152.216.7.110',
     sessionAge: 3600.5,
     sessionId: 'foobar',
+    trackingToken: 'tst_abc123',
     userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
     acceptLanguage: 'en-US,en;q=0.8'
 )->withEvent(
