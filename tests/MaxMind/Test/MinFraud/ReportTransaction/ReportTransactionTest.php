@@ -18,26 +18,18 @@ class ReportTransactionTest extends ServiceClientTester
 {
     public function testMinimalRequest(): void
     {
-        $this->assertEmpty(
-            // @phpstan-ignore-next-line
-            $this->createReportTransactionRequest(
-                Data::minimalRequest(),
-                1
-            )->report(Data::minimalRequest()),
-            'response for minimal request'
-        );
+        $this->createReportTransactionRequest(
+            Data::minimalRequest(),
+            1
+        )->report(Data::minimalRequest());
     }
 
     public function testFullRequest(): void
     {
         $req = Data::fullRequest();
-        $this->assertEmpty(
-            // @phpstan-ignore-next-line
-            $this->createReportTransactionRequest(
-                $req
-            )->report($req),
-            'response for full request'
-        );
+        $this->createReportTransactionRequest(
+            $req
+        )->report($req);
     }
 
     public function testRequestsWithNulls(): void
@@ -52,14 +44,10 @@ class ReportTransactionTest extends ServiceClientTester
                 'transaction_id' => null,
             ]
         );
-        $this->assertEmpty(
-            // @phpstan-ignore-next-line
-            $this->createReportTransactionRequest(
-                Data::minimalRequest(),
-                1
-            )->report($req),
-            'response from request including nulls'
-        );
+        $this->createReportTransactionRequest(
+            Data::minimalRequest(),
+            1
+        )->report($req);
     }
 
     public function testRequiredFields(): void
