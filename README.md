@@ -209,6 +209,7 @@ $request = $mf->withDevice(
     bankPhoneNumber: '123-456-1234',
     avsResult: 'Y',
     cvvResult: 'N',
+    token: '123456abc1234',
     was3dSecureSuccessful: true
 )->withOrder(
     amount: 323.21,
