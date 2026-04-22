@@ -9,6 +9,8 @@ CHANGELOG
   [Device Tracking Add-on](https://dev.maxmind.com/minfraud/track-devices)
   for explicit device linking.
 * Added `fat_zebra` to the payment processor validation.
+* Added `clear` to the valid values for the `tag` parameter on the Report
+  Transaction API.
 
 3.6.0 (2026-01-20)
 ------------------

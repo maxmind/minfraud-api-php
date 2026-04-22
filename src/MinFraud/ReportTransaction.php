@@ -53,8 +53,8 @@ class ReportTransaction extends ServiceClient
      *                                             `maxmindId`, `minfraudId`, or `transactionId`.
      * @param string               $tag            Required. A string indicating the likelihood that a
      *                                             transaction may be fraudulent. Possible values:
-     *                                             not_fraud, suspected_fraud, spam_or_abuse, or
-     *                                             chargeback.
+     *                                             not_fraud, suspected_fraud, spam_or_abuse,
+     *                                             chargeback, or clear.
      * @param string               $chargebackCode Optional. A string which is provided by your payment
      *                                             processor indicating the reason for the chargeback.
      * @param string               $maxmindId      Optional. A unique eight character string identifying
@@ -159,9 +159,9 @@ class ReportTransaction extends ServiceClient
             // This is required so we always throw an exception if it is not set
             throw new InvalidInputException('A tag is required');
         }
-        if (!\in_array($tag, ['not_fraud', 'suspected_fraud', 'spam_or_abuse', 'chargeback'], true)) {
+        if (!\in_array($tag, ['not_fraud', 'suspected_fraud', 'spam_or_abuse', 'chargeback', 'clear'], true)) {
             $this->maybeThrowInvalidInputException(
-                "$tag must be one of 'not_fraud', 'suspected_fraud', 'spam_or_abuse', or 'chargeback'",
+                "$tag must be one of 'not_fraud', 'suspected_fraud', 'spam_or_abuse', 'chargeback', or 'clear'",
             );
         }
         $values['tag'] = $tag;
