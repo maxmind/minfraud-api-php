@@ -59,6 +59,12 @@ class ReportTransactionTest extends ServiceClientTester
         $this->createReportTransactionRequest($req, 1)->report($req);
 
         $req = [
+            'ip_address' => '1.1.1.1',
+            'tag' => 'clear',
+        ];
+        $this->createReportTransactionRequest($req, 1)->report($req);
+
+        $req = [
             'maxmind_id' => '12345678',
             'tag' => 'not_fraud',
         ];
