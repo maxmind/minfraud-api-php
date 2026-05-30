@@ -7,7 +7,7 @@ namespace MaxMind\MinFraud\Model;
 use GeoIp2\Record\Location;
 
 /**
- * Model of the GeoIP2 Location information, including the local time.
+ * Model of the GeoIP Location information, including the local time.
  */
 class GeoIp2Location extends Location
 {

@@ -15,7 +15,7 @@ use GeoIp2\Record\Subdivision;
 use GeoIp2\Record\Traits;
 
 /**
- * Model containing GeoIP2 data and the risk for the IP address.
+ * Model containing GeoIP data and the risk for the IP address.
  */
 class IpAddress implements \JsonSerializable
 {
