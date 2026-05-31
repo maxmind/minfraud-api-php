@@ -207,7 +207,7 @@ class MinFraudTest extends ServiceClientTester
         $this->assertSame(
             'Royaume-Uni',
             $insights->ipAddress->country->name,
-            'locales setting made it to the GeoIP2 models'
+            'locales setting made it to the GeoIP models'
         );
     }
 

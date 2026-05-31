@@ -60,7 +60,7 @@ class Insights implements \JsonSerializable
     public readonly string $id;
 
     /**
-     * @var IpAddress an object containing GeoIP2 and minFraud Insights
+     * @var IpAddress an object containing GeoIP and minFraud Insights
      *                information about the geolocated IP address
      */
     public readonly IpAddress $ipAddress;

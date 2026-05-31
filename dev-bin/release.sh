@@ -129,10 +129,10 @@ else
 fi
 
 if [ ! -d .geoip2 ]; then
-    echo "Cloning GeoIP2 for docs"
+    echo "Cloning GeoIP for docs"
     git clone git@github.com:maxmind/GeoIP2-php.git .geoip2
 else
-    echo "Updating GeoIP2 for docs"
+    echo "Updating GeoIP for docs"
     pushd .geoip2
     git pull
     popd
