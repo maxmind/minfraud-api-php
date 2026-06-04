@@ -397,5 +397,5 @@ vendor/bin/phpunit
 
 - [API Documentation](https://maxmind.github.io/minfraud-api-php/)
 - [minFraud Web Services Docs](https://dev.maxmind.com/minfraud/)
-- [Report Transaction API Docs](https://dev.maxmind.com/minfraud/report-transaction/)
+- [Report Transaction API Docs](https://dev.maxmind.com/minfraud/report-a-transaction/)
 - GitHub Issues: https://github.com/maxmind/minfraud-api-php/issues

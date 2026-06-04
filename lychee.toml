@@ -31,6 +31,9 @@ exclude = [
     '^https://updates\.maxmind\.com',
     '^https://www\.maxmind\.com/en/accounts/',
     'https://www\.maxmind\.com/en/account/login',
+    # The minFraud API responses doc renders its schema anchors client-side, so
+    # lychee cannot verify the #fragment even though the page and anchor exist.
+    '^https://dev\.maxmind\.com/minfraud/api-documentation/responses/#',
     # Placeholders / local
     '^https?://example\.(com|org|net)',
     '^http://localhost',

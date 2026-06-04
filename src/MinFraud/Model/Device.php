@@ -10,7 +10,7 @@ namespace MaxMind\MinFraud\Model;
  * In order to receive device output from minFraud Insights or minFraud
  * Factors, you must be using the Device Tracking Add-on.
  *
- * @link https://dev.maxmind.com/minfraud/track-devices?lang=en Device Tracking
+ * @link https://dev.maxmind.com/minfraud/track-devices/?lang=en Device Tracking
  * Add-on
  */
 class Device implements \JsonSerializable

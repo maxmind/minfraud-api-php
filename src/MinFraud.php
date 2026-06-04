@@ -114,7 +114,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the array to be sent to the web
      * service set to `$values`. Existing values will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation?lang=en
+     * @link https://dev.maxmind.com/minfraud/api-documentation/?lang=en
      * minFraud API docs
      *
      * @param array<string, mixed> $values The request as a structured array
@@ -197,7 +197,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--device
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--device
      *     minFraud device API docs
      */
     public function withDevice(
@@ -324,7 +324,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--event
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--event
      *     minFraud event API docs
      */
     public function withEvent(
@@ -405,7 +405,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `account` array set to
      * the values provided. Existing `` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--account
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--account
      *     minFraud account API docs
      *
      * @param array<string, mixed> $values      An array of account data. The keys are the same as
@@ -458,7 +458,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `email` array set to
      * values provided. Existing `email` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--email
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--email
      *     minFraud email API docs
      *
      * @param array<string, mixed> $values  An array of email data. The keys are the same as
@@ -519,7 +519,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `billing` array set to
      * `$values`. Existing `billing` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--billing
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--billing
      *     minFraud billing API docs
      *
      * @param array<string, mixed> $values           An array of billing data. The keys are the same as
@@ -646,7 +646,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `shipping` array set to
      * the values provided. Existing `shipping` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--shipping
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--shipping
      *     minFraud shipping API docs
      *
      * @param array<string, mixed> $values  An array of shipping data. The keys are the same as
@@ -768,7 +768,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `payment` array set to
      * the values provided. Existing `payment` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--payment
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--payment
      *     minFraud payment API docs
      *
      * @param array<string, mixed> $values        An array of payment data. The keys are the same as
@@ -1027,7 +1027,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `credit_card` array set to
      * provided values. Existing `credit_card` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--credit-card
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--credit-card
      *     minFraud credit_card API docs
      *
      * @param array<string, mixed> $values                An array of credit card data. The keys are the same as
@@ -1225,7 +1225,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `order` array set to
      * the provided values. Existing `order` data will be replaced.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--order
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--order
      *     minFraud order API docs
      *
      * @param array<string, mixed> $values         An array of order data. The keys are the same as the JSON keys.
@@ -1243,7 +1243,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of the original with additional data.
      *
-     * @see https://support.maxmind.com/hc/en-us/articles/5452293435675-Order-and-Shopping-Cart-Inputs#h_01G0Z50Q0MRXQ5R52EF34E6G7J
+     * @see https://support.maxmind.com/knowledge-base/articles/order-and-shopping-cart-inputs-minfraud
      */
     public function withOrder(
         array $values = [],
@@ -1326,7 +1326,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the provided values added to the
      * shopping cart array. Existing shopping cart data will be preserved.
      *
-     * @link https://dev.maxmind.com/minfraud/api-documentation/requests?lang=en#schema--request--shopping-cart--item
+     * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--shopping-cart
      *     minFraud shopping cart item API docs
      *
      * @param array<string, mixed> $values   An array of shopping cart data. The keys are the same
