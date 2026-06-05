@@ -8,10 +8,10 @@ the directory <code>vendor</code> in your project directory. If you use a versio
 system, <code>composer.json</code> should be added to it.</p><h3 id=require-autoloader>Require Autoloader<a class=heading-anchor href=#require-autoloader aria-label="Link to Require Autoloader">#</a></h3><p>After installing the dependencies, you need to require the Composer autoloader
 from your code:</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-php data-lang=php><span style=display:flex><span><span style=color:#cf222e>require</span> <span style=color:#0a3069>&#39;vendor/autoload.php&#39;</span><span style=color:#1f2328>;</span>
 </span></span></code></pre></div><h2 id=install-via-phar>Install via Phar<a class=heading-anchor href=#install-via-phar aria-label="Link to Install via Phar">#</a></h2><p>Although we strongly recommend using Composer, we also provide a
-<a href=https://php.net/manual/en/book.phar.php>phar archive</a> containing most of the
+<a href=https://www.php.net/manual/en/book.phar.php>phar archive</a> containing most of the
 dependencies for this API. The latest phar archive is available on
 <a href=https://github.com/maxmind/minfraud-api-php/releases>our releases page</a>.</p><h3 id=install-dependencies-1>Install Dependencies<a class=heading-anchor href=#install-dependencies-1 aria-label="Link to Install Dependencies">#</a></h3><p>Please note that you must have the PHP
-<a href=https://php.net/manual/en/book.curl.php>cURL extension</a> installed to use
+<a href=https://www.php.net/manual/en/book.curl.php>cURL extension</a> installed to use
 this archive. For Debian based distributions, this can typically be found in
 the <code>php-curl</code> package. For other operating systems, please consult the
 relevant documentation. After installing the extension you may need to restart
@@ -21,7 +21,7 @@ your web server.</p><p>If you are missing this extension, you will see errors li
 <a href=https://maxmind.github.io/minfraud-api-php/>our GitHub Page</a> under the &ldquo;API&rdquo;
 tab.</p><h2 id=usage>Usage<a class=heading-anchor href=#usage aria-label="Link to Usage">#</a></h2><p>This library provides access to both the
 <a href=https://dev.maxmind.com/minfraud/>minFraud (Score, Insights and Factors)</a>
-and <a href=https://dev.maxmind.com/minfraud/report-transaction/>Report Transaction</a>
+and <a href=https://dev.maxmind.com/minfraud/report-a-transaction/>Report Transaction</a>
 APIs.</p><h3 id=minfraud-api>minFraud API<a class=heading-anchor href=#minfraud-api aria-label="Link to minFraud API">#</a></h3><p>To use the minFraud API, create a new <code>\MaxMind\MinFraud</code> object. The
 constructor takes your MaxMind account ID, license key, and an optional
 <code>options</code> array as arguments. This object is immutable. See the API
@@ -210,6 +210,6 @@ exceptions.</li></ul><h4 id=report-transaction-example>Report Transaction Exampl
 </span></span></code></pre></div><h2 id=support>Support<a class=heading-anchor href=#support aria-label="Link to Support">#</a></h2><p>Please report all issues with this code using the
 <a href=https://github.com/maxmind/minfraud-api-php/issues>GitHub issue tracker</a>.</p><p>If you are having an issue with the minFraud service that is not specific to
 the client API, please see
-<a href=https://www.maxmind.com/en/support>our support page</a>.</p><h2 id=requirements>Requirements<a class=heading-anchor href=#requirements aria-label="Link to Requirements">#</a></h2><p>This code requires PHP 8.1 or greater. Older versions of PHP are not
+<a href=https://support.maxmind.com/knowledge-base>our support page</a>.</p><h2 id=requirements>Requirements<a class=heading-anchor href=#requirements aria-label="Link to Requirements">#</a></h2><p>This code requires PHP 8.1 or greater. Older versions of PHP are not
 supported.</p><p>There are several other dependencies as defined in the <code>composer.json</code> file.</p><h2 id=contributing>Contributing<a class=heading-anchor href=#contributing aria-label="Link to Contributing">#</a></h2><p>Patches and pull requests are encouraged. All code should follow the PSR-2
 style guidelines. Please include unit tests whenever possible.</p><h2 id=versioning>Versioning<a class=heading-anchor href=#versioning aria-label="Link to Versioning">#</a></h2><p>This API uses <a href=https://semver.org/>Semantic Versioning</a>.</p><h2 id=copyright-and-license>Copyright and License<a class=heading-anchor href=#copyright-and-license aria-label="Link to Copyright and License">#</a></h2><p>This software is Copyright (c) 2015-2026 by MaxMind, Inc.</p><p>This is free software, licensed under the Apache License, Version 2.0.</p></main></body></html>
