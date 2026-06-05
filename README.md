@@ -44,14 +44,14 @@ require 'vendor/autoload.php';
 ## Install via Phar
 
 Although we strongly recommend using Composer, we also provide a
-[phar archive](https://php.net/manual/en/book.phar.php) containing most of the
+[phar archive](https://www.php.net/manual/en/book.phar.php) containing most of the
 dependencies for this API. The latest phar archive is available on
 [our releases page](https://github.com/maxmind/minfraud-api-php/releases).
 
 ### Install Dependencies
 
 Please note that you must have the PHP
-[cURL extension](https://php.net/manual/en/book.curl.php) installed to use
+[cURL extension](https://www.php.net/manual/en/book.curl.php) installed to use
 this archive. For Debian based distributions, this can typically be found in
 the `php-curl` package. For other operating systems, please consult the
 relevant documentation. After installing the extension you may need to restart
@@ -81,7 +81,7 @@ tab.
 
 This library provides access to both the
 [minFraud (Score, Insights and Factors)](https://dev.maxmind.com/minfraud/)
-and [Report Transaction](https://dev.maxmind.com/minfraud/report-transaction/)
+and [Report Transaction](https://dev.maxmind.com/minfraud/report-a-transaction/)
 APIs.
 
 ### minFraud API
@@ -336,7 +336,7 @@ Please report all issues with this code using the
 
 If you are having an issue with the minFraud service that is not specific to
 the client API, please see
-[our support page](https://www.maxmind.com/en/support).
+[our support page](https://support.maxmind.com/knowledge-base).
 
 ## Requirements
 
