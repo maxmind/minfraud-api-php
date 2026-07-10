@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MaxMind\Test\MinFraud\Model;
 
+use GeoIp2\Record\AnonymizerFeed;
 use MaxMind\MinFraud\Model\Insights;
 use MaxMind\MinFraud\Model\Score;
 use MaxMind\Test\MinFraudData as Data;
@@ -154,6 +155,30 @@ class InsightsTest extends ScoreTest
             $array['ip_address']['anonymizer']['network_last_seen'],
             $insights->ipAddress->anonymizer->networkLastSeen,
             'correct anonymizer network last seen'
+        );
+
+        $this->assertInstanceOf(
+            AnonymizerFeed::class,
+            $insights->ipAddress->anonymizer->residential,
+            'anonymizer residential is an AnonymizerFeed'
+        );
+
+        $this->assertSame(
+            $array['ip_address']['anonymizer']['residential']['confidence'],
+            $insights->ipAddress->anonymizer->residential->confidence,
+            'correct anonymizer residential confidence'
+        );
+
+        $this->assertSame(
+            $array['ip_address']['anonymizer']['residential']['network_last_seen'],
+            $insights->ipAddress->anonymizer->residential->networkLastSeen,
+            'correct anonymizer residential network last seen'
+        );
+
+        $this->assertSame(
+            $array['ip_address']['anonymizer']['residential']['provider_name'],
+            $insights->ipAddress->anonymizer->residential->providerName,
+            'correct anonymizer residential provider name'
         );
 
         $this->assertSame(
