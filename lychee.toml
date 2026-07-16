@@ -4,8 +4,10 @@
 # Run locally with:
 #   lychee './**/*.md' './src/**/*.php' './composer.json'
 
-# Include URL fragments in checks
-include_fragments = true
+# Include URL fragments in checks. Lychee 0.24 replaced the old boolean
+# with a `none|anchor-only|text-only|full` enum; `full` checks both anchor
+# fragments (e.g. `#section`) and text fragments (e.g. `#:~:text=example`).
+include_fragments = "full"
 
 # Don't allow any redirects, so links that have moved are surfaced and updated
 # to their canonical destination.
