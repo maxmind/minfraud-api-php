@@ -32,7 +32,12 @@ fi
 
 check_command perl
 check_command php
-check_command wget
+
+# box.phar, composer.phar, and phpDocumentor.phar are managed by mise (see
+# mise.toml)
+check_command box.phar
+check_command composer.phar
+check_command phpDocumentor.phar
 
 # Check that we're not on the main branch
 current_branch=$(git branch --show-current)
@@ -91,21 +96,12 @@ if [ -d vendor ]; then
     rm -fr vendor
 fi
 
-php composer.phar self-update
-php composer.phar update --no-dev
+composer.phar update --no-dev
 
 perl -pi -e "s/(?<=const VERSION = ').+?(?=';)/$tag/g" src/MinFraud/ServiceClient.php
 perl -pi -e "s{(?<=php composer\.phar require maxmind\/minfraud:).+}{^$version}g" README.md
 
-box_phar_hash='f98cf885a7c07c84df66e33888f1d93f063298598e0a5f41ca322aeb9683179b  box.phar'
-
-if ! echo "$box_phar_hash" | sha256sum -c; then
-    wget -O box.phar "https://github.com/box-project/box/releases/download/4.6.10/box.phar"
-fi
-
-echo "$box_phar_hash" | sha256sum -c
-
-php box.phar compile
+box.phar compile
 
 phar_test=$(./dev-bin/phar-test.php)
 if [[ -n $phar_test ]]; then
@@ -114,7 +110,7 @@ if [[ -n $phar_test ]]; then
 fi
 
 # Download test deps
-php composer.phar update
+composer.phar update
 
 ./vendor/bin/phpunit
 
@@ -143,20 +139,11 @@ if [ -n "$(git status --porcelain)" ]; then
     exit 1
 fi
 
-# Using Composer is possible, but they don't recommend it.
-phpdocumentor_phar_hash='aa00973d88b278fe59fd8dce826d8d5419df589cb7563ac379856ec305d6b938  phpDocumentor.phar'
-
-if ! echo "$phpdocumentor_phar_hash" | sha256sum -c; then
-    wget -O phpDocumentor.phar https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.8.1/phpDocumentor.phar
-fi
-
-echo "$phpdocumentor_phar_hash" | sha256sum -c
-
 # Use cache dir in /tmp as otherwise cache files get into the output directory.
 cachedir="/tmp/phpdoc-$$-$RANDOM"
 rm -rf "$cachedir"
 
-php phpDocumentor.phar \
+phpDocumentor.phar \
     --visibility=public \
     --cache-folder="$cachedir" \
     --title="minFraud PHP API $tag" \

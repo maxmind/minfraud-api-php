@@ -7,12 +7,9 @@ docs/public/
 .php-cs-fixer.cache
 .phpunit.cache/
 .phpunit.result.cache
-box.phar
 build
 composer.lock
-composer.phar
 minfraud.phar
-/phpDocumentor.phar
 phpunit.xml
 t.php
 vendor/

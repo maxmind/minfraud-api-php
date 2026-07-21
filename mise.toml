@@ -8,6 +8,9 @@ disable_backends = [
 [tools]
 hugo = "latest"
 lychee = "latest"
+"github:box-project/box" = "latest"
+"github:composer/composer" = "latest"
+"github:phpDocumentor/phpDocumentor" = "latest"
 
 [hooks]
 enter = "mise install --quiet"
