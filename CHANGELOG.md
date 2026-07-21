@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.7.0
+3.7.0 (2026-07-21)
 ------------------
 
 * Added the `residential` property to the `anonymizer` object on
