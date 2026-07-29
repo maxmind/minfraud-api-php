@@ -189,6 +189,16 @@ class UtilTest extends TestCase
                 ],
             ],
             [
+                'name' => 'Fastmail Canada alias domain',
+                'input' => ['email' => ['address' => 'alias@user.fastmail.ca']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('user@fastmail.ca'),
+                        'domain' => 'user.fastmail.ca',
+                    ],
+                ],
+            ],
+            [
                 'name' => 'Domain with multiple host parts',
                 'input' => ['email' => ['address' => 'foo@bar.example.com']],
                 'expected' => [
@@ -205,6 +215,16 @@ class UtilTest extends TestCase
                     'email' => [
                         'address' => md5('foo@ymail.com'),
                         'domain' => 'ymail.com',
+                    ],
+                ],
+            ],
+            [
+                'name' => 'Alternate Yahoo signup domain',
+                'input' => ['email' => ['address' => 'test-alias@myyahoo.com']],
+                'expected' => [
+                    'email' => [
+                        'address' => md5('test@myyahoo.com'),
+                        'domain' => 'myyahoo.com',
                     ],
                 ],
             ],

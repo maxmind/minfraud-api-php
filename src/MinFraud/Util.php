@@ -127,6 +127,7 @@ class Util
         'fastemailer.com' => true,
         'fastest.cc' => true,
         'fastimap.com' => true,
+        'fastmail.ca' => true,
         'fastmail.cn' => true,
         'fastmail.co.uk' => true,
         'fastmail.com' => true,
@@ -223,6 +224,7 @@ class Util
      * @var array<string, bool>
      */
     private static $yahooDomains = [
+        'myyahoo.com' => true,
         'y7mail.com' => true,
         'yahoo.at' => true,
         'yahoo.be' => true,
