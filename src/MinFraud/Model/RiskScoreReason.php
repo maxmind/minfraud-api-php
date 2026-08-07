@@ -12,8 +12,8 @@ class RiskScoreReason implements \JsonSerializable
     /**
      * @var float|null The factor by which the risk score is increased (if the value is greater than 1)
      *                 or decreased (if the value is less than 1) for given risk reason(s).
-     *                 Multipliers greater than 1.5 and less than 0.66 are considered significant
-     *                 and lead to risk reason(s) being present.
+     *                 Multipliers representing a significant percentage increase or decrease in the
+     *                 risk score lead to risk reason(s) being present.
      */
     public readonly ?float $multiplier;
 
