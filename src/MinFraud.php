@@ -119,6 +119,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @param array<string, mixed> $values The request as a structured array
      *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
+     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
@@ -194,11 +198,15 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                             Device Tracking Add-on for explicit
      *                                             device linking
      *
-     * @return MinFraud A new immutable MinFraud object. This object is a clone
-     *                  of the original with additional data.
-     *
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--device
      *     minFraud device API docs
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
+     *
+     * @return MinFraud A new immutable MinFraud object. This object is a clone
+     *                  of the original with additional data.
      */
     public function withDevice(
         array $values = [],
@@ -321,11 +329,15 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            - `agent`
      *                                            - `customer`
      *
-     * @return MinFraud A new immutable MinFraud object. This object is a clone of
-     *                  the original with additional data.
-     *
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--event
      *     minFraud event API docs
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
+     *
+     * @return MinFraud A new immutable MinFraud object. This object is a clone of
+     *                  the original with additional data.
      */
     public function withEvent(
         array $values = [],
@@ -417,6 +429,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                          the username or login name associated
      *                                          with the account
      *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
+     *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
      */
@@ -469,6 +485,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $domain  The domain of the email address used in the
      *                                      transaction. Do not include the `@` in this
      *                                      field.
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -549,6 +569,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $postal           The postal code of the user's billing address
      * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
      *                                               billing address
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -661,6 +685,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $country The two character ISO 3166-1 alpha-2 country
      *                                      code of the user's shipping address
      * @param string|null          $postal  The postal code of the user's shipping address
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -793,6 +821,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            - `gift_card`
      *                                            - `real_time_payment`
      *                                            - `rewards`
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -1059,6 +1091,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param bool|null            $was3dSecureSuccessful Whether the outcome of 3-D Secure
      *                                                    verification was successful
      *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
+     *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
      */
@@ -1179,6 +1215,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @param array<string, mixed> $values the custom inputs to send in the request
      *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               key or value is invalid
+     *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
@@ -1241,9 +1280,13 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $subaffiliateId The ID of the sub-affiliate where the order is coming from.
      *                                             No specific format is required.
      *
-     * @return MinFraud A new immutable MinFraud object. This object is a clone of the original with additional data.
-     *
      * @see https://support.maxmind.com/knowledge-base/articles/order-and-shopping-cart-inputs-minfraud
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
+     *
+     * @return MinFraud A new immutable MinFraud object. This object is a clone of the original with additional data.
      */
     public function withOrder(
         array $values = [],
@@ -1339,6 +1382,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                       order currency.
      * @param int|null             $quantity The quantity of the item in the shopping cart.
      *                                       The value must be a whole number.
+     *
+     * @throws InvalidInputException if input validation is enabled and a
+     *                               value is invalid, a value has the wrong
+     *                               type, or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -1496,6 +1543,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         );
     }
 
+    /**
+     * @throws InvalidInputException if the value is invalid and input
+     *                               validation is enabled
+     */
     private function verifyCountryCode(string $country): void
     {
         if (!preg_match('/^[A-Z]{2}$/', $country)) {
@@ -1503,6 +1554,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
     }
 
+    /**
+     * @throws InvalidInputException if the value is invalid and input
+     *                               validation is enabled
+     */
     private function verifyPhoneCountryCode(string $phoneCountryCode): void
     {
         if (!preg_match('/^[0-9]{1,4}$/', $phoneCountryCode)) {
@@ -1510,6 +1565,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
     }
 
+    /**
+     * @throws InvalidInputException if the value is invalid and input
+     *                               validation is enabled
+     */
     private function verifyRegionCode(string $region): void
     {
         if (!preg_match('/^[0-9A-Z]{1,4}$/', $region)) {

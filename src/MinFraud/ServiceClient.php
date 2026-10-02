@@ -60,6 +60,9 @@ abstract class ServiceClient
         return 'minFraud-API/' . self::VERSION;
     }
 
+    /**
+     * @throws InvalidInputException if input validation is enabled
+     */
     protected function maybeThrowInvalidInputException(string $msg): void
     {
         if ($this->validateInput) {
@@ -73,6 +76,9 @@ abstract class ServiceClient
      * @param array<string, mixed> $array the parent array
      * @param string               $key   the key to remove
      * @param list<string>         $types the expected types
+     *
+     * @throws InvalidInputException if the value has an unexpected type and
+     *                               input validation is enabled
      */
     protected function remove(array &$array, string $key, array $types = ['string']): mixed
     {
@@ -94,6 +100,9 @@ abstract class ServiceClient
 
     /**
      * @param array<mixed> $values
+     *
+     * @throws InvalidInputException if the array has unknown keys and input
+     *                               validation is enabled
      */
     protected function verifyEmpty(array $values): void
     {

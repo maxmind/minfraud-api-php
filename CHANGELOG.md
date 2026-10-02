@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+3.8.0
+------------------
+
+* The PHPDoc for the `with()` and `with*()` methods of `MaxMind\MinFraud` now
+  lists the `InvalidInputException` they throw when input validation is
+  enabled.
+
 3.7.0 (2026-07-21)
 ------------------
 
