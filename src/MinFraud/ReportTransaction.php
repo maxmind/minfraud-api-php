@@ -94,9 +94,7 @@ class ReportTransaction extends ServiceClient
      *                                 POST.
      * @throws HttpException           when an unexpected HTTP error occurs
      * @throws \RuntimeException       with older web-service-common releases, if cURL setup fails
-     * @throws WebServiceException     when some other error occurs. This also
-     *                                 serves as the base class for the above
-     *                                 exceptions.
+     * @throws WebServiceException     when another web service error occurs
      */
     public function report(
         array $values = [],
