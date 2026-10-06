@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\MinFraud;
 
 use MaxMind\Exception\InvalidInputException;
+use MaxMind\Exception\WebServiceException;
 use MaxMind\WebService\Client;
 
 abstract class ServiceClient
@@ -35,6 +36,9 @@ abstract class ServiceClient
      * @param int                  $accountId  your account ID
      * @param string               $licenseKey your license key
      * @param array<string, mixed> $options    options for the client
+     *
+     * @throws \RuntimeException   with older web-service-common releases, if HTTP client setup fails
+     * @throws WebServiceException if HTTP client setup fails
      */
     public function __construct(
         int $accountId,
