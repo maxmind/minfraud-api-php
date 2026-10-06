@@ -529,20 +529,6 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider withMethods
-     */
-    public function testValuesWithNamedArgs(string $method): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('not both');
-
-        $this->createMinFraudRequestWithFullResponse(
-            'insights',
-            0
-        )->{$method}(['unknown' => 'some value'], null);
-    }
-
-    /**
      * @return array<list<string>>
      */
     public static function withMethods(): array
@@ -558,6 +544,39 @@ class MinFraudTest extends ServiceClientTester
             ['withCreditCard'],
             ['withOrder'],
             ['withShoppingCartItem'],
+        ];
+    }
+
+    /**
+     * @dataProvider withNamedArguments
+     */
+    public function testValuesWithNamedArgs(string $method, string $parameter): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not both');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->{$method}(['unknown' => 'some value'], ...[$parameter => 'value']);
+    }
+
+    /**
+     * @return array<array{string, string}>
+     */
+    public static function withNamedArguments(): array
+    {
+        return [
+            ['withDevice', 'userAgent'],
+            ['withEvent', 'transactionId'],
+            ['withAccount', 'userId'],
+            ['withEmail', 'domain'],
+            ['withBilling', 'country'],
+            ['withShipping', 'country'],
+            ['withPayment', 'processor'],
+            ['withCreditCard', 'country'],
+            ['withOrder', 'currency'],
+            ['withShoppingCartItem', 'itemId'],
         ];
     }
 
