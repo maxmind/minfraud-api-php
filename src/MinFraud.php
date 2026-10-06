@@ -119,15 +119,31 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @param array<string, mixed> $values The request as a structured array
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a section or shopping cart item is not
+     *                               an array, or if validation is enabled and
+     *                               a value is invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
      */
     public function with(array $values): self
     {
+        foreach ([
+            'account', 'billing', 'credit_card', 'custom_inputs', 'device',
+            'email', 'event', 'order', 'payment', 'shipping', 'shopping_cart',
+        ] as $section) {
+            if (\array_key_exists($section, $values) && !\is_array($values[$section])) {
+                throw new InvalidInputException("The $section section must be an array.");
+            }
+        }
+        if (isset($values['shopping_cart'])) {
+            foreach ($values['shopping_cart'] as $item) {
+                if (!\is_array($item)) {
+                    throw new InvalidInputException('Each shopping_cart item must be an array.');
+                }
+            }
+        }
+
         $new = $this;
         if (\array_key_exists('account', $values)) {
             $new = $new->withAccount($this->remove($values, 'account', ['array']));

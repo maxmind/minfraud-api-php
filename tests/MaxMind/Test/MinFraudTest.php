@@ -16,6 +16,39 @@ use MaxMind\Test\MinFraudData as Data;
  */
 class MinFraudTest extends ServiceClientTester
 {
+    /**
+     * @dataProvider invalidRequestStructures
+     *
+     * @param array<string, mixed> $values
+     */
+    public function testInvalidRequestStructure(array $values, bool $validate): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => $validate]);
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be an array');
+        $client->with($values);
+    }
+
+    /**
+     * @return array<array{array<string, mixed>, bool}>
+     */
+    public static function invalidRequestStructures(): array
+    {
+        $cases = [];
+        foreach ([true, false] as $validate) {
+            foreach ([
+                ['device' => null],
+                ['device' => 'x'],
+                ['shopping_cart' => null],
+                ['shopping_cart' => ['x']],
+            ] as $values) {
+                $cases[] = [$values, $validate];
+            }
+        }
+
+        return $cases;
+    }
+
     public function testMinFraud(): void
     {
         $minFraud = new MinFraud(0, '', ['hashEmail' => true, 'locales' => ['en', 'fr']]);

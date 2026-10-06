@@ -4,6 +4,8 @@ CHANGELOG
 3.8.0
 ------------------
 
+* `with()` now rejects non-array sections and shopping cart items with
+  `InvalidInputException`, including when input validation is disabled.
 * The PHPDoc for the `with()` and `with*()` methods of `MaxMind\MinFraud` now
   lists the `InvalidInputException` they throw when input validation is
   enabled.
