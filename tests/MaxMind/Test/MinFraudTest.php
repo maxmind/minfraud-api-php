@@ -81,6 +81,33 @@ class MinFraudTest extends ServiceClientTester
         return [[['value']], [['a' => new \stdClass()]], [['a' => ['x']]]];
     }
 
+    /**
+     * @dataProvider unvalidatedAddressFields
+     */
+    public function testAddressFieldWithoutValidation(string $method, string $section, string $field): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $result = $client->{$method}([$field => 12]);
+        $this->assertSame(12, $result->jsonSerialize()['content'][$section][$field]);
+    }
+
+    /**
+     * @return array<array{string, string, string}>
+     */
+    public static function unvalidatedAddressFields(): array
+    {
+        return [
+            ['withBilling', 'billing', 'country'],
+            ['withBilling', 'billing', 'region'],
+            ['withBilling', 'billing', 'phone_country_code'],
+            ['withShipping', 'shipping', 'country'],
+            ['withShipping', 'shipping', 'region'],
+            ['withShipping', 'shipping', 'phone_country_code'],
+            ['withCreditCard', 'credit_card', 'country'],
+            ['withCreditCard', 'credit_card', 'bank_phone_country_code'],
+        ];
+    }
+
     public function testMinFraud(): void
     {
         $minFraud = new MinFraud(0, '', ['hashEmail' => true, 'locales' => ['en', 'fr']]);

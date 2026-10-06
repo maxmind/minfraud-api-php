@@ -646,7 +646,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            $this->verifyCountryCode($country);
+            if ($this->validateInput) {
+                $this->verifyCountryCode($country);
+            }
             $values['country'] = $country;
         }
 
@@ -659,7 +661,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($phoneCountryCode !== null) {
-            $this->verifyPhoneCountryCode($phoneCountryCode);
+            if ($this->validateInput) {
+                $this->verifyPhoneCountryCode($phoneCountryCode);
+            }
             $values['phone_country_code'] = $phoneCountryCode;
         }
 
@@ -672,7 +676,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($region !== null) {
-            $this->verifyRegionCode($region);
+            if ($this->validateInput) {
+                $this->verifyRegionCode($region);
+            }
             $values['region'] = $region;
         }
 
@@ -764,7 +770,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            $this->verifyCountryCode($country);
+            if ($this->validateInput) {
+                $this->verifyCountryCode($country);
+            }
             $values['country'] = $country;
         }
 
@@ -785,7 +793,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($phoneCountryCode !== null) {
-            $this->verifyPhoneCountryCode($phoneCountryCode);
+            if ($this->validateInput) {
+                $this->verifyPhoneCountryCode($phoneCountryCode);
+            }
             $values['phone_country_code'] = $phoneCountryCode;
         }
 
@@ -798,7 +808,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($region !== null) {
-            $this->verifyRegionCode($region);
+            if ($this->validateInput) {
+                $this->verifyRegionCode($region);
+            }
             $values['region'] = $region;
         }
 
@@ -1162,7 +1174,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($bankPhoneCountryCode !== null) {
-            if (!preg_match('/^[0-9]{1,4}$/', $bankPhoneCountryCode)) {
+            if ($this->validateInput && !preg_match('/^[0-9]{1,4}$/', $bankPhoneCountryCode)) {
                 $this->maybeThrowInvalidInputException('Bank phone country code must be a string of 1 to 4 digits.');
             }
 
@@ -1174,7 +1186,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            $this->verifyCountryCode($country);
+            if ($this->validateInput) {
+                $this->verifyCountryCode($country);
+            }
             $values['country'] = $country;
         }
 
