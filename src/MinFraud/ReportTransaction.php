@@ -29,6 +29,9 @@ class ReportTransaction extends ServiceClient
      *   to the `with*()` methods are validated. It is recommended that you
      *   leave validation on while developing and only (optionally) disable it
      *   before deployment.
+     *
+     * @throws \RuntimeException   with older web-service-common releases, if HTTP client setup fails
+     * @throws WebServiceException if HTTP client setup fails
      */
     public function __construct(
         int $accountId,
@@ -90,9 +93,8 @@ class ReportTransaction extends ServiceClient
      *                                 other reason, e.g., invalid JSON in the
      *                                 POST.
      * @throws HttpException           when an unexpected HTTP error occurs
-     * @throws WebServiceException     when some other error occurs. This also
-     *                                 serves as the base class for the above
-     *                                 exceptions.
+     * @throws \RuntimeException       with older web-service-common releases, if cURL setup fails
+     * @throws WebServiceException     when another web service error occurs
      */
     public function report(
         array $values = [],

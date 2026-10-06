@@ -16,6 +16,98 @@ use MaxMind\Test\MinFraudData as Data;
  */
 class MinFraudTest extends ServiceClientTester
 {
+    /**
+     * @dataProvider invalidRequestStructures
+     *
+     * @param array<string, mixed> $values
+     */
+    public function testInvalidRequestStructure(array $values, bool $validate): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => $validate]);
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be an array');
+        $client->with($values);
+    }
+
+    /**
+     * @return array<array{array<string, mixed>, bool}>
+     */
+    public static function invalidRequestStructures(): array
+    {
+        $cases = [];
+        foreach ([true, false] as $validate) {
+            foreach ([
+                ['device' => null],
+                ['device' => 'x'],
+                ['shopping_cart' => null],
+                ['shopping_cart' => ['x']],
+            ] as $values) {
+                $cases[] = [$values, $validate];
+            }
+        }
+
+        return $cases;
+    }
+
+    /**
+     * @dataProvider invalidCustomInputs
+     *
+     * @param array<mixed> $values
+     */
+    public function testInvalidCustomInput(array $values): void
+    {
+        $client = new MinFraud(1, 'key');
+        $this->expectException(InvalidInputException::class);
+        $client->withCustomInputs($values);
+    }
+
+    /**
+     * @dataProvider invalidCustomInputs
+     *
+     * @param array<mixed> $values
+     */
+    public function testCustomInputsWithoutValidation(array $values): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $result = $client->withCustomInputs($values);
+        $this->assertSame($values, $result->jsonSerialize()['content']['custom_inputs']);
+    }
+
+    /**
+     * @return array<array{array<mixed>}>
+     */
+    public static function invalidCustomInputs(): array
+    {
+        return [[['value']], [['a' => new \stdClass()]], [['a' => ['x']]]];
+    }
+
+    /**
+     * @dataProvider unvalidatedAddressFields
+     */
+    public function testAddressFieldWithoutValidation(string $method, string $section, string $field): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $result = $client->{$method}([$field => 12]);
+        $this->assertSame(12, $result->jsonSerialize()['content'][$section][$field]);
+    }
+
+    /**
+     * @return array<array{string, string, string}>
+     */
+    public static function unvalidatedAddressFields(): array
+    {
+        return [
+            ['withBilling', 'billing', 'country'],
+            ['withBilling', 'billing', 'region'],
+            ['withBilling', 'billing', 'phone_country_code'],
+            ['withShipping', 'shipping', 'country'],
+            ['withShipping', 'shipping', 'region'],
+            ['withShipping', 'shipping', 'phone_country_code'],
+            ['withCreditCard', 'credit_card', 'country'],
+            ['withCreditCard', 'credit_card', 'bank_phone_country_code'],
+        ];
+    }
+
     public function testMinFraud(): void
     {
         $minFraud = new MinFraud(0, '', ['hashEmail' => true, 'locales' => ['en', 'fr']]);
@@ -442,6 +534,7 @@ class MinFraudTest extends ServiceClientTester
     public static function withMethods(): array
     {
         return [
+            ['withDevice'],
             ['withEvent'],
             ['withAccount'],
             ['withEmail'],
@@ -451,6 +544,39 @@ class MinFraudTest extends ServiceClientTester
             ['withCreditCard'],
             ['withOrder'],
             ['withShoppingCartItem'],
+        ];
+    }
+
+    /**
+     * @dataProvider withNamedArguments
+     */
+    public function testValuesWithNamedArgs(string $method, string $parameter): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not both');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->{$method}(['unknown' => 'some value'], ...[$parameter => 'value']);
+    }
+
+    /**
+     * @return array<array{string, string}>
+     */
+    public static function withNamedArguments(): array
+    {
+        return [
+            ['withDevice', 'userAgent'],
+            ['withEvent', 'transactionId'],
+            ['withAccount', 'userId'],
+            ['withEmail', 'domain'],
+            ['withBilling', 'country'],
+            ['withShipping', 'country'],
+            ['withPayment', 'processor'],
+            ['withCreditCard', 'country'],
+            ['withOrder', 'currency'],
+            ['withShoppingCartItem', 'itemId'],
         ];
     }
 

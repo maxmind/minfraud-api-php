@@ -137,6 +137,18 @@ class ReportTransactionTest extends ServiceClientTester
         ];
     }
 
+    public function testValuesWithNamedArgs(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('not both');
+
+        $req = Data::minimalRequest();
+        $this->createReportTransactionRequest(
+            $req,
+            0
+        )->report($req, notes: 'some notes');
+    }
+
     public function testUnknownKey(): void
     {
         $this->expectException(InvalidInputException::class);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MaxMind\MinFraud;
 
 use MaxMind\Exception\InvalidInputException;
+use MaxMind\Exception\WebServiceException;
 use MaxMind\WebService\Client;
 
 abstract class ServiceClient
@@ -35,6 +36,9 @@ abstract class ServiceClient
      * @param int                  $accountId  your account ID
      * @param string               $licenseKey your license key
      * @param array<string, mixed> $options    options for the client
+     *
+     * @throws \RuntimeException   with older web-service-common releases, if HTTP client setup fails
+     * @throws WebServiceException if HTTP client setup fails
      */
     public function __construct(
         int $accountId,
@@ -60,6 +64,9 @@ abstract class ServiceClient
         return 'minFraud-API/' . self::VERSION;
     }
 
+    /**
+     * @throws InvalidInputException if input validation is enabled
+     */
     protected function maybeThrowInvalidInputException(string $msg): void
     {
         if ($this->validateInput) {
@@ -73,6 +80,9 @@ abstract class ServiceClient
      * @param array<string, mixed> $array the parent array
      * @param string               $key   the key to remove
      * @param list<string>         $types the expected types
+     *
+     * @throws InvalidInputException if the value has an unexpected type and
+     *                               input validation is enabled
      */
     protected function remove(array &$array, string $key, array $types = ['string']): mixed
     {
@@ -94,6 +104,9 @@ abstract class ServiceClient
 
     /**
      * @param array<mixed> $values
+     *
+     * @throws InvalidInputException if the array has unknown keys and input
+     *                               validation is enabled
      */
     protected function verifyEmpty(array $values): void
     {

@@ -1,6 +1,22 @@
 CHANGELOG
 =========
 
+3.8.0
+------------------
+
+* `with()` now rejects non-array sections and shopping cart items with
+  `InvalidInputException`, including when input validation is disabled.
+* Custom input validation now rejects integer keys and array or object values
+  with `InvalidInputException` instead of a type error or conversion warning.
+  When validation is disabled, these values pass through unchanged.
+* When input validation is disabled, billing, shipping, and credit card
+  country fields no longer fail in string validators. Billing and shipping
+  region and phone country code fields, and credit card bank phone country
+  codes, also pass through unchanged.
+* The PHPDoc for the `with()` and `with*()` methods of `MaxMind\MinFraud` now
+  lists the `InvalidInputException` they throw when input validation is
+  enabled.
+
 3.7.0 (2026-07-21)
 ------------------
 
