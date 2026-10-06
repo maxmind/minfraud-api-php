@@ -240,7 +240,7 @@ When adding a new input field to a `->with*()` method:
    return $new;
    ```
 
-5. **Update PHPDoc** with full documentation
+5. **Update PHPDoc**, including `@throws InvalidInputException` on validation methods and their callers.
 6. **Add tests** for the new field
 7. **Update CHANGELOG.md**
 
@@ -289,6 +289,9 @@ When adding input validation:
 
 1. **Create a validation method** following the pattern:
    ```php
+   /**
+    * @throws InvalidInputException if validation is enabled and the value is invalid
+    */
    private function verifyFieldName(string $value): void
    {
        if (!preg_match('/pattern/', $value)) {
