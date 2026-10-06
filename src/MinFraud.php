@@ -434,7 +434,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
     /**
      * This returns a `MinFraud` object with the `account` array set to
-     * the values provided. Existing `` data will be replaced.
+     * the values provided. Existing `account` data will be replaced.
      *
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--account
      *     minFraud account API docs
