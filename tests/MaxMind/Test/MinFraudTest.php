@@ -49,6 +49,38 @@ class MinFraudTest extends ServiceClientTester
         return $cases;
     }
 
+    /**
+     * @dataProvider invalidCustomInputs
+     *
+     * @param array<mixed> $values
+     */
+    public function testInvalidCustomInput(array $values): void
+    {
+        $client = new MinFraud(1, 'key');
+        $this->expectException(InvalidInputException::class);
+        $client->withCustomInputs($values);
+    }
+
+    /**
+     * @dataProvider invalidCustomInputs
+     *
+     * @param array<mixed> $values
+     */
+    public function testCustomInputsWithoutValidation(array $values): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $result = $client->withCustomInputs($values);
+        $this->assertSame($values, $result->jsonSerialize()['content']['custom_inputs']);
+    }
+
+    /**
+     * @return array<array{array<mixed>}>
+     */
+    public static function invalidCustomInputs(): array
+    {
+        return [[['value']], [['a' => new \stdClass()]], [['a' => ['x']]]];
+    }
+
     public function testMinFraud(): void
     {
         $minFraud = new MinFraud(0, '', ['hashEmail' => true, 'locales' => ['en', 'fr']]);

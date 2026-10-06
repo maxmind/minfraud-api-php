@@ -1229,7 +1229,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * This returns a `MinFraud` object with the `custom_inputs` array set to
      * `$values`. Existing `custom_inputs` data will be replaced.
      *
-     * @param array<string, mixed> $values the custom inputs to send in the request
+     * @param array<mixed> $values the custom inputs to send in the request
      *
      * @throws InvalidInputException if input validation is enabled and a
      *                               key or value is invalid
@@ -1239,34 +1239,37 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     public function withCustomInputs(array $values): self
     {
-        foreach ($values as $key => $value) {
-            if (\is_string($value)) {
-                if (str_contains($value, "\n")) {
+        if ($this->validateInput) {
+            foreach ($values as $key => $value) {
+                if (\is_string($value)) {
+                    if (str_contains($value, "\n")) {
+                        $this->maybeThrowInvalidInputException(
+                            "$value is invalid. String custom input values must not contain newline characters.",
+                        );
+                    }
+                    if ($value === '' || \strlen($value) > 255) {
+                        $this->maybeThrowInvalidInputException(
+                            "$value is invalid. String custom input values must have a length between 1 and 255.",
+                        );
+                    }
+                } elseif (is_numeric($value)) {
+                    if ($value < -1e13 + 1 || $value > 1e13 - 1) {
+                        $this->maybeThrowInvalidInputException(
+                            "$value is invalid. Numeric custom input values must be between -1e13 and 1e13.",
+                        );
+                    }
+                } elseif (!\is_bool($value)) {
                     $this->maybeThrowInvalidInputException(
-                        "$value is invalid. String custom input values must not contain newline characters.",
+                        'Custom input values must be strings, numbers, or booleans. Received '
+                        . get_debug_type($value) . '.',
                     );
                 }
-                if ($value === '' || \strlen($value) > 255) {
-                    $this->maybeThrowInvalidInputException(
-                        "$value is invalid. String custom input values must have a length between 1 and 255.",
-                    );
-                }
-            } elseif (is_numeric($value)) {
-                if ($value < -1e13 + 1 || $value > 1e13 - 1) {
-                    $this->maybeThrowInvalidInputException(
-                        "$value is invalid. Numeric custom input values must be between -1e13 and 1e13.",
-                    );
-                }
-            } elseif (!\is_bool($value)) {
-                $this->maybeThrowInvalidInputException(
-                    "$value is invalid. Custom input values must be strings, numbers, or booleans.",
-                );
-            }
 
-            if (!preg_match('/^[a-z0-9_]{1,25}\Z/', $key)) {
-                $this->maybeThrowInvalidInputException(
-                    "$key is invalid. Custom input keys must be alphanumeric and have 25 characters or less.",
-                );
+                if (!\is_string($key) || !preg_match('/^[a-z0-9_]{1,25}\Z/', $key)) {
+                    $this->maybeThrowInvalidInputException(
+                        "$key is invalid. Custom input keys must be alphanumeric and have 25 characters or less.",
+                    );
+                }
             }
         }
 
