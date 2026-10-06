@@ -698,18 +698,25 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--shipping
      *     minFraud shipping API docs
      *
-     * @param array<string, mixed> $values  An array of shipping data. The keys are the same as
-     *                                      the JSON keys. You may use either this or the named
-     *                                      arguments, but not both.
-     * @param string|null          $company The company of the end user as provided in
-     *                                      their shipping information
-     * @param string|null          $address The first line of the user's shipping address
-     * @param string|null          $city    The city of the user's shipping address
-     * @param string|null          $region  The ISO 3166-2 subdivision code for the user's
-     *                                      shipping address
-     * @param string|null          $country The two character ISO 3166-1 alpha-2 country
-     *                                      code of the user's shipping address
-     * @param string|null          $postal  The postal code of the user's shipping address
+     * @param array<string, mixed> $values           An array of shipping data. The keys are the same as
+     *                                               the JSON keys. You may use either this or the named
+     *                                               arguments, but not both.
+     * @param string|null          $company          The company of the end user as provided in
+     *                                               their shipping information
+     * @param string|null          $address          The first line of the user's shipping address
+     * @param string|null          $city             The city of the user's shipping address
+     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
+     *                                               shipping address
+     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
+     *                                               code of the user's shipping address
+     * @param string|null          $postal           The postal code of the user's shipping address
+     * @param string|null          $address2         the second line of the shipping address
+     * @param string|null          $deliverySpeed    the delivery speed: same_day, overnight,
+     *                                               expedited, or standard
+     * @param string|null          $firstName        the recipient's first name
+     * @param string|null          $lastName         the recipient's last name
+     * @param string|null          $phoneCountryCode the phone country code, with 1 to 4 digits
+     * @param string|null          $phoneNumber      the recipient's phone number
      *
      * @throws InvalidInputException if input validation is enabled and a
      *                               value is invalid, a value has the wrong
@@ -1418,6 +1425,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                       order currency.
      * @param int|null             $quantity The quantity of the item in the shopping cart.
      *                                       The value must be a whole number.
+     * @param string|null          $itemId   the identifier of the item in the shopping cart
      *
      * @throws InvalidInputException if input validation is enabled and a
      *                               value is invalid, a value has the wrong
