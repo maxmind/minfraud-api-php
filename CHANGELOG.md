@@ -23,6 +23,11 @@ CHANGELOG
   `phoneWasVerificationSuccessful`, and `phoneVerificationTime` named
   arguments. Omit `phone_was_verification_successful` if no verification was
   attempted.
+* Added the `was_verification_successful` and `verification_time` inputs to
+  the `/email` object. These describe the most recent verification of the
+  email address. Use them with `withEmail()` as array keys or as the
+  `wasVerificationSuccessful` and `verificationTime` named arguments. Omit
+  `was_verification_successful` if no verification was attempted.
 
 3.7.0 (2026-07-21)
 ------------------

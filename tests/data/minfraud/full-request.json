@@ -12,7 +12,9 @@
   },
   "email": {
     "address": "977577b140bfb7c516e4746204fbdb01",
-    "domain": "maxmind.com"
+    "domain": "maxmind.com",
+    "was_verification_successful": true,
+    "verification_time": "2026-10-01T14:30:00Z"
   },
   "billing": {
     "first_name": "First",
