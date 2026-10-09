@@ -172,7 +172,9 @@ $request = $mf->withDevice(
     usernameMd5: '4f9726678c438914fa04bdb8c1a24088'
 )->withEmail(
     address: 'test@maxmind.com',
-    domain: 'maxmind.com'
+    domain: 'maxmind.com',
+    verificationTime: '2026-10-01T14:30:00Z',
+    wasVerificationSuccessful: true
 )->withBilling(
     firstName: 'First',
     lastName: 'Last',
