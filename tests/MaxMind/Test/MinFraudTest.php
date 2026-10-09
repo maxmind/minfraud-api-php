@@ -101,6 +101,7 @@ class MinFraudTest extends ServiceClientTester
             ['withBilling', 'billing', 'region'],
             ['withBilling', 'billing', 'phone_country_code'],
             ['withBilling', 'billing', 'phone_verification_time'],
+            ['withEmail', 'email', 'verification_time'],
             ['withShipping', 'shipping', 'country'],
             ['withShipping', 'shipping', 'region'],
             ['withShipping', 'shipping', 'phone_country_code'],
@@ -230,7 +231,9 @@ class MinFraudTest extends ServiceClientTester
             )
             ->withEmail(
                 address: '977577b140bfb7c516e4746204fbdb01',
-                domain: 'maxmind.com'
+                domain: 'maxmind.com',
+                wasVerificationSuccessful: true,
+                verificationTime: '2026-10-01T14:30:00Z'
             )
             ->withEvent(
                 party: 'customer',
@@ -856,6 +859,58 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withBilling(['phone_was_verification_successful' => 'true']);
+    }
+
+    /**
+     * @dataProvider goodTimes
+     */
+    public function testGoodEmailVerificationTimes(string $time): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(['verification_time' => $time]);
+
+        $this->assertSame(
+            $time,
+            $result->jsonSerialize()['content']['email']['verification_time'],
+        );
+    }
+
+    public function testBadEmailVerificationTime(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid RFC 3339');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(['verification_time' => '2026/10/01 14:30']);
+    }
+
+    public function testEmailWasVerificationSuccessfulFalse(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(wasVerificationSuccessful: false);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['email']['was_verification_successful'],
+        );
+    }
+
+    public function testBadEmailWasVerificationSuccessful(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage(
+            'Expected was_verification_successful to be in [boolean] but was string',
+        );
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(['was_verification_successful' => 'true']);
     }
 
     /**
