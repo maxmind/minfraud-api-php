@@ -16,6 +16,13 @@ CHANGELOG
 * The PHPDoc for the `with()` and `with*()` methods of `MaxMind\MinFraud` now
   lists the `InvalidInputException` they throw when input validation is
   enabled.
+* Added the `phone_verification_method`, `phone_was_verification_successful`,
+  and `phone_verification_time` inputs to the `/billing` object. These describe
+  the most recent verification of the billing phone number. Use them with
+  `withBilling()` as array keys or as the `phoneVerificationMethod`,
+  `phoneWasVerificationSuccessful`, and `phoneVerificationTime` named
+  arguments. Omit `phone_was_verification_successful` if no verification was
+  attempted.
 
 3.7.0 (2026-07-21)
 ------------------
