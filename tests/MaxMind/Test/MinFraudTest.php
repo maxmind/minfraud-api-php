@@ -92,7 +92,13 @@ class MinFraudTest extends ServiceClientTester
         if (!\in_array($field, $numbers, true) && !\in_array("$method $field", $strings, true)) {
             $values[] = 12;
         }
-        $booleans = ['has_gift_message', 'is_gift', 'was_3d_secure_successful', 'was_authorized'];
+        $booleans = [
+            'has_gift_message',
+            'is_gift',
+            'phone_was_verification_successful',
+            'was_3d_secure_successful',
+            'was_authorized',
+        ];
         if (\in_array($field, $booleans, true)) {
             $values[] = 'true';
         } else {
@@ -122,7 +128,8 @@ class MinFraudTest extends ServiceClientTester
     {
         $address = [
             'address', 'address_2', 'city', 'company', 'country', 'first_name', 'last_name',
-            'phone_country_code', 'phone_number', 'postal', 'region',
+            'phone_country_code', 'phone_number', 'phone_verification_method', 'phone_verification_time',
+            'phone_was_verification_successful', 'postal', 'region',
         ];
         $fields = [
             'withAccount' => ['user_id', 'username_md5'],
@@ -283,7 +290,13 @@ class MinFraudTest extends ServiceClientTester
      */
     public static function invalidValues(): array
     {
-        $address = ['country' => 'usa', 'phone_country_code' => '12345', 'region' => 'invalid'];
+        $address = [
+            'country' => 'usa',
+            'phone_country_code' => '12345',
+            'phone_verification_method' => 'other_method',
+            'phone_verification_time' => 'not a time',
+            'region' => 'invalid',
+        ];
         $fields = [
             'withAccount' => ['account', ['username_md5' => 'not an MD5']],
             'withBilling' => ['billing', $address],
@@ -403,7 +416,10 @@ class MinFraudTest extends ServiceClientTester
                 country: 'US',
                 postal: '06510',
                 phoneNumber: '123-456-7890',
-                phoneCountryCode: '1'
+                phoneCountryCode: '1',
+                phoneVerificationMethod: 'delivered_code',
+                phoneWasVerificationSuccessful: true,
+                phoneVerificationTime: '2026-10-01T14:30:00Z'
             )
             ->withCreditCard(
                 country: 'US',
@@ -470,6 +486,9 @@ class MinFraudTest extends ServiceClientTester
                 postal: '73003',
                 phoneNumber: '123-456-0000',
                 phoneCountryCode: '1',
+                phoneVerificationMethod: 'network',
+                phoneWasVerificationSuccessful: false,
+                phoneVerificationTime: '2026-10-01T14:31:00Z',
                 deliverySpeed: 'same_day'
             )
             ->withShoppingCartItem(
@@ -968,6 +987,193 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withShipping(['delivery_speed' => 'slow']);
+    }
+
+    /**
+     * @dataProvider goodPhoneVerificationMethods
+     */
+    public function testGoodBillingPhoneVerificationMethod(string $good): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_method' => $good]);
+
+        $this->assertSame(
+            $good,
+            $result->jsonSerialize()['content']['billing']['phone_verification_method'],
+        );
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function goodPhoneVerificationMethods(): array
+    {
+        return [
+            ['delivered_code'],
+            ['network'],
+            ['other'],
+        ];
+    }
+
+    public function testBadBillingPhoneVerificationMethod(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid phone verification method');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_method' => 'sms']);
+    }
+
+    /**
+     * @dataProvider goodTimes
+     */
+    public function testGoodBillingPhoneVerificationTimes(string $time): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_time' => $time]);
+
+        $this->assertSame(
+            $time,
+            $result->jsonSerialize()['content']['billing']['phone_verification_time'],
+        );
+    }
+
+    /**
+     * @dataProvider badTimes
+     */
+    public function testBadBillingPhoneVerificationTime(string $time): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid RFC 3339');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_time' => $time]);
+    }
+
+    public function testBillingPhoneWasVerificationSuccessfulFalse(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(phoneWasVerificationSuccessful: false);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['billing']['phone_was_verification_successful'],
+        );
+    }
+
+    public function testBadBillingPhoneWasVerificationSuccessful(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage(
+            'Expected phone_was_verification_successful to be in [boolean] but was string',
+        );
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_was_verification_successful' => 'true']);
+    }
+
+    /**
+     * @dataProvider goodPhoneVerificationMethods
+     */
+    public function testGoodShippingPhoneVerificationMethod(string $good): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_method' => $good]);
+
+        $this->assertSame(
+            $good,
+            $result->jsonSerialize()['content']['shipping']['phone_verification_method'],
+        );
+    }
+
+    public function testBadShippingPhoneVerificationMethod(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid phone verification method');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_method' => 'sms']);
+    }
+
+    /**
+     * @dataProvider goodTimes
+     */
+    public function testGoodShippingPhoneVerificationTimes(string $time): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_time' => $time]);
+
+        $this->assertSame(
+            $time,
+            $result->jsonSerialize()['content']['shipping']['phone_verification_time'],
+        );
+    }
+
+    /**
+     * @dataProvider badTimes
+     */
+    public function testBadShippingPhoneVerificationTime(string $time): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid RFC 3339');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_time' => $time]);
+    }
+
+    public function testShippingPhoneWasVerificationSuccessfulFalse(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(phoneWasVerificationSuccessful: false);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['shipping']['phone_was_verification_successful'],
+        );
+    }
+
+    public function testPositionalPostalAndRegion(): void
+    {
+        $content = $this->createMinFraudRequestWithFullResponse('insights', 0)
+            ->withBilling([], null, null, null, null, 'US', null, null, null, null, '06510', 'CT')
+            ->withShipping([], null, null, null, null, 'US', null, null, null, null, null, '73003', 'OK')
+            ->jsonSerialize()['content'];
+
+        $this->assertSame(['country' => 'US', 'postal' => '06510', 'region' => 'CT'], $content['billing']);
+        $this->assertSame(['country' => 'US', 'postal' => '73003', 'region' => 'OK'], $content['shipping']);
+    }
+
+    public function testBadShippingPhoneWasVerificationSuccessful(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage(
+            'Expected phone_was_verification_successful to be in [boolean] but was string',
+        );
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_was_verification_successful' => 'true']);
     }
 
     /**

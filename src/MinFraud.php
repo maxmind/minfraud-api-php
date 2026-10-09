@@ -552,33 +552,45 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--billing
      *     minFraud billing API docs
      *
-     * @param array<string, mixed> $values           An array of billing data. The keys are the same as
-     *                                               the JSON keys. You may use either this or the named
-     *                                               arguments, but not both.
-     * @param string|null          $address          The first line of the user's billing address
-     * @param string|null          $address2         The second line of the user's billing address
-     * @param string|null          $city             The city of the user's billing address
-     * @param string|null          $company          The company of the end user as provided in
-     *                                               their billing information
-     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
-     *                                               code of the user's billing address
-     * @param string|null          $firstName        The first name of the end user as provided
-     *                                               in their billing information
-     * @param string|null          $lastName         The last name of the end user as provided
-     *                                               in their billing information
-     * @param string|null          $phoneCountryCode The country code for phone number
-     *                                               associated with the user's billing
-     *                                               address. If you provide this
-     *                                               information then you must provide
-     *                                               at least one digit.
-     * @param string|null          $phoneNumber      The phone number without the country code
-     *                                               for the user's billing address. Punctuation
-     *                                               characters will be stripped. After
-     *                                               stripping punctuation characters, the
-     *                                               number must contain only digits.
-     * @param string|null          $postal           The postal code of the user's billing address
-     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
-     *                                               billing address
+     * @param array<string, mixed> $values                         An array of billing data. The keys are the same as
+     *                                                             the JSON keys. You may use either this or the named
+     *                                                             arguments, but not both.
+     * @param string|null          $address                        The first line of the user's billing address
+     * @param string|null          $address2                       The second line of the user's billing address
+     * @param string|null          $city                           The city of the user's billing address
+     * @param string|null          $company                        The company of the end user as provided in
+     *                                                             their billing information
+     * @param string|null          $country                        The two character ISO 3166-1 alpha-2 country
+     *                                                             code of the user's billing address
+     * @param string|null          $firstName                      The first name of the end user as provided
+     *                                                             in their billing information
+     * @param string|null          $lastName                       The last name of the end user as provided
+     *                                                             in their billing information
+     * @param string|null          $phoneCountryCode               The country code for phone number
+     *                                                             associated with the user's billing
+     *                                                             address. If you provide this
+     *                                                             information then you must provide
+     *                                                             at least one digit.
+     * @param string|null          $phoneNumber                    The phone number without the country code
+     *                                                             for the user's billing address. Punctuation
+     *                                                             characters will be stripped. After
+     *                                                             stripping punctuation characters, the
+     *                                                             number must contain only digits.
+     * @param string|null          $postal                         The postal code of the user's billing address
+     * @param string|null          $region                         The ISO 3166-2 subdivision code for the user's
+     *                                                             billing address
+     * @param string|null          $phoneVerificationMethod        The most recent method used to verify
+     *                                                             the billing phone number: delivered_code,
+     *                                                             network, or other
+     * @param string|null          $phoneVerificationTime          The date and time of the most recent
+     *                                                             verification of the billing phone number,
+     *                                                             in RFC 3339 date-time format. The time
+     *                                                             must not be before 1970-01-01T00:00:00Z
+     *                                                             or more than two days in the future.
+     * @param bool|null            $phoneWasVerificationSuccessful Whether the most recent verification
+     *                                                             of the billing phone number succeeded.
+     *                                                             Omit this if no verification was
+     *                                                             attempted.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
@@ -600,6 +612,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $phoneNumber = null,
         ?string $postal = null,
         ?string $region = null,
+        ?string $phoneVerificationMethod = null,
+        ?string $phoneVerificationTime = null,
+        ?bool $phoneWasVerificationSuccessful = null,
     ): self {
         if (\count($values) !== 0 && \func_num_args() !== 1) {
             throw new \InvalidArgumentException(
@@ -622,6 +637,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             phoneNumber: $phoneNumber,
             postal: $postal,
             region: $region,
+            phoneVerificationMethod: $phoneVerificationMethod,
+            phoneVerificationTime: $phoneVerificationTime,
+            phoneWasVerificationSuccessful: $phoneWasVerificationSuccessful,
         );
 
         return $new;
@@ -634,25 +652,36 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--shipping
      *     minFraud shipping API docs
      *
-     * @param array<string, mixed> $values           An array of shipping data. The keys are the same as
-     *                                               the JSON keys. You may use either this or the named
-     *                                               arguments, but not both.
-     * @param string|null          $company          The company of the end user as provided in
-     *                                               their shipping information
-     * @param string|null          $address          The first line of the user's shipping address
-     * @param string|null          $city             The city of the user's shipping address
-     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
-     *                                               shipping address
-     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
-     *                                               code of the user's shipping address
-     * @param string|null          $postal           The postal code of the user's shipping address
-     * @param string|null          $address2         the second line of the shipping address
-     * @param string|null          $deliverySpeed    the delivery speed: same_day, overnight,
-     *                                               expedited, or standard
-     * @param string|null          $firstName        the recipient's first name
-     * @param string|null          $lastName         the recipient's last name
-     * @param string|null          $phoneCountryCode the phone country code, with 1 to 4 digits
-     * @param string|null          $phoneNumber      the recipient's phone number
+     * @param array<string, mixed> $values                         An array of shipping data. The keys are the same as
+     *                                                             the JSON keys. You may use either this or the named
+     *                                                             arguments, but not both.
+     * @param string|null          $company                        The company of the end user as provided in
+     *                                                             their shipping information
+     * @param string|null          $address                        The first line of the user's shipping address
+     * @param string|null          $city                           The city of the user's shipping address
+     * @param string|null          $region                         The ISO 3166-2 subdivision code for the user's
+     *                                                             shipping address
+     * @param string|null          $country                        The two character ISO 3166-1 alpha-2 country
+     *                                                             code of the user's shipping address
+     * @param string|null          $postal                         The postal code of the user's shipping address
+     * @param string|null          $address2                       the second line of the shipping address
+     * @param string|null          $deliverySpeed                  the delivery speed: same_day, overnight,
+     *                                                             expedited, or standard
+     * @param string|null          $firstName                      the recipient's first name
+     * @param string|null          $lastName                       the recipient's last name
+     * @param string|null          $phoneCountryCode               the phone country code, with 1 to 4 digits
+     * @param string|null          $phoneNumber                    the recipient's phone number
+     * @param string|null          $phoneVerificationMethod        the most recent method used to verify
+     *                                                             the shipping phone number: delivered_code,
+     *                                                             network, or other
+     * @param string|null          $phoneVerificationTime          the date and time of the most recent
+     *                                                             verification of the shipping phone number,
+     *                                                             in RFC 3339 date-time format. The time
+     *                                                             must not be before 1970-01-01T00:00:00Z
+     *                                                             or more than two days in the future.
+     * @param bool|null            $phoneWasVerificationSuccessful whether the most recent verification of
+     *                                                             the shipping phone number succeeded. Omit this
+     *                                                             if no verification was attempted.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
@@ -675,6 +704,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $phoneNumber = null,
         ?string $postal = null,
         ?string $region = null,
+        ?string $phoneVerificationMethod = null,
+        ?string $phoneVerificationTime = null,
+        ?bool $phoneWasVerificationSuccessful = null,
     ): self {
         if (\count($values) !== 0 && \func_num_args() !== 1) {
             throw new \InvalidArgumentException(
@@ -704,6 +736,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             phoneNumber: $phoneNumber,
             postal: $postal,
             region: $region,
+            phoneVerificationMethod: $phoneVerificationMethod,
+            phoneVerificationTime: $phoneVerificationTime,
+            phoneWasVerificationSuccessful: $phoneWasVerificationSuccessful,
         );
 
         // Check after the address fields, so that type errors and unknown keys
@@ -1474,6 +1509,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $phoneNumber,
         ?string $postal,
         ?string $region,
+        ?string $phoneVerificationMethod,
+        ?string $phoneVerificationTime,
+        ?bool $phoneWasVerificationSuccessful,
     ): array {
         if (\count($values) !== 0) {
             $address = $this->removeString($values, 'address');
@@ -1485,6 +1523,13 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $lastName = $this->removeString($values, 'last_name');
             $phoneCountryCode = $this->remove($values, 'phone_country_code');
             $phoneNumber = $this->removeString($values, 'phone_number');
+            $phoneVerificationMethod = $this->remove($values, 'phone_verification_method');
+            $phoneVerificationTime = $this->remove($values, 'phone_verification_time');
+            $phoneWasVerificationSuccessful = $this->remove(
+                $values,
+                'phone_was_verification_successful',
+                ['boolean'],
+            );
             $postal = $this->removeString($values, 'postal');
             $region = $this->remove($values, 'region');
 
@@ -1527,6 +1572,24 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
         if ($phoneNumber !== null) {
             $fields['phone_number'] = $phoneNumber;
+        }
+
+        if ($phoneVerificationMethod !== null) {
+            if (!\in_array($phoneVerificationMethod, ['delivered_code', 'network', 'other'], true)) {
+                $this->maybeThrowInvalidInputException(
+                    "$phoneVerificationMethod is not a valid phone verification method",
+                );
+            }
+            $fields['phone_verification_method'] = $phoneVerificationMethod;
+        }
+
+        if ($phoneVerificationTime !== null) {
+            $this->verifyRfc3339DateTime($phoneVerificationTime);
+            $fields['phone_verification_time'] = $phoneVerificationTime;
+        }
+
+        if ($phoneWasVerificationSuccessful !== null) {
+            $fields['phone_was_verification_successful'] = $phoneWasVerificationSuccessful;
         }
 
         if ($postal !== null) {

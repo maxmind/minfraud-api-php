@@ -184,7 +184,10 @@ $request = $mf->withDevice(
     country: 'US',
     postal: '06510',
     phoneNumber: '123-456-7890',
-    phoneCountryCode: '1'
+    phoneCountryCode: '1',
+    phoneVerificationMethod: 'delivered_code',
+    phoneWasVerificationSuccessful: true,
+    phoneVerificationTime: '2026-10-01T14:30:00Z'
 )->withShipping(
     firstName: 'ShipFirst',
     lastName: 'ShipLast',
@@ -197,6 +200,9 @@ $request = $mf->withDevice(
     postal: '73003',
     phoneNumber: '123-456-0000',
     phoneCountryCode: '1',
+    phoneVerificationMethod: 'network',
+    phoneWasVerificationSuccessful: false,
+    phoneVerificationTime: '2026-10-01T14:31:00Z',
     deliverySpeed: 'same_day'
 )->withPayment(
     method: 'card',
