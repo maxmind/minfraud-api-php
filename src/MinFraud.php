@@ -556,33 +556,43 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--billing
      *     minFraud billing API docs
      *
-     * @param array<string, mixed> $values           An array of billing data. The keys are the same as
-     *                                               the JSON keys. You may use either this or the named
-     *                                               arguments, but not both.
-     * @param string|null          $address          The first line of the user's billing address
-     * @param string|null          $address2         The second line of the user's billing address
-     * @param string|null          $city             The city of the user's billing address
-     * @param string|null          $company          The company of the end user as provided in
-     *                                               their billing information
-     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
-     *                                               code of the user's billing address
-     * @param string|null          $firstName        The first name of the end user as provided
-     *                                               in their billing information
-     * @param string|null          $lastName         The last name of the end user as provided
-     *                                               in their billing information
-     * @param string|null          $phoneCountryCode The country code for phone number
-     *                                               associated with the user's billing
-     *                                               address. If you provide this
-     *                                               information then you must provide
-     *                                               at least one digit.
-     * @param string|null          $phoneNumber      The phone number without the country code
-     *                                               for the user's billing address. Punctuation
-     *                                               characters will be stripped. After
-     *                                               stripping punctuation characters, the
-     *                                               number must contain only digits.
-     * @param string|null          $postal           The postal code of the user's billing address
-     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
-     *                                               billing address
+     * @param array<string, mixed> $values                         An array of billing data. The keys are the same as
+     *                                                             the JSON keys. You may use either this or the named
+     *                                                             arguments, but not both.
+     * @param string|null          $address                        The first line of the user's billing address
+     * @param string|null          $address2                       The second line of the user's billing address
+     * @param string|null          $city                           The city of the user's billing address
+     * @param string|null          $company                        The company of the end user as provided in
+     *                                                             their billing information
+     * @param string|null          $country                        The two character ISO 3166-1 alpha-2 country
+     *                                                             code of the user's billing address
+     * @param string|null          $firstName                      The first name of the end user as provided
+     *                                                             in their billing information
+     * @param string|null          $lastName                       The last name of the end user as provided
+     *                                                             in their billing information
+     * @param string|null          $phoneCountryCode               The country code for phone number
+     *                                                             associated with the user's billing
+     *                                                             address. If you provide this
+     *                                                             information then you must provide
+     *                                                             at least one digit.
+     * @param string|null          $phoneNumber                    The phone number without the country code
+     *                                                             for the user's billing address. Punctuation
+     *                                                             characters will be stripped. After
+     *                                                             stripping punctuation characters, the
+     *                                                             number must contain only digits.
+     * @param string|null          $phoneVerificationMethod        The most recent method used to verify
+     *                                                             the billing phone number: delivered_code,
+     *                                                             network, or other
+     * @param string|null          $phoneVerificationTime          The date and time of the most recent
+     *                                                             verification of the billing phone number,
+     *                                                             in RFC 3339 date-time format
+     * @param bool|null            $phoneWasVerificationSuccessful Whether the most recent verification
+     *                                                             of the billing phone number succeeded.
+     *                                                             Omit this if no verification was
+     *                                                             attempted.
+     * @param string|null          $postal                         The postal code of the user's billing address
+     * @param string|null          $region                         The ISO 3166-2 subdivision code for the user's
+     *                                                             billing address
      *
      * @throws InvalidInputException if input validation is enabled and a
      *                               value is invalid, a value has the wrong
@@ -602,6 +612,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $lastName = null,
         ?string $phoneCountryCode = null,
         ?string $phoneNumber = null,
+        ?string $phoneVerificationMethod = null,
+        ?string $phoneVerificationTime = null,
+        ?bool $phoneWasVerificationSuccessful = null,
         ?string $postal = null,
         ?string $region = null,
     ): self {
@@ -621,6 +634,13 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $lastName = $this->remove($values, 'last_name');
             $phoneCountryCode = $this->remove($values, 'phone_country_code');
             $phoneNumber = $this->remove($values, 'phone_number');
+            $phoneVerificationMethod = $this->remove($values, 'phone_verification_method');
+            $phoneVerificationTime = $this->remove($values, 'phone_verification_time');
+            $phoneWasVerificationSuccessful = $this->remove(
+                $values,
+                'phone_was_verification_successful',
+                ['boolean'],
+            );
             $postal = $this->remove($values, 'postal');
             $region = $this->remove($values, 'region');
 
@@ -667,6 +687,26 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
         if ($phoneNumber !== null) {
             $values['phone_number'] = $phoneNumber;
+        }
+
+        if ($phoneVerificationMethod !== null) {
+            if (!\in_array($phoneVerificationMethod, ['delivered_code', 'network', 'other'], true)) {
+                $this->maybeThrowInvalidInputException(
+                    "$phoneVerificationMethod is not a valid phone verification method",
+                );
+            }
+            $values['phone_verification_method'] = $phoneVerificationMethod;
+        }
+
+        if ($phoneVerificationTime !== null) {
+            if ($this->validateInput) {
+                $this->verifyRfc3339DateTime($phoneVerificationTime);
+            }
+            $values['phone_verification_time'] = $phoneVerificationTime;
+        }
+
+        if ($phoneWasVerificationSuccessful !== null) {
+            $values['phone_was_verification_successful'] = $phoneWasVerificationSuccessful;
         }
 
         if ($postal !== null) {

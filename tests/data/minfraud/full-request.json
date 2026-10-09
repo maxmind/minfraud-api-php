@@ -25,7 +25,10 @@
     "country": "US",
     "postal": "06510",
     "phone_number": "123-456-7890",
-    "phone_country_code": "1"
+    "phone_country_code": "1",
+    "phone_verification_method": "delivered_code",
+    "phone_was_verification_successful": true,
+    "phone_verification_time": "2026-10-01T14:30:00Z"
   },
   "shipping": {
     "first_name": "ShipFirst",
