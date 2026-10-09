@@ -393,12 +393,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($time !== null) {
-            if (\DateTime::createFromFormat(\DateTime::RFC3339, $time) === false
-                && \DateTime::createFromFormat(\DateTime::RFC3339_EXTENDED, $time) === false
-            ) {
-                $this->maybeThrowInvalidInputException("$time is not a valid RFC 3339 formatted datetime string");
-            }
-
+            $this->verifyRfc3339DateTime($time);
             $values['time'] = $time;
         }
 
@@ -1585,6 +1580,19 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $this->client->post($service, $url, $this->content),
             $this->locales
         );
+    }
+
+    /**
+     * @throws InvalidInputException if the value is invalid and input
+     *                               validation is enabled
+     */
+    private function verifyRfc3339DateTime(string $dateTime): void
+    {
+        if (\DateTime::createFromFormat(\DateTime::RFC3339, $dateTime) === false
+            && \DateTime::createFromFormat(\DateTime::RFC3339_EXTENDED, $dateTime) === false
+        ) {
+            $this->maybeThrowInvalidInputException("$dateTime is not a valid RFC 3339 formatted datetime string");
+        }
     }
 
     /**
