@@ -601,77 +601,28 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $postal = null,
         ?string $region = null,
     ): self {
-        if (\count($values) !== 0) {
-            if (\func_num_args() !== 1) {
-                throw new \InvalidArgumentException(
-                    'You may only provide the $values array or named arguments, not both.',
-                );
-            }
-
-            $address = $this->removeString($values, 'address');
-            $address2 = $this->removeString($values, 'address_2');
-            $city = $this->removeString($values, 'city');
-            $company = $this->removeString($values, 'company');
-            $country = $this->remove($values, 'country');
-            $firstName = $this->removeString($values, 'first_name');
-            $lastName = $this->removeString($values, 'last_name');
-            $phoneCountryCode = $this->remove($values, 'phone_country_code');
-            $phoneNumber = $this->removeString($values, 'phone_number');
-            $postal = $this->removeString($values, 'postal');
-            $region = $this->remove($values, 'region');
-
-            $this->verifyEmpty($values);
-        }
-
-        if ($address !== null) {
-            $values['address'] = $address;
-        }
-
-        if ($address2 !== null) {
-            $values['address_2'] = $address2;
-        }
-
-        if ($city !== null) {
-            $values['city'] = $city;
-        }
-
-        if ($company !== null) {
-            $values['company'] = $company;
-        }
-
-        if ($country !== null) {
-            $this->verifyCountryCode($country);
-            $values['country'] = $country;
-        }
-
-        if ($firstName !== null) {
-            $values['first_name'] = $firstName;
-        }
-
-        if ($lastName !== null) {
-            $values['last_name'] = $lastName;
-        }
-
-        if ($phoneCountryCode !== null) {
-            $this->verifyPhoneCountryCode($phoneCountryCode);
-            $values['phone_country_code'] = $phoneCountryCode;
-        }
-
-        if ($phoneNumber !== null) {
-            $values['phone_number'] = $phoneNumber;
-        }
-
-        if ($postal !== null) {
-            $values['postal'] = $postal;
-        }
-
-        if ($region !== null) {
-            $this->verifyRegionCode($region);
-            $values['region'] = $region;
+        if (\count($values) !== 0 && \func_num_args() !== 1) {
+            throw new \InvalidArgumentException(
+                'You may only provide the $values array or named arguments, not both.',
+            );
         }
 
         $new = clone $this;
-        $new->content['billing'] = $values;
+        $new->content['billing'] = $this->addressValues(
+            values: $values,
+            fields: [],
+            address: $address,
+            address2: $address2,
+            city: $city,
+            company: $company,
+            country: $country,
+            firstName: $firstName,
+            lastName: $lastName,
+            phoneCountryCode: $phoneCountryCode,
+            phoneNumber: $phoneNumber,
+            postal: $postal,
+            region: $region,
+        );
 
         return $new;
     }
@@ -725,86 +676,46 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $postal = null,
         ?string $region = null,
     ): self {
+        if (\count($values) !== 0 && \func_num_args() !== 1) {
+            throw new \InvalidArgumentException(
+                'You may only provide the $values array or named arguments, not both.',
+            );
+        }
         if (\count($values) !== 0) {
-            if (\func_num_args() !== 1) {
-                throw new \InvalidArgumentException(
-                    'You may only provide the $values array or named arguments, not both.',
-                );
-            }
-
-            $address = $this->removeString($values, 'address');
-            $address2 = $this->removeString($values, 'address_2');
-            $city = $this->removeString($values, 'city');
-            $company = $this->removeString($values, 'company');
-            $country = $this->remove($values, 'country');
             $deliverySpeed = $this->remove($values, 'delivery_speed');
-            $firstName = $this->removeString($values, 'first_name');
-            $lastName = $this->removeString($values, 'last_name');
-            $phoneCountryCode = $this->remove($values, 'phone_country_code');
-            $phoneNumber = $this->removeString($values, 'phone_number');
-            $postal = $this->removeString($values, 'postal');
-            $region = $this->remove($values, 'region');
-
-            $this->verifyEmpty($values);
         }
 
-        if ($address !== null) {
-            $values['address'] = $address;
-        }
-
-        if ($address2 !== null) {
-            $values['address_2'] = $address2;
-        }
-
-        if ($city !== null) {
-            $values['city'] = $city;
-        }
-
-        if ($company !== null) {
-            $values['company'] = $company;
-        }
-
-        if ($country !== null) {
-            $this->verifyCountryCode($country);
-            $values['country'] = $country;
-        }
-
+        $fields = [];
         if ($deliverySpeed !== null) {
-            if (!\in_array($deliverySpeed, ['same_day', 'overnight', 'expedited', 'standard'], true)) {
-                $this->maybeThrowInvalidInputException("$deliverySpeed is not a valid delivery speed");
-            }
-
-            $values['delivery_speed'] = $deliverySpeed;
+            $fields['delivery_speed'] = $deliverySpeed;
         }
 
-        if ($firstName !== null) {
-            $values['first_name'] = $firstName;
-        }
+        $shipping = $this->addressValues(
+            values: $values,
+            fields: $fields,
+            address: $address,
+            address2: $address2,
+            city: $city,
+            company: $company,
+            country: $country,
+            firstName: $firstName,
+            lastName: $lastName,
+            phoneCountryCode: $phoneCountryCode,
+            phoneNumber: $phoneNumber,
+            postal: $postal,
+            region: $region,
+        );
 
-        if ($lastName !== null) {
-            $values['last_name'] = $lastName;
-        }
-
-        if ($phoneCountryCode !== null) {
-            $this->verifyPhoneCountryCode($phoneCountryCode);
-            $values['phone_country_code'] = $phoneCountryCode;
-        }
-
-        if ($phoneNumber !== null) {
-            $values['phone_number'] = $phoneNumber;
-        }
-
-        if ($postal !== null) {
-            $values['postal'] = $postal;
-        }
-
-        if ($region !== null) {
-            $this->verifyRegionCode($region);
-            $values['region'] = $region;
+        // Check after the address fields, so that type errors and unknown keys
+        // are reported first.
+        if ($deliverySpeed !== null
+            && !\in_array($deliverySpeed, ['same_day', 'overnight', 'expedited', 'standard'], true)
+        ) {
+            $this->maybeThrowInvalidInputException("$deliverySpeed is not a valid delivery speed");
         }
 
         $new = clone $this;
-        $new->content['shipping'] = $values;
+        $new->content['shipping'] = $shipping;
 
         return $new;
     }
@@ -1533,6 +1444,105 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
     public function factors(): Factors
     {
         return $this->post(Factors::class, 'factors');
+    }
+
+    /**
+     * Builds the address array that withBilling() and withShipping() share.
+     *
+     * @param array<string, mixed> $values the array argument of the public
+     *                                     method, without section-specific keys
+     * @param array<string, mixed> $fields section-specific fields to add.
+     *                                     The caller checks their values.
+     *
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
+     *
+     * @return array<string, mixed>
+     */
+    private function addressValues(
+        array $values,
+        array $fields,
+        ?string $address,
+        ?string $address2,
+        ?string $city,
+        ?string $company,
+        ?string $country,
+        ?string $firstName,
+        ?string $lastName,
+        ?string $phoneCountryCode,
+        ?string $phoneNumber,
+        ?string $postal,
+        ?string $region,
+    ): array {
+        if (\count($values) !== 0) {
+            $address = $this->removeString($values, 'address');
+            $address2 = $this->removeString($values, 'address_2');
+            $city = $this->removeString($values, 'city');
+            $company = $this->removeString($values, 'company');
+            $country = $this->remove($values, 'country');
+            $firstName = $this->removeString($values, 'first_name');
+            $lastName = $this->removeString($values, 'last_name');
+            $phoneCountryCode = $this->remove($values, 'phone_country_code');
+            $phoneNumber = $this->removeString($values, 'phone_number');
+            $postal = $this->removeString($values, 'postal');
+            $region = $this->remove($values, 'region');
+
+            $this->verifyEmpty($values);
+        }
+
+        if ($address !== null) {
+            $fields['address'] = $address;
+        }
+
+        if ($address2 !== null) {
+            $fields['address_2'] = $address2;
+        }
+
+        if ($city !== null) {
+            $fields['city'] = $city;
+        }
+
+        if ($company !== null) {
+            $fields['company'] = $company;
+        }
+
+        if ($country !== null) {
+            $this->verifyCountryCode($country);
+            $fields['country'] = $country;
+        }
+
+        if ($firstName !== null) {
+            $fields['first_name'] = $firstName;
+        }
+
+        if ($lastName !== null) {
+            $fields['last_name'] = $lastName;
+        }
+
+        if ($phoneCountryCode !== null) {
+            $this->verifyPhoneCountryCode($phoneCountryCode);
+            $fields['phone_country_code'] = $phoneCountryCode;
+        }
+
+        if ($phoneNumber !== null) {
+            $fields['phone_number'] = $phoneNumber;
+        }
+
+        if ($postal !== null) {
+            $fields['postal'] = $postal;
+        }
+
+        if ($region !== null) {
+            $this->verifyRegionCode($region);
+            $fields['region'] = $region;
+        }
+
+        // Keep the keys in alphabetical order, with any unknown keys that
+        // pass through when validation is off first.
+        ksort($fields);
+
+        return $values + $fields;
     }
 
     /**

@@ -242,6 +242,26 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
+     * @testWith ["withBilling", "billing"]
+     *           ["withShipping", "shipping"]
+     */
+    public function testAddressUnknownKeyWithoutValidation(string $method, string $section): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $result = $client->{$method}(['unknown' => 'x', 'city' => 'Waltham']);
+        $this->assertSame(['unknown' => 'x', 'city' => 'Waltham'], $result->jsonSerialize()['content'][$section]);
+    }
+
+    public function testShippingUnknownKeyBeforeDeliverySpeed(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Unknown keys in array: typo');
+
+        $client = new MinFraud(1, 'key');
+        $client->withShipping(['delivery_speed' => 'bogus', 'typo' => 5]);
+    }
+
+    /**
      * @dataProvider invalidValues
      */
     public function testInvalidValueWithoutValidation(
