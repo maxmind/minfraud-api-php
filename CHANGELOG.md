@@ -13,6 +13,14 @@ CHANGELOG
   country fields no longer fail in string validators. Billing and shipping
   region and phone country code fields, and credit card bank phone country
   codes, also pass through unchanged.
+* The RFC 3339 check for the event `time` input now accepts any number of
+  fractional second digits. Before, it rejected values with more than three
+  digits, such as `2026-10-01T14:30:00.123456Z`.
+* The RFC 3339 check for the event `time` input now rejects the values that
+  the web service rejects. Before, it accepted out-of-range date and time
+  values, such as `2026-02-30T10:00:00Z`, because PHP rolled them over. It
+  also accepted time zone names, such as `EST`, offsets without a colon, such
+  as `+0000`, and a lowercase `z`.
 * The PHPDoc for the `with()` and `with*()` methods of `MaxMind\MinFraud` now
   lists the `InvalidInputException` they throw when input validation is
   enabled.

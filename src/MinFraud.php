@@ -1588,8 +1588,13 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function verifyRfc3339DateTime(string $dateTime): void
     {
-        if (\DateTime::createFromFormat(\DateTime::RFC3339, $dateTime) === false
-            && \DateTime::createFromFormat(\DateTime::RFC3339_EXTENDED, $dateTime) === false
+        // The pattern is the format that the web service accepts. checkdate()
+        // rejects dates that do not exist, such as February 30.
+        $pattern = '/\A(\d{4})-(\d{2})-(\d{2})'
+            . 'T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?'
+            . '(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)\z/';
+        if (!preg_match($pattern, $dateTime, $matches)
+            || !checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1])
         ) {
             $this->maybeThrowInvalidInputException("$dateTime is not a valid RFC 3339 formatted datetime string");
         }

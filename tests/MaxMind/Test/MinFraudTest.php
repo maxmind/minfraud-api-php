@@ -1176,10 +1176,12 @@ class MinFraudTest extends ServiceClientTester
      */
     public function testGoodEventTimes(string $time): void
     {
-        $this->createMinFraudRequestWithFullResponse(
+        $result = $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
         )->withEvent(['time' => $time]);
+
+        $this->assertSame($time, $result->jsonSerialize()['content']['event']['time']);
     }
 
     /**
@@ -1195,13 +1197,24 @@ class MinFraudTest extends ServiceClientTester
         array_push(
             $tests,
             ['2014-04-12T23:20:50.052+01:00'],
-            ['2014-04-12T23:20:50.052Z']
+            ['2014-04-12T23:20:50.052Z'],
+            ['2014-04-12T23:20:50.5Z'],
+            ['2014-04-12T23:20:50.052123+01:00'],
+            ['2014-04-12T23:20:50.052123Z'],
+            ['2014-04-12T23:20:50.052123456Z'],
+            ['2026-10-01T14:30:00+23:59'],
+            ['2024-02-29T00:00:00-05:00'],
+            ['2024-02-29T00:00:00Z'],
+            ['2014-04-12T23:20:50.123456789012345678901234567890Z']
         );
 
         return $tests;
     }
 
-    public function testBadEventTime(): void
+    /**
+     * @dataProvider badTimes
+     */
+    public function testBadEventTime(string $time): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('valid RFC 3339');
@@ -1209,7 +1222,43 @@ class MinFraudTest extends ServiceClientTester
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEvent(['time' => '2014/04/04 19:20']);
+        )->withEvent(['time' => $time]);
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function badTimes(): array
+    {
+        return [
+            ['2014/04/04 19:20'],
+            ['2014-04-12T23:20:50.Z'],
+            ['2014-04-12T23:20:50.052123'],
+            ['2014-02-30T23:20:50Z'],
+            ['2014-02-30T23:20:50.052123Z'],
+            ['2026-02-29T00:00:00Z'],
+            ['2026-04-31T00:00:00Z'],
+            ['2014-13-12T23:20:50Z'],
+            ['2014-04-12T24:20:50Z'],
+            ['2014-04-12T25:20:50Z'],
+            ['2014-04-12T23:60:50Z'],
+            ['2026-10-01T14:60:00Z'],
+            ['2014-04-12T23:20:61Z'],
+            ['2026-10-01T14:30:60Z'],
+            ['2026-10-01T24:00:00Z'],
+            ['2026-10-01t14:30:00Z'],
+            ['2026-10-01T14:30:00z'],
+            ['2026-10-01T14:30:00EST'],
+            ['2026-10-01T14:30:00America/New_York'],
+            ['2026-10-01T14:30:00GMT+2'],
+            ['2026-10-01T14:30:00+0000'],
+            ['2026-10-01T14:30:00+24:00'],
+            ['2026-10-01T14:30:00+25:00'],
+            ['2026-10-01T14:30:00+05:60'],
+            ['2026-1-1T14:30:00Z'],
+            ['26-10-01T14:30:00Z'],
+            ['2026-10-01T4:30:00Z'],
+        ];
     }
 
     /**
