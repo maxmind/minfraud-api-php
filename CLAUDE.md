@@ -115,6 +115,11 @@ private function verifyCountryCode(string $country): void
 
 - Validation methods throw `InvalidInputException` when enabled
 - `maybeThrowInvalidInputException()` respects the `validateInput` option
+- `remove()` always rejects a value with the wrong type, so checks after it
+  can rely on the type without a `validateInput` guard
+- Use `removeString()` for a free-form string field with no other check, or
+  for a field that already accepted an integer, such as `session_id`. It also
+  accepts an integer and converts it to a string
 - Common validations: country codes, region codes, phone codes, email addresses, IP addresses
 
 #### 6. **Dual Array/Named Arguments Pattern**

@@ -82,30 +82,282 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider unvalidatedAddressFields
+     * @dataProvider allFields
      */
-    public function testAddressFieldWithoutValidation(string $method, string $section, string $field): void
+    public function testWrongTypeWithoutValidation(string $method, string $field): void
     {
+        $values = [new \stdClass(), ['x']];
+        $numbers = ['amount', 'price', 'quantity', 'session_age'];
+        $strings = array_map(static fn (array $row) => "$row[0] $row[2]", self::freeFormStringFields());
+        if (!\in_array($field, $numbers, true) && !\in_array("$method $field", $strings, true)) {
+            $values[] = 12;
+        }
+        $booleans = [
+            'has_gift_message',
+            'is_gift',
+            'phone_was_verification_successful',
+            'was_3d_secure_successful',
+            'was_authorized',
+        ];
+        if (\in_array($field, $booleans, true)) {
+            $values[] = 'true';
+        } else {
+            $values[] = true;
+        }
+        if (\in_array($field, $numbers, true)) {
+            $values[] = 'not a number';
+            $values[] = ' 12';
+            $values[] = "12\n";
+        }
+
         $client = new MinFraud(1, 'key', ['validateInput' => false]);
-        $result = $client->{$method}([$field => 12]);
-        $this->assertSame(12, $result->jsonSerialize()['content'][$section][$field]);
+        foreach ($values as $value) {
+            try {
+                $client->{$method}([$field => $value]);
+                $this->fail('Expected an InvalidInputException');
+            } catch (InvalidInputException $e) {
+                $this->assertStringStartsWith("Expected $field to be in [", $e->getMessage());
+            }
+        }
     }
 
     /**
-     * @return array<array{string, string, string}>
+     * @return array<string, array{string, string}>
      */
-    public static function unvalidatedAddressFields(): array
+    public static function allFields(): array
+    {
+        $address = [
+            'address', 'address_2', 'city', 'company', 'country', 'first_name', 'last_name',
+            'phone_country_code', 'phone_number', 'phone_verification_method', 'phone_verification_time',
+            'phone_was_verification_successful', 'postal', 'region',
+        ];
+        $fields = [
+            'withAccount' => ['user_id', 'username_md5'],
+            'withBilling' => $address,
+            'withCreditCard' => [
+                'avs_result', 'bank_name', 'bank_phone_country_code', 'bank_phone_number', 'country',
+                'cvv_result', 'issuer_id_number', 'last_digits', 'token', 'was_3d_secure_successful',
+            ],
+            'withDevice' => [
+                'accept_language', 'ip_address', 'session_age', 'session_id', 'tracking_token', 'user_agent',
+            ],
+            'withEmail' => ['address', 'domain'],
+            'withEvent' => ['party', 'shop_id', 'time', 'transaction_id', 'type'],
+            'withOrder' => [
+                'affiliate_id', 'amount', 'currency', 'discount_code', 'has_gift_message', 'is_gift',
+                'referrer_uri', 'subaffiliate_id',
+            ],
+            'withPayment' => ['decline_code', 'method', 'processor', 'was_authorized'],
+            'withShipping' => [...$address, 'delivery_speed'],
+            'withShoppingCartItem' => ['category', 'item_id', 'price', 'quantity'],
+        ];
+
+        $rows = [];
+        foreach ($fields as $method => $keys) {
+            foreach ($keys as $key) {
+                $rows["$method $key"] = [$method, $key];
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @dataProvider numericStrings
+     */
+    public function testNumericString(
+        string $method,
+        string $section,
+        string $field,
+        string $value,
+        mixed $expected,
+    ): void {
+        $client = new MinFraud(1, 'key');
+        $content = $client->{$method}([$field => $value])->jsonSerialize()['content'][$section];
+        if ($section === 'shopping_cart') {
+            $content = $content[0];
+        }
+        $this->assertSame($expected, $content[$field]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string, string, mixed}>
+     */
+    public static function numericStrings(): array
     {
         return [
-            ['withBilling', 'billing', 'country'],
-            ['withBilling', 'billing', 'region'],
-            ['withBilling', 'billing', 'phone_country_code'],
-            ['withShipping', 'shipping', 'country'],
-            ['withShipping', 'shipping', 'region'],
-            ['withShipping', 'shipping', 'phone_country_code'],
-            ['withCreditCard', 'credit_card', 'country'],
-            ['withCreditCard', 'credit_card', 'bank_phone_country_code'],
+            'amount' => ['withOrder', 'order', 'amount', '12.50', '12.50'],
+            'price' => ['withShoppingCartItem', 'shopping_cart', 'price', '1.5', '1.5'],
+            'quantity' => ['withShoppingCartItem', 'shopping_cart', 'quantity', '3', '3'],
+            'quantity with a sign' => ['withShoppingCartItem', 'shopping_cart', 'quantity', '+3', '+3'],
+            'session_age' => ['withDevice', 'device', 'session_age', '3600', 3600.0],
         ];
+    }
+
+    /**
+     * @testWith ["2.5"]
+     *           ["1e2"]
+     */
+    public function testFractionalQuantityString(string $quantity): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be a whole number');
+
+        $client = new MinFraud(1, 'key');
+        $client->withShoppingCartItem(['quantity' => $quantity]);
+    }
+
+    /**
+     * @dataProvider freeFormStringFields
+     */
+    public function testIntegerInFreeFormStringField(string $method, string $section, string $field): void
+    {
+        $client = new MinFraud(1, 'key');
+        $content = $client->{$method}([$field => 12])->jsonSerialize()['content'][$section];
+        if ($section === 'shopping_cart') {
+            $content = $content[0];
+        }
+        $this->assertSame('12', $content[$field]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string}>
+     */
+    public static function freeFormStringFields(): array
+    {
+        $address = ['address', 'address_2', 'city', 'company', 'first_name', 'last_name', 'phone_number', 'postal'];
+        $fields = [
+            'withAccount' => ['account', ['user_id']],
+            'withBilling' => ['billing', $address],
+            'withCreditCard' => ['credit_card', ['bank_name', 'bank_phone_number']],
+            'withDevice' => ['device', ['accept_language', 'session_id', 'tracking_token', 'user_agent']],
+            'withEvent' => ['event', ['shop_id', 'transaction_id']],
+            'withOrder' => ['order', ['affiliate_id', 'discount_code', 'subaffiliate_id']],
+            'withPayment' => ['payment', ['decline_code']],
+            'withShipping' => ['shipping', $address],
+            'withShoppingCartItem' => ['shopping_cart', ['category', 'item_id']],
+        ];
+
+        $rows = [];
+        foreach ($fields as $method => [$section, $keys]) {
+            foreach ($keys as $key) {
+                $rows["$method $key"] = [$method, $section, $key];
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @testWith ["withBilling", "billing"]
+     *           ["withShipping", "shipping"]
+     */
+    public function testAddressUnknownKeyWithoutValidation(string $method, string $section): void
+    {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $result = $client->{$method}(['unknown' => 'x', 'city' => 'Waltham']);
+        $this->assertSame(['unknown' => 'x', 'city' => 'Waltham'], $result->jsonSerialize()['content'][$section]);
+    }
+
+    public function testShippingUnknownKeyBeforeDeliverySpeed(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('Unknown keys in array: typo');
+
+        $client = new MinFraud(1, 'key');
+        $client->withShipping(['delivery_speed' => 'bogus', 'typo' => 5]);
+    }
+
+    /**
+     * @dataProvider trailingNewlines
+     */
+    public function testTrailingNewline(string $method, string $field, string $value): void
+    {
+        $this->expectException(InvalidInputException::class);
+
+        $client = new MinFraud(1, 'key');
+        $client->{$method}([$field => $value]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string}>
+     */
+    public static function trailingNewlines(): array
+    {
+        return [
+            'username_md5' => ['withAccount', 'username_md5', "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"],
+            'billing country' => ['withBilling', 'country', "US\n"],
+            'billing phone_country_code' => ['withBilling', 'phone_country_code', "1\n"],
+            'billing region' => ['withBilling', 'region', "CT\n"],
+            'bank_phone_country_code' => ['withCreditCard', 'bank_phone_country_code', "1\n"],
+            'credit card country' => ['withCreditCard', 'country', "US\n"],
+            'issuer_id_number' => ['withCreditCard', 'issuer_id_number', "123456\n"],
+            'last_digits' => ['withCreditCard', 'last_digits', "1234\n"],
+            'token' => ['withCreditCard', 'token', "abc\n"],
+            'email address' => ['withEmail', 'address', "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"],
+            'currency' => ['withOrder', 'currency', "USD\n"],
+            'shipping country' => ['withShipping', 'country', "US\n"],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidValues
+     */
+    public function testInvalidValueWithoutValidation(
+        string $method,
+        string $section,
+        string $field,
+        mixed $value,
+    ): void {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $content = $client->{$method}([$field => $value])->jsonSerialize()['content'][$section];
+        if ($section === 'shopping_cart') {
+            $content = $content[0];
+        }
+        $this->assertSame($value, $content[$field]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string, mixed}>
+     */
+    public static function invalidValues(): array
+    {
+        $address = [
+            'country' => 'usa',
+            'phone_country_code' => '12345',
+            'phone_verification_method' => 'other_method',
+            'phone_verification_time' => 'not a time',
+            'region' => 'invalid',
+        ];
+        $fields = [
+            'withAccount' => ['account', ['username_md5' => 'not an MD5']],
+            'withBilling' => ['billing', $address],
+            'withCreditCard' => ['credit_card', [
+                'avs_result' => 'YY',
+                'bank_phone_country_code' => '12345',
+                'country' => 'usa',
+                'cvv_result' => 'NN',
+                'issuer_id_number' => '12345',
+                'last_digits' => '123',
+                'token' => '4111111111111111',
+            ]],
+            'withDevice' => ['device', ['ip_address' => 'not an IP', 'session_age' => -1.5, 'session_id' => '']],
+            'withEmail' => ['email', ['address' => 'not an email', 'domain' => 'not a domain']],
+            'withEvent' => ['event', ['party' => 'other', 'time' => 'not a time', 'type' => 'other']],
+            'withOrder' => ['order', ['amount' => -1.5, 'currency' => 'usd', 'referrer_uri' => 'not a URL']],
+            'withPayment' => ['payment', ['method' => 'other', 'processor' => 'other']],
+            'withShipping' => ['shipping', [...$address, 'delivery_speed' => 'other']],
+            'withShoppingCartItem' => ['shopping_cart', ['price' => -1.5, 'quantity' => -1]],
+        ];
+
+        $rows = [];
+        foreach ($fields as $method => [$section, $values]) {
+            foreach ($values as $key => $value) {
+                $rows["$method $key"] = [$method, $section, $key, $value];
+            }
+        }
+
+        return $rows;
     }
 
     public function testMinFraud(): void
@@ -196,7 +448,10 @@ class MinFraudTest extends ServiceClientTester
                 country: 'US',
                 postal: '06510',
                 phoneNumber: '123-456-7890',
-                phoneCountryCode: '1'
+                phoneCountryCode: '1',
+                phoneVerificationMethod: 'delivered_code',
+                phoneWasVerificationSuccessful: true,
+                phoneVerificationTime: '2026-10-01T14:30:00Z'
             )
             ->withCreditCard(
                 country: 'US',
@@ -263,6 +518,9 @@ class MinFraudTest extends ServiceClientTester
                 postal: '73003',
                 phoneNumber: '123-456-0000',
                 phoneCountryCode: '1',
+                phoneVerificationMethod: 'network',
+                phoneWasVerificationSuccessful: false,
+                phoneVerificationTime: '2026-10-01T14:31:00Z',
                 deliverySpeed: 'same_day'
             )
             ->withShoppingCartItem(
@@ -764,6 +1022,193 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
+     * @dataProvider goodPhoneVerificationMethods
+     */
+    public function testGoodBillingPhoneVerificationMethod(string $good): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_method' => $good]);
+
+        $this->assertSame(
+            $good,
+            $result->jsonSerialize()['content']['billing']['phone_verification_method'],
+        );
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function goodPhoneVerificationMethods(): array
+    {
+        return [
+            ['delivered_code'],
+            ['network'],
+            ['other'],
+        ];
+    }
+
+    public function testBadBillingPhoneVerificationMethod(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid phone verification method');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_method' => 'sms']);
+    }
+
+    /**
+     * @dataProvider goodTimes
+     */
+    public function testGoodBillingPhoneVerificationTimes(string $time): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_time' => $time]);
+
+        $this->assertSame(
+            $time,
+            $result->jsonSerialize()['content']['billing']['phone_verification_time'],
+        );
+    }
+
+    /**
+     * @dataProvider badTimes
+     */
+    public function testBadBillingPhoneVerificationTime(string $time): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid RFC 3339');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_verification_time' => $time]);
+    }
+
+    public function testBillingPhoneWasVerificationSuccessfulFalse(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(phoneWasVerificationSuccessful: false);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['billing']['phone_was_verification_successful'],
+        );
+    }
+
+    public function testBadBillingPhoneWasVerificationSuccessful(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage(
+            'Expected phone_was_verification_successful to be in [boolean] but was string',
+        );
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withBilling(['phone_was_verification_successful' => 'true']);
+    }
+
+    /**
+     * @dataProvider goodPhoneVerificationMethods
+     */
+    public function testGoodShippingPhoneVerificationMethod(string $good): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_method' => $good]);
+
+        $this->assertSame(
+            $good,
+            $result->jsonSerialize()['content']['shipping']['phone_verification_method'],
+        );
+    }
+
+    public function testBadShippingPhoneVerificationMethod(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid phone verification method');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_method' => 'sms']);
+    }
+
+    /**
+     * @dataProvider goodTimes
+     */
+    public function testGoodShippingPhoneVerificationTimes(string $time): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_time' => $time]);
+
+        $this->assertSame(
+            $time,
+            $result->jsonSerialize()['content']['shipping']['phone_verification_time'],
+        );
+    }
+
+    /**
+     * @dataProvider badTimes
+     */
+    public function testBadShippingPhoneVerificationTime(string $time): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('valid RFC 3339');
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_verification_time' => $time]);
+    }
+
+    public function testShippingPhoneWasVerificationSuccessfulFalse(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(phoneWasVerificationSuccessful: false);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['shipping']['phone_was_verification_successful'],
+        );
+    }
+
+    public function testPositionalPostalAndRegion(): void
+    {
+        $content = $this->createMinFraudRequestWithFullResponse('insights', 0)
+            ->withBilling([], null, null, null, null, 'US', null, null, null, null, '06510', 'CT')
+            ->withShipping([], null, null, null, null, 'US', null, null, null, null, null, '73003', 'OK')
+            ->jsonSerialize()['content'];
+
+        $this->assertSame(['country' => 'US', 'postal' => '06510', 'region' => 'CT'], $content['billing']);
+        $this->assertSame(['country' => 'US', 'postal' => '73003', 'region' => 'OK'], $content['shipping']);
+    }
+
+    public function testBadShippingPhoneWasVerificationSuccessful(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage(
+            'Expected phone_was_verification_successful to be in [boolean] but was string',
+        );
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withShipping(['phone_was_verification_successful' => 'true']);
+    }
+
+    /**
      * @dataProvider badIins
      */
     public function testBadIin(string $iin): void
@@ -1176,10 +1621,12 @@ class MinFraudTest extends ServiceClientTester
      */
     public function testGoodEventTimes(string $time): void
     {
-        $this->createMinFraudRequestWithFullResponse(
+        $result = $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
         )->withEvent(['time' => $time]);
+
+        $this->assertSame($time, $result->jsonSerialize()['content']['event']['time']);
     }
 
     /**
@@ -1195,13 +1642,24 @@ class MinFraudTest extends ServiceClientTester
         array_push(
             $tests,
             ['2014-04-12T23:20:50.052+01:00'],
-            ['2014-04-12T23:20:50.052Z']
+            ['2014-04-12T23:20:50.052Z'],
+            ['2014-04-12T23:20:50.5Z'],
+            ['2014-04-12T23:20:50.052123+01:00'],
+            ['2014-04-12T23:20:50.052123Z'],
+            ['2014-04-12T23:20:50.052123456Z'],
+            ['2026-10-01T14:30:00+23:59'],
+            ['2024-02-29T00:00:00-05:00'],
+            ['2024-02-29T00:00:00Z'],
+            ['2014-04-12T23:20:50.123456789012345678901234567890Z']
         );
 
         return $tests;
     }
 
-    public function testBadEventTime(): void
+    /**
+     * @dataProvider badTimes
+     */
+    public function testBadEventTime(string $time): void
     {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('valid RFC 3339');
@@ -1209,7 +1667,43 @@ class MinFraudTest extends ServiceClientTester
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEvent(['time' => '2014/04/04 19:20']);
+        )->withEvent(['time' => $time]);
+    }
+
+    /**
+     * @return array<list<string>>
+     */
+    public static function badTimes(): array
+    {
+        return [
+            ['2014/04/04 19:20'],
+            ['2014-04-12T23:20:50.Z'],
+            ['2014-04-12T23:20:50.052123'],
+            ['2014-02-30T23:20:50Z'],
+            ['2014-02-30T23:20:50.052123Z'],
+            ['2026-02-29T00:00:00Z'],
+            ['2026-04-31T00:00:00Z'],
+            ['2014-13-12T23:20:50Z'],
+            ['2014-04-12T24:20:50Z'],
+            ['2014-04-12T25:20:50Z'],
+            ['2014-04-12T23:60:50Z'],
+            ['2026-10-01T14:60:00Z'],
+            ['2014-04-12T23:20:61Z'],
+            ['2026-10-01T14:30:60Z'],
+            ['2026-10-01T24:00:00Z'],
+            ['2026-10-01t14:30:00Z'],
+            ['2026-10-01T14:30:00z'],
+            ['2026-10-01T14:30:00EST'],
+            ['2026-10-01T14:30:00America/New_York'],
+            ['2026-10-01T14:30:00GMT+2'],
+            ['2026-10-01T14:30:00+0000'],
+            ['2026-10-01T14:30:00+24:00'],
+            ['2026-10-01T14:30:00+25:00'],
+            ['2026-10-01T14:30:00+05:60'],
+            ['2026-1-1T14:30:00Z'],
+            ['26-10-01T14:30:00Z'],
+            ['2026-10-01T4:30:00Z'],
+        ];
     }
 
     /**
