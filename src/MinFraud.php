@@ -468,7 +468,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($usernameMd5 !== null) {
-            if (!preg_match('/^[a-fA-F0-9]{32}$/', $usernameMd5)) {
+            if (!preg_match('/\A[a-fA-F0-9]{32}\z/', $usernameMd5)) {
                 $this->maybeThrowInvalidInputException("$usernameMd5 must be an MD5");
             }
             $values['username_md5'] = $usernameMd5;
@@ -522,7 +522,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
         if ($address !== null) {
             if (!filter_var($address, \FILTER_VALIDATE_EMAIL)
-                && !preg_match('/^[a-fA-F0-9]{32}$/', $address)) {
+                && !preg_match('/\A[a-fA-F0-9]{32}\z/', $address)) {
                 $this->maybeThrowInvalidInputException("$address is an invalid email address or MD5");
             }
             $values['address'] = $address;
@@ -1109,7 +1109,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($bankPhoneCountryCode !== null) {
-            if (!preg_match('/^[0-9]{1,4}$/', $bankPhoneCountryCode)) {
+            if (!preg_match('/\A[0-9]{1,4}\z/', $bankPhoneCountryCode)) {
                 $this->maybeThrowInvalidInputException('Bank phone country code must be a string of 1 to 4 digits.');
             }
 
@@ -1133,27 +1133,27 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($issuerIdNumber !== null) {
-            if (!preg_match('/^(?:[0-9]{6}|[0-9]{8})$/', $issuerIdNumber)) {
+            if (!preg_match('/\A(?:[0-9]{6}|[0-9]{8})\z/', $issuerIdNumber)) {
                 $this->maybeThrowInvalidInputException('Issuer ID number must be a string of 6 or 8 digits.');
             }
             $values['issuer_id_number'] = $issuerIdNumber;
         }
 
         if ($lastDigits !== null) {
-            if (!preg_match('/^(?:[0-9]{2}|[0-9]{4})$/', $lastDigits)) {
+            if (!preg_match('/\A(?:[0-9]{2}|[0-9]{4})\z/', $lastDigits)) {
                 $this->maybeThrowInvalidInputException('Last digits must be a string of 2 or 4 digits.');
             }
             $values['last_digits'] = $lastDigits;
         }
 
         if ($token !== null) {
-            if (!preg_match('/^[\x21-\x7E]{1,255}$/', $token)) {
+            if (!preg_match('/\A[\x21-\x7E]{1,255}\z/', $token)) {
                 $this->maybeThrowInvalidInputException(
                     'Credit card token must be a string of 1 to 255 printable ASCII characters.',
                 );
             }
 
-            if (preg_match('/^[0-9]{1,19}$/', $token)) {
+            if (preg_match('/\A[0-9]{1,19}\z/', $token)) {
                 $this->maybeThrowInvalidInputException(
                     'Credit card token cannot look like a card number or part of one.',
                 );
@@ -1296,7 +1296,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($currency !== null) {
-            if (!preg_match('/^[A-Z]{3}$/', $currency)) {
+            if (!preg_match('/\A[A-Z]{3}\z/', $currency)) {
                 $this->maybeThrowInvalidInputException("$currency is not a valid currency code");
             }
             $values['currency'] = $currency;
@@ -1661,7 +1661,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function verifyCountryCode(string $country): void
     {
-        if (!preg_match('/^[A-Z]{2}$/', $country)) {
+        if (!preg_match('/\A[A-Z]{2}\z/', $country)) {
             $this->maybeThrowInvalidInputException("$country is not a valid ISO 3166-1 country code");
         }
     }
@@ -1672,7 +1672,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function verifyPhoneCountryCode(string $phoneCountryCode): void
     {
-        if (!preg_match('/^[0-9]{1,4}$/', $phoneCountryCode)) {
+        if (!preg_match('/\A[0-9]{1,4}\z/', $phoneCountryCode)) {
             $this->maybeThrowInvalidInputException('Phone country code must be a string of 1 to 4 digits.');
         }
     }
@@ -1683,7 +1683,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function verifyRegionCode(string $region): void
     {
-        if (!preg_match('/^[0-9A-Z]{1,4}$/', $region)) {
+        if (!preg_match('/\A[0-9A-Z]{1,4}\z/', $region)) {
             $this->maybeThrowInvalidInputException(
                 "$region is not a valid ISO 3166-2 region code (without country prefix)",
             );

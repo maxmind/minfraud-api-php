@@ -145,7 +145,7 @@ class ReportTransaction extends ServiceClient
 
         if ($minfraudId !== null) {
             if (!preg_match(
-                '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i',
+                '/\A[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\z/i',
                 $minfraudId,
             )) {
                 $this->maybeThrowInvalidInputException("$minfraudId must be a valid minFraud ID");

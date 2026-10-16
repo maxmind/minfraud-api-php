@@ -269,6 +269,38 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
+     * @dataProvider trailingNewlines
+     */
+    public function testTrailingNewline(string $method, string $field, string $value): void
+    {
+        $this->expectException(InvalidInputException::class);
+
+        $client = new MinFraud(1, 'key');
+        $client->{$method}([$field => $value]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string}>
+     */
+    public static function trailingNewlines(): array
+    {
+        return [
+            'username_md5' => ['withAccount', 'username_md5', "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"],
+            'billing country' => ['withBilling', 'country', "US\n"],
+            'billing phone_country_code' => ['withBilling', 'phone_country_code', "1\n"],
+            'billing region' => ['withBilling', 'region', "CT\n"],
+            'bank_phone_country_code' => ['withCreditCard', 'bank_phone_country_code', "1\n"],
+            'credit card country' => ['withCreditCard', 'country', "US\n"],
+            'issuer_id_number' => ['withCreditCard', 'issuer_id_number', "123456\n"],
+            'last_digits' => ['withCreditCard', 'last_digits', "1234\n"],
+            'token' => ['withCreditCard', 'token', "abc\n"],
+            'email address' => ['withEmail', 'address', "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"],
+            'currency' => ['withOrder', 'currency', "USD\n"],
+            'shipping country' => ['withShipping', 'country', "US\n"],
+        ];
+    }
+
+    /**
      * @dataProvider invalidValues
      */
     public function testInvalidValueWithoutValidation(
