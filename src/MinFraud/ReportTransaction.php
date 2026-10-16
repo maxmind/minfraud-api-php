@@ -26,9 +26,10 @@ class ReportTransaction extends ServiceClient
      * * `proxy` - The HTTP proxy to use. May include a schema, port,
      *   username, and password, e.g., `http://username:password@127.0.0.1:10`.
      * * `validateInput` - Default is `true`. Determines whether values passed
-     *   to the `with*()` methods are validated. It is recommended that you
-     *   leave validation on while developing and only (optionally) disable it
-     *   before deployment.
+     *   to `report()` are validated. A value with the wrong type in the
+     *   `$values` array is always rejected. It is recommended that you leave
+     *   validation on while developing and only (optionally) disable it before
+     *   deployment.
      *
      * @throws \RuntimeException   with older web-service-common releases, if HTTP client setup fails
      * @throws WebServiceException if HTTP client setup fails
@@ -113,13 +114,13 @@ class ReportTransaction extends ServiceClient
                 );
             }
 
-            $chargebackCode = $this->remove($values, 'chargeback_code');
+            $chargebackCode = $this->removeString($values, 'chargeback_code');
             $ipAddress = $this->remove($values, 'ip_address');
             $maxmindId = $this->remove($values, 'maxmind_id');
             $minfraudId = $this->remove($values, 'minfraud_id');
-            $notes = $this->remove($values, 'notes');
+            $notes = $this->removeString($values, 'notes');
             $tag = $this->remove($values, 'tag');
-            $transactionId = $this->remove($values, 'transaction_id');
+            $transactionId = $this->removeString($values, 'transaction_id');
 
             $this->verifyEmpty($values);
         }

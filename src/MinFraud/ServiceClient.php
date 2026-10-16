@@ -79,18 +79,27 @@ abstract class ServiceClient
      *
      * @param array<string, mixed> $array the parent array
      * @param string               $key   the key to remove
-     * @param list<string>         $types the expected types
+     * @param list<string>         $types the expected types. `numeric string`
+     *                                    matches a string that `is_numeric()`
+     *                                    accepts and that has no surrounding
+     *                                    whitespace.
      *
-     * @throws InvalidInputException if the value has an unexpected type and
-     *                               input validation is enabled
+     * @throws InvalidInputException if the value has an unexpected type
      */
     protected function remove(array &$array, string $key, array $types = ['string']): mixed
     {
         if (\array_key_exists($key, $array)) {
             $value = $array[$key];
             $actualType = \gettype($value);
+            if ($actualType === 'string'
+                && \in_array('numeric string', $types, true)
+                && is_numeric($value)
+                && trim($value) === $value
+            ) {
+                $actualType = 'numeric string';
+            }
             if ($value !== null && !\in_array($actualType, $types, true)) {
-                $this->maybeThrowInvalidInputException(
+                throw new InvalidInputException(
                     "Expected $key to be in [" . implode(', ', $types) . "] but was $actualType",
                 );
             }
@@ -100,6 +109,26 @@ abstract class ServiceClient
         }
 
         return null;
+    }
+
+    /**
+     * Removes a free-form string. An integer is converted to a string.
+     *
+     * @ignore
+     *
+     * @param array<string, mixed> $array the parent array
+     * @param string               $key   the key to remove
+     *
+     * @throws InvalidInputException if the value has an unexpected type
+     */
+    protected function removeString(array &$array, string $key): ?string
+    {
+        $value = $this->remove($array, $key, ['integer', 'string']);
+        if (\is_int($value)) {
+            return (string) $value;
+        }
+
+        return $value;
     }
 
     /**

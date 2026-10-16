@@ -82,30 +82,217 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider unvalidatedAddressFields
+     * @dataProvider allFields
      */
-    public function testAddressFieldWithoutValidation(string $method, string $section, string $field): void
+    public function testWrongTypeWithoutValidation(string $method, string $field): void
     {
+        $values = [new \stdClass(), ['x']];
+        $numbers = ['amount', 'price', 'quantity', 'session_age'];
+        $strings = array_map(static fn (array $row) => "$row[0] $row[2]", self::freeFormStringFields());
+        if (!\in_array($field, $numbers, true) && !\in_array("$method $field", $strings, true)) {
+            $values[] = 12;
+        }
+        $booleans = ['has_gift_message', 'is_gift', 'was_3d_secure_successful', 'was_authorized'];
+        if (\in_array($field, $booleans, true)) {
+            $values[] = 'true';
+        } else {
+            $values[] = true;
+        }
+        if (\in_array($field, $numbers, true)) {
+            $values[] = 'not a number';
+            $values[] = ' 12';
+            $values[] = "12\n";
+        }
+
         $client = new MinFraud(1, 'key', ['validateInput' => false]);
-        $result = $client->{$method}([$field => 12]);
-        $this->assertSame(12, $result->jsonSerialize()['content'][$section][$field]);
+        foreach ($values as $value) {
+            try {
+                $client->{$method}([$field => $value]);
+                $this->fail('Expected an InvalidInputException');
+            } catch (InvalidInputException $e) {
+                $this->assertStringStartsWith("Expected $field to be in [", $e->getMessage());
+            }
+        }
     }
 
     /**
-     * @return array<array{string, string, string}>
+     * @return array<string, array{string, string}>
      */
-    public static function unvalidatedAddressFields(): array
+    public static function allFields(): array
+    {
+        $address = [
+            'address', 'address_2', 'city', 'company', 'country', 'first_name', 'last_name',
+            'phone_country_code', 'phone_number', 'postal', 'region',
+        ];
+        $fields = [
+            'withAccount' => ['user_id', 'username_md5'],
+            'withBilling' => $address,
+            'withCreditCard' => [
+                'avs_result', 'bank_name', 'bank_phone_country_code', 'bank_phone_number', 'country',
+                'cvv_result', 'issuer_id_number', 'last_digits', 'token', 'was_3d_secure_successful',
+            ],
+            'withDevice' => [
+                'accept_language', 'ip_address', 'session_age', 'session_id', 'tracking_token', 'user_agent',
+            ],
+            'withEmail' => ['address', 'domain'],
+            'withEvent' => ['party', 'shop_id', 'time', 'transaction_id', 'type'],
+            'withOrder' => [
+                'affiliate_id', 'amount', 'currency', 'discount_code', 'has_gift_message', 'is_gift',
+                'referrer_uri', 'subaffiliate_id',
+            ],
+            'withPayment' => ['decline_code', 'method', 'processor', 'was_authorized'],
+            'withShipping' => [...$address, 'delivery_speed'],
+            'withShoppingCartItem' => ['category', 'item_id', 'price', 'quantity'],
+        ];
+
+        $rows = [];
+        foreach ($fields as $method => $keys) {
+            foreach ($keys as $key) {
+                $rows["$method $key"] = [$method, $key];
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @dataProvider numericStrings
+     */
+    public function testNumericString(
+        string $method,
+        string $section,
+        string $field,
+        string $value,
+        mixed $expected,
+    ): void {
+        $client = new MinFraud(1, 'key');
+        $content = $client->{$method}([$field => $value])->jsonSerialize()['content'][$section];
+        if ($section === 'shopping_cart') {
+            $content = $content[0];
+        }
+        $this->assertSame($expected, $content[$field]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string, string, mixed}>
+     */
+    public static function numericStrings(): array
     {
         return [
-            ['withBilling', 'billing', 'country'],
-            ['withBilling', 'billing', 'region'],
-            ['withBilling', 'billing', 'phone_country_code'],
-            ['withShipping', 'shipping', 'country'],
-            ['withShipping', 'shipping', 'region'],
-            ['withShipping', 'shipping', 'phone_country_code'],
-            ['withCreditCard', 'credit_card', 'country'],
-            ['withCreditCard', 'credit_card', 'bank_phone_country_code'],
+            'amount' => ['withOrder', 'order', 'amount', '12.50', '12.50'],
+            'price' => ['withShoppingCartItem', 'shopping_cart', 'price', '1.5', '1.5'],
+            'quantity' => ['withShoppingCartItem', 'shopping_cart', 'quantity', '3', '3'],
+            'quantity with a sign' => ['withShoppingCartItem', 'shopping_cart', 'quantity', '+3', '+3'],
+            'session_age' => ['withDevice', 'device', 'session_age', '3600', 3600.0],
         ];
+    }
+
+    /**
+     * @testWith ["2.5"]
+     *           ["1e2"]
+     */
+    public function testFractionalQuantityString(string $quantity): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('must be a whole number');
+
+        $client = new MinFraud(1, 'key');
+        $client->withShoppingCartItem(['quantity' => $quantity]);
+    }
+
+    /**
+     * @dataProvider freeFormStringFields
+     */
+    public function testIntegerInFreeFormStringField(string $method, string $section, string $field): void
+    {
+        $client = new MinFraud(1, 'key');
+        $content = $client->{$method}([$field => 12])->jsonSerialize()['content'][$section];
+        if ($section === 'shopping_cart') {
+            $content = $content[0];
+        }
+        $this->assertSame('12', $content[$field]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string}>
+     */
+    public static function freeFormStringFields(): array
+    {
+        $address = ['address', 'address_2', 'city', 'company', 'first_name', 'last_name', 'phone_number', 'postal'];
+        $fields = [
+            'withAccount' => ['account', ['user_id']],
+            'withBilling' => ['billing', $address],
+            'withCreditCard' => ['credit_card', ['bank_name', 'bank_phone_number']],
+            'withDevice' => ['device', ['accept_language', 'session_id', 'tracking_token', 'user_agent']],
+            'withEvent' => ['event', ['shop_id', 'transaction_id']],
+            'withOrder' => ['order', ['affiliate_id', 'discount_code', 'subaffiliate_id']],
+            'withPayment' => ['payment', ['decline_code']],
+            'withShipping' => ['shipping', $address],
+            'withShoppingCartItem' => ['shopping_cart', ['category', 'item_id']],
+        ];
+
+        $rows = [];
+        foreach ($fields as $method => [$section, $keys]) {
+            foreach ($keys as $key) {
+                $rows["$method $key"] = [$method, $section, $key];
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @dataProvider invalidValues
+     */
+    public function testInvalidValueWithoutValidation(
+        string $method,
+        string $section,
+        string $field,
+        mixed $value,
+    ): void {
+        $client = new MinFraud(1, 'key', ['validateInput' => false]);
+        $content = $client->{$method}([$field => $value])->jsonSerialize()['content'][$section];
+        if ($section === 'shopping_cart') {
+            $content = $content[0];
+        }
+        $this->assertSame($value, $content[$field]);
+    }
+
+    /**
+     * @return array<string, array{string, string, string, mixed}>
+     */
+    public static function invalidValues(): array
+    {
+        $address = ['country' => 'usa', 'phone_country_code' => '12345', 'region' => 'invalid'];
+        $fields = [
+            'withAccount' => ['account', ['username_md5' => 'not an MD5']],
+            'withBilling' => ['billing', $address],
+            'withCreditCard' => ['credit_card', [
+                'avs_result' => 'YY',
+                'bank_phone_country_code' => '12345',
+                'country' => 'usa',
+                'cvv_result' => 'NN',
+                'issuer_id_number' => '12345',
+                'last_digits' => '123',
+                'token' => '4111111111111111',
+            ]],
+            'withDevice' => ['device', ['ip_address' => 'not an IP', 'session_age' => -1.5, 'session_id' => '']],
+            'withEmail' => ['email', ['address' => 'not an email', 'domain' => 'not a domain']],
+            'withEvent' => ['event', ['party' => 'other', 'time' => 'not a time', 'type' => 'other']],
+            'withOrder' => ['order', ['amount' => -1.5, 'currency' => 'usd', 'referrer_uri' => 'not a URL']],
+            'withPayment' => ['payment', ['method' => 'other', 'processor' => 'other']],
+            'withShipping' => ['shipping', [...$address, 'delivery_speed' => 'other']],
+            'withShoppingCartItem' => ['shopping_cart', ['price' => -1.5, 'quantity' => -1]],
+        ];
+
+        $rows = [];
+        foreach ($fields as $method => [$section, $values]) {
+            foreach ($values as $key => $value) {
+                $rows["$method $key"] = [$method, $section, $key, $value];
+            }
+        }
+
+        return $rows;
     }
 
     public function testMinFraud(): void

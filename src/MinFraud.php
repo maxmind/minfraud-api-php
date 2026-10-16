@@ -78,9 +78,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                           - `locales` - An array of locale codes to use for the location name
      *                             properties.
      *                           - `validateInput` - Default is `true`. Determines whether values passed
-     *                             to the `with*()` methods are validated. It is recommended that you
-     *                             leave validation on while developing and only (optionally) disable it
-     *                             before deployment.
+     *                             to the `with*()` methods are validated. A value with the wrong type
+     *                             in a `$values` array is always rejected, except in custom inputs.
+     *                             It is recommended that you leave validation on while developing and
+     *                             only (optionally) disable it before deployment.
      *
      * @throws \RuntimeException   with older web-service-common releases, if HTTP client setup fails
      * @throws WebServiceException if HTTP client setup fails
@@ -123,8 +124,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param array<string, mixed> $values The request as a structured array
      *
      * @throws InvalidInputException if a section or shopping cart item is not
-     *                               an array, or if validation is enabled and
-     *                               a value is invalid or a key is unknown
+     *                               an array, if a value has the wrong type,
+     *                               or if validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -220,9 +222,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--device
      *     minFraud device API docs
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -242,25 +244,19 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     'You may only provide the $values array or named arguments, not both.',
                 );
             }
-            $acceptLanguage = $this->remove($values, 'accept_language');
+            $acceptLanguage = $this->removeString($values, 'accept_language');
             $ipAddress = $this->remove($values, 'ip_address');
 
-            $v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string']);
+            $v = $this->remove($values, 'session_age', ['double', 'integer', 'numeric string']);
             if ($v !== null) {
-                if (!is_numeric($v)) {
-                    $this->maybeThrowInvalidInputException('Expected session_age to be a number');
-                }
                 $sessionAge = (float) $v;
             }
 
 
-            $v = $this->remove($values, 'session_id', ['integer', 'string']);
-            if ($v !== null) {
-                $sessionId = (string) $v;
-            }
+            $sessionId = $this->removeString($values, 'session_id');
 
-            $trackingToken = $this->remove($values, 'tracking_token');
-            $userAgent = $this->remove($values, 'user_agent');
+            $trackingToken = $this->removeString($values, 'tracking_token');
+            $userAgent = $this->removeString($values, 'user_agent');
 
             $this->verifyEmpty($values);
         }
@@ -351,9 +347,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--event
      *     minFraud event API docs
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -373,9 +369,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
             $party = $this->remove($values, 'party');
-            $shopId = $this->remove($values, 'shop_id');
+            $shopId = $this->removeString($values, 'shop_id');
             $time = $this->remove($values, 'time');
-            $transactionId = $this->remove($values, 'transaction_id');
+            $transactionId = $this->removeString($values, 'transaction_id');
             $type = $this->remove($values, 'type');
 
             $this->verifyEmpty($values);
@@ -443,9 +439,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                          the username or login name associated
      *                                          with the account
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -461,7 +457,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     'You may only provide the $values array or named arguments, not both.',
                 );
             }
-            $userId = $this->remove($values, 'user_id');
+            $userId = $this->removeString($values, 'user_id');
             $usernameMd5 = $this->remove($values, 'username_md5');
 
             $this->verifyEmpty($values);
@@ -500,9 +496,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                      transaction. Do not include the `@` in this
      *                                      field.
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -584,9 +580,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
      *                                               billing address
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -612,16 +608,16 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $address = $this->remove($values, 'address');
-            $address2 = $this->remove($values, 'address_2');
-            $city = $this->remove($values, 'city');
-            $company = $this->remove($values, 'company');
+            $address = $this->removeString($values, 'address');
+            $address2 = $this->removeString($values, 'address_2');
+            $city = $this->removeString($values, 'city');
+            $company = $this->removeString($values, 'company');
             $country = $this->remove($values, 'country');
-            $firstName = $this->remove($values, 'first_name');
-            $lastName = $this->remove($values, 'last_name');
+            $firstName = $this->removeString($values, 'first_name');
+            $lastName = $this->removeString($values, 'last_name');
             $phoneCountryCode = $this->remove($values, 'phone_country_code');
-            $phoneNumber = $this->remove($values, 'phone_number');
-            $postal = $this->remove($values, 'postal');
+            $phoneNumber = $this->removeString($values, 'phone_number');
+            $postal = $this->removeString($values, 'postal');
             $region = $this->remove($values, 'region');
 
             $this->verifyEmpty($values);
@@ -644,9 +640,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            if ($this->validateInput) {
-                $this->verifyCountryCode($country);
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -659,9 +653,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($phoneCountryCode !== null) {
-            if ($this->validateInput) {
-                $this->verifyPhoneCountryCode($phoneCountryCode);
-            }
+            $this->verifyPhoneCountryCode($phoneCountryCode);
             $values['phone_country_code'] = $phoneCountryCode;
         }
 
@@ -674,9 +666,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($region !== null) {
-            if ($this->validateInput) {
-                $this->verifyRegionCode($region);
-            }
+            $this->verifyRegionCode($region);
             $values['region'] = $region;
         }
 
@@ -713,9 +703,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $phoneCountryCode the phone country code, with 1 to 4 digits
      * @param string|null          $phoneNumber      the recipient's phone number
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -742,17 +732,17 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $address = $this->remove($values, 'address');
-            $address2 = $this->remove($values, 'address_2');
-            $city = $this->remove($values, 'city');
-            $company = $this->remove($values, 'company');
+            $address = $this->removeString($values, 'address');
+            $address2 = $this->removeString($values, 'address_2');
+            $city = $this->removeString($values, 'city');
+            $company = $this->removeString($values, 'company');
             $country = $this->remove($values, 'country');
             $deliverySpeed = $this->remove($values, 'delivery_speed');
-            $firstName = $this->remove($values, 'first_name');
-            $lastName = $this->remove($values, 'last_name');
+            $firstName = $this->removeString($values, 'first_name');
+            $lastName = $this->removeString($values, 'last_name');
             $phoneCountryCode = $this->remove($values, 'phone_country_code');
-            $phoneNumber = $this->remove($values, 'phone_number');
-            $postal = $this->remove($values, 'postal');
+            $phoneNumber = $this->removeString($values, 'phone_number');
+            $postal = $this->removeString($values, 'postal');
             $region = $this->remove($values, 'region');
 
             $this->verifyEmpty($values);
@@ -775,9 +765,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            if ($this->validateInput) {
-                $this->verifyCountryCode($country);
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -798,9 +786,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($phoneCountryCode !== null) {
-            if ($this->validateInput) {
-                $this->verifyPhoneCountryCode($phoneCountryCode);
-            }
+            $this->verifyPhoneCountryCode($phoneCountryCode);
             $values['phone_country_code'] = $phoneCountryCode;
         }
 
@@ -813,9 +799,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($region !== null) {
-            if ($this->validateInput) {
-                $this->verifyRegionCode($region);
-            }
+            $this->verifyRegionCode($region);
             $values['region'] = $region;
         }
 
@@ -855,9 +839,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            - `real_time_payment`
      *                                            - `rewards`
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -876,7 +860,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $declineCode = $this->remove($values, 'decline_code');
+            $declineCode = $this->removeString($values, 'decline_code');
             $method = $this->remove($values, 'method');
             $processor = $this->remove($values, 'processor');
             $wasAuthorized = $this->remove($values, 'was_authorized', ['boolean']);
@@ -1124,9 +1108,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param bool|null            $was3dSecureSuccessful Whether the outcome of 3-D Secure
      *                                                    verification was successful
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -1154,9 +1138,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $values = Util::cleanCreditCard($values);
 
             $avsResult = $this->remove($values, 'avs_result');
-            $bankName = $this->remove($values, 'bank_name');
+            $bankName = $this->removeString($values, 'bank_name');
             $bankPhoneCountryCode = $this->remove($values, 'bank_phone_country_code');
-            $bankPhoneNumber = $this->remove($values, 'bank_phone_number');
+            $bankPhoneNumber = $this->removeString($values, 'bank_phone_number');
             $country = $this->remove($values, 'country');
             $cvvResult = $this->remove($values, 'cvv_result');
             $issuerIdNumber = $this->remove($values, 'issuer_id_number');
@@ -1179,7 +1163,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($bankPhoneCountryCode !== null) {
-            if ($this->validateInput && !preg_match('/^[0-9]{1,4}$/', $bankPhoneCountryCode)) {
+            if (!preg_match('/^[0-9]{1,4}$/', $bankPhoneCountryCode)) {
                 $this->maybeThrowInvalidInputException('Bank phone country code must be a string of 1 to 4 digits.');
             }
 
@@ -1191,9 +1175,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            if ($this->validateInput) {
-                $this->verifyCountryCode($country);
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -1320,9 +1302,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @see https://support.maxmind.com/knowledge-base/articles/order-and-shopping-cart-inputs-minfraud
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of the original with additional data.
      */
@@ -1344,14 +1326,14 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $affiliateId = $this->remove($values, 'affiliate_id');
-            $amount = $this->remove($values, 'amount', ['double', 'float', 'integer']);
+            $affiliateId = $this->removeString($values, 'affiliate_id');
+            $amount = $this->remove($values, 'amount', ['double', 'integer', 'numeric string']);
             $currency = $this->remove($values, 'currency');
-            $discountCode = $this->remove($values, 'discount_code');
+            $discountCode = $this->removeString($values, 'discount_code');
             $hasGiftMessage = $this->remove($values, 'has_gift_message', ['boolean']);
             $isGift = $this->remove($values, 'is_gift', ['boolean']);
             $referrerUri = $this->remove($values, 'referrer_uri');
-            $subaffiliateId = $this->remove($values, 'subaffiliate_id');
+            $subaffiliateId = $this->removeString($values, 'subaffiliate_id');
 
             $this->verifyEmpty($values);
         }
@@ -1422,9 +1404,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                       The value must be a whole number.
      * @param string|null          $itemId   the identifier of the item in the shopping cart
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -1443,15 +1425,12 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $category = $this->remove($values, 'category');
+            $category = $this->removeString($values, 'category');
 
-            $v = $this->remove($values, 'item_id', ['integer', 'string']);
-            if ($v !== null) {
-                $itemId = (string) $v;
-            }
+            $itemId = $this->removeString($values, 'item_id');
 
-            $price = $this->remove($values, 'price', ['double', 'float', 'integer']);
-            $quantity = $this->remove($values, 'quantity', ['integer']);
+            $price = $this->remove($values, 'price', ['double', 'integer', 'numeric string']);
+            $quantity = $this->remove($values, 'quantity', ['integer', 'numeric string']);
 
             $this->verifyEmpty($values);
         }
@@ -1474,6 +1453,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         if ($quantity !== null) {
             if ($quantity < 0) {
                 $this->maybeThrowInvalidInputException("$quantity must be greater than or equal to 0");
+            }
+            if (\is_string($quantity) && !preg_match('/\A\+?\d+\z/', $quantity)) {
+                $this->maybeThrowInvalidInputException("$quantity must be a whole number");
             }
             $values['quantity'] = $quantity;
         }

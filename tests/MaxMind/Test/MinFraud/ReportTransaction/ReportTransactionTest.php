@@ -165,7 +165,7 @@ class ReportTransactionTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider notStringTypes
+     * @dataProvider notStringOrIntegerTypes
      *
      * @param mixed $chargebackCode
      */
@@ -185,7 +185,7 @@ class ReportTransactionTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider notStringTypes
+     * @dataProvider notStringOrIntegerTypes
      *
      * @param mixed $notes
      */
@@ -202,7 +202,7 @@ class ReportTransactionTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider notStringTypes
+     * @dataProvider notStringOrIntegerTypes
      *
      * @param mixed $transactionId
      */
@@ -224,13 +224,26 @@ class ReportTransactionTest extends ServiceClientTester
     /**
      * @return list<list<mixed>>
      */
-    public static function notStringTypes(): array
+    public static function notStringOrIntegerTypes(): array
     {
         return [
-            [1],
             [['string']],
             [new \stdClass()],
         ];
+    }
+
+    /**
+     * @testWith ["chargeback_code"]
+     *           ["notes"]
+     *           ["transaction_id"]
+     */
+    public function testIntegerInFreeFormStringField(string $field): void
+    {
+        $req = array_merge(Data::minimalRequest(), [$field => 123]);
+        $expected = array_merge($req, [$field => '123']);
+        // report() sends the fields in alphabetical order.
+        ksort($expected);
+        $this->createReportTransactionRequest($expected)->report($req);
     }
 
     /**
@@ -350,6 +363,48 @@ class ReportTransactionTest extends ServiceClientTester
             ['risky_business'],
             [''],
         ];
+    }
+
+    /**
+     * @testWith ["chargeback_code"]
+     *           ["ip_address"]
+     *           ["maxmind_id"]
+     *           ["minfraud_id"]
+     *           ["notes"]
+     *           ["tag"]
+     *           ["transaction_id"]
+     */
+    public function testWrongTypeWithoutValidation(string $field): void
+    {
+        $values = [true, ['string'], new \stdClass()];
+        if (!\in_array($field, ['chargeback_code', 'notes', 'transaction_id'], true)) {
+            $values[] = 1;
+        }
+
+        foreach ($values as $value) {
+            $req = array_merge(Data::minimalRequest(), [$field => $value]);
+
+            try {
+                $this->createReportTransactionRequest($req, 0, ['validateInput' => false])->report($req);
+                $this->fail('Expected an InvalidInputException');
+            } catch (InvalidInputException $e) {
+                $this->assertStringStartsWith("Expected $field to be in [", $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * @testWith ["ip_address", "not an IP"]
+     *           ["maxmind_id", "abc"]
+     *           ["minfraud_id", "abc"]
+     *           ["tag", "risky_business"]
+     */
+    public function testInvalidValueWithoutValidation(string $field, string $value): void
+    {
+        $req = array_merge(Data::minimalRequest(), [$field => $value]);
+        // report() sends the fields in alphabetical order.
+        ksort($req);
+        $this->createReportTransactionRequest($req, 1, ['validateInput' => false])->report($req);
     }
 
     /**
