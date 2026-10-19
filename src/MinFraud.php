@@ -1212,7 +1212,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     );
                 }
 
-                if (!\is_string($key) || !preg_match('/^[a-z0-9_]{1,25}\Z/', $key)) {
+                if (!\is_string($key) || !preg_match('/\A[a-z0-9_]{1,25}\z/', $key)) {
                     $this->maybeThrowInvalidInputException(
                         "$key is invalid. Custom input keys must be alphanumeric and have 25 characters or less.",
                     );

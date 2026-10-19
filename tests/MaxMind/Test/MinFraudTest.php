@@ -2030,6 +2030,7 @@ class MinFraudTest extends ServiceClientTester
     {
         return [
             [['InvalidKey' => 1]],
+            [["abc\n" => 1]],
             [['too_long' => str_repeat('x', 256)]],
             [['has_newline' => "test\n"]],
             [['too_big' => 1e13]],

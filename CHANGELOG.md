@@ -35,7 +35,7 @@ CHANGELOG
   enabled.
 * Input validation now rejects a trailing newline in fields with a fixed
   format, such as country, region, and currency codes, the credit card
-  `issuer_id_number`, and the minFraud ID of
+  `issuer_id_number`, custom input keys, and the minFraud ID of
   `MaxMind\MinFraud\ReportTransaction`. Before, it accepted values such as
   `"US\n"`.
 * Added the `phone_verification_method`, `phone_was_verification_successful`,
