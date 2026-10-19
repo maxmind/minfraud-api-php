@@ -107,7 +107,7 @@ The library validates input by default (can be disabled with `validateInput: fal
 ```php
 private function verifyCountryCode(string $country): void
 {
-    if (!preg_match('/^[A-Z]{2}$/', $country)) {
+    if (!preg_match('/\A[A-Z]{2}\z/', $country)) {
         $this->maybeThrowInvalidInputException("...");
     }
 }
@@ -115,6 +115,8 @@ private function verifyCountryCode(string $country): void
 
 - Validation methods throw `InvalidInputException` when enabled
 - `maybeThrowInvalidInputException()` respects the `validateInput` option
+- Use the `\A` and `\z` anchors in a regex. `$` and `\Z` also match before a
+  trailing newline
 - `remove()` always rejects a value with the wrong type, so checks after it
   can rely on the type without a `validateInput` guard
 - Use `removeString()` for a free-form string field with no other check, or
