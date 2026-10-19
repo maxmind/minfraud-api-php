@@ -75,6 +75,26 @@ abstract class ServiceClient
     }
 
     /**
+     * Removes a free-form string. An integer is converted to a string.
+     *
+     * @ignore
+     *
+     * @param array<string, mixed> $array the parent array
+     * @param string               $key   the key to remove
+     *
+     * @throws InvalidInputException if the value has an unexpected type
+     */
+    protected function removeString(array &$array, string $key): ?string
+    {
+        $value = $this->remove($array, $key, ['integer', 'string']);
+        if (\is_int($value)) {
+            return (string) $value;
+        }
+
+        return $value;
+    }
+
+    /**
      * @ignore
      *
      * @param array<string, mixed> $array the parent array
@@ -109,26 +129,6 @@ abstract class ServiceClient
         }
 
         return null;
-    }
-
-    /**
-     * Removes a free-form string. An integer is converted to a string.
-     *
-     * @ignore
-     *
-     * @param array<string, mixed> $array the parent array
-     * @param string               $key   the key to remove
-     *
-     * @throws InvalidInputException if the value has an unexpected type
-     */
-    protected function removeString(array &$array, string $key): ?string
-    {
-        $value = $this->remove($array, $key, ['integer', 'string']);
-        if (\is_int($value)) {
-            return (string) $value;
-        }
-
-        return $value;
     }
 
     /**
