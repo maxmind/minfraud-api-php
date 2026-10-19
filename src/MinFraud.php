@@ -625,7 +625,6 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         $new = clone $this;
         $new->content['billing'] = $this->addressValues(
             values: $values,
-            fields: [],
             address: $address,
             address2: $address2,
             city: $city,
@@ -708,23 +707,17 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $phoneVerificationTime = null,
         ?bool $phoneWasVerificationSuccessful = null,
     ): self {
-        if (\count($values) !== 0 && \func_num_args() !== 1) {
-            throw new \InvalidArgumentException(
-                'You may only provide the $values array or named arguments, not both.',
-            );
-        }
         if (\count($values) !== 0) {
+            if (\func_num_args() !== 1) {
+                throw new \InvalidArgumentException(
+                    'You may only provide the $values array or named arguments, not both.',
+                );
+            }
             $deliverySpeed = $this->remove($values, 'delivery_speed');
-        }
-
-        $fields = [];
-        if ($deliverySpeed !== null) {
-            $fields['delivery_speed'] = $deliverySpeed;
         }
 
         $shipping = $this->addressValues(
             values: $values,
-            fields: $fields,
             address: $address,
             address2: $address2,
             city: $city,
@@ -743,10 +736,11 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
         // Check after the address fields, so that type errors and unknown keys
         // are reported first.
-        if ($deliverySpeed !== null
-            && !\in_array($deliverySpeed, ['same_day', 'overnight', 'expedited', 'standard'], true)
-        ) {
-            $this->maybeThrowInvalidInputException("$deliverySpeed is not a valid delivery speed");
+        if ($deliverySpeed !== null) {
+            if (!\in_array($deliverySpeed, ['same_day', 'overnight', 'expedited', 'standard'], true)) {
+                $this->maybeThrowInvalidInputException("$deliverySpeed is not a valid delivery speed");
+            }
+            $shipping['delivery_speed'] = $deliverySpeed;
         }
 
         $new = clone $this;
@@ -1486,8 +1480,6 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @param array<string, mixed> $values the array argument of the public
      *                                     method, without section-specific keys
-     * @param array<string, mixed> $fields section-specific fields to add.
-     *                                     The caller checks their values.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
@@ -1497,7 +1489,6 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function addressValues(
         array $values,
-        array $fields,
         ?string $address,
         ?string $address2,
         ?string $city,
@@ -1536,6 +1527,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $this->verifyEmpty($values);
         }
 
+        $fields = [];
         if ($address !== null) {
             $fields['address'] = $address;
         }
@@ -1600,10 +1592,6 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $this->verifyRegionCode($region);
             $fields['region'] = $region;
         }
-
-        // Keep the keys in alphabetical order, with any unknown keys that
-        // pass through when validation is off first.
-        ksort($fields);
 
         return $values + $fields;
     }
