@@ -33,7 +33,9 @@ exception in the <code>\MaxMind\Exception</code> namespace will be thrown. This
 validation can be disabled by setting <code>validateInput</code> to <code>false</code> in the
 options array for <code>\MaxMind\MinFraud</code>, but it is recommended that you keep it
 on at least through development as it will help ensure that you are sending
-valid data to the web service.</p><p>After creating the request object, send a Score request by calling
+valid data to the web service.
+A value with the wrong type in an array argument, such as an array where a
+string is expected, is always rejected, except in custom inputs.</p><p>After creating the request object, send a Score request by calling
 <code>->score()</code>, an Insights request by calling <code>->insights()</code>, or a Factors
 request by calling <code>->factors()</code>. If the request succeeds, a model object will
 be returned for the endpoint. If the request fails, an exception will be
@@ -89,7 +91,10 @@ serves as the base class for the above exceptions.</li></ul><h4 id=minfraud-exam
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>country</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;US&#39;</span><span style=color:#1f2328>,</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>postal</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;06510&#39;</span><span style=color:#1f2328>,</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneNumber</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;123-456-7890&#39;</span><span style=color:#1f2328>,</span>
-</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneCountryCode</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;1&#39;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneCountryCode</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;1&#39;</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneVerificationMethod</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;delivered_code&#39;</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneWasVerificationSuccessful</span><span style=color:#0550ae>:</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneVerificationTime</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;2026-10-01T14:30:00Z&#39;</span>
 </span></span><span style=display:flex><span><span style=color:#1f2328>)</span><span style=color:#0550ae>-&gt;</span><span style=color:#1f2328>withShipping</span><span style=color:#1f2328>(</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>firstName</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;ShipFirst&#39;</span><span style=color:#1f2328>,</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>lastName</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;ShipLast&#39;</span><span style=color:#1f2328>,</span>
@@ -102,6 +107,9 @@ serves as the base class for the above exceptions.</li></ul><h4 id=minfraud-exam
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>postal</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;73003&#39;</span><span style=color:#1f2328>,</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneNumber</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;123-456-0000&#39;</span><span style=color:#1f2328>,</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneCountryCode</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;1&#39;</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneVerificationMethod</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;network&#39;</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneWasVerificationSuccessful</span><span style=color:#0550ae>:</span> <span style=color:#cf222e>false</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>phoneVerificationTime</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;2026-10-01T14:31:00Z&#39;</span><span style=color:#1f2328>,</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>deliverySpeed</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;same_day&#39;</span>
 </span></span><span style=display:flex><span><span style=color:#1f2328>)</span><span style=color:#0550ae>-&gt;</span><span style=color:#1f2328>withPayment</span><span style=color:#1f2328>(</span>
 </span></span><span style=display:flex><span>    <span style=color:#1f2328>method</span><span style=color:#0550ae>:</span> <span style=color:#0a3069>&#39;card&#39;</span><span style=color:#1f2328>,</span>
@@ -177,7 +185,9 @@ This object is immutable. You then send one or more reports using the
 setting <code>validateInput</code> to <code>false</code> in the options array for
 <code>\MaxMind\MinFraud\ReportTransaction</code>, but it is recommended that you keep it
 on at least through development as it will help ensure that you are sending
-valid data to the web service.</p><p>If the report is successful, nothing is returned. If the report fails, an
+valid data to the web service.
+A value with the wrong type in the array argument, such as an array where a
+string is expected, is always rejected.</p><p>If the report is successful, nothing is returned. If the report fails, an
 exception will be thrown.</p><p>See the API documentation for more details.</p><h4 id=report-transaction-exceptions>Report Transaction Exceptions<a class=heading-anchor href=#report-transaction-exceptions aria-label="Link to Report Transaction Exceptions">#</a></h4><p>All externally visible exceptions are in the <code>\MaxMind\Exception</code> namespace.
 The possible exceptions are:</p><ul><li><code>InvalidInputException</code> - This will be thrown when the <code>->report()</code> method
 is called with invalid input data or when the required fields are missing.
