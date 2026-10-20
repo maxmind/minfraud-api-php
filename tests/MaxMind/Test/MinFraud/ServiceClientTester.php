@@ -37,7 +37,15 @@ abstract class ServiceClientTester extends TestCase
 
         $stub->expects($this->exactly($callsToRequest))
             ->method('post')
-            ->with($this->equalTo(json_encode($requestContent)))
+            ->with($this->callback(function (string $body) use ($requestContent): bool {
+                // The web service does not use the JSON key order.
+                $this->assertSame(
+                    self::sortKeys(json_decode(json_encode($requestContent), true)),
+                    self::sortKeys(json_decode($body, true)),
+                );
+
+                return true;
+            }))
             ->willReturn([$statusCode, $contentType, $responseBody]);
 
         $factory = $this->getMockBuilder(
@@ -96,5 +104,15 @@ abstract class ServiceClientTester extends TestCase
             $licenseKey,
             $options
         );
+    }
+
+    private static function sortKeys(mixed $value): mixed
+    {
+        if (!\is_array($value)) {
+            return $value;
+        }
+        ksort($value);
+
+        return array_map(self::sortKeys(...), $value);
     }
 }

@@ -9,13 +9,43 @@ CHANGELOG
 * Custom input validation now rejects integer keys and array or object values
   with `InvalidInputException` instead of a type error or conversion warning.
   When validation is disabled, these values pass through unchanged.
-* When input validation is disabled, billing, shipping, and credit card
-  country fields no longer fail in string validators. Billing and shipping
-  region and phone country code fields, and credit card bank phone country
-  codes, also pass through unchanged.
+* A request value with the wrong type, such as an array where a string is
+  expected, now causes an `InvalidInputException`, including when input
+  validation is disabled. This applies to the array arguments of the
+  `with*()` methods of `MaxMind\MinFraud`, except for custom inputs, and of
+  `MaxMind\MinFraud\ReportTransaction::report()`. Before, with validation
+  disabled, such a value caused a type error, a conversion warning, or an
+  error, or was sent to the web service, depending on the field. A value with
+  the right type that fails a check is still sent unchanged when validation
+  is disabled.
+* The order `amount`, shopping cart `price` and `quantity`, and device
+  `session_age` inputs now accept numeric strings, such as `"12.50"`. They are
+  sent unchanged, except `session_age`, which is converted to a number as
+  before. A `session_age` string that is not numeric is now always rejected.
+* The RFC 3339 check for the event `time` input now accepts any number of
+  fractional second digits. Before, it rejected values with more than three
+  digits, such as `2026-10-01T14:30:00.123456Z`.
+* The RFC 3339 check for the event `time` input now rejects the values that
+  the web service rejects. Before, it accepted out-of-range date and time
+  values, such as `2026-02-30T10:00:00Z`, because PHP rolled them over. It
+  also accepted time zone names, such as `EST`, offsets without a colon, such
+  as `+0000`, and a lowercase `z`.
 * The PHPDoc for the `with()` and `with*()` methods of `MaxMind\MinFraud` now
   lists the `InvalidInputException` they throw when input validation is
   enabled.
+* Input validation now rejects a trailing newline in fields with a fixed
+  format, such as country, region, and currency codes, the credit card
+  `issuer_id_number`, custom input keys, and the minFraud ID of
+  `MaxMind\MinFraud\ReportTransaction`. Before, it accepted values such as
+  `"US\n"`.
+* Added the `phone_verification_method`, `phone_was_verification_successful`,
+  and `phone_verification_time` inputs to the `/billing` and `/shipping`
+  objects. These describe the most recent verification of the billing or
+  shipping phone number. Use them with `withBilling()` and `withShipping()` as
+  array keys or as the `phoneVerificationMethod`,
+  `phoneWasVerificationSuccessful`, and `phoneVerificationTime` named
+  arguments. Omit `phone_was_verification_successful` if no verification was
+  attempted.
 
 3.7.0 (2026-07-21)
 ------------------

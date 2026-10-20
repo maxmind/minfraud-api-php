@@ -107,6 +107,8 @@ validation can be disabled by setting `validateInput` to `false` in the
 options array for `\MaxMind\MinFraud`, but it is recommended that you keep it
 on at least through development as it will help ensure that you are sending
 valid data to the web service.
+A value with the wrong type in an array argument, such as an array where a
+string is expected, is always rejected, except in custom inputs.
 
 After creating the request object, send a Score request by calling
 `->score()`, an Insights request by calling `->insights()`, or a Factors
@@ -182,7 +184,10 @@ $request = $mf->withDevice(
     country: 'US',
     postal: '06510',
     phoneNumber: '123-456-7890',
-    phoneCountryCode: '1'
+    phoneCountryCode: '1',
+    phoneVerificationMethod: 'delivered_code',
+    phoneWasVerificationSuccessful: true,
+    phoneVerificationTime: '2026-10-01T14:30:00Z'
 )->withShipping(
     firstName: 'ShipFirst',
     lastName: 'ShipLast',
@@ -195,6 +200,9 @@ $request = $mf->withDevice(
     postal: '73003',
     phoneNumber: '123-456-0000',
     phoneCountryCode: '1',
+    phoneVerificationMethod: 'network',
+    phoneWasVerificationSuccessful: false,
+    phoneVerificationTime: '2026-10-01T14:31:00Z',
     deliverySpeed: 'same_day'
 )->withPayment(
     method: 'card',
@@ -279,6 +287,8 @@ setting `validateInput` to `false` in the options array for
 `\MaxMind\MinFraud\ReportTransaction`, but it is recommended that you keep it
 on at least through development as it will help ensure that you are sending
 valid data to the web service.
+A value with the wrong type in the array argument, such as an array where a
+string is expected, is always rejected.
 
 If the report is successful, nothing is returned. If the report fails, an
 exception will be thrown.

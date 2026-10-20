@@ -78,9 +78,10 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                           - `locales` - An array of locale codes to use for the location name
      *                             properties.
      *                           - `validateInput` - Default is `true`. Determines whether values passed
-     *                             to the `with*()` methods are validated. It is recommended that you
-     *                             leave validation on while developing and only (optionally) disable it
-     *                             before deployment.
+     *                             to the `with*()` methods are validated. A value with the wrong type
+     *                             in a `$values` array is always rejected, except in custom inputs.
+     *                             It is recommended that you leave validation on while developing and
+     *                             only (optionally) disable it before deployment.
      *
      * @throws \RuntimeException   with older web-service-common releases, if HTTP client setup fails
      * @throws WebServiceException if HTTP client setup fails
@@ -123,8 +124,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param array<string, mixed> $values The request as a structured array
      *
      * @throws InvalidInputException if a section or shopping cart item is not
-     *                               an array, or if validation is enabled and
-     *                               a value is invalid or a key is unknown
+     *                               an array, if a value has the wrong type,
+     *                               or if validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -220,9 +222,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--device
      *     minFraud device API docs
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -242,25 +244,19 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     'You may only provide the $values array or named arguments, not both.',
                 );
             }
-            $acceptLanguage = $this->remove($values, 'accept_language');
+            $acceptLanguage = $this->removeString($values, 'accept_language');
             $ipAddress = $this->remove($values, 'ip_address');
 
-            $v = $this->remove($values, 'session_age', ['double', 'float', 'integer', 'string']);
+            $v = $this->remove($values, 'session_age', ['double', 'integer', 'numeric string']);
             if ($v !== null) {
-                if (!is_numeric($v)) {
-                    $this->maybeThrowInvalidInputException('Expected session_age to be a number');
-                }
                 $sessionAge = (float) $v;
             }
 
 
-            $v = $this->remove($values, 'session_id', ['integer', 'string']);
-            if ($v !== null) {
-                $sessionId = (string) $v;
-            }
+            $sessionId = $this->removeString($values, 'session_id');
 
-            $trackingToken = $this->remove($values, 'tracking_token');
-            $userAgent = $this->remove($values, 'user_agent');
+            $trackingToken = $this->removeString($values, 'tracking_token');
+            $userAgent = $this->removeString($values, 'user_agent');
 
             $this->verifyEmpty($values);
         }
@@ -351,9 +347,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--event
      *     minFraud event API docs
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -373,9 +369,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
             $party = $this->remove($values, 'party');
-            $shopId = $this->remove($values, 'shop_id');
+            $shopId = $this->removeString($values, 'shop_id');
             $time = $this->remove($values, 'time');
-            $transactionId = $this->remove($values, 'transaction_id');
+            $transactionId = $this->removeString($values, 'transaction_id');
             $type = $this->remove($values, 'type');
 
             $this->verifyEmpty($values);
@@ -393,12 +389,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($time !== null) {
-            if (\DateTime::createFromFormat(\DateTime::RFC3339, $time) === false
-                && \DateTime::createFromFormat(\DateTime::RFC3339_EXTENDED, $time) === false
-            ) {
-                $this->maybeThrowInvalidInputException("$time is not a valid RFC 3339 formatted datetime string");
-            }
-
+            $this->verifyRfc3339DateTime($time);
             $values['time'] = $time;
         }
 
@@ -448,9 +439,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                          the username or login name associated
      *                                          with the account
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -466,7 +457,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     'You may only provide the $values array or named arguments, not both.',
                 );
             }
-            $userId = $this->remove($values, 'user_id');
+            $userId = $this->removeString($values, 'user_id');
             $usernameMd5 = $this->remove($values, 'username_md5');
 
             $this->verifyEmpty($values);
@@ -477,7 +468,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($usernameMd5 !== null) {
-            if (!preg_match('/^[a-fA-F0-9]{32}$/', $usernameMd5)) {
+            if (!preg_match('/\A[a-fA-F0-9]{32}\z/', $usernameMd5)) {
                 $this->maybeThrowInvalidInputException("$usernameMd5 must be an MD5");
             }
             $values['username_md5'] = $usernameMd5;
@@ -505,9 +496,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                      transaction. Do not include the `@` in this
      *                                      field.
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -531,7 +522,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 
         if ($address !== null) {
             if (!filter_var($address, \FILTER_VALIDATE_EMAIL)
-                && !preg_match('/^[a-fA-F0-9]{32}$/', $address)) {
+                && !preg_match('/\A[a-fA-F0-9]{32}\z/', $address)) {
                 $this->maybeThrowInvalidInputException("$address is an invalid email address or MD5");
             }
             $values['address'] = $address;
@@ -561,37 +552,49 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--billing
      *     minFraud billing API docs
      *
-     * @param array<string, mixed> $values           An array of billing data. The keys are the same as
-     *                                               the JSON keys. You may use either this or the named
-     *                                               arguments, but not both.
-     * @param string|null          $address          The first line of the user's billing address
-     * @param string|null          $address2         The second line of the user's billing address
-     * @param string|null          $city             The city of the user's billing address
-     * @param string|null          $company          The company of the end user as provided in
-     *                                               their billing information
-     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
-     *                                               code of the user's billing address
-     * @param string|null          $firstName        The first name of the end user as provided
-     *                                               in their billing information
-     * @param string|null          $lastName         The last name of the end user as provided
-     *                                               in their billing information
-     * @param string|null          $phoneCountryCode The country code for phone number
-     *                                               associated with the user's billing
-     *                                               address. If you provide this
-     *                                               information then you must provide
-     *                                               at least one digit.
-     * @param string|null          $phoneNumber      The phone number without the country code
-     *                                               for the user's billing address. Punctuation
-     *                                               characters will be stripped. After
-     *                                               stripping punctuation characters, the
-     *                                               number must contain only digits.
-     * @param string|null          $postal           The postal code of the user's billing address
-     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
-     *                                               billing address
+     * @param array<string, mixed> $values                         An array of billing data. The keys are the same as
+     *                                                             the JSON keys. You may use either this or the named
+     *                                                             arguments, but not both.
+     * @param string|null          $address                        The first line of the user's billing address
+     * @param string|null          $address2                       The second line of the user's billing address
+     * @param string|null          $city                           The city of the user's billing address
+     * @param string|null          $company                        The company of the end user as provided in
+     *                                                             their billing information
+     * @param string|null          $country                        The two character ISO 3166-1 alpha-2 country
+     *                                                             code of the user's billing address
+     * @param string|null          $firstName                      The first name of the end user as provided
+     *                                                             in their billing information
+     * @param string|null          $lastName                       The last name of the end user as provided
+     *                                                             in their billing information
+     * @param string|null          $phoneCountryCode               The country code for phone number
+     *                                                             associated with the user's billing
+     *                                                             address. If you provide this
+     *                                                             information then you must provide
+     *                                                             at least one digit.
+     * @param string|null          $phoneNumber                    The phone number without the country code
+     *                                                             for the user's billing address. Punctuation
+     *                                                             characters will be stripped. After
+     *                                                             stripping punctuation characters, the
+     *                                                             number must contain only digits.
+     * @param string|null          $postal                         The postal code of the user's billing address
+     * @param string|null          $region                         The ISO 3166-2 subdivision code for the user's
+     *                                                             billing address
+     * @param string|null          $phoneVerificationMethod        The most recent method used to verify
+     *                                                             the billing phone number: delivered_code,
+     *                                                             network, or other
+     * @param string|null          $phoneVerificationTime          The date and time of the most recent
+     *                                                             verification of the billing phone number,
+     *                                                             in RFC 3339 date-time format. The time
+     *                                                             must not be before 1970-01-01T00:00:00Z
+     *                                                             or more than two days in the future.
+     * @param bool|null            $phoneWasVerificationSuccessful Whether the most recent verification
+     *                                                             of the billing phone number succeeded.
+     *                                                             Omit this if no verification was
+     *                                                             attempted.
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -609,84 +612,34 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $phoneNumber = null,
         ?string $postal = null,
         ?string $region = null,
+        ?string $phoneVerificationMethod = null,
+        ?string $phoneVerificationTime = null,
+        ?bool $phoneWasVerificationSuccessful = null,
     ): self {
-        if (\count($values) !== 0) {
-            if (\func_num_args() !== 1) {
-                throw new \InvalidArgumentException(
-                    'You may only provide the $values array or named arguments, not both.',
-                );
-            }
-
-            $address = $this->remove($values, 'address');
-            $address2 = $this->remove($values, 'address_2');
-            $city = $this->remove($values, 'city');
-            $company = $this->remove($values, 'company');
-            $country = $this->remove($values, 'country');
-            $firstName = $this->remove($values, 'first_name');
-            $lastName = $this->remove($values, 'last_name');
-            $phoneCountryCode = $this->remove($values, 'phone_country_code');
-            $phoneNumber = $this->remove($values, 'phone_number');
-            $postal = $this->remove($values, 'postal');
-            $region = $this->remove($values, 'region');
-
-            $this->verifyEmpty($values);
-        }
-
-        if ($address !== null) {
-            $values['address'] = $address;
-        }
-
-        if ($address2 !== null) {
-            $values['address_2'] = $address2;
-        }
-
-        if ($city !== null) {
-            $values['city'] = $city;
-        }
-
-        if ($company !== null) {
-            $values['company'] = $company;
-        }
-
-        if ($country !== null) {
-            if ($this->validateInput) {
-                $this->verifyCountryCode($country);
-            }
-            $values['country'] = $country;
-        }
-
-        if ($firstName !== null) {
-            $values['first_name'] = $firstName;
-        }
-
-        if ($lastName !== null) {
-            $values['last_name'] = $lastName;
-        }
-
-        if ($phoneCountryCode !== null) {
-            if ($this->validateInput) {
-                $this->verifyPhoneCountryCode($phoneCountryCode);
-            }
-            $values['phone_country_code'] = $phoneCountryCode;
-        }
-
-        if ($phoneNumber !== null) {
-            $values['phone_number'] = $phoneNumber;
-        }
-
-        if ($postal !== null) {
-            $values['postal'] = $postal;
-        }
-
-        if ($region !== null) {
-            if ($this->validateInput) {
-                $this->verifyRegionCode($region);
-            }
-            $values['region'] = $region;
+        if (\count($values) !== 0 && \func_num_args() !== 1) {
+            throw new \InvalidArgumentException(
+                'You may only provide the $values array or named arguments, not both.',
+            );
         }
 
         $new = clone $this;
-        $new->content['billing'] = $values;
+        $new->content['billing'] = $this->addressValues(
+            values: $values,
+            address: $address,
+            address2: $address2,
+            city: $city,
+            company: $company,
+            country: $country,
+            firstName: $firstName,
+            lastName: $lastName,
+            phoneCountryCode: $phoneCountryCode,
+            phoneNumber: $phoneNumber,
+            postal: $postal,
+            region: $region,
+            phoneVerificationMethod: $phoneVerificationMethod,
+            phoneVerificationTime: $phoneVerificationTime,
+            phoneWasVerificationSuccessful: $phoneWasVerificationSuccessful,
+        );
 
         return $new;
     }
@@ -698,29 +651,40 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--shipping
      *     minFraud shipping API docs
      *
-     * @param array<string, mixed> $values           An array of shipping data. The keys are the same as
-     *                                               the JSON keys. You may use either this or the named
-     *                                               arguments, but not both.
-     * @param string|null          $company          The company of the end user as provided in
-     *                                               their shipping information
-     * @param string|null          $address          The first line of the user's shipping address
-     * @param string|null          $city             The city of the user's shipping address
-     * @param string|null          $region           The ISO 3166-2 subdivision code for the user's
-     *                                               shipping address
-     * @param string|null          $country          The two character ISO 3166-1 alpha-2 country
-     *                                               code of the user's shipping address
-     * @param string|null          $postal           The postal code of the user's shipping address
-     * @param string|null          $address2         the second line of the shipping address
-     * @param string|null          $deliverySpeed    the delivery speed: same_day, overnight,
-     *                                               expedited, or standard
-     * @param string|null          $firstName        the recipient's first name
-     * @param string|null          $lastName         the recipient's last name
-     * @param string|null          $phoneCountryCode the phone country code, with 1 to 4 digits
-     * @param string|null          $phoneNumber      the recipient's phone number
+     * @param array<string, mixed> $values                         An array of shipping data. The keys are the same as
+     *                                                             the JSON keys. You may use either this or the named
+     *                                                             arguments, but not both.
+     * @param string|null          $company                        The company of the end user as provided in
+     *                                                             their shipping information
+     * @param string|null          $address                        The first line of the user's shipping address
+     * @param string|null          $city                           The city of the user's shipping address
+     * @param string|null          $region                         The ISO 3166-2 subdivision code for the user's
+     *                                                             shipping address
+     * @param string|null          $country                        The two character ISO 3166-1 alpha-2 country
+     *                                                             code of the user's shipping address
+     * @param string|null          $postal                         The postal code of the user's shipping address
+     * @param string|null          $address2                       the second line of the shipping address
+     * @param string|null          $deliverySpeed                  the delivery speed: same_day, overnight,
+     *                                                             expedited, or standard
+     * @param string|null          $firstName                      the recipient's first name
+     * @param string|null          $lastName                       the recipient's last name
+     * @param string|null          $phoneCountryCode               the phone country code, with 1 to 4 digits
+     * @param string|null          $phoneNumber                    the recipient's phone number
+     * @param string|null          $phoneVerificationMethod        the most recent method used to verify
+     *                                                             the shipping phone number: delivered_code,
+     *                                                             network, or other
+     * @param string|null          $phoneVerificationTime          the date and time of the most recent
+     *                                                             verification of the shipping phone number,
+     *                                                             in RFC 3339 date-time format. The time
+     *                                                             must not be before 1970-01-01T00:00:00Z
+     *                                                             or more than two days in the future.
+     * @param bool|null            $phoneWasVerificationSuccessful whether the most recent verification of
+     *                                                             the shipping phone number succeeded. Omit this
+     *                                                             if no verification was attempted.
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -739,6 +703,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         ?string $phoneNumber = null,
         ?string $postal = null,
         ?string $region = null,
+        ?string $phoneVerificationMethod = null,
+        ?string $phoneVerificationTime = null,
+        ?bool $phoneWasVerificationSuccessful = null,
     ): self {
         if (\count($values) !== 0) {
             if (\func_num_args() !== 1) {
@@ -746,86 +713,38 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     'You may only provide the $values array or named arguments, not both.',
                 );
             }
-
-            $address = $this->remove($values, 'address');
-            $address2 = $this->remove($values, 'address_2');
-            $city = $this->remove($values, 'city');
-            $company = $this->remove($values, 'company');
-            $country = $this->remove($values, 'country');
             $deliverySpeed = $this->remove($values, 'delivery_speed');
-            $firstName = $this->remove($values, 'first_name');
-            $lastName = $this->remove($values, 'last_name');
-            $phoneCountryCode = $this->remove($values, 'phone_country_code');
-            $phoneNumber = $this->remove($values, 'phone_number');
-            $postal = $this->remove($values, 'postal');
-            $region = $this->remove($values, 'region');
-
-            $this->verifyEmpty($values);
         }
 
-        if ($address !== null) {
-            $values['address'] = $address;
-        }
+        $shipping = $this->addressValues(
+            values: $values,
+            address: $address,
+            address2: $address2,
+            city: $city,
+            company: $company,
+            country: $country,
+            firstName: $firstName,
+            lastName: $lastName,
+            phoneCountryCode: $phoneCountryCode,
+            phoneNumber: $phoneNumber,
+            postal: $postal,
+            region: $region,
+            phoneVerificationMethod: $phoneVerificationMethod,
+            phoneVerificationTime: $phoneVerificationTime,
+            phoneWasVerificationSuccessful: $phoneWasVerificationSuccessful,
+        );
 
-        if ($address2 !== null) {
-            $values['address_2'] = $address2;
-        }
-
-        if ($city !== null) {
-            $values['city'] = $city;
-        }
-
-        if ($company !== null) {
-            $values['company'] = $company;
-        }
-
-        if ($country !== null) {
-            if ($this->validateInput) {
-                $this->verifyCountryCode($country);
-            }
-            $values['country'] = $country;
-        }
-
+        // Check after the address fields, so that type errors and unknown keys
+        // are reported first.
         if ($deliverySpeed !== null) {
             if (!\in_array($deliverySpeed, ['same_day', 'overnight', 'expedited', 'standard'], true)) {
                 $this->maybeThrowInvalidInputException("$deliverySpeed is not a valid delivery speed");
             }
-
-            $values['delivery_speed'] = $deliverySpeed;
-        }
-
-        if ($firstName !== null) {
-            $values['first_name'] = $firstName;
-        }
-
-        if ($lastName !== null) {
-            $values['last_name'] = $lastName;
-        }
-
-        if ($phoneCountryCode !== null) {
-            if ($this->validateInput) {
-                $this->verifyPhoneCountryCode($phoneCountryCode);
-            }
-            $values['phone_country_code'] = $phoneCountryCode;
-        }
-
-        if ($phoneNumber !== null) {
-            $values['phone_number'] = $phoneNumber;
-        }
-
-        if ($postal !== null) {
-            $values['postal'] = $postal;
-        }
-
-        if ($region !== null) {
-            if ($this->validateInput) {
-                $this->verifyRegionCode($region);
-            }
-            $values['region'] = $region;
+            $shipping['delivery_speed'] = $deliverySpeed;
         }
 
         $new = clone $this;
-        $new->content['shipping'] = $values;
+        $new->content['shipping'] = $shipping;
 
         return $new;
     }
@@ -860,9 +779,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                            - `real_time_payment`
      *                                            - `rewards`
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is
      *                  a clone of the original with additional data.
@@ -881,7 +800,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $declineCode = $this->remove($values, 'decline_code');
+            $declineCode = $this->removeString($values, 'decline_code');
             $method = $this->remove($values, 'method');
             $processor = $this->remove($values, 'processor');
             $wasAuthorized = $this->remove($values, 'was_authorized', ['boolean']);
@@ -1129,9 +1048,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param bool|null            $was3dSecureSuccessful Whether the outcome of 3-D Secure
      *                                                    verification was successful
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of
      *                  the original with additional data.
@@ -1159,9 +1078,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             $values = Util::cleanCreditCard($values);
 
             $avsResult = $this->remove($values, 'avs_result');
-            $bankName = $this->remove($values, 'bank_name');
+            $bankName = $this->removeString($values, 'bank_name');
             $bankPhoneCountryCode = $this->remove($values, 'bank_phone_country_code');
-            $bankPhoneNumber = $this->remove($values, 'bank_phone_number');
+            $bankPhoneNumber = $this->removeString($values, 'bank_phone_number');
             $country = $this->remove($values, 'country');
             $cvvResult = $this->remove($values, 'cvv_result');
             $issuerIdNumber = $this->remove($values, 'issuer_id_number');
@@ -1184,7 +1103,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($bankPhoneCountryCode !== null) {
-            if ($this->validateInput && !preg_match('/^[0-9]{1,4}$/', $bankPhoneCountryCode)) {
+            if (!preg_match('/\A[0-9]{1,4}\z/', $bankPhoneCountryCode)) {
                 $this->maybeThrowInvalidInputException('Bank phone country code must be a string of 1 to 4 digits.');
             }
 
@@ -1196,9 +1115,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($country !== null) {
-            if ($this->validateInput) {
-                $this->verifyCountryCode($country);
-            }
+            $this->verifyCountryCode($country);
             $values['country'] = $country;
         }
 
@@ -1210,27 +1127,27 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($issuerIdNumber !== null) {
-            if (!preg_match('/^(?:[0-9]{6}|[0-9]{8})$/', $issuerIdNumber)) {
+            if (!preg_match('/\A(?:[0-9]{6}|[0-9]{8})\z/', $issuerIdNumber)) {
                 $this->maybeThrowInvalidInputException('Issuer ID number must be a string of 6 or 8 digits.');
             }
             $values['issuer_id_number'] = $issuerIdNumber;
         }
 
         if ($lastDigits !== null) {
-            if (!preg_match('/^(?:[0-9]{2}|[0-9]{4})$/', $lastDigits)) {
+            if (!preg_match('/\A(?:[0-9]{2}|[0-9]{4})\z/', $lastDigits)) {
                 $this->maybeThrowInvalidInputException('Last digits must be a string of 2 or 4 digits.');
             }
             $values['last_digits'] = $lastDigits;
         }
 
         if ($token !== null) {
-            if (!preg_match('/^[\x21-\x7E]{1,255}$/', $token)) {
+            if (!preg_match('/\A[\x21-\x7E]{1,255}\z/', $token)) {
                 $this->maybeThrowInvalidInputException(
                     'Credit card token must be a string of 1 to 255 printable ASCII characters.',
                 );
             }
 
-            if (preg_match('/^[0-9]{1,19}$/', $token)) {
+            if (preg_match('/\A[0-9]{1,19}\z/', $token)) {
                 $this->maybeThrowInvalidInputException(
                     'Credit card token cannot look like a card number or part of one.',
                 );
@@ -1289,7 +1206,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                     );
                 }
 
-                if (!\is_string($key) || !preg_match('/^[a-z0-9_]{1,25}\Z/', $key)) {
+                if (!\is_string($key) || !preg_match('/\A[a-z0-9_]{1,25}\z/', $key)) {
                     $this->maybeThrowInvalidInputException(
                         "$key is invalid. Custom input keys must be alphanumeric and have 25 characters or less.",
                     );
@@ -1325,9 +1242,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *
      * @see https://support.maxmind.com/knowledge-base/articles/order-and-shopping-cart-inputs-minfraud
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone of the original with additional data.
      */
@@ -1349,14 +1266,14 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $affiliateId = $this->remove($values, 'affiliate_id');
-            $amount = $this->remove($values, 'amount', ['double', 'float', 'integer']);
+            $affiliateId = $this->removeString($values, 'affiliate_id');
+            $amount = $this->remove($values, 'amount', ['double', 'integer', 'numeric string']);
             $currency = $this->remove($values, 'currency');
-            $discountCode = $this->remove($values, 'discount_code');
+            $discountCode = $this->removeString($values, 'discount_code');
             $hasGiftMessage = $this->remove($values, 'has_gift_message', ['boolean']);
             $isGift = $this->remove($values, 'is_gift', ['boolean']);
             $referrerUri = $this->remove($values, 'referrer_uri');
-            $subaffiliateId = $this->remove($values, 'subaffiliate_id');
+            $subaffiliateId = $this->removeString($values, 'subaffiliate_id');
 
             $this->verifyEmpty($values);
         }
@@ -1373,7 +1290,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         }
 
         if ($currency !== null) {
-            if (!preg_match('/^[A-Z]{3}$/', $currency)) {
+            if (!preg_match('/\A[A-Z]{3}\z/', $currency)) {
                 $this->maybeThrowInvalidInputException("$currency is not a valid currency code");
             }
             $values['currency'] = $currency;
@@ -1427,9 +1344,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      *                                       The value must be a whole number.
      * @param string|null          $itemId   the identifier of the item in the shopping cart
      *
-     * @throws InvalidInputException if input validation is enabled and a
-     *                               value is invalid, a value has the wrong
-     *                               type, or a key is unknown
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
      *
      * @return MinFraud A new immutable MinFraud object. This object is a clone
      *                  of the original with additional data.
@@ -1448,15 +1365,12 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 );
             }
 
-            $category = $this->remove($values, 'category');
+            $category = $this->removeString($values, 'category');
 
-            $v = $this->remove($values, 'item_id', ['integer', 'string']);
-            if ($v !== null) {
-                $itemId = (string) $v;
-            }
+            $itemId = $this->removeString($values, 'item_id');
 
-            $price = $this->remove($values, 'price', ['double', 'float', 'integer']);
-            $quantity = $this->remove($values, 'quantity', ['integer']);
+            $price = $this->remove($values, 'price', ['double', 'integer', 'numeric string']);
+            $quantity = $this->remove($values, 'quantity', ['integer', 'numeric string']);
 
             $this->verifyEmpty($values);
         }
@@ -1479,6 +1393,9 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         if ($quantity !== null) {
             if ($quantity < 0) {
                 $this->maybeThrowInvalidInputException("$quantity must be greater than or equal to 0");
+            }
+            if (\is_string($quantity) && !preg_match('/\A\+?\d+\z/', $quantity)) {
+                $this->maybeThrowInvalidInputException("$quantity must be a whole number");
             }
             $values['quantity'] = $quantity;
         }
@@ -1559,6 +1476,127 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
     }
 
     /**
+     * Builds the address array that withBilling() and withShipping() share.
+     *
+     * @param array<string, mixed> $values the array argument of the public
+     *                                     method, without section-specific keys
+     *
+     * @throws InvalidInputException if a value has the wrong type, or if
+     *                               input validation is enabled and a value is
+     *                               invalid or a key is unknown
+     *
+     * @return array<string, mixed>
+     */
+    private function addressValues(
+        array $values,
+        ?string $address,
+        ?string $address2,
+        ?string $city,
+        ?string $company,
+        ?string $country,
+        ?string $firstName,
+        ?string $lastName,
+        ?string $phoneCountryCode,
+        ?string $phoneNumber,
+        ?string $postal,
+        ?string $region,
+        ?string $phoneVerificationMethod,
+        ?string $phoneVerificationTime,
+        ?bool $phoneWasVerificationSuccessful,
+    ): array {
+        if (\count($values) !== 0) {
+            $address = $this->removeString($values, 'address');
+            $address2 = $this->removeString($values, 'address_2');
+            $city = $this->removeString($values, 'city');
+            $company = $this->removeString($values, 'company');
+            $country = $this->remove($values, 'country');
+            $firstName = $this->removeString($values, 'first_name');
+            $lastName = $this->removeString($values, 'last_name');
+            $phoneCountryCode = $this->remove($values, 'phone_country_code');
+            $phoneNumber = $this->removeString($values, 'phone_number');
+            $phoneVerificationMethod = $this->remove($values, 'phone_verification_method');
+            $phoneVerificationTime = $this->remove($values, 'phone_verification_time');
+            $phoneWasVerificationSuccessful = $this->remove(
+                $values,
+                'phone_was_verification_successful',
+                ['boolean'],
+            );
+            $postal = $this->removeString($values, 'postal');
+            $region = $this->remove($values, 'region');
+
+            $this->verifyEmpty($values);
+        }
+
+        $fields = [];
+        if ($address !== null) {
+            $fields['address'] = $address;
+        }
+
+        if ($address2 !== null) {
+            $fields['address_2'] = $address2;
+        }
+
+        if ($city !== null) {
+            $fields['city'] = $city;
+        }
+
+        if ($company !== null) {
+            $fields['company'] = $company;
+        }
+
+        if ($country !== null) {
+            $this->verifyCountryCode($country);
+            $fields['country'] = $country;
+        }
+
+        if ($firstName !== null) {
+            $fields['first_name'] = $firstName;
+        }
+
+        if ($lastName !== null) {
+            $fields['last_name'] = $lastName;
+        }
+
+        if ($phoneCountryCode !== null) {
+            $this->verifyPhoneCountryCode($phoneCountryCode);
+            $fields['phone_country_code'] = $phoneCountryCode;
+        }
+
+        if ($phoneNumber !== null) {
+            $fields['phone_number'] = $phoneNumber;
+        }
+
+        if ($phoneVerificationMethod !== null) {
+            if (!\in_array($phoneVerificationMethod, ['delivered_code', 'network', 'other'], true)) {
+                $this->maybeThrowInvalidInputException(
+                    "$phoneVerificationMethod is not a valid phone verification method",
+                );
+            }
+            $fields['phone_verification_method'] = $phoneVerificationMethod;
+        }
+
+        if ($phoneVerificationTime !== null) {
+            $this->verifyRfc3339DateTime($phoneVerificationTime);
+            $fields['phone_verification_time'] = $phoneVerificationTime;
+        }
+
+        if ($phoneWasVerificationSuccessful !== null) {
+            $fields['phone_was_verification_successful'] = $phoneWasVerificationSuccessful;
+        }
+
+        if ($postal !== null) {
+            $fields['postal'] = $postal;
+        }
+
+        if ($region !== null) {
+            $this->verifyRegionCode($region);
+            $fields['region'] = $region;
+        }
+
+        return $values + $fields;
+    }
+
+    /**
      * @param string $class the model class name to use
      * @param string $path  the service path suffix to use
      *
@@ -1591,9 +1629,27 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @throws InvalidInputException if the value is invalid and input
      *                               validation is enabled
      */
+    private function verifyRfc3339DateTime(string $dateTime): void
+    {
+        // The pattern is the format that the web service accepts. checkdate()
+        // rejects dates that do not exist, such as February 30.
+        $pattern = '/\A(\d{4})-(\d{2})-(\d{2})'
+            . 'T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?'
+            . '(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)\z/';
+        if (!preg_match($pattern, $dateTime, $matches)
+            || !checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1])
+        ) {
+            $this->maybeThrowInvalidInputException("$dateTime is not a valid RFC 3339 formatted datetime string");
+        }
+    }
+
+    /**
+     * @throws InvalidInputException if the value is invalid and input
+     *                               validation is enabled
+     */
     private function verifyCountryCode(string $country): void
     {
-        if (!preg_match('/^[A-Z]{2}$/', $country)) {
+        if (!preg_match('/\A[A-Z]{2}\z/', $country)) {
             $this->maybeThrowInvalidInputException("$country is not a valid ISO 3166-1 country code");
         }
     }
@@ -1604,7 +1660,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function verifyPhoneCountryCode(string $phoneCountryCode): void
     {
-        if (!preg_match('/^[0-9]{1,4}$/', $phoneCountryCode)) {
+        if (!preg_match('/\A[0-9]{1,4}\z/', $phoneCountryCode)) {
             $this->maybeThrowInvalidInputException('Phone country code must be a string of 1 to 4 digits.');
         }
     }
@@ -1615,7 +1671,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      */
     private function verifyRegionCode(string $region): void
     {
-        if (!preg_match('/^[0-9A-Z]{1,4}$/', $region)) {
+        if (!preg_match('/\A[0-9A-Z]{1,4}\z/', $region)) {
             $this->maybeThrowInvalidInputException(
                 "$region is not a valid ISO 3166-2 region code (without country prefix)",
             );
