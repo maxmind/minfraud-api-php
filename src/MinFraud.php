@@ -487,14 +487,26 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @link https://dev.maxmind.com/minfraud/api-documentation/requests/?lang=en#schema--request--email
      *     minFraud email API docs
      *
-     * @param array<string, mixed> $values  An array of email data. The keys are the same as
-     *                                      the JSON keys. You may use either this or the named
-     *                                      arguments, but not both.
-     * @param string|null          $address The email address used in the transaction.
-     *                                      This field must be a valid email address.
-     * @param string|null          $domain  The domain of the email address used in the
-     *                                      transaction. Do not include the `@` in this
-     *                                      field.
+     * @param array<string, mixed> $values                    An array of email data. The keys are the same as
+     *                                                        the JSON keys. You may use either this or the named
+     *                                                        arguments, but not both.
+     * @param string|null          $address                   The email address used in the transaction.
+     *                                                        This field must be a valid email address.
+     * @param string|null          $domain                    The domain of the email address used in the
+     *                                                        transaction. Do not include the `@` in this
+     *                                                        field.
+     * @param string|null          $verificationTime          The date and time of the most recent
+     *                                                        attempt to verify the email address, if
+     *                                                        known, in RFC 3339 date-time format. The
+     *                                                        time must not be before
+     *                                                        1970-01-01T00:00:00Z or more than two days
+     *                                                        in the future.
+     * @param bool|null            $wasVerificationSuccessful Whether the most recent verification
+     *                                                        that the end user controls the email
+     *                                                        address succeeded, for example by
+     *                                                        confirming a link sent to the address.
+     *                                                        Omit this if no verification was
+     *                                                        attempted.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
@@ -507,6 +519,8 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
         array $values = [],
         ?string $address = null,
         ?string $domain = null,
+        ?string $verificationTime = null,
+        ?bool $wasVerificationSuccessful = null,
     ): self {
         if (\count($values) !== 0) {
             if (\func_num_args() !== 1) {
@@ -516,6 +530,12 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
             }
             $address = $this->remove($values, 'address');
             $domain = $this->remove($values, 'domain');
+            $verificationTime = $this->remove($values, 'verification_time');
+            $wasVerificationSuccessful = $this->remove(
+                $values,
+                'was_verification_successful',
+                ['boolean'],
+            );
 
             $this->verifyEmpty($values);
         }
@@ -533,6 +553,15 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 $this->maybeThrowInvalidInputException("$domain is an invalid domain name");
             }
             $values['domain'] = $domain;
+        }
+
+        if ($verificationTime !== null) {
+            $this->verifyRfc3339DateTime($verificationTime);
+            $values['verification_time'] = $verificationTime;
+        }
+
+        if ($wasVerificationSuccessful !== null) {
+            $values['was_verification_successful'] = $wasVerificationSuccessful;
         }
 
         $new = clone $this;
