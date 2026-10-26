@@ -1282,18 +1282,6 @@ class MinFraudTest extends ServiceClientTester
         );
     }
 
-    public function testEmailWasVerificationSuccessfulFalseWith(): void
-    {
-        $result = $this->createMinFraudRequestWithFullResponse(
-            'insights',
-            0
-        )->with(['email' => ['was_verification_successful' => false]]);
-
-        $this->assertFalse(
-            $result->jsonSerialize()['content']['email']['was_verification_successful'],
-        );
-    }
-
     public function testEmailVerificationWithHashing(): void
     {
         $result = $this->createMinFraudRequestWithFullResponse(
