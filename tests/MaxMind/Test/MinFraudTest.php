@@ -494,7 +494,7 @@ class MinFraudTest extends ServiceClientTester
                 party: 'customer',
                 transactionId: 'txn3134133',
                 shopId: 's2123',
-                time: '2014-04-12T23:20:50+00:00',
+                time: '2026-10-05T23:20:50+00:00',
                 type: 'purchase'
             )
             ->withOrder(
