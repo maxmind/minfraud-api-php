@@ -98,6 +98,7 @@ class MinFraudTest extends ServiceClientTester
             'phone_was_verification_successful',
             'was_3d_secure_successful',
             'was_authorized',
+            'was_verification_successful',
         ];
         if (\in_array($field, $booleans, true)) {
             $values[] = 'true';
@@ -141,7 +142,7 @@ class MinFraudTest extends ServiceClientTester
             'withDevice' => [
                 'accept_language', 'ip_address', 'session_age', 'session_id', 'tracking_token', 'user_agent',
             ],
-            'withEmail' => ['address', 'domain'],
+            'withEmail' => ['address', 'domain', 'verification_time', 'was_verification_successful'],
             'withEvent' => ['party', 'shop_id', 'time', 'transaction_id', 'type'],
             'withOrder' => [
                 'affiliate_id', 'amount', 'currency', 'discount_code', 'has_gift_message', 'is_gift',
@@ -342,7 +343,11 @@ class MinFraudTest extends ServiceClientTester
                 'token' => '4111111111111111',
             ]],
             'withDevice' => ['device', ['ip_address' => 'not an IP', 'session_age' => -1.5, 'session_id' => '']],
-            'withEmail' => ['email', ['address' => 'not an email', 'domain' => 'not a domain']],
+            'withEmail' => ['email', [
+                'address' => 'not an email',
+                'domain' => 'not a domain',
+                'verification_time' => 'not a time',
+            ]],
             'withEvent' => ['event', ['party' => 'other', 'time' => 'not a time', 'type' => 'other']],
             'withOrder' => ['order', ['amount' => -1.5, 'currency' => 'usd', 'referrer_uri' => 'not a URL']],
             'withPayment' => ['payment', ['method' => 'other', 'processor' => 'other']],
@@ -481,13 +486,15 @@ class MinFraudTest extends ServiceClientTester
             )
             ->withEmail(
                 address: '977577b140bfb7c516e4746204fbdb01',
-                domain: 'maxmind.com'
+                domain: 'maxmind.com',
+                verificationTime: '2026-10-01T14:30:00Z',
+                wasVerificationSuccessful: true
             )
             ->withEvent(
                 party: 'customer',
                 transactionId: 'txn3134133',
                 shopId: 's2123',
-                time: '2014-04-12T23:20:50+00:00',
+                time: '2026-10-05T23:20:50+00:00',
                 type: 'purchase'
             )
             ->withOrder(
@@ -1060,36 +1067,6 @@ class MinFraudTest extends ServiceClientTester
         )->withBilling(['phone_verification_method' => 'sms']);
     }
 
-    /**
-     * @dataProvider goodTimes
-     */
-    public function testGoodBillingPhoneVerificationTimes(string $time): void
-    {
-        $result = $this->createMinFraudRequestWithFullResponse(
-            'insights',
-            0
-        )->withBilling(['phone_verification_time' => $time]);
-
-        $this->assertSame(
-            $time,
-            $result->jsonSerialize()['content']['billing']['phone_verification_time'],
-        );
-    }
-
-    /**
-     * @dataProvider badTimes
-     */
-    public function testBadBillingPhoneVerificationTime(string $time): void
-    {
-        $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('valid RFC 3339');
-
-        $this->createMinFraudRequestWithFullResponse(
-            'insights',
-            0
-        )->withBilling(['phone_verification_time' => $time]);
-    }
-
     public function testBillingPhoneWasVerificationSuccessfulFalse(): void
     {
         $result = $this->createMinFraudRequestWithFullResponse(
@@ -1142,36 +1119,6 @@ class MinFraudTest extends ServiceClientTester
         )->withShipping(['phone_verification_method' => 'sms']);
     }
 
-    /**
-     * @dataProvider goodTimes
-     */
-    public function testGoodShippingPhoneVerificationTimes(string $time): void
-    {
-        $result = $this->createMinFraudRequestWithFullResponse(
-            'insights',
-            0
-        )->withShipping(['phone_verification_time' => $time]);
-
-        $this->assertSame(
-            $time,
-            $result->jsonSerialize()['content']['shipping']['phone_verification_time'],
-        );
-    }
-
-    /**
-     * @dataProvider badTimes
-     */
-    public function testBadShippingPhoneVerificationTime(string $time): void
-    {
-        $this->expectException(InvalidInputException::class);
-        $this->expectExceptionMessage('valid RFC 3339');
-
-        $this->createMinFraudRequestWithFullResponse(
-            'insights',
-            0
-        )->withShipping(['phone_verification_time' => $time]);
-    }
-
     public function testShippingPhoneWasVerificationSuccessfulFalse(): void
     {
         $result = $this->createMinFraudRequestWithFullResponse(
@@ -1206,6 +1153,66 @@ class MinFraudTest extends ServiceClientTester
             'insights',
             0
         )->withShipping(['phone_was_verification_successful' => 'true']);
+    }
+
+    public function testEmailWasVerificationSuccessfulFalse(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(wasVerificationSuccessful: false);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['email']['was_verification_successful'],
+        );
+    }
+
+    public function testBadEmailWasVerificationSuccessful(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage(
+            'Expected was_verification_successful to be in [boolean] but was string',
+        );
+
+        $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(['was_verification_successful' => 'true']);
+    }
+
+    public function testEmailWasVerificationSuccessfulFalseArray(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0
+        )->withEmail(['was_verification_successful' => false]);
+
+        $this->assertFalse(
+            $result->jsonSerialize()['content']['email']['was_verification_successful'],
+        );
+    }
+
+    public function testEmailVerificationWithHashing(): void
+    {
+        $result = $this->createMinFraudRequestWithFullResponse(
+            'insights',
+            0,
+            ['hashEmail' => true],
+        )->withEmail([
+            'address' => 'test@gmail.com',
+            'verification_time' => '2026-10-01T14:30:00Z',
+            'was_verification_successful' => false,
+        ]);
+
+        $this->assertSame(
+            [
+                'address' => '1aedb8d9dc4751e229a335e371db8058',
+                'verification_time' => '2026-10-01T14:30:00Z',
+                'was_verification_successful' => false,
+                'domain' => 'gmail.com',
+            ],
+            $result->jsonSerialize()['content']['email'],
+        );
     }
 
     /**
@@ -1617,16 +1624,31 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider goodTimes
+     * @dataProvider goodTimeInputs
      */
-    public function testGoodEventTimes(string $time): void
-    {
+    public function testGoodTimes(
+        string $method,
+        string $section,
+        string $field,
+        string $time,
+    ): void {
         $result = $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEvent(['time' => $time]);
+        )->{$method}([$field => $time]);
 
-        $this->assertSame($time, $result->jsonSerialize()['content']['event']['time']);
+        $this->assertSame(
+            $time,
+            $result->jsonSerialize()['content'][$section][$field],
+        );
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public static function goodTimeInputs(): array
+    {
+        return self::timeInputs(self::goodTimes());
     }
 
     /**
@@ -1657,17 +1679,29 @@ class MinFraudTest extends ServiceClientTester
     }
 
     /**
-     * @dataProvider badTimes
+     * @dataProvider badTimeInputs
      */
-    public function testBadEventTime(string $time): void
-    {
+    public function testBadTime(
+        string $method,
+        string $section,
+        string $field,
+        string $time,
+    ): void {
         $this->expectException(InvalidInputException::class);
         $this->expectExceptionMessage('valid RFC 3339');
 
         $this->createMinFraudRequestWithFullResponse(
             'insights',
             0
-        )->withEvent(['time' => $time]);
+        )->{$method}([$field => $time]);
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    public static function badTimeInputs(): array
+    {
+        return self::timeInputs(self::badTimes());
     }
 
     /**
@@ -1704,6 +1738,30 @@ class MinFraudTest extends ServiceClientTester
             ['26-10-01T14:30:00Z'],
             ['2026-10-01T4:30:00Z'],
         ];
+    }
+
+    /**
+     * @param array<list<string>> $times
+     *
+     * @return array<string, list<string>>
+     */
+    private static function timeInputs(array $times): array
+    {
+        $fields = [
+            ['withBilling', 'billing', 'phone_verification_time'],
+            ['withShipping', 'shipping', 'phone_verification_time'],
+            ['withEmail', 'email', 'verification_time'],
+            ['withEvent', 'event', 'time'],
+        ];
+
+        $tests = [];
+        foreach ($fields as [$method, $section, $field]) {
+            foreach ($times as [$time]) {
+                $tests["{$section} {$field} {$time}"] = [$method, $section, $field, $time];
+            }
+        }
+
+        return $tests;
     }
 
     /**

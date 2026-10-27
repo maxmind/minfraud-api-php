@@ -165,14 +165,16 @@ $request = $mf->withDevice(
     party: 'customer',
     transactionId: 'txn3134133',
     shopId: 's2123',
-    time: '2012-04-12T23:20:50+00:00',
+    time: '2026-10-05T23:20:50+00:00',
     type: 'purchase'
 )->withAccount(
     userId: 3132,
     usernameMd5: '4f9726678c438914fa04bdb8c1a24088'
 )->withEmail(
     address: 'test@maxmind.com',
-    domain: 'maxmind.com'
+    domain: 'maxmind.com',
+    verificationTime: '2026-10-01T14:30:00Z',
+    wasVerificationSuccessful: true
 )->withBilling(
     firstName: 'First',
     lastName: 'Last',
