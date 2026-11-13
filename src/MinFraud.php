@@ -992,6 +992,7 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
                 'rede',
                 'redpagos',
                 'rewardspay',
+                'ryft',
                 'safecharge',
                 'sagepay',
                 'securepay',
