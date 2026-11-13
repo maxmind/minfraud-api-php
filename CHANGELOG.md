@@ -51,6 +51,7 @@ CHANGELOG
   email address. Use them with `withEmail()` as array keys or as the
   `verificationTime` and `wasVerificationSuccessful` named arguments. Omit
   `was_verification_successful` if no verification was attempted.
+* Added `ryft` to the payment processor validation.
 
 3.7.0 (2026-07-21)
 ------------------
