@@ -52,6 +52,8 @@ namespace MaxMind\MinFraud\Model;
  * * `EMAIL_ACTIVITY` - Riskiness of the email address based on minFraud network activity.
  * * `PHONE_ACTIVITY` - Riskiness of the phone number based on minFraud network activity.
  * * `SHIP_ACTIVITY` - Riskiness of ship address based on minFraud network activity.
+ *
+ * @final
  */
 class Reason implements \JsonSerializable
 {

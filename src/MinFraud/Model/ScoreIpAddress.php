@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing the IP address's risk for the Score response.
+ *
+ * @final
  */
 class ScoreIpAddress implements \JsonSerializable
 {

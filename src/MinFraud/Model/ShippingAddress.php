@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing properties of the shipping address.
+ *
+ * @final
  */
 class ShippingAddress extends Address
 {

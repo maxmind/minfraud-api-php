@@ -9,6 +9,8 @@ namespace MaxMind\MinFraud;
  * policy.
  *
  * @ignore
+ *
+ * @final
  */
 class Util
 {

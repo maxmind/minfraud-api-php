@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing information about the billing or shipping phone number.
+ *
+ * @final
  */
 class Phone implements \JsonSerializable
 {

@@ -12,6 +12,8 @@ namespace MaxMind\MinFraud\Model;
  *
  * @link https://dev.maxmind.com/minfraud/track-devices/?lang=en Device Tracking
  * Add-on
+ *
+ * @final
  */
 class Device implements \JsonSerializable
 {

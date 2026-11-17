@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model of the Score response.
+ *
+ * @final
  */
 class Score implements \JsonSerializable
 {

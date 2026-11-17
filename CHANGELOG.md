@@ -57,6 +57,16 @@ CHANGELOG
   1.13.1, which lacks the decoder limits for crafted databases
   (GHSA-hj94-g986-h9r7). See the release notes for
   [geoip2/geoip2 3.5.0](https://github.com/maxmind/GeoIP2-php/releases/tag/v3.5.0).
+* Most concrete classes that no other class extends are now marked `@final`.
+  They will be `final` in the next major version. Static analyzers such as
+  PHPStan report a class that extends them. These classes stay open:
+  * `MaxMind\MinFraud\Model\Insights`, because
+    `MaxMind\MinFraud\Model\Factors` extends it.
+  * `MaxMind\MinFraud\Model\IpAddress` and
+    `MaxMind\MinFraud\Model\RiskScoreReason`, until the next major version.
+    With `@final`, PHPStan asks to narrow the `?array` return type of their
+    `jsonSerialize()` methods to `array`. That change would break a subclass
+    that overrides the method.
 
 3.7.0 (2026-07-21)
 ------------------

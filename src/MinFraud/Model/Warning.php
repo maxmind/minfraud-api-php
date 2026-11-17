@@ -31,6 +31,8 @@ namespace MaxMind\MinFraud\Model;
  *   our database.
  * * `SHIPPING_POSTAL_NOT_FOUND` - the shipping postal could not be found in
  *   our database.
+ *
+ * @final
  */
 class Warning implements \JsonSerializable
 {

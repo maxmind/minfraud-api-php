@@ -10,6 +10,9 @@ use MaxMind\Exception\InvalidInputException;
 use MaxMind\Exception\InvalidRequestException;
 use MaxMind\Exception\WebServiceException;
 
+/**
+ * @final
+ */
 class ReportTransaction extends ServiceClient
 {
     /**
