@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-3.8.0
+3.8.0 (2026-11-18)
 ------------------
 
 * `with()` now rejects non-array sections and shopping cart items with
