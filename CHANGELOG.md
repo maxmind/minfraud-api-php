@@ -52,6 +52,11 @@ CHANGELOG
   `verificationTime` and `wasVerificationSuccessful` named arguments. Omit
   `was_verification_successful` if no verification was attempted.
 * Added `ryft` to the payment processor validation.
+* The minimum version of `geoip2/geoip2` is now 3.5.0. `minfraud.phar`
+  bundles this version or later. The 3.7.0 phar bundled `maxmind-db/reader`
+  1.13.1, which lacks the decoder limits for crafted databases
+  (GHSA-hj94-g986-h9r7). See the release notes for
+  [geoip2/geoip2 3.5.0](https://github.com/maxmind/GeoIP2-php/releases/tag/v3.5.0).
 
 3.7.0 (2026-07-21)
 ------------------
