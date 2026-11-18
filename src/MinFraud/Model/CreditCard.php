@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model with details about the credit card used.
+ *
+ * @final
  */
 class CreditCard implements \JsonSerializable
 {

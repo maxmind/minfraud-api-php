@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing information about the email address.
+ *
+ * @final
  */
 class Email implements \JsonSerializable
 {

@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing information about the billing address.
+ *
+ * @final
  */
 // phpcs:disable
 class BillingAddress extends Address {}

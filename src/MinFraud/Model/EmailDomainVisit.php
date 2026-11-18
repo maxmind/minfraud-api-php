@@ -10,6 +10,8 @@ namespace MaxMind\MinFraud\Model;
  * This object provides data from MaxMind's automated checks of domain
  * accessibility, including whether the domain is live, has errors, or
  * redirects to another location.
+ *
+ * @final
  */
 class EmailDomainVisit implements \JsonSerializable
 {

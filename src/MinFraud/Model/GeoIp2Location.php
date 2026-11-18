@@ -8,6 +8,8 @@ use GeoIp2\Record\Location;
 
 /**
  * Model of the GeoIP Location information, including the local time.
+ *
+ * @final
  */
 class GeoIp2Location extends Location
 {

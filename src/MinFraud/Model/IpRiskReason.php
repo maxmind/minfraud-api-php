@@ -25,6 +25,8 @@ namespace MaxMind\MinFraud\Model;
  *   seen on this IP address.
  * * `MINFRAUD_NETWORK_ACTIVITY` - Suspicious activity has been seen on this
  *   IP address across minFraud customers.
+ *
+ * @final
  */
 class IpRiskReason implements \JsonSerializable
 {

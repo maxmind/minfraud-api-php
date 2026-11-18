@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model containing information about the card issuer.
+ *
+ * @final
  */
 class Issuer implements \JsonSerializable
 {

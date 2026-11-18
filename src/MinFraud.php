@@ -38,6 +38,8 @@ use MaxMind\MinFraud\Util;
  * ```
  *
  * If the request fails, an exception is thrown.
+ *
+ * @final
  */
 class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
 {

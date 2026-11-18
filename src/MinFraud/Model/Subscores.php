@@ -8,6 +8,8 @@ namespace MaxMind\MinFraud\Model;
  * The scores for risk factors that are used in calculating the riskScore.
  *
  * @deprecated use RiskScoreReason instead
+ *
+ * @final
  */
 class Subscores implements \JsonSerializable
 {

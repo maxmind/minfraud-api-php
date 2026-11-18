@@ -8,6 +8,8 @@ namespace MaxMind\MinFraud\Model;
  * Model with the disposition set by custom rules.
  *
  * In order to receive a disposition, you must be using minFraud custom rules.
+ *
+ * @final
  */
 class Disposition implements \JsonSerializable
 {

@@ -6,6 +6,8 @@ namespace MaxMind\MinFraud\Model;
 
 /**
  * Model representing the Factors response.
+ *
+ * @final
  */
 class Factors extends Insights
 {
