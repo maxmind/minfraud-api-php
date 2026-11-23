@@ -204,7 +204,6 @@ $request = $mf->withDevice(
     phoneCountryCode: '1',
     phoneVerificationMethod: 'network',
     phoneWasVerificationSuccessful: false,
-    phoneVerificationTime: '2026-10-01T14:31:00Z',
     deliverySpeed: 'same_day'
 )->withPayment(
     method: 'card',
