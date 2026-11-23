@@ -497,18 +497,27 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $domain                    The domain of the email address used in the
      *                                                        transaction. Do not include the `@` in this
      *                                                        field.
-     * @param string|null          $verificationTime          The date and time of the most recent
-     *                                                        attempt to verify the email address, if
-     *                                                        known, in RFC 3339 date-time format. The
-     *                                                        time must not be before
+     * @param string|null          $verificationTime          The date and time that the end user
+     *                                                        completed the most recent verification of
+     *                                                        the email address, if known, in RFC 3339
+     *                                                        date-time format. Set this only if
+     *                                                        `$wasVerificationSuccessful` is `true`.
+     *                                                        The time must not be before
      *                                                        1970-01-01T00:00:00Z or more than two days
      *                                                        in the future.
-     * @param bool|null            $wasVerificationSuccessful Whether the most recent verification
-     *                                                        that the end user controls the email
-     *                                                        address succeeded, for example by
+     * @param bool|null            $wasVerificationSuccessful Whether the end user has verified that
+     *                                                        they control the email address, as of
+     *                                                        the time of the event. Set this to
+     *                                                        `true` if the user completed a
+     *                                                        verification, for example by
      *                                                        confirming a link sent to the address.
-     *                                                        Omit this if no verification was
-     *                                                        attempted.
+     *                                                        Set it to `false` if the address is
+     *                                                        not verified. This includes a
+     *                                                        verification that is pending,
+     *                                                        abandoned, expired, or failed, and an
+     *                                                        address that you did not try to
+     *                                                        verify. Omitting this is not
+     *                                                        equivalent to `false`.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
@@ -610,18 +619,32 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $postal                         The postal code of the user's billing address
      * @param string|null          $region                         The ISO 3166-2 subdivision code for the user's
      *                                                             billing address
-     * @param string|null          $phoneVerificationMethod        The most recent method used to verify
-     *                                                             the billing phone number: delivered_code,
-     *                                                             network, or other
-     * @param string|null          $phoneVerificationTime          The date and time of the most recent
-     *                                                             verification of the billing phone number,
-     *                                                             in RFC 3339 date-time format. The time
-     *                                                             must not be before 1970-01-01T00:00:00Z
-     *                                                             or more than two days in the future.
-     * @param bool|null            $phoneWasVerificationSuccessful Whether the most recent verification
-     *                                                             of the billing phone number succeeded.
-     *                                                             Omit this if no verification was
-     *                                                             attempted.
+     * @param string|null          $phoneVerificationMethod        The method used for the most recent
+     *                                                             verification of the billing phone number:
+     *                                                             delivered_code, network, or other. Set
+     *                                                             this if you tried to verify the phone
+     *                                                             number, even if the user did not complete
+     *                                                             the verification. Do not set this if you
+     *                                                             did not try to verify the phone number.
+     * @param string|null          $phoneVerificationTime          The date and time that the end user
+     *                                                             completed the most recent verification of
+     *                                                             the billing phone number, if known, in
+     *                                                             RFC 3339 date-time format. Set this only
+     *                                                             if `$phoneWasVerificationSuccessful` is
+     *                                                             `true`. The time must not be before
+     *                                                             1970-01-01T00:00:00Z or more than two
+     *                                                             days in the future.
+     * @param bool|null            $phoneWasVerificationSuccessful Whether the end user has verified that
+     *                                                             they control the billing phone number,
+     *                                                             as of the time of the event. Set this
+     *                                                             to `true` if the user completed a
+     *                                                             verification. Set it to `false` if the
+     *                                                             phone number is not verified. This
+     *                                                             includes a verification that is
+     *                                                             pending, abandoned, expired, or
+     *                                                             failed, and a phone number that you
+     *                                                             did not try to verify. Omitting this
+     *                                                             is not equivalent to `false`.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
@@ -701,17 +724,30 @@ class MinFraud extends MinFraud\ServiceClient implements \JsonSerializable
      * @param string|null          $lastName                       the recipient's last name
      * @param string|null          $phoneCountryCode               the phone country code, with 1 to 4 digits
      * @param string|null          $phoneNumber                    the recipient's phone number
-     * @param string|null          $phoneVerificationMethod        the most recent method used to verify
-     *                                                             the shipping phone number: delivered_code,
-     *                                                             network, or other
-     * @param string|null          $phoneVerificationTime          the date and time of the most recent
-     *                                                             verification of the shipping phone number,
-     *                                                             in RFC 3339 date-time format. The time
-     *                                                             must not be before 1970-01-01T00:00:00Z
-     *                                                             or more than two days in the future.
-     * @param bool|null            $phoneWasVerificationSuccessful whether the most recent verification of
-     *                                                             the shipping phone number succeeded. Omit this
-     *                                                             if no verification was attempted.
+     * @param string|null          $phoneVerificationMethod        The method used for the most recent
+     *                                                             verification of the shipping phone number:
+     *                                                             delivered_code, network, or other. Set
+     *                                                             this if you tried to verify the phone
+     *                                                             number, even if the user did not complete
+     *                                                             the verification. Do not set this if you
+     *                                                             did not try to verify the phone number.
+     * @param string|null          $phoneVerificationTime          The date and time that the end user
+     *                                                             completed the most recent verification of
+     *                                                             the shipping phone number, if known, in
+     *                                                             RFC 3339 date-time format. Set this only
+     *                                                             if `$phoneWasVerificationSuccessful` is
+     *                                                             `true`. The time must not be before
+     *                                                             1970-01-01T00:00:00Z or more than two days
+     *                                                             in the future.
+     * @param bool|null            $phoneWasVerificationSuccessful Whether the end user has verified that they
+     *                                                             control the shipping phone number, as of the
+     *                                                             time of the event. Set this to `true` if the
+     *                                                             user completed a verification. Set it to
+     *                                                             `false` if the phone number is not verified.
+     *                                                             This includes a verification that is pending,
+     *                                                             abandoned, expired, or failed, and a phone
+     *                                                             number that you did not try to verify.
+     *                                                             Omitting this is not equivalent to `false`.
      *
      * @throws InvalidInputException if a value has the wrong type, or if
      *                               input validation is enabled and a value is
